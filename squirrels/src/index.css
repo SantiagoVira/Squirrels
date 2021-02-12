@@ -1,3 +1,8 @@
+html {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -8,9 +13,16 @@ body {
     -moz-osx-font-smoothing: grayscale;
     color: #fae9cf;
     background-color: #43404f;
+
+    overflow-x: hidden;
+    overflow-y: scroll;
 }
 
 code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
