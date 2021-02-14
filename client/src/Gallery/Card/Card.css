@@ -1,14 +1,15 @@
 .squirrelCard {
-  width: 200px;
-  border-style: solid;
-  border-width: 2px;
-  border-radius: 3px;
-  overflow-wrap: break-word;
-  padding: 10px;
-  border-color: var(--cinnamon);
-  display: inline-block;
+    width: 200px;
+    border-style: solid;
+    border-width: 2px;
+    border-radius: 12px;
+    margin: 1vw 1vh;
+    overflow-wrap: break-word;
+    padding: 10px;
+    border-color: #7c3b0c;
+    background: var(--cinnamon);
 }
 
 .squirrelCard h1 {
-  font-size: clamp(20px, 2vw, 25px)
+    font-size: clamp(20px, 2vw, 25px);
 }
