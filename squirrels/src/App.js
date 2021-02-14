@@ -1,4 +1,4 @@
-import { Router, Switch, Route } from "react-router-dom";
+import { Router, Switch, Route, withRouter } from "react-router-dom";
 import history from "./history";
 
 // Our components
@@ -15,11 +15,28 @@ import Uploads from "./Uploads/Uploads.js";
 // The footer
 import Footer from "./Footer/Footer.js";
 
+//UseState
+import { useState, useEffect } from "react";
+
 function App() {
+    const [page, setPage] = useState(window.location.href);
+    const ChangeListener = ({ history }) => {
+        useEffect(
+            () =>
+                history.listen(() => {
+                    setPage(window.location.href);
+                }),
+            []
+        );
+        return <div />;
+    };
+
+    const Changer = withRouter(ChangeListener);
     return (
         <Router history={history}>
             <>
-                <Menu />
+                <Changer />
+                <Menu page={page} />
                 <Header />
 
                 <div className="content">

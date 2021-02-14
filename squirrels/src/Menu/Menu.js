@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
 
-function Menu() {
+function Menu(props) {
     const [scrolled, setScrolled] = useState("");
-    const [page, setPage] = useState(window.location.href);
+    const page = props.page;
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll);
@@ -29,18 +29,12 @@ function Menu() {
     return (
         <div className={`menu ${scrolled}`}>
             {links.map((link) =>
-                !page.endsWith(link.to) ? (
+                page.endsWith(link.to) ? (
                     <strong key={unique()}>
                         <Link to={link.to}>{link.name}</Link>
                     </strong>
                 ) : (
-                    <Link
-                        key={unique()}
-                        to={link.to}
-                        onClick={() => {
-                            setPage(window.location.href);
-                        }}
-                    >
+                    <Link key={unique()} to={link.to}>
                         {link.name}
                     </Link>
                 )
