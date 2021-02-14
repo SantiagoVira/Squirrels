@@ -1,7 +1,7 @@
 .footer {
     background-color: var(--bottom); /* index.css variable */
-    bottom: 0px;
-    left: 0px;
+    bottom: 0;
+    left: 0;
     width: 100%;
     padding: 10px;
 }
