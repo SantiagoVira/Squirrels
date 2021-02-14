@@ -6,6 +6,7 @@
   overflow-wrap: break-word;
   padding: 10px;
   border-color: var(--cinnamon);
+  display: inline-block;
 }
 
 .squirrelCard h1 {

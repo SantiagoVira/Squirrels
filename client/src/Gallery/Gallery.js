@@ -25,8 +25,18 @@ function Gallery() {
       method: 'get',
       url: 'https://data.cityofnewyork.us/resource/gfqj-f768.json',
     });
-    setStories(response.data);
-  });
+
+    let randomStories = [];
+    let randomInt = 0;
+    for(let i = 0; i < 10; i++) {
+      randomInt = Math.floor(Math.random() * response.data.length);
+      randomStories.push(
+        response.data[randomInt]
+      )
+    }
+
+    setStories(randomStories);
+  }, []);
 
   if(!stories) {
     return null;
