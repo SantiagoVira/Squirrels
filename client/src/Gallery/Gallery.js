@@ -26,23 +26,34 @@ function RenderSquirrels(props) {
 function Gallery() {
     const [stories, setStories] = useState(null);
 
-    useEffect(async () => {
-        const response = await axios({
-            method: "get",
-            url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
-        });
-        setStories(response.data);
+  useEffect(async () => {
+    const response = await axios({
+        method: "get",
+        url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
     });
+    setStories(response.data);
 
-    if (!stories) {
-        return null;
+    let randomStories = [];
+    let randomInt = 0;
+    for(let i = 0; i < 10; i++) {
+      randomInt = Math.floor(Math.random() * response.data.length);
+      randomStories.push(
+        response.data[randomInt]
+      )
     }
 
-    return (
-        <div>
-            <RenderSquirrels stories={stories} />
-        </div>
-    );
+    setStories(randomStories);
+  }, []);
+
+  if(!stories) {
+    return null;
+  }
+
+  return (
+    <div>
+      <RenderSquirrels stories={stories} />
+    </div>
+  );
 }
 
 export default Gallery;
