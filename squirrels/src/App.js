@@ -1,53 +1,20 @@
 import "./App.css";
-import Bottom from "./Bottom";
-import Top from "./Top";
+import {Router, Switch, Route} from "react-router-dom";
+import history from "./history";
+import Menu from "./Menu";
+import Landing from "./Landing";
 
 function App() {
     return (
-        <div className="App">
-            <Top />
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <h1>Hello World!</h1>
-            <Bottom />
-        </div>
+        <Router history={history}>
+            <div className="App">
+                <Menu />
+                <Switch>
+                    <Route path="/" exact component={Landing}></Route>
+                    <Route path="/gallery" exact></Route>
+                </Switch>
+            </div>
+        </Router>
     );
 }
 
