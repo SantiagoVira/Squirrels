@@ -20,7 +20,7 @@
 }
 
 .menu a:hover {
-    text-shadow: 3px 3px 3px var(--bg);
+    text-shadow: 0 0 3px var(--bg);
 
     /* Transitions are when applying */
     transition-delay: 100ms;
