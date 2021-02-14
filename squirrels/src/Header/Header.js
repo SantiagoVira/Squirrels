@@ -1,7 +1,7 @@
-import "./App.css";
+import "./Header.css";
 import React from "react";
 
-function Top() {
+function Header() {
     return (
         <div className="topContainer">
             <svg className="top" viewBox="0 0 500 100">
@@ -12,4 +12,4 @@ function Top() {
     );
 }
 
-export default Top;
+export default Header;

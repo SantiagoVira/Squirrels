@@ -1,7 +1,22 @@
-html {
+@import url("https://fonts.googleapis.com/css2?family=Courgette&display=swap");
+
+:root {
+    --bg: #43404f;
+    --bottom: #b3aca8;
+    --text: #fae9cf;
+    --cinnamon: #d2691e;
+    --blue: #8ccaf7;
+    --top: #9384c2;
+}
+
+/* Do we not want a scrollbar? */
+/* html {
     -ms-overflow-style: none;
     scrollbar-width: none;
-}
+} */
+/* ::-webkit-scrollbar {
+    display: none;
+} */
 
 body {
     margin: 0;
@@ -18,11 +33,12 @@ body {
     overflow-y: scroll;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-        monospace;
+.content {
+  padding: 1rem calc(5% + 1rem); /* Making it line up */
 }
 
-::-webkit-scrollbar {
-    display: none;
-}
+/* We don't use this anywhere—yet */
+/* code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+        monospace;
+} */

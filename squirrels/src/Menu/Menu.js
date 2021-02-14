@@ -17,7 +17,7 @@ function Menu() {
         <div className={`menu ${scrolled}`}>
             <strong><Link to="/">Squirrels</Link></strong>
             <Link to="/gallery">Gallery</Link>
-            <a href="#">Uploads</a>
+            <Link to="/uploads">Uploads</Link>
         </div>
     );
 }
