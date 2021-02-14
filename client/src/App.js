@@ -11,6 +11,7 @@ import Header from "./Header/Header.js";
 import Gallery from "./Gallery/Gallery.js";
 import Home from "./Home/Home.js";
 import Uploads from "./Uploads/Uploads.js";
+import About from "./About/About.js";
 
 // The footer
 import Footer from "./Footer/Footer.js";
@@ -57,6 +58,7 @@ function App() {
                             exact
                             component={Uploads}
                         ></Route>
+                        <Route path="/about" exact component={About}></Route>
                     </Switch>
                 </div>
 

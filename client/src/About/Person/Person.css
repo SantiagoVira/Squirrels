@@ -1,0 +1,9 @@
+:root {
+    --personCardWidth: 35vw;
+}
+.white {
+    border-radius: 20px;
+    background-color: #fbfaf1;
+    width: var(--personCardWidth);
+    height: 65vh;
+}

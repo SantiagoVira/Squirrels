@@ -15,7 +15,6 @@ function RenderSquirrels(props) {
     return props.stories.map((log) => {
         return (
             <Card
-                //key={some kind of unique identifier}
                 //title={whatever part of the log starts with "story_topic"}
                 content={log.note_squirrel_park_stories}
                 key={unique()}

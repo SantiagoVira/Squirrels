@@ -1,0 +1,9 @@
+.container {
+    display: grid;
+    grid-template-columns: var(--personCardWidth) var(--personCardWidth);
+    grid-row: auto auto;
+    grid-column-gap: 5vw;
+    grid-row-gap: 5vw;
+    align-items: center;
+    justify-content: center;
+}
