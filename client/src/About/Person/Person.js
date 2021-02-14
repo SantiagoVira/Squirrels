@@ -1,10 +1,24 @@
 import React from "react";
 import "./Person.css";
 
-function Person() {
+function Person(props) {
+    console.log(props.src);
     return (
         <div>
-            <div className="white"></div>
+            <div className="white">
+                <div
+                    className={
+                        props.square ? "sqrImgWrapper" : "rectImgWrapper"
+                    }
+                >
+                    <img src={props.src} alt={props.name} />
+                </div>
+                <br />
+                <div className="name">
+                    <b>{props.name}</b>
+                </div>
+                <p className="quote">"{props.desc}"</p>
+            </div>
         </div>
     );
 }
