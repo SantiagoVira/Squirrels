@@ -11,7 +11,6 @@ function Menu(props) {
     });
 
     const onScroll = () => {
-        console.log(window.innerHeight / 1);
         window.pageYOffset > window.innerHeight / 4
             ? setScrolled("scrolled")
             : setScrolled("");
