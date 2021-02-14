@@ -18,6 +18,11 @@
     display: none;
 } */
 
+html, 
+body {
+    height: 100%;   /* Takes up 100% of children content */
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -35,6 +40,13 @@ body {
 
 .content {
   padding: 1rem calc(5% + 1rem); /* Making it line up */
+}
+
+#root {
+    position: relative;
+    display: flex;  /* Dynamically resizes height to children */
+    flex-direction: column; /* Stacks footer vertically */
+    min-height: 100%;   /* Makes screen height the minimum, even if there isn't enough content */
 }
 
 /* We don't use this anywhere—yet */
