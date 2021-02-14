@@ -11,7 +11,10 @@ function Menu(props) {
     });
 
     const onScroll = () => {
-        window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");
+        console.log(window.innerHeight / 1);
+        window.pageYOffset > window.innerHeight / 4
+            ? setScrolled("scrolled")
+            : setScrolled("");
     };
 
     function unique() {
@@ -44,4 +47,3 @@ function Menu(props) {
 }
 
 export default Menu;
-//change which is stong based on seleccted
