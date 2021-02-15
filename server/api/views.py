@@ -11,8 +11,9 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
     serializer_class =  SquirreLogSerializer
 
+# Handles get and post requests to squirrelogs
 @api_view(['GET', 'POST'])
-def logs(request):
+def logs(request):  # 'logs' is an arbitrary name, change it if you want
     print(request.data)
     if request.method == 'GET':
         logs = SquirreLog.objects.all()

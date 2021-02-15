@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import axios from "axios";
 
 function Create() {
+    // Stores form inputs to be sent to server
     const [request, setRequest] = useState({topic: "", note: ""});
 
     const onSubmitClick = (e) => {
