@@ -18,6 +18,10 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-server/static
 client/build
 client/node_modules
+server/static
+*.pyc
+
+# server's virtual environment
+venv/
