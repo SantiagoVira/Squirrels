@@ -13,11 +13,18 @@ function unique() {
 function RenderSquirrels(props) {
     //Render the stories, raises: can't render an object
     return props.stories.map((log) => {
+        let topics = [];
+        for (const property in log) {
+          if (property.startsWith("story_topic")) {
+            topics.push(property.replace("story_topic", "").replaceAll("_", " "))
+          }
+        }
+        let title = topics.join(" and ");
         return (
             <Card
-                //title={whatever part of the log starts with "story_topic"}
+                title={title}
                 content={log.note_squirrel_park_stories}
-                key={unique()}
+                key={unique()} // Could hypothetically have duplicate but it's unlikely
             />
         );
     });
