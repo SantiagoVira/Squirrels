@@ -1,0 +1,39 @@
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa&display=swap");
+
+:root {
+    --personCardWidth: 35vw;
+}
+.white {
+    border-radius: 20px;
+    background-color: #fbfaf1;
+    width: var(--personCardWidth);
+    height: 65vh;
+    padding: 10px;
+    text-align: center;
+}
+.rectImgWrapper {
+    display: inline-block;
+    position: relative;
+    width: 200px;
+    height: 200px;
+    overflow: hidden;
+    border-radius: 50%;
+}
+.rectImgWrapper img {
+    height: 200px;
+    width: auto;
+    margin-left: -50px;
+}
+.name {
+    margin-top: 25px;
+}
+b {
+    font-size: 5vw;
+    color: black;
+    font-family: "Comfortaa", cursive;
+}
+.quote {
+    font-style: italic;
+    font-size: 2vw;
+    color: rgb(129, 129, 129);
+}

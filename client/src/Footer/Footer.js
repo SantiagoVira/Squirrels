@@ -3,9 +3,12 @@ import "./Footer.css";
 
 function Footer() {
     return (
-      <div className="footer">
-        <p>Test text</p>
-      </div>
+        <div>
+            <div style={{ height: "20vh" }}></div>
+            <div className="footer">
+                <p>Test text</p>
+            </div>
+        </div>
     );
 }
 
