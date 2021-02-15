@@ -15,36 +15,41 @@ function RenderSquirrels(props) {
     return props.stories.map((log) => {
         return (
             <Card
-                //key={some kind of unique identifier}
-                //title={whatever part of the log starts with "story_topic"}
-                content={log.note_squirrel_park_stories}
-                key={unique()}
+              //key={some kind of unique identifier}
+              //title={whatever part of the log starts with "story_topic"}
+              content={log.note_squirrel_park_stories}
+              key={unique()}
             />
         );
     });
 }
 
 function Gallery() {
-    const [stories, setStories] = useState(null);
+  const [data, setData] = useState(null);
+  const [stories, setStories] = useState(null);
 
   useEffect(async () => {
     const response = await axios({
         method: "get",
         url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
     });
-    setStories(response.data);
 
+    setData(response.data);
+    randomizeStories(response.data);
+  }, []);
+
+  function randomizeStories(stories) {
     let randomStories = [];
     let randomInt = 0;
+  
     for(let i = 0; i < 10; i++) {
-      randomInt = Math.floor(Math.random() * response.data.length);
+      randomInt = Math.floor(Math.random() * stories.length);
       randomStories.push(
-        response.data[randomInt]
+        stories[randomInt]
       )
     }
-
     setStories(randomStories);
-  }, []);
+  }
 
   if(!stories) {
     return null;
@@ -52,6 +57,7 @@ function Gallery() {
 
   return (
     <div>
+      <button onClick={() => randomizeStories(data)}>Generate</button>
       <RenderSquirrels stories={stories} />
     </div>
   );
