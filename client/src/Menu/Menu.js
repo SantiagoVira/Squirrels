@@ -11,9 +11,7 @@ function Menu(props) {
     });
 
     const onScroll = () => {
-        window.pageYOffset > window.innerHeight / 4
-            ? setScrolled("scrolled")
-            : setScrolled("");
+        window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");
     };
 
     function unique() {

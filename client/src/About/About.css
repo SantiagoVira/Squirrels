@@ -7,3 +7,14 @@
     align-items: center;
     justify-content: center;
 }
+.story {
+    font-style: italic;
+    font-size: 2vw;
+    color: var(--text);
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.storyText {
+    margin-right: 0 !important;
+}
