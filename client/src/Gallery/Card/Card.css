@@ -1,17 +1,43 @@
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  align-content: stretch;
+}
+
 .squirrelCard {
-    display: inline-block;
+    /* display: inline-flex; */
     margin-right: 10px;
-    width: 200px;
+    padding: 15px;
+    flex-grow: 2;
+    flex-shrink: 2;
+
+    /* Fit so it's more like the NYT website's cards? */
+    width: clamp(100px, fit-content, 400px);
+
+    /* Color stuff */
     border-style: solid;
     border-width: 2px;
     border-radius: 12px;
-    margin: 1vw 1vh;
-    overflow-wrap: break-word;
-    padding: 10px;
+    margin: 1vh 1vw;
     border-color: #7c3b0c;
     background: var(--cinnamon);
 }
 
 .squirrelCard h1 {
     font-size: clamp(20px, 2vw, 25px);
+}
+
+.generate-btn {
+    font-size: clamp(20px, 2vw, 25px); /* Same size as the headings */
+    width: fit-content;
+    display: block;
+    padding: 5px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: var(--cinnamon);
+    background-color: #7c3b0c;
+    color: inherit;
+    font: inherit;
+    margin: auto; /* Center it */
 }

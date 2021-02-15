@@ -47,7 +47,7 @@ function Gallery() {
   function randomizeStories(stories) {
     let randomStories = [];
     let randomInt = 0;
-  
+
     for(let i = 0; i < 10; i++) {
       randomInt = Math.floor(Math.random() * stories.length);
       randomStories.push(
@@ -63,8 +63,11 @@ function Gallery() {
 
   return (
     <div>
-      <button onClick={() => randomizeStories(data)}>Generate</button>
-      <RenderSquirrels stories={stories} />
+      <div className="cards">
+        <RenderSquirrels stories={stories} />
+      </div>
+      // We should have a way to find stories again 
+      <div onClick={() => randomizeStories(data)} className="generate-btn">Generate more!</div>
     </div>
   );
 }
