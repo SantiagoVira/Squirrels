@@ -6,7 +6,7 @@ import Card from "../../Card/Card.js";
 
 function Uploads() {
     const [posts, setPosts] = useState(
-        axios.get("http://localhost:8000/logs/") /*idk*/
+        axios.get("http://localhost:8000/api/logs/") /*idk*/
     );
     /* Imma comment it out until the server stuff is ready
 
