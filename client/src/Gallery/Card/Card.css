@@ -8,18 +8,20 @@
 .squirrelCard {
     /* display: inline-flex; */
     margin-right: 10px;
+    margin-bottom: 10px;
     padding: 15px;
-    flex-grow: 2;
-    flex-shrink: 2;
+    /* flex-grow: 1; */
+    /* flex-grow: 2; */
+    /* flex-shrink: 2; */
 
     /* Fit so it's more like the NYT website's cards? */
-    width: clamp(100px, fit-content, 400px);
+    width: clamp(100px, 100px+10%, 400px);
 
     /* Color stuff */
     border-style: solid;
     border-width: 2px;
     border-radius: 12px;
-    margin: 1vh 1vw;
+    /* margin: 1vh 1vw; */
     border-color: #7c3b0c;
     background: var(--cinnamon);
 }
@@ -39,5 +41,12 @@
     background-color: #7c3b0c;
     color: inherit;
     font: inherit;
+    font-size: clamp(10px, 8vw, 20px);
     margin: auto; /* Center it */
+    transition-duration: 100ms; /* phasing out of hover */
+}
+.generate-btn:hover {
+    transform: translate(-3px, -3px);
+    box-shadow: 3px 3px 3px black;
+    transition-duration: 100ms; /* phasing into hover */
 }
