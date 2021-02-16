@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import Card from "./Card/Card.js";
+import Card from "../Card/Card.js";
 import "./Gallery.css";
 
 function unique() {
@@ -15,9 +15,11 @@ function RenderSquirrels(props) {
     return props.stories.map((log) => {
         let topics = [];
         for (const property in log) {
-          if (property.startsWith("story_topic")) {
-            topics.push(property.replace("story_topic", "").replaceAll("_", " "))
-          }
+            if (property.startsWith("story_topic")) {
+                topics.push(
+                    property.replace("story_topic", "").replaceAll("_", " ")
+                );
+            }
         }
         let title = topics.join(" and ");
         return (
@@ -31,45 +33,48 @@ function RenderSquirrels(props) {
 }
 
 function Gallery() {
-  const [data, setData] = useState(null);
-  const [stories, setStories] = useState(null);
+    const [data, setData] = useState(null);
+    const [stories, setStories] = useState(null);
 
-  useEffect(async () => {
-    const response = await axios({
-        method: "get",
-        url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
-    });
+    useEffect(async () => {
+        const response = await axios({
+            method: "get",
+            url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
+        });
 
-    setData(response.data);
-    randomizeStories(response.data);
-  }, []);
+        setData(response.data);
+        randomizeStories(response.data);
+    }, []);
 
-  function randomizeStories(stories) {
-    // We should have a way to find stories again 
-    let randomStories = [];
-    let randomInt = 0;
+    function randomizeStories(stories) {
+        // We should have a way to find stories again
+        let randomStories = [];
+        let randomInt = 0;
 
-    for(let i = 0; i < 10; i++) {
-      randomInt = Math.floor(Math.random() * stories.length);
-      randomStories.push(
-        stories[randomInt]
-      )
+        for (let i = 0; i < 10; i++) {
+            randomInt = Math.floor(Math.random() * stories.length);
+            randomStories.push(stories[randomInt]);
+        }
+        setStories(randomStories);
     }
-    setStories(randomStories);
-  }
 
-  if(!stories) {
-    return null;
-  }
+    if (!stories) {
+        return null;
+    }
 
-  return (
-    <div>
-      <div className="cards">
-        <RenderSquirrels stories={stories} />
-      </div>
-      <div onClick={() => randomizeStories(data)} className="generate-btn">Generate more!</div>
-    </div>
-  );
+    return (
+        <div>
+            <div className="cards">
+                <RenderSquirrels stories={stories} />
+            </div>
+            <div
+                onClick={() => randomizeStories(data)}
+                className="generate-btn"
+            >
+                Generate more!
+            </div>
+        </div>
+    );
 }
 
 export default Gallery;

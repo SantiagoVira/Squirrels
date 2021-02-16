@@ -10,7 +10,6 @@ import Header from "./Header/Header.js";
 // Content
 import Gallery from "./Gallery/Gallery.js";
 import Home from "./Home/Home.js";
-import Uploads from "./Uploads/Uploads.js";
 import About from "./About/About.js";
 import Create from "./Create/Create.js";
 
@@ -53,11 +52,6 @@ function App() {
                             path="/gallery"
                             exact
                             component={Gallery}
-                        ></Route>
-                        <Route
-                            path="/uploads"
-                            exact
-                            component={Uploads}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route path="/create" exact component={Create}></Route>
