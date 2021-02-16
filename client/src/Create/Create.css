@@ -22,6 +22,7 @@
 form {
     text-align: center;
 }
+input,
 textarea {
     border: none;
     outline: none;
@@ -34,6 +35,7 @@ textarea {
     resize: none;
     overflow: hidden;
     min-height: 30px;
+    word-wrap: none;
 }
 ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */

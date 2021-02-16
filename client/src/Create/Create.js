@@ -19,7 +19,7 @@ function Create() {
         <div>
             <form onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
-                    <textarea
+                    <input
                         value={request.topic}
                         onChange={(e) =>
                             setRequest({ ...request, topic: e.target.value })
