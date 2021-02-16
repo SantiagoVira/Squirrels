@@ -21,11 +21,11 @@ function Menu(props) {
     }
 
     const links = [
-        { to: "/", name: "Squirrels" },
+        { to: "/", name: "Home" },
         { to: "/gallery", name: "Gallery" },
         { to: "/uploads", name: "Uploads" },
         { to: "/about", name: "About" },
-        { to: "/create", name: "+"}
+        { to: "/create", name: "+" },
     ];
 
     return (

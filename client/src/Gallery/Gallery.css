@@ -1,0 +1,21 @@
+.generate-btn {
+    font-size: clamp(20px, 2vw, 25px); /* Same size as the headings */
+    width: fit-content;
+    display: block;
+    padding: 5px;
+    border-radius: 3px;
+    border-style: solid;
+    border-color: var(--cinnamon);
+    background-color: #7c3b0c;
+    color: inherit;
+    font: inherit;
+    font-size: clamp(10px, 8vw, 20px);
+    margin: auto; /* Center it */
+    transition-duration: 100ms; /* phasing out of hover */
+    user-select: none;
+}
+.generate-btn:hover {
+    transform: translate(-1px, -1px);
+    box-shadow: 3px 3px 3px black;
+    transition-duration: 100ms; /* phasing into hover */
+}
