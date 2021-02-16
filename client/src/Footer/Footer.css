@@ -10,3 +10,12 @@
     left: 0;
     height: 100px;
 }
+img {
+    height: 80px;
+    float: left;
+}
+p {
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+}
