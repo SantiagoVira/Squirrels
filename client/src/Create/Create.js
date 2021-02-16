@@ -9,16 +9,9 @@ function Create() {
 
     const onSubmitClick = (e) => {
         e.preventDefault();
-<<<<<<< HEAD
-        axios.post("http://localhost:8000/api/logs/", {
-            ...request, 
-            pub_date: new Date().toISOString()  //Gets current date
-=======
-        console.log(request);
         axios.post("http://localhost:8000/logs/", {
             ...request,
             pub_date: new Date().toISOString(), //Gets current date
->>>>>>> 6571c4041b163c8c052237f2a29e63de58f594be
         });
     };
 
