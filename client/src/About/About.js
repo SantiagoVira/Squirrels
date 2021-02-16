@@ -11,6 +11,8 @@ function About() {
     return (
         <div>
             <div className="story">
+                <strong>Our Story</strong>
+                <br />
                 <p className="storyText">
                     You may be wondering.... wtf? Why? Wha... wh.. why though?
                     Don't worry, we got you. This is the story of our
@@ -43,6 +45,10 @@ function About() {
                     a litle bit of laughter in this ****storm of a time. You're
                     Welcome.
                 </p>
+                <br />
+                <br />
+                <strong>Meet the Devs</strong>
+                <div style={{ marginBottom: "20px" }} />
             </div>
             <div className="container">
                 <Person
