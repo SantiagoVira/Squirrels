@@ -23,6 +23,7 @@ client/node_modules
 server/static/*
 *.pyc
 server/**/__pycache__/
+server/db.sqlite3
 
 # server's virtual environment
 venv/
