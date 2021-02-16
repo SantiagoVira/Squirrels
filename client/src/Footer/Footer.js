@@ -13,7 +13,7 @@ function Footer() {
                     <br />
                     app to share pictures and stories of tree rodents rather
                     <br />
-                    than... literaly anything else
+                    than... literally anything else
                 </p>
             </div>
         </div>
