@@ -24,8 +24,8 @@ function Menu(props) {
         { to: "/", name: "Home" },
         { to: "/gallery", name: "Gallery" },
         { to: "/uploads", name: "Uploads" },
-        { to: "/about", name: "About" },
         { to: "/create", name: "Create" },
+        { to: "/about", name: "About" },
     ];
 
     return (
