@@ -25,7 +25,7 @@ function Menu(props) {
         { to: "/gallery", name: "Gallery" },
         { to: "/uploads", name: "Uploads" },
         { to: "/about", name: "About" },
-        { to: "/create", name: "+" },
+        { to: "/create", name: "Create" },
     ];
 
     return (
