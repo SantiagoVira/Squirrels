@@ -11,10 +11,13 @@ function Uploads() {
         const response = await axios.get("http://localhost:8000/api/logs/");
         setPosts(response.data);
     }, []);
+
     return (
         <div className="main">
             {posts.map((post) => {
-                <Card title={post.topic} content={post.note} />;
+                return (
+                    <Card title={post.topic} content={post.note} />
+                );
             })}
         </div>
     );
