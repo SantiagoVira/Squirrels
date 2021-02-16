@@ -23,9 +23,8 @@ function Menu(props) {
     const links = [
         { to: "/", name: "Home" },
         { to: "/gallery", name: "Gallery" },
-        { to: "/uploads", name: "Uploads" },
+        { to: "/create", name: "Create" },
         { to: "/about", name: "About" },
-        { to: "/create", name: "+" },
     ];
 
     return (

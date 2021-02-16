@@ -1,3 +1,6 @@
+* {
+    user-select: none;
+}
 .topContainer {
     width: 100%;
     display: flex;
