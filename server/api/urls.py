@@ -7,7 +7,6 @@ router.register(r'SquirreLogs', views.SquirreLogViewSet) # Registering the views
 
 # These urlpatterns are included in server/urls.py
 urlpatterns = [ # We can actually register the path for our serialized info here
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('logs/', views.logs)
 ]
