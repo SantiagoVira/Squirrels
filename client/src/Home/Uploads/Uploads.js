@@ -8,17 +8,16 @@ function Uploads() {
     const [posts, setPosts] = useState([]);
 
     useEffect(async () => {
-      const response = await axios.get("http://localhost:8000/api/logs/");
-      setPosts(response.data);
-    }, [])
-    /* Imma comment it out until the server stuff is ready
-
-      return <div>
-        {posts.map((post) => {<Card title={post.topic} content={post.note}/>})}
-      </div>
-
-    */
-    return <h1>Users' squirrels here.</h1>;
+        const response = await axios.get("http://localhost:8000/api/logs/");
+        setPosts(response.data);
+    }, []);
+    return (
+        <div className="main">
+            {posts.map((post) => {
+                <Card title={post.topic} content={post.note} />;
+            })}
+        </div>
+    );
 }
 
 export default Uploads;
