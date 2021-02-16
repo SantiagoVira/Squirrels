@@ -7,7 +7,7 @@ function Create() {
 
     const onSubmitClick = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8000/logs/", {
+        axios.post("http://localhost:8000/api/logs/", {
             ...request, 
             pub_date: new Date().toISOString()  //Gets current date
         });

@@ -10,9 +10,7 @@ function Footer() {
                 <img src={Banner} alt="Sqrrlz" />
                 <p>
                     Sqrrlz was made by 4 talented idiots who chose to make an
-                    <br />
-                    app to share pictures and stories of tree rodents rather
-                    <br />
+                    app to share pictures and stories <br /> of tree rodents rather
                     than... literally anything else
                 </p>
             </div>

@@ -20,7 +20,7 @@ yarn-error.log*
 
 client/build
 client/node_modules
-server/static
+server/static/*
 *.pyc
 
 # server's virtual environment
