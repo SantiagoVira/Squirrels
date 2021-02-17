@@ -38,23 +38,29 @@
 .buttons {
     width: 100%;
     text-align: right;
+    display: flex;
+    align-items: center;
+    justify-content: left;
 }
-.buttons > div {
+.btnWrapper {
+    max-width: 200px;
+    display: flex;
+    flex: 1;
+}
+.voteBtn {
     width: 15px;
     height: 15px;
     border: 4px solid var(--inactive);
     border-left: 0;
     border-top: 0;
     float: left;
-    margin-right: 10px;
+    margin: 10px;
 }
-.buttons > .up {
+.up {
     transform: rotate(225deg);
-    margin-top: 7px;
 }
-.buttons > .down {
+.down {
     transform: rotate(45deg);
-    margin-top: -5px;
 }
 .up:hover {
     border: 4px solid var(--upvoting);
@@ -69,7 +75,8 @@
 .votes {
     color: black;
     float: left;
-    margin-right: 20px;
     font-size: 27px;
-    margin-top: 5px;
+    margin: 10px;
+    flex-grow: 4;
+    user-select: none;
 }

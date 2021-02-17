@@ -12,24 +12,28 @@ function Card(props) {
         //access card at [id]
         //Set card's votes in the database to votes variable
     }
+
+    function Arrow(props) {
+        return (
+            <div
+                onClick={() => {
+                    vote(props.id, props.class);
+                }}
+                className={"voteBtn " + props.class}
+            ></div>
+        );
+    }
+
     return (
         <div className="squirrelCard">
             <h1>{props.title}</h1>
             <p>{props.content}</p>
             <div className="buttons">
-                <div
-                    onClick={() => {
-                        vote(props.id, "up");
-                    }}
-                    className="up"
-                ></div>
-                <p className="votes">{votes}</p>
-                <div
-                    onClick={() => {
-                        vote(props.id, "down");
-                    }}
-                    className="down"
-                ></div>
+                <div className="btnWrapper">
+                    <Arrow class="up" id={props.id} />
+                    <p className="votes">{votes}</p>
+                    <Arrow class="down" id={props.id} />
+                </div>
             </div>
         </div>
     );
