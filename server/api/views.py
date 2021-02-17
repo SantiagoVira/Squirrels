@@ -14,7 +14,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
 # Handles get and post requests to squirrelogs
 @api_view(['GET', 'POST'])
 def logs(request):  # 'logs' is an arbitrary name, change it if you want
-    print(request.data)
     if request.method == 'GET':
         logs = SquirreLog.objects.all()
         serializer = SquirreLogSerializer(logs, many=True)
@@ -26,3 +25,8 @@ def logs(request):  # 'logs' is an arbitrary name, change it if you want
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['PUT'])
+def vote(request):
+    if request.method == 'PUT':
+        print(request.data)

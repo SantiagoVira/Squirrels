@@ -4,7 +4,9 @@ from .models import SquirreLog
 
 # Serializers are used in the views 
 class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField()
+
     class Meta:
         model = SquirreLog
         # We could also add function names to the serializer!
-        fields = ('topic', 'note', 'pub_date')
+        fields = ('id', 'topic', 'note', 'pub_date')
