@@ -16,6 +16,9 @@ import Create from "./Create/Create.js";
 // The footer
 import Footer from "./Footer/Footer.js";
 
+//404
+import Error404 from "./404.js";
+
 //UseState
 import { useState, useEffect } from "react";
 
@@ -55,6 +58,7 @@ function App() {
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route path="/create" exact component={Create}></Route>
+                        <Route component={Error404} />
                     </Switch>
                 </div>
 

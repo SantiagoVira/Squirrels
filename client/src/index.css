@@ -39,7 +39,7 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: var(--cinnamon);
+    background-color: var(--cinnamon);
 }
 
 .content {
@@ -58,3 +58,8 @@ body {
     font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
         monospace;
 } */
+.error {
+    font-size: 6vw;
+    font-weight: bold;
+    text-align: center;
+}
