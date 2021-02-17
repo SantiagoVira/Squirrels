@@ -10,6 +10,7 @@ function Uploads() {
     useEffect(async () => {
         const response = await axios.get("http://localhost:8000/api/logs/");
         setPosts(response.data);
+        console.log(response.data);
     }, []);
 
     return (
