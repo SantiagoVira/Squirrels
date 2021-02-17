@@ -9,4 +9,4 @@ class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = SquirreLog
         # We could also add function names to the serializer!
-        fields = ('id', 'topic', 'note', 'pub_date')
+        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'user_story')
