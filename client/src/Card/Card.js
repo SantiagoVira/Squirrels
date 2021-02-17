@@ -1,32 +1,35 @@
+import axios from "axios";
 import React, { useState } from "react";
 import "./Card.css";
 
-function Card(props) {
+function Card({post}) {
     //When we call the card component, pass the id to access it on the server
-    const [votes, setVotes] = useState(1);
+    const [votes, setVotes] = useState(post.votes);
 
-    function vote(id, op) {
-        const changer = op === "up" ? 1 : -1;
-        const newTotal = votes + changer;
-        setVotes(newTotal);
-        //access card at [id]
-        //Set card's votes in the database to votes variable
+    async function vote(id, op) {
+        if(id) {
+            const upvote = op === "up" ? true : false;
+            //Set card's votes in the database to votes variable
+            const response = await axios.put("http://localhost:8000/api/vote/", 
+                {id: id, upvote: upvote})
+            setVotes(response.data.votes)
+        }
     }
     return (
         <div className="squirrelCard">
-            <h1>{props.title}</h1>
-            <p>{props.content}</p>
+            <h1>{post.topic}</h1>
+            <p>{post.note}</p>
             <div className="buttons">
                 <div
                     onClick={() => {
-                        vote(props.id, "up");
+                        vote(post.id, "up");
                     }}
                     className="up"
                 ></div>
                 <p className="votes">{votes}</p>
                 <div
                     onClick={() => {
-                        vote(props.id, "down");
+                        vote(post.id, "down");
                     }}
                     className="down"
                 ></div>

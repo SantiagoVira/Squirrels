@@ -29,4 +29,12 @@ def logs(request):  # 'logs' is an arbitrary name, change it if you want
 @api_view(['PUT'])
 def vote(request):
     if request.method == 'PUT':
-        print(request.data)
+        log = SquirreLog.objects.get(id=request.data['id'])
+        vote_count = (log.votes + 1 if request.data['upvote']
+            else log.votes - 1)
+        serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
+
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
