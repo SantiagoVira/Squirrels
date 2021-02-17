@@ -10,14 +10,13 @@ function Uploads() {
     useEffect(async () => {
         const response = await axios.get("http://localhost:8000/api/logs/");
         setPosts(response.data);
-        console.log(response.data);
     }, []);
 
     return (
         <div className="main">
             {posts.map((post) => {
                 return (
-                    <Card title={post.topic} content={post.note} />
+                    <Card post={post} />
                 );
             })}
         </div>
