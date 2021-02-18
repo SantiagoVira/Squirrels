@@ -35,6 +35,10 @@
     font-size: clamp(20px, 2vw, 25px);
 }
 
+.squirrelCard p {
+    font-size: 20px;
+}
+
 .buttons {
     width: 100%;
     text-align: right;

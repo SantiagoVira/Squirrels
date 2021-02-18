@@ -1,4 +1,4 @@
-import axios from "axios";
+import api from "../api";
 import React, { useState } from "react";
 import "./Card.css";
 
@@ -10,8 +10,8 @@ function Card({ post }) {
         if (id) {
             const upvote = op === "up" ? true : false;
             //Set card's votes in the database to votes variable
-            const response = await axios.put(
-                "http://localhost:8000/api/vote/",
+            const response = await api.put(
+                "/api/vote/",
                 { id: id, upvote: upvote }
             );
             setVotes(response.data.votes);

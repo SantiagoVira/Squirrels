@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../api";
 
 import "./Create.css";
 
@@ -9,7 +9,7 @@ function Create() {
 
     const onSubmitClick = (e) => {
         e.preventDefault();
-        axios.post("http://localhost:8000/api/logs/", {
+        api.post("/api/logs/", {
             ...request,
             pub_date: new Date().toISOString(), //Gets current date
         });

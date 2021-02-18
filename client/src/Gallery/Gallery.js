@@ -28,7 +28,7 @@ function RenderSquirrels(props) {
             key: unique(),
             gallery: true,
         };
-        return <Card post={post} />;
+        return <Card post={post} key={unique()} />;
     });
 }
 

@@ -22,9 +22,9 @@ function Menu(props) {
 
     const links = [
         { to: "/", name: "Home" },
+        { to: "/about", name: "About" },
         { to: "/gallery", name: "Gallery" },
         { to: "/create", name: "Create" },
-        { to: "/about", name: "About" },
     ];
 
     return (
