@@ -8,12 +8,11 @@ function Card({ post }) {
 
     async function vote(id, op) {
         if (id) {
-            const upvote = op === "up" ? true : false;
+            const upvote = op === "up" ? 1 : -1;
             //Set card's votes in the database to votes variable
-            const response = await api.put(
-                "/api/vote/",
-                { id: id, upvote: upvote }
-            );
+            const response = await api.put(`/api/log/${id}/`, { 
+                upvote: upvote 
+            });
             setVotes(response.data.votes);
         }
     }

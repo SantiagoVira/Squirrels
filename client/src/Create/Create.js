@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../api";
+import history from "../history";
 
 import "./Create.css";
 
@@ -7,12 +8,13 @@ function Create() {
     // Stores form inputs to be sent to server
     const [request, setRequest] = useState({ topic: "", note: "" });
 
-    const onSubmitClick = (e) => {
+    const onSubmitClick = async (e) => {
         e.preventDefault();
-        api.post("/api/logs/", {
+        await api.post("/api/logs/", {
             ...request,
             pub_date: new Date().toISOString(), //Gets current date
         });
+        history.push("/");
     };
 
     return (

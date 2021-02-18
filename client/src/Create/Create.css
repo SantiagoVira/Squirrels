@@ -8,7 +8,7 @@
     /* flex-shrink: 2; */
 
     /* Fit so it's more like the NYT website's cards? */
-    width: clamp(100px, 100px+10%, 400px);
+    /*width: clamp(100px, calc(100px+10%), 400px); doesn't work in firefox? */
 
     /* Color stuff */
     border-style: solid;
@@ -28,6 +28,7 @@ textarea {
     outline: none;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
+    padding: 1rem;
     color: var(--text);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
@@ -36,7 +37,15 @@ textarea {
     overflow: hidden;
     min-height: 30px;
     word-wrap: none;
+
+    box-sizing: border-box;
+    width: 100%;
 }
+
+textarea {
+    min-height: 10rem;
+}
+
 ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: var(--text);
