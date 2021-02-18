@@ -1,0 +1,13 @@
+.user {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    height: 75vh;
+    flex-grow: 2;
+    margin-left: 10px;
+    padding: 7.5px;
+    justify-content: flex-start;
+}
+.user > p {
+    margin-left: 5px;
+    text-align: left;
+}

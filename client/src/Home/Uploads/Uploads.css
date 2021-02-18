@@ -1,0 +1,14 @@
+.posts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 10vh;
+    width: 40vw;
+    flex-grow: 3;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+.posts > .squirrelCard {
+    max-width: 30vw;
+}

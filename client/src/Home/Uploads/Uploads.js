@@ -13,12 +13,11 @@ function Uploads() {
     }, []);
 
     return (
-        <div className="main">
+        <div className="posts">
             {posts.map((post) => {
-                return (
-                    <Card post={post} />
-                );
+                return <Card post={post} />;
             })}
+            <h1>Posts go here</h1>
         </div>
     );
 }

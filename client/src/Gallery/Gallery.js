@@ -22,13 +22,13 @@ function RenderSquirrels(props) {
             }
         }
         let title = topics.join(" and ");
-        return (
-            <Card
-                title={title}
-                content={log.note_squirrel_park_stories}
-                key={unique()} // Could hypothetically have duplicate but it's unlikely
-            />
-        );
+        const post = {
+            topic: title,
+            note: log.note_squirrel_park_stories,
+            key: unique(),
+            gallery: true,
+        };
+        return <Card post={post} />;
     });
 }
 

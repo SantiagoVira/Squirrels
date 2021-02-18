@@ -1,21 +1,14 @@
 import React from "react";
 import "./Home.css";
 import Uploads from "./Uploads/Uploads";
+import User from "./User/User";
 
 function Home() {
     return (
-        <>
-            <h1>Welcome home.</h1>
+        <div className="main">
             <Uploads />
-
-            <h1>Scroll</h1>
-            <h1>Scroll</h1>
-            <h1>Scroll</h1>
-            <h1>Scroll</h1>
-            <h1>Scroll</h1>
-            <h1>Scroll</h1>
-            <h1>Congrats! You made it</h1>
-        </>
+            <User />
+        </div>
     );
 }
 

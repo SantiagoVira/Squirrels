@@ -33,13 +33,15 @@ function Card({ post }) {
         <div className="squirrelCard">
             <h1>{post.topic}</h1>
             <p>{post.note}</p>
-            <div className="buttons">
-                <div className="btnWrapper">
-                    <Arrow class="up" id={post.id} />
-                    <p className="votes">{votes}</p>
-                    <Arrow class="down" id={post.id} />
+            {!post.gallery ? (
+                <div className="buttons">
+                    <div className="btnWrapper">
+                        <Arrow class="up" id={post.id} />
+                        <p className="votes">{votes}</p>
+                        <Arrow class="down" id={post.id} />
+                    </div>
                 </div>
-            </div>
+            ) : null}
         </div>
     );
 }
