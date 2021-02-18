@@ -2,19 +2,17 @@ import api from "../api";
 import React, { useState } from "react";
 import "./Card.css";
 
-function Card({ post }) {
+function Card({ post, onDelete }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
 
     async function vote(id, op) {
-        if (id) {
-            const upvote = op === "up" ? 1 : -1;
-            //Set card's votes in the database to votes variable
-            const response = await api.put(`/api/log/${id}/`, { 
-                upvote: upvote 
-            });
-            setVotes(response.data.votes);
-        }
+        const upvote = op === "up" ? 1 : -1;
+        //Set card's votes in the database to votes variable
+        const response = await api.put(`/api/log/${id}/`, { 
+            upvote: upvote 
+        });
+        setVotes(response.data.votes);
     }
 
     function Arrow(props) {
@@ -41,6 +39,10 @@ function Card({ post }) {
                     </div>
                 </div>
             ) : null}
+            {/* Renders delete button only if this component is passed onDelete */}
+            {onDelete &&
+                <button onClick={() => onDelete(post.id)}>Delete</button>
+            }
         </div>
     );
 }
