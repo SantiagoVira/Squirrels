@@ -7,10 +7,10 @@ function Card({ post, onDelete }) {
     const [votes, setVotes] = useState(post.votes);
 
     async function vote(id, op) {
-        const upvote = op === "up" ? 1 : -1;
+        const currentVote = op === "up" ? 1 : -1;
         //Set card's votes in the database to votes variable
         const response = await api.put(`/api/log/${id}/`, { 
-            upvote: upvote 
+            votes: votes + currentVote 
         });
         setVotes(response.data.votes);
     }
