@@ -39,9 +39,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Third-party
     'rest_framework', # Rest API
-    'api.apps.ApiConfig', # Django won't know about the api otherwise
     'corsheaders', # enables cors requests from frontend
+
+    # Custom Apps
+    'api.apps.ApiConfig', # Django won't know about the api otherwise
 ]
 
 MIDDLEWARE = [
@@ -104,6 +107,15 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    # Authentication method by priority
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
 
 
 # Internationalization

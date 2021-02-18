@@ -5,13 +5,12 @@ from rest_framework.response import Response
 from .serializers import SquirreLogSerializer
 from .models import SquirreLog
 
-# There are other kinds of viewsets we could change to; this one's just lazy lol
 # Register viewsets in api/urls.py
-class SquirreLogViewSet(viewsets.ModelViewSet):
+class SquirreLogViewSet(viewsets.ViewSet):
     def get_many(self, request):
         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
-        serializer =  SquirreLogSerializer(queryset, many=True)
-        return Response(serializer.data)
+        serializer_class =  SquirreLogSerializer(queryset, many=True)
+        return Response(serializer_class.data)
 
     def create(self, request):
         serializer = SquirreLogSerializer(data=request.data)
