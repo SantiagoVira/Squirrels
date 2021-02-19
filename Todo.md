@@ -7,7 +7,7 @@ Decide on:
 Frontend:
 
 -   Assemble home page based on (finished) Figma layout
--   404 page
+-   (maybe a fancier) 404 page
 -   Search bar for the squirrel stories... somewhere
 -   iframe links for each card div
     -   Since each card has a unique id, they could all be located at sqrrlz.com/cards/{id} or smth like that
