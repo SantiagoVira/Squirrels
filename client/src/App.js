@@ -28,27 +28,22 @@ import CardLoader from "./CardLoader";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
+    const [user, setUser] = useState({ isLoggedIn: false, username: "" });
 
     useEffect(() => {
         const getUser = async () => {
             try {
                 const token = localStorage.getItem("token");
                 if(token) {
-                    const response = await api.get("/api/current_user/", {
-                        headers: {
-                            Authorization: `JWT ${token}`
-                        }
-                    })
-                    setUser({isLoggedIn: true, username: response.data.user.username})
-                } else {
-                    setUser({isLoggedIn: false, username: ""})
+                    const response = await api.get("/api/current_user/")
+                    setUser({isLoggedIn: true, username: response.data.username})
                 }
             } catch(err) {};
         };
         getUser();
     }, []);
 
+    // To change user in children components
     const changeUser = (data) => {
         setUser(data);
     };
@@ -66,7 +61,6 @@ function App() {
 
     const Changer = withRouter(ChangeListener);
     function Cardlink(props) {
-        console.log(props.page);
         return props.page.includes("/card") ? null : props.children;
         //<Cardlink page={page}></Cardlink>
     }

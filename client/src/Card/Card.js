@@ -1,16 +1,22 @@
 import api from "../api";
 import React, { useState } from "react";
 import "./Card.css";
+import User from "../Home/User/User";
 
-function Card({ post, onDelete }) {
+function Card({ post, onDelete}) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
 
     async function vote(id, op) {
-        const currentVote = op === "up";
-        //Set card's votes in the database to votes variable
-        const response = await api.put(`/api/log/${id}/`, {upvote: currentVote});
-        setVotes(response.data.votes);
+        try {
+            const currentVote = op === "up";
+            //Set card's votes in the database to votes variable
+            const response = await api.put(
+                `/api/log/${id}/`, 
+                {upvote: currentVote}, 
+            );
+            setVotes(response.data.votes);
+        } catch(err) {};
     }
 
     function Arrow(props) {

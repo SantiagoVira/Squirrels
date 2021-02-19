@@ -6,14 +6,14 @@ from api.views import SquirreLogViewSet, current_user, UserList
 
 # Assigns viewset methods to HTTP request methods
 logs = SquirreLogViewSet.as_view({
-    'get': 'get_many',
+    'get': 'list',
     'post': 'create',
 })
 
 log = SquirreLogViewSet.as_view({
-    'get': 'get_one',
+    'get': 'retrieve',
     'put': 'vote',
-    'delete': 'delete',
+    'delete': 'destroy',
 })
 
 # These urlpatterns are included in server/urls.py

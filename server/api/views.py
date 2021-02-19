@@ -23,7 +23,18 @@ class UserList(APIView):
 
 # Register viewsets in api/urls.py
 class SquirreLogViewSet(viewsets.ViewSet):
-    def get_many(self, request):
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            self.permission_classes = [permissions.AllowAny, ]
+        elif self.request.method == 'PUT':
+            self.permission_classes = [permissions.IsAuthenticated, ]
+        else:
+            self.permission_classes = [permissions.IsAuthenticated, ]
+        return super(SquirreLogViewSet, self).get_permissions()
+
+    def list(self, request):
+        print(self.permission_classes)
+        print(request.auth)
         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
         serializer = SquirreLogSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -35,12 +46,14 @@ class SquirreLogViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
-    def get_one(self, request, **kwargs):
+    def retrieve(self, request, **kwargs):
         queryset = SquirreLog.objects.get(id=kwargs['pk'])
         serializer = SquirreLogSerializer(queryset)
         return Response(serializer.data)
 
     def vote(self, request, **kwargs):
+        print(self.permission_classes)
+        print(request.auth)
         log = SquirreLog.objects.get(id=kwargs['pk'])
 
         if request.data['upvote']:
@@ -54,7 +67,7 @@ class SquirreLogViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    def delete(self, request, **kwargs):
+    def destroy(self, request, **kwargs):
         SquirreLog.objects.get(id=kwargs['pk']).delete()
         return Response(kwargs['pk'])
 

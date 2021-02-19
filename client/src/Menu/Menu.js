@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import history from "../history";
 import "./Menu.css";
 
 function Menu(props) {
@@ -32,7 +33,7 @@ function Menu(props) {
                     Logout
                 </Link>
             );
-        } else if(props.user.isLoggedIn === false) {
+        } else {
             const links = [
                 { to: "/login", name: "Login" },
                 { to: "/register", name: "Register" },
@@ -40,7 +41,7 @@ function Menu(props) {
             return (
                 <React.Fragment>
                     {links.map((link) =>
-                        page.endsWith(link.to) ? (
+                        history.location.pathname === link.to ? (
                             <strong key={unique()}>
                                 <Link to={link.to}>{link.name}</Link>
                             </strong>

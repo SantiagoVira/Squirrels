@@ -8,8 +8,10 @@ function Uploads() {
     const [posts, setPosts] = useState([]);
 
     useEffect(async () => {
-        const response = await api.get("/api/logs/");
-        setPosts(response.data);
+        try {
+            const response = await api.get("/api/logs/");
+            setPosts(response.data);
+        } catch(err) {}
     }, []);
 
     const delete_log = async (id) => {
