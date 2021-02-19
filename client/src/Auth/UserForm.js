@@ -25,14 +25,19 @@ function UserForm(props) {
         <div>
             <div>{error}</div>
             <form onSubmit={e => onFormSubmit(e, form)}>
-                <input 
-                    type="text" 
-                    value={form.username} 
-                    onChange={e => setForm({...form, username: e.target.value})} />
-                <input 
-                    type="password" 
-                    value={form.password} 
-                    onChange={e => setForm({...form, password: e.target.value})} />
+                <label htmlFor="username_submission">Username</label>
+                <input
+                    type="text"
+                    value={form.username}
+                    onChange={e => setForm({...form, username: e.target.value})}
+                    id="username_submission" />
+
+                <label htmlFor="password_submisison">Password</label>
+                <input
+                    type="password"
+                    value={form.password}
+                    onChange={e => setForm({...form, password: e.target.value})}
+                    id="password_submisison"/>
                 <button>{props.text}</button>
             </form>
         </div>
