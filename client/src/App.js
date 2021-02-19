@@ -26,12 +26,12 @@ import { useState, useEffect } from "react";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({isLoggedIn: null, username: ""});
+    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
 
     const changeUser = (isLoggedIn, username) => {
-        setUser({isLoggedIn: isLoggedIn, username: username});
+        setUser({ isLoggedIn: isLoggedIn, username: username });
     };
-    
+
     const ChangeListener = ({ history }) => {
         useEffect(
             () =>
@@ -59,11 +59,23 @@ function App() {
                             // ^^ Menu can take routes as props
                         }
                         <Route path="/" exact component={Home}></Route>
-                        <Route path="/gallery" exact component={Gallery}></Route>
+                        <Route
+                            path="/gallery"
+                            exact
+                            component={Gallery}
+                        ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route path="/create" exact component={Create}></Route>
-                        <Route path="/login" exact render={() => (<Login changeUser={changeUser} />)}></Route>
-                        <Route path="/register" exact render={() => (<Login changeUser={changeUser} />)}></Route>
+                        <Route
+                            path="/login"
+                            exact
+                            render={() => <Login changeUser={changeUser} />}
+                        ></Route>
+                        <Route
+                            path="/register"
+                            exact
+                            render={() => <Register changeUser={changeUser} />}
+                        ></Route>
                         <Route component={Error404} />
                     </Switch>
                 </div>
