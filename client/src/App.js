@@ -12,6 +12,8 @@ import Gallery from "./Gallery/Gallery.js";
 import Home from "./Home/Home.js";
 import About from "./About/About.js";
 import Create from "./Create/Create.js";
+import Login from "./Auth/Login.js";
+import Register from "./Auth/Register.js";
 
 // The footer
 import Footer from "./Footer/Footer.js";
@@ -24,6 +26,12 @@ import { useState, useEffect } from "react";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
+    const [user, setUser] = useState({isLoggedIn: null, username: ""});
+
+    const changeUser = (isLoggedIn, username) => {
+        setUser({isLoggedIn: isLoggedIn, username: username});
+    };
+    
     const ChangeListener = ({ history }) => {
         useEffect(
             () =>
@@ -40,7 +48,7 @@ function App() {
         <Router history={history}>
             <>
                 <Changer />
-                <Menu page={page} />
+                <Menu page={page} user={user} changeUser={changeUser} />
                 <Header />
 
                 <div className="content">
@@ -51,13 +59,11 @@ function App() {
                             // ^^ Menu can take routes as props
                         }
                         <Route path="/" exact component={Home}></Route>
-                        <Route
-                            path="/gallery"
-                            exact
-                            component={Gallery}
-                        ></Route>
+                        <Route path="/gallery" exact component={Gallery}></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route path="/create" exact component={Create}></Route>
+                        <Route path="/login" exact render={() => (<Login changeUser={changeUser} />)}></Route>
+                        <Route path="/register" exact render={() => (<Login changeUser={changeUser} />)}></Route>
                         <Route component={Error404} />
                     </Switch>
                 </div>

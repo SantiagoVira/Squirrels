@@ -1,4 +1,5 @@
 .menu {
+    box-sizing: border-box;
     font-size: 24px;
     position: fixed;
     padding: 1rem 5%;
@@ -7,12 +8,9 @@
     z-index: 1;
 }
 
-.menu > * {
-    padding: 0 1rem;
-}
-
 .menu a {
     color: inherit;
+    padding: 0 1rem;
     text-decoration: none;
 
     /* Transitions are when applying */
@@ -26,6 +24,14 @@
     /* Transitions are when applying */
     transition-delay: 100ms;
     transition-duration: 200ms;
+}
+
+.menu .left {
+    float: left;
+}
+
+.menu .right {
+    float: right;
 }
 
 .scrolled {

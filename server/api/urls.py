@@ -20,5 +20,5 @@ urlpatterns = [ # We can actually register the path for our serialized info here
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('logs/', logs, name='logs'),
     path('log/<int:pk>/', log, name='log'),
-    path('token/', obtain_jwt_token)
+    path('authenticate/', obtain_jwt_token)
 ]
