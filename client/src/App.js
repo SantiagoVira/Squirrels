@@ -27,7 +27,7 @@ import { useState, useEffect } from "react";
 import CardLoader from "./CardLoader";
 
 function App() {
-    //const [page, setPage] = useState(window.location.href);
+    const [page, setPage] = useState(window.location.href);
     const [user, setUser] = useState({ isLoggedIn: null, username: "" });
 
     useEffect(() => {
@@ -48,35 +48,32 @@ function App() {
         setUser(data);
     };
 
-    // const ChangeListener = ({ history }) => {
-    //     useEffect(
-    //         () =>
-    //             history.listen(() => {
-    //                 setPage(window.location.href);
-    //             }),
-    //         []
-    //     );
-    //     return <div />;
-    // };
+    const ChangeListener = ({ history }) => {
+        useEffect(() => {
+            const unlisten = history.listen(() => {
+                setPage(window.location.href);
+            })
+            
+            unlisten();
+        }, []);
+        
+        return <div></div>
+    };
 
-    // const Changer = withRouter(ChangeListener);
+    const Changer = withRouter(ChangeListener);
     function Cardlink(props) {
-<<<<<<< HEAD
-        return props.page.includes("/card") ? null : props.children;
-=======
         return history.location.pathname.includes("/card")
             ? null
             : props.children;
->>>>>>> b6e17ae402e57ae4ec31942f2c14c15cc3dea805
         //<Cardlink page={page}></Cardlink>
     }
     return (
         <Router history={history}>
             <>
-                {/*<Cardlink page={page}><Changer /></Cardlink>*/}
+                <Cardlink page={page}><Changer /></Cardlink>
                 <Cardlink>
                     <Menu
-                        page={history.location.pathname}
+                        page={page}
                         user={user}
                         changeUser={changeUser}
                     />
