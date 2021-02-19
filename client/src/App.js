@@ -1,4 +1,4 @@
-import { Router, Switch, Route, withRouter } from "react-router-dom";
+import { Router, Switch, Route, withRouter, matchPath } from "react-router-dom";
 import history from "./history";
 import api from "./api";
 
@@ -24,6 +24,7 @@ import Error404 from "./404/404.js";
 
 //UseState
 import { useState, useEffect } from "react";
+import CardLoader from "./CardLoader";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
@@ -60,12 +61,23 @@ function App() {
     };
 
     const Changer = withRouter(ChangeListener);
+    function Cardlink(props) {
+        console.log(props.page);
+        return props.page.includes("/card") ? null : props.children;
+        //<Cardlink page={page}></Cardlink>
+    }
     return (
         <Router history={history}>
             <>
-                <Changer />
-                <Menu page={page} user={user} changeUser={changeUser} />
-                <Header />
+                <Cardlink page={page}>
+                    <Changer />
+                </Cardlink>
+                <Cardlink page={page}>
+                    <Menu page={page} user={user} changeUser={changeUser} />
+                </Cardlink>
+                <Cardlink page={page}>
+                    <Header />
+                </Cardlink>
 
                 <div className="content">
                     <Switch>
@@ -92,11 +104,14 @@ function App() {
                             exact
                             render={() => <Register changeUser={changeUser} />}
                         ></Route>
+                        <Route path="/card/:id" component={CardLoader}></Route>
                         <Route component={Error404} />
                     </Switch>
                 </div>
 
-                <Footer />
+                <Cardlink page={page}>
+                    <Footer />
+                </Cardlink>
             </>
         </Router>
     );
