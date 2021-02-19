@@ -22,20 +22,37 @@ function Menu(props) {
     }
 
     function logout() {
-        localStorage.removeItem('token');
+        localStorage.removeItem("token");
         props.changeUser(false, "");
     }
 
-    function renderAuth() {
-        if(props.user.isLoggedIn) {
-            return <Link to="#" onClick={() => logout()}>Logout</Link>
+    function renderAuth(page) {
+        if (props.user.isLoggedIn) {
+            return (
+                <Link to="#" onClick={() => logout()}>
+                    Logout
+                </Link>
+            );
         } else {
+            const links = [
+                { to: "/login", name: "Login" },
+                { to: "/register", name: "Register" },
+            ];
             return (
                 <React.Fragment>
-                    <Link to="/login">Login</Link>
-                    <Link to="/register">Register</Link>
+                    {links.map((link) =>
+                        page.endsWith(link.to) ? (
+                            <strong key={unique()}>
+                                <Link to={link.to}>{link.name}</Link>
+                            </strong>
+                        ) : (
+                            <Link key={unique()} to={link.to}>
+                                {link.name}
+                            </Link>
+                        )
+                    )}
                 </React.Fragment>
-            )
+            );
         }
     }
 
@@ -61,9 +78,7 @@ function Menu(props) {
                     )
                 )}
             </div>
-            <div className="right">
-                {renderAuth()}
-            </div>
+            <div className="right">{renderAuth(page)}</div>
         </div>
     );
 }

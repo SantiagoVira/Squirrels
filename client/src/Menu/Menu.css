@@ -6,6 +6,7 @@
     width: 100%;
     transition: 0.5s;
     z-index: 1;
+    user-select: none;
 }
 
 .menu a {
