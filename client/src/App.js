@@ -1,5 +1,6 @@
 import { Router, Switch, Route, withRouter } from "react-router-dom";
 import history from "./history";
+import api from "./api";
 
 // Our components
 
@@ -26,7 +27,20 @@ import { useState, useEffect } from "react";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
+    const [user, setUser] = useState({ isLoggedIn: false, username: "" });
+
+    // useEffect(async () => {
+    //     const token = localStorage.getItem("token");
+    //     if(token) {
+    //         const response = await api.get("/users/", {
+    //             headers: {
+    //                 Authorization: `JWT ${token}`
+    //             }
+    //         })
+    //         console.log(response.data)
+    //         //setUser({isLoggedIn: true, username: response.data})
+    //     };
+    // }, []);
 
     const changeUser = (isLoggedIn, username) => {
         setUser({ isLoggedIn: isLoggedIn, username: username });
