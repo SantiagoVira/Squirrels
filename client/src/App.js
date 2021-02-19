@@ -19,7 +19,7 @@ import Register from "./Auth/Register.js";
 import Footer from "./Footer/Footer.js";
 
 //404
-import Error404 from "./404.js";
+import Error404 from "./404/404.js";
 
 //UseState
 import { useState, useEffect } from "react";
