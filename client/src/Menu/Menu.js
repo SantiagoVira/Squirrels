@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import history from "../history";
 import "./Menu.css";
+import history from "../history";
 
 function Menu(props) {
     const [scrolled, setScrolled] = useState("");
@@ -62,12 +63,11 @@ function Menu(props) {
         { to: "/gallery", name: "Gallery" },
         { to: "/create", name: "Create" },
     ];
-
     return (
         <div className={`menu ${scrolled}`}>
             <div className="left">
                 {links.map((link) =>
-                    page.endsWith(link.to) ? (
+                    history.location.pathname === link.to ? (
                         <strong key={unique()}>
                             <Link to={link.to}>{link.name}</Link>
                         </strong>

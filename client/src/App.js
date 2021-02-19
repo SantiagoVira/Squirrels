@@ -27,8 +27,8 @@ import { useState, useEffect } from "react";
 import CardLoader from "./CardLoader";
 
 function App() {
-    const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ isLoggedIn: false, username: "" });
+    //const [page, setPage] = useState(window.location.href);
+    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
 
     useEffect(() => {
         const getUser = async () => {
@@ -38,7 +38,7 @@ function App() {
                     const response = await api.get("/api/current_user/")
                     setUser({isLoggedIn: true, username: response.data.username})
                 }
-            } catch(err) {};
+            } catch (err) {}
         };
         getUser();
     }, []);
@@ -48,32 +48,40 @@ function App() {
         setUser(data);
     };
 
-    const ChangeListener = ({ history }) => {
-        useEffect(
-            () =>
-                history.listen(() => {
-                    setPage(window.location.href);
-                }),
-            []
-        );
-        return <div />;
-    };
+    // const ChangeListener = ({ history }) => {
+    //     useEffect(
+    //         () =>
+    //             history.listen(() => {
+    //                 setPage(window.location.href);
+    //             }),
+    //         []
+    //     );
+    //     return <div />;
+    // };
 
-    const Changer = withRouter(ChangeListener);
+    // const Changer = withRouter(ChangeListener);
     function Cardlink(props) {
+<<<<<<< HEAD
         return props.page.includes("/card") ? null : props.children;
+=======
+        return history.location.pathname.includes("/card")
+            ? null
+            : props.children;
+>>>>>>> b6e17ae402e57ae4ec31942f2c14c15cc3dea805
         //<Cardlink page={page}></Cardlink>
     }
     return (
         <Router history={history}>
             <>
-                <Cardlink page={page}>
-                    <Changer />
+                {/*<Cardlink page={page}><Changer /></Cardlink>*/}
+                <Cardlink>
+                    <Menu
+                        page={history.location.pathname}
+                        user={user}
+                        changeUser={changeUser}
+                    />
                 </Cardlink>
-                <Cardlink page={page}>
-                    <Menu page={page} user={user} changeUser={changeUser} />
-                </Cardlink>
-                <Cardlink page={page}>
+                <Cardlink>
                     <Header />
                 </Cardlink>
 
@@ -102,12 +110,17 @@ function App() {
                             exact
                             render={() => <Register changeUser={changeUser} />}
                         ></Route>
+                        <Route
+                            path="/card/undefined"
+                            exact
+                            component={Error404}
+                        />
                         <Route path="/card/:id" component={CardLoader}></Route>
                         <Route component={Error404} />
                     </Switch>
                 </div>
 
-                <Cardlink page={page}>
+                <Cardlink>
                     <Footer />
                 </Cardlink>
             </>

@@ -3,7 +3,7 @@ import Logo from "./404logo.png";
 import "./404.css";
 function Error404() {
     return (
-        <div style={{ textAlign: "right" }}>
+        <div style={{ textAlign: "right", margin: "0" }}>
             <img className="logo404" src={Logo} alt="Detective Squirrel" />
             <br />
             <h1 className="error">Error 404: Squirrel not found</h1>

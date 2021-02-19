@@ -1,22 +1,24 @@
 Decide on:
 
--   Data to display in the user breakdown on the home page
+-   Data to display in the user breakdown on the home page (profile picture, username, # of posts, total votes on posts)
 
 Frontend:
 
--   Search bar for the squirrel stories... somewhere
--   Button to get iframe link
+-   Search bar for the squirrel stories in the gallery
 -   Adaptable CSS for different screen sizes
+-   hidden stuff on main page during /card url stays hidden --or-- Menu doesnt update like it used to
 
 Server:
 
 -   User accounts
--   link backend to iframe id's
--   Connect up/down voting to each individual card
+    -   Must be logged in to create posts, upvote, (saving)
+    -   delete posts you created
+    -   Only one vote(up/down)
 -   Move squirrel census stories to database
+-   Auto Capitalize each topic in the cards
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
--   Auto Capitalize each topic in the cards
+-   foreign key relationship between users and their SquirreLogs
 
 Presentation:
 
