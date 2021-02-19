@@ -5,11 +5,10 @@ import api from "./api.js";
 function CardLoader(props) {
     const [card, setCard] = useState("");
     const id = props.match.params.id;
-    console.log(id);
     //Ramons job now
     useEffect(async () => {
         const response = await api.get(`/api/log/${id}`);
-        setCard(response);
+        setCard(response.data);
     }, []);
     return <Card post={card} key={"sdifingjodsfnvuow 3jeifa"} />;
 }
