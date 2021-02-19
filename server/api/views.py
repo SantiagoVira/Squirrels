@@ -22,11 +22,11 @@ class UserList(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Register viewsets in api/urls.py
-class SquirreLogViewSet(viewsets.ModelViewSet):
+class SquirreLogViewSet(viewsets.ViewSet):
     def get_many(self, request):
         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
-        serializer_class =  SquirreLogSerializer(queryset, many=True)
-        return Response(serializer_class.data)
+        serializer = SquirreLogSerializer(queryset, many=True)
+        return Response(serializer.data)
 
     def create(self, request):
         serializer = SquirreLogSerializer(data=request.data)
@@ -35,6 +35,11 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+    def get_one(self, request, **kwargs):
+        queryset = SquirreLog.objects.get(id=kwargs['pk'])
+        serializer = SquirreLogSerializer(queryset)
+        return Response(serializer.data)
+
     def vote(self, request, **kwargs):
         log = SquirreLog.objects.get(id=kwargs['pk'])
 

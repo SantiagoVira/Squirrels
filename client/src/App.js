@@ -29,18 +29,20 @@ function App() {
     const [page, setPage] = useState(window.location.href);
     const [user, setUser] = useState({ isLoggedIn: false, username: "" });
 
-    // useEffect(async () => {
-    //     const token = localStorage.getItem("token");
-    //     if(token) {
-    //         const response = await api.get("/users/", {
-    //             headers: {
-    //                 Authorization: `JWT ${token}`
-    //             }
-    //         })
-    //         console.log(response.data)
-    //         //setUser({isLoggedIn: true, username: response.data})
-    //     };
-    // }, []);
+    useEffect(async () => {
+        try {
+            const token = localStorage.getItem("token");
+            if(token) {
+                const response = await api.get("/api/current_user/", {
+                    headers: {
+                        Authorization: `JWT ${token}`
+                    }
+                })
+                console.log(response.data)
+                //setUser({isLoggedIn: true, username: response.data})
+            };
+        } catch(err) {};
+    }, []);
 
     const changeUser = (isLoggedIn, username) => {
         setUser({ isLoggedIn: isLoggedIn, username: username });

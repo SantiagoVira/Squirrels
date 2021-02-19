@@ -11,6 +11,7 @@ logs = SquirreLogViewSet.as_view({
 })
 
 log = SquirreLogViewSet.as_view({
+    'get': 'get_one',
     'put': 'vote',
     'delete': 'delete',
 })
