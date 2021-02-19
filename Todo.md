@@ -5,9 +5,8 @@ Decide on:
 Frontend:
 
 -   Search bar for the squirrel stories... somewhere
--   iframe links for each card div
-    -   Since each card has a unique id, they could all be located at sqrrlz.com/cards/{id} or smth like that
-    -   iframe takes a url, so the iframe item could be <iframe src='sqrrlz.com/cards/{id}' />
+-   link backend to iframe id's
+-   button to get iframe link
 -   Adaptable CSS for different screen sizes
 
 Server:
