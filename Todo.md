@@ -4,7 +4,7 @@ Decide on:
 
 Frontend:
 
--   Search bar for the squirrel stories... somewhere
+-   Search bar for the squirrel stories in the gallery
 -   Button to get iframe link
 -   Adaptable CSS for different screen sizes
 
@@ -18,6 +18,7 @@ Server:
 -   Auto Capitalize each topic in the cards
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
+-   foreign key relationship between users and their SquirreLogs
 
 Presentation:
 
