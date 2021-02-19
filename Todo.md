@@ -1,13 +1,9 @@
 Decide on:
 
--   Home page user posts layout
 -   Data to display in the user breakdown on the home page
--   Login/Register form design
 
 Frontend:
 
--   Assemble home page based on (finished) Figma layout
--   (maybe a fancier) 404 page
 -   Search bar for the squirrel stories... somewhere
 -   iframe links for each card div
     -   Since each card has a unique id, they could all be located at sqrrlz.com/cards/{id} or smth like that
@@ -21,6 +17,7 @@ Server:
 -   Move squirrel census stories to database
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
+-   Auto Capitalize each topic in the cards
 
 Presentation:
 
