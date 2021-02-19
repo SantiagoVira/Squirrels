@@ -108,6 +108,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+JWT_AUTH = {
+    'JWT_RESPONSE_PAYLOAD_HANDLER': 'server.utils.jwt_response_handler'
+}
+
 REST_FRAMEWORK = {
     # Authentication method by priority
     'DEFAULT_AUTHENTICATION_CLASSES': (
