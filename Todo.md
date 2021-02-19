@@ -1,6 +1,6 @@
 Decide on:
 
--   Data to display in the user breakdown on the home page
+-   Data to display in the user breakdown on the home page (profile picture, username, # of posts, total votes on posts)
 
 Frontend:
 
@@ -11,12 +11,13 @@ Frontend:
 Server:
 
 -   User accounts
--   link backend to iframe id's
--   Connect up/down voting to each individual card
+    -   Must be logged in to create posts, upvote, (saving)
+    -   delete posts you created
+    -   Only one vote(up/down)
 -   Move squirrel census stories to database
+-   Auto Capitalize each topic in the cards
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
--   Auto Capitalize each topic in the cards
 
 Presentation:
 
