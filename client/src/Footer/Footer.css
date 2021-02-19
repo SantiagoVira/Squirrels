@@ -12,6 +12,14 @@
     justify-content: center;
     align-items: center;
 }
+
+.footer a {
+  color: inherit;
+}
+.footer a:hover {
+  text-decoration: none;
+}
+
 img {
     height: 80px;
     float: left;

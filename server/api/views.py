@@ -30,28 +30,28 @@ def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
-# class UserList(viewsets.ModelViewSet):
-#     """Make and sign in users"""
-#
-#     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
-#     serializer_class = UserSerializerWithToken
-#     queryset = User.objects.all()
+class UserList(viewsets.ModelViewSet):
+    """Make and sign in users"""
+
+    permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
+    serializer_class = UserSerializerWithToken
+    queryset = User.objects.all()
 
 # The class used in the article:
-class UserList(APIView):
-    """
-    Create a new user. It's called 'UserList' because normally we'd have a get
-    method here too, for retrieving a list of all User objects.
-    """
-
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = UserSerializerWithToken(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# class UserList(APIView):
+#     """
+#     Create a new user. It's called 'UserList' because normally we'd have a get
+#     method here too, for retrieving a list of all User objects.
+#     """
+#
+#     permission_classes = (permissions.AllowAny,)
+#
+#     def post(self, request, format=None):
+#         serializer = UserSerializerWithToken(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Handles get and post requests to squirrelogs # I think this and SquireLogViewSet do the same thing?
 # https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/
