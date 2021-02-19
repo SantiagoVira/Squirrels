@@ -26,25 +26,28 @@ import Error404 from "./404/404.js";
 import { useState, useEffect } from "react";
 import CardLoader from "./CardLoader";
 
-function App() {
-    const [page, setPage] = useState(window.location.href);
+function App(props) {
+    //const [page, setPage] = useState(window.location.href);
     const [user, setUser] = useState({ isLoggedIn: null, username: "" });
 
     useEffect(() => {
         const getUser = async () => {
             try {
                 const token = localStorage.getItem("token");
-                if(token) {
+                if (token) {
                     const response = await api.get("/api/current_user/", {
                         headers: {
-                            Authorization: `JWT ${token}`
-                        }
-                    })
-                    setUser({isLoggedIn: true, username: response.data.user.username})
+                            Authorization: `JWT ${token}`,
+                        },
+                    });
+                    setUser({
+                        isLoggedIn: true,
+                        username: response.data.user.username,
+                    });
                 } else {
-                    setUser({isLoggedIn: false, username: ""})
+                    setUser({ isLoggedIn: false, username: "" });
                 }
-            } catch(err) {};
+            } catch (err) {}
         };
         getUser();
     }, []);
@@ -53,33 +56,36 @@ function App() {
         setUser(data);
     };
 
-    const ChangeListener = ({ history }) => {
-        useEffect(
-            () =>
-                history.listen(() => {
-                    setPage(window.location.href);
-                }),
-            []
-        );
-        return <div />;
-    };
+    // const ChangeListener = ({ history }) => {
+    //     useEffect(
+    //         () =>
+    //             history.listen(() => {
+    //                 setPage(window.location.href);
+    //             }),
+    //         []
+    //     );
+    //     return <div />;
+    // };
 
-    const Changer = withRouter(ChangeListener);
+    // const Changer = withRouter(ChangeListener);
     function Cardlink(props) {
-        console.log(props.page);
-        return props.page.includes("/card") ? null : props.children;
+        return history.location.pathname.includes("/card")
+            ? null
+            : props.children;
         //<Cardlink page={page}></Cardlink>
     }
     return (
         <Router history={history}>
             <>
-                <Cardlink page={page}>
-                    <Changer />
+                {/*<Cardlink page={page}><Changer /></Cardlink>*/}
+                <Cardlink>
+                    <Menu
+                        page={history.location.pathname}
+                        user={user}
+                        changeUser={changeUser}
+                    />
                 </Cardlink>
-                <Cardlink page={page}>
-                    <Menu page={page} user={user} changeUser={changeUser} />
-                </Cardlink>
-                <Cardlink page={page}>
+                <Cardlink>
                     <Header />
                 </Cardlink>
 
@@ -108,12 +114,17 @@ function App() {
                             exact
                             render={() => <Register changeUser={changeUser} />}
                         ></Route>
+                        <Route
+                            path="/card/undefined"
+                            exact
+                            component={Error404}
+                        />
                         <Route path="/card/:id" component={CardLoader}></Route>
                         <Route component={Error404} />
                     </Switch>
                 </div>
 
-                <Cardlink page={page}>
+                <Cardlink>
                     <Footer />
                 </Cardlink>
             </>

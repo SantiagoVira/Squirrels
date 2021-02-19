@@ -1,15 +1,20 @@
 import api from "../api";
 import React, { useState } from "react";
 import "./Card.css";
+import IconButton from "@material-ui/core/IconButton";
+import CodeIcon from "@material-ui/icons/Code";
 
 function Card({ post, onDelete }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
+    const [copied, setCopied] = useState("Copy Embed Link");
 
     async function vote(id, op) {
         const currentVote = op === "up";
         //Set card's votes in the database to votes variable
-        const response = await api.put(`/api/log/${id}/`, {upvote: currentVote});
+        const response = await api.put(`/api/log/${id}/`, {
+            upvote: currentVote,
+        });
         setVotes(response.data.votes);
     }
 
@@ -23,10 +28,49 @@ function Card({ post, onDelete }) {
             ></div>
         );
     }
-
+    function getPosition(string, subString, index) {
+        return string.split(subString, index).join(subString).length;
+    }
     return (
         <div className="squirrelCard">
-            <h1>{post.topic}</h1>
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <h1>{post.topic}</h1>
+                <div className="tooltip">
+                    <IconButton
+                        className="copier"
+                        onMouseOut={() => {
+                            setCopied("Copy Embed Link");
+                        }}
+                        onClick={() => {
+                            setCopied("Copied!");
+                            navigator.clipboard.writeText(
+                                `<iframe src="${
+                                    window.location.href.slice(
+                                        0,
+                                        getPosition(
+                                            window.location.href,
+                                            "/",
+                                            3
+                                        )
+                                    ) + `/card/${post.id}`
+                                }" title="Sqrrlz Card />"`
+                            );
+                        }}
+                    >
+                        <span className="tooltiptext" id="myTooltip">
+                            {copied}
+                        </span>
+                        <CodeIcon className="codeIcon" />
+                    </IconButton>
+                </div>
+            </div>
+            <br />
             <p>{post.note}</p>
             {!post.gallery ? (
                 <div className="buttons">
@@ -38,9 +82,9 @@ function Card({ post, onDelete }) {
                 </div>
             ) : null}
             {/* Renders delete button only if this component is passed onDelete */}
-            {onDelete &&
+            {onDelete && (
                 <button onClick={() => onDelete(post.id)}>Delete</button>
-            }
+            )}
         </div>
     );
 }

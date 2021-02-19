@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
+import history from "../history";
 
 function Menu(props) {
     const [scrolled, setScrolled] = useState("");
@@ -32,7 +33,7 @@ function Menu(props) {
                     Logout
                 </Link>
             );
-        } else if(props.user.isLoggedIn === false) {
+        } else if (props.user.isLoggedIn === false) {
             const links = [
                 { to: "/login", name: "Login" },
                 { to: "/register", name: "Register" },
@@ -61,12 +62,11 @@ function Menu(props) {
         { to: "/gallery", name: "Gallery" },
         { to: "/create", name: "Create" },
     ];
-
     return (
         <div className={`menu ${scrolled}`}>
             <div className="left">
                 {links.map((link) =>
-                    page.endsWith(link.to) ? (
+                    history.location.pathname === link.to ? (
                         <strong key={unique()}>
                             <Link to={link.to}>{link.name}</Link>
                         </strong>

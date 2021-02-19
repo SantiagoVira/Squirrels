@@ -33,6 +33,15 @@
 
 .squirrelCard h1 {
     font-size: clamp(20px, 2vw, 25px);
+    float: left;
+}
+.squirrelCard .copier {
+    float: right;
+    color: var(--text);
+}
+.codeIcon {
+    width: 12px !important;
+    height: 12px !important;
 }
 
 .squirrelCard p {
@@ -83,4 +92,44 @@
     margin: 10px;
     flex-grow: 4;
     user-select: none;
+}
+
+/*Iframe copy button pop up*/
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    font-size: 12px;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
 }

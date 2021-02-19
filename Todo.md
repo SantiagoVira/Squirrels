@@ -5,8 +5,8 @@ Decide on:
 Frontend:
 
 -   Search bar for the squirrel stories in the gallery
--   Button to get iframe link
 -   Adaptable CSS for different screen sizes
+-   hidden stuff on main page during /card url stays hidden --or-- Menu doesnt update like it used to
 
 Server:
 
