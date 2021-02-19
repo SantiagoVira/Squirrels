@@ -28,25 +28,29 @@ import CardLoader from "./CardLoader";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ isLoggedIn: false, username: "" });
+    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
 
-    useEffect(async () => {
-        try {
-            const token = localStorage.getItem("token");
-            if(token) {
-                const response = await api.get("/api/current_user/", {
-                    headers: {
-                        Authorization: `JWT ${token}`
-                    }
-                })
-                console.log(response.data)
-                //setUser({isLoggedIn: true, username: response.data})
-            };
-        } catch(err) {};
+    useEffect(() => {
+        const getUser = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                if(token) {
+                    const response = await api.get("/api/current_user/", {
+                        headers: {
+                            Authorization: `JWT ${token}`
+                        }
+                    })
+                    setUser({isLoggedIn: true, username: response.data.user.username})
+                } else {
+                    setUser({isLoggedIn: false, username: ""})
+                }
+            } catch(err) {};
+        };
+        getUser();
     }, []);
 
-    const changeUser = (isLoggedIn, username) => {
-        setUser({ isLoggedIn: isLoggedIn, username: username });
+    const changeUser = (data) => {
+        setUser(data);
     };
 
     const ChangeListener = ({ history }) => {
