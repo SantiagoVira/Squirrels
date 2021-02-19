@@ -5,13 +5,13 @@ Decide on:
 Frontend:
 
 -   Search bar for the squirrel stories... somewhere
--   link backend to iframe id's
--   button to get iframe link
+-   Button to get iframe link
 -   Adaptable CSS for different screen sizes
 
 Server:
 
 -   User accounts
+-   link backend to iframe id's
 -   Connect up/down voting to each individual card
 -   Move squirrel census stories to database
 -   Sort squirrel stories by topic
