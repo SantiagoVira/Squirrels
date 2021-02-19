@@ -21,6 +21,6 @@ from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('api.urls')),
-    path("", views.client),
-    re_path(r'^.*/$', views.client)
+    # path("", views.client),
+    # re_path(r'^.*/$', views.client)
 ]

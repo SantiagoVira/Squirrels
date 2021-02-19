@@ -7,8 +7,7 @@ class SquirreLog(models.Model):
     pub_date = models.DateTimeField('date published')
     user_story = models.BooleanField(default=False)
     votes = models.IntegerField(default=0)
-    # Maybe a field for squirrel upvotes from users?
-    # Reporting system  
+    # Reporting system
 
     def __str__(self):
         return self.topic

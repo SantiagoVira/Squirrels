@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # Third-party
     'rest_framework', # Rest API
     'corsheaders', # enables cors requests from frontend
@@ -137,6 +137,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# I want to be able to see the django interface
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "static/static"),
 )

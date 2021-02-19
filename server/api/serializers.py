@@ -4,7 +4,10 @@ from django.contrib.auth.models import User # default django user model
 
 from .models import SquirreLog
 
-# Serializers are used in the views 
+# The default user class
+from django.contrib.auth.models import User
+
+# Serializers are used in the views
 class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.ReadOnlyField()
 
@@ -13,30 +16,34 @@ class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
         # We could also add function names to the serializer!
         fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'user_story')
 
-# Used for logins
-class UserSerializer(serializers.ModelSerializer):
+# CREDIT:
+# https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
+
+class UserSerializer(serializers.HyperlinkedModelSerializer):
+    id = serializers.ReadOnlyField()
+
     class Meta:
         model = User
-        fields = {'username',}
+        fields = ('username',)
 
-class UserTokenSerializer(serializers.ModelSerializer):
-    token = serializers.SerializerMethodField() # gets value from method call
-    password = serializers.CharField(write_only=True) # reading isn't allowed
+class UserSerializerWithToken(serializers.ModelSerializer): # For handling signups
+    # We're using token-based authentication
+    token = serializers.SerializerMethodField()
+    password = serializers.CharField(write_only=True)
 
     def get_token(self, obj):
-        # Encodes data into JWT format
-        payload = api_settings.JWT_PAYLOAD_HANDLER(obj)
-        token = api_settings.JWT_ENCODE_HANDLER(payload)
+        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
+        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
+
+        payload = jwt_payload_handler(obj)
+        token = jwt_encode_handler(payload)
         return token
-    
-    def create(self, data):
-        # Removes password from data and instantiate user model
-        password = data.pop('password', None)
-        instance = self.Meta.model(**data)
-        # Sets and hashes password
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
         if password is not None:
-            instance.set_password(password)
-        # Creates user
+            instance.set_password(password) # Security
         instance.save()
         return instance
 

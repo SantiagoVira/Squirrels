@@ -8,7 +8,11 @@ function Uploads() {
     const [posts, setPosts] = useState([]);
 
     useEffect(async () => {
-        const response = await api.get("/api/logs/");
+        // Changed some paths in backend
+        const response = await axios.get('http://localhost:8000/api/SquirreLogs/');
+
+        // If you want to comment those paths back, this is what was here before:
+        // const response = await axios.get("http://localhost:8000/api/logs/");
         setPosts(response.data);
     }, []);
 
