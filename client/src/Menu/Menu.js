@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import User from "../Home/User/User";
 import "./Menu.css";
 
 function Menu(props) {
@@ -23,7 +22,7 @@ function Menu(props) {
 
     function logout() {
         localStorage.removeItem("token");
-        props.changeUser(false, "");
+        props.changeUser({ isLoggedIn: false, username: "" });
     }
 
     function renderAuth(page) {
@@ -33,7 +32,7 @@ function Menu(props) {
                     Logout
                 </Link>
             );
-        } else {
+        } else if(props.user.isLoggedIn === false) {
             const links = [
                 { to: "/login", name: "Login" },
                 { to: "/register", name: "Register" },
