@@ -17,7 +17,7 @@ class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = {'username',}
+        fields = ('username',)
 
 class UserTokenSerializer(serializers.ModelSerializer):
     token = serializers.SerializerMethodField() # gets value from method call
@@ -42,4 +42,4 @@ class UserTokenSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = {'username', 'password', 'token'}
+        fields = ('username', 'password', 'token')
