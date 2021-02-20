@@ -1,13 +1,33 @@
+:root {
+    --profileSize: 75px;
+}
 .user {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 20px;
     height: fit-content;
-    flex-grow: 2;
     margin-left: 10px;
-    padding: 7.5px;
+    padding: 2rem;
     justify-content: flex-start;
+    flex: 1.25;
 }
 .user > p {
     margin-left: 5px;
     text-align: left;
+}
+
+.circular--portrait {
+    width: var(--profileSize);
+    height: var(--profileSize);
+    overflow: hidden;
+    border-radius: 50%;
+    margin-right: none !important;
+}
+
+.PFPw {
+    height: var(--profileSize);
+    width: auto;
+}
+.PFPh {
+    width: var(--profileSize);
+    height: auto;
 }
