@@ -63,6 +63,9 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
         log = SquirreLog.objects.get(id=kwargs['pk'])
