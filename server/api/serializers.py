@@ -14,10 +14,15 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
+    SquirreLogs = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='squirrelog-detail'
+    )
 
     class Meta:
         model = SquirrelTopic
-        fields = ('id', 'topic_name')
+        fields = ('id', 'SquirreLogs', 'topic_name',)
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.ReadOnlyField()

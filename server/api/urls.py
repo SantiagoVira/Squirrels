@@ -4,8 +4,10 @@ from . import views
 
 from rest_framework_jwt.views import obtain_jwt_token
 
+# Registering viewsets
 router = routers.DefaultRouter()
-router.register(r'SquirreLogs', views.SquirreLogViewSet) # Registering the viewset
+router.register(r'SquirreLogs', views.SquirreLogViewSet)
+router.register(r'Topics', views.TopicViewSet)
 
 # These urlpatterns are included in server/urls.py
 urlpatterns = [ # We can actually register the path for our serialized info here

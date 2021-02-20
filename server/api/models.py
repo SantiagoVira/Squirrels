@@ -17,9 +17,8 @@ class SquirreLog(models.Model):
     # topic = models.CharField(max_length=100)
 
     # ForeignKey connections
-    topic = models.ForeignKey(SquirrelTopic, on_delete=models.CASCADE, default="")
+    topic = models.ForeignKey(SquirrelTopic, on_delete=models.CASCADE, default="", related_name="SquirreLogs")
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    # Reporting system?
 
     def __str__(self):
         return str(self.topic)
