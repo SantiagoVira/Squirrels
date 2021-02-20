@@ -5,13 +5,13 @@ from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog
 
 # Serializers are used in the views 
-class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
+class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
 
     class Meta:
         model = SquirreLog
         # We could also add function names to the serializer!
-        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'user_story')
+        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'owner')
 
 # Used for logins
 class UserSerializer(serializers.ModelSerializer):

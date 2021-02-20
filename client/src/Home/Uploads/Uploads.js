@@ -15,8 +15,10 @@ function Uploads() {
     }, []);
 
     const delete_log = async (id) => {
-        await api.delete(`/api/log/${id}/`);
-        setPosts(posts.filter((post) => post.id !== id));
+        try {
+            await api.delete(`/api/log/${id}/`);
+            setPosts(posts.filter((post) => post.id !== id));
+        } catch(err) {}
     };
 
     return (

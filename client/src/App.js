@@ -53,8 +53,8 @@ function App() {
             const unlisten = history.listen(() => {
                 setPage(window.location.href);
             })
-            
-            unlisten();
+
+            return () => unlisten();
         }, []);
         
         return <div></div>
