@@ -55,7 +55,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     serializer_class = SquirreLogSerializer
 
     def get_permissions(self):
-        if self.action == 'list':
+        if self.action in ['list', 'retrieve']:
             self.permission_classes = [permissions.AllowAny, ]
         elif self.action in ['create', 'vote']:
             self.permission_classes = [permissions.IsAuthenticated, ]

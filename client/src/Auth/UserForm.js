@@ -14,7 +14,7 @@ function UserForm(props) {
             
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
-            await props.changeUser({ isLoggedIn: true, username: response.data.user.username });
+            await props.changeUser({ isLoggedIn: true, username: response.data.username });
             history.push("/")
         } catch (err) {
             if (err.response && err.response.status === 400) {

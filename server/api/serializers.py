@@ -42,4 +42,4 @@ class UserSerializerWithToken(serializers.ModelSerializer): # For handling signu
 
     class Meta:
         model = User
-        fields = {'username', 'password', 'token'}
+        fields = ('username', 'password', 'token')
