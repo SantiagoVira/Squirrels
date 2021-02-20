@@ -5,12 +5,12 @@ function Person(props) {
     return (
         <div>
             <div className="white">
-                <div
-                    className={
-                        props.square ? "sqrImgWrapper" : "rectImgWrapper"
-                    }
-                >
-                    <img src={props.src} alt={props.name} />
+                <div className="rectImgWrapper">
+                    <img
+                        src={props.src}
+                        alt={props.name}
+                        className={props.side}
+                    />
                 </div>
                 <br />
                 <div className="name">

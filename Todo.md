@@ -3,6 +3,10 @@ Decide on:
 Frontend:
 
 -   Adaptable CSS for different screen sizes
+    -   Menu
+    -   Home page
+    -   Gallery page
+    -   Create page
 
 Server:
 

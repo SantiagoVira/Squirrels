@@ -14,17 +14,18 @@
 }
 
 .footer a {
-  color: inherit;
+    color: inherit;
 }
 .footer a:hover {
-  text-decoration: none;
+    text-decoration: none;
 }
 
-img {
-    height: 80px;
+.bannerImg {
+    width: 90px;
     float: left;
 }
-p {
+.footerBlurb {
+    width: 70vw;
     text-align: center;
     margin-left: 20px;
     font-size: 12px;

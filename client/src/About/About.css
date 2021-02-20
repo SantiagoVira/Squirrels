@@ -1,7 +1,6 @@
 .container {
     display: grid;
     grid-template-columns: var(--personCardWidth) var(--personCardWidth);
-    grid-row: auto auto;
     grid-column-gap: 5vw;
     grid-row-gap: 5vw;
     align-items: center;
@@ -9,7 +8,7 @@
 }
 .story {
     font-style: italic;
-    font-size: 2vw;
+    font-size: 1.9rem;
     color: var(--text);
     text-align: center;
     align-items: center;
@@ -17,5 +16,5 @@
 }
 .storyText {
     margin-right: 0 !important;
-    font-size: 1.5vw;
+    font-size: 1.5rem;
 }

@@ -43,6 +43,7 @@ input {
 .label {
     width: 90%;
     text-align: left;
+    font-size: 0.9rem;
 }
 ::placeholder {
     /* Chrome, Firefox, Opera, Safari 10.1+ */

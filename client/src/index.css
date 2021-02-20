@@ -62,3 +62,25 @@ body {
 button {
     cursor: pointer;
 }
+
+@media only screen and (max-width: 900px) {
+    /*About page*/
+    .container {
+        grid-template-columns: var(--personCardWidth) !important;
+    }
+    :root {
+        --personCardWidth: 55vw !important;
+        --personCardHeight: 35vh !important;
+    }
+    b {
+        font-size: 2rem !important;
+    }
+    .quote {
+        font-size: 1.2rem !important;
+    }
+
+    /* Login/Register */
+    .label {
+        text-align: center !important;
+    }
+}

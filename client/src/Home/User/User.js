@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import "./User.css";
+import Row from "../../Row";
+import Col from "../../Col";
 
 function User() {
     const [direction, setDirection] = useState();
@@ -15,37 +17,6 @@ function User() {
         img.src = url;
     }
     getMeta(url);
-    function Row(props) {
-        return (
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-evenly",
-                }}
-            >
-                {props.children}
-            </div>
-        );
-    }
-    function Col(props) {
-        return (
-            <div
-                style={Object.assign(
-                    {},
-                    {
-                        display: "flex",
-                        flexDirection: "column",
-                        alignItems: "center",
-                        justifyContent: "space-evenly",
-                    },
-                    props.style
-                )}
-            >
-                {props.children}
-            </div>
-        );
-    }
     const UserDataStyles = { fontSize: "20px", fontWeight: "500" };
     const user = {
         votes: 44,
