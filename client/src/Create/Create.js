@@ -13,7 +13,7 @@ function Create() {
     const onSubmitClick = async (e) => {
         try {
             e.preventDefault();
-            await api.post("http://localhost:8000/api/SquirreLogs/", {
+            await api.post("/api/SquirreLogs/", {
                 ...request,
                 pub_date: new Date().toISOString(), //Gets current date
             });
