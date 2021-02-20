@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import history from "../history";
 import "./Menu.css";
 
 function Menu(props) {
@@ -9,7 +8,8 @@ function Menu(props) {
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll);
-    });
+        return () => window.removeEventListener("scroll", onScroll)
+    }, []);
 
     const onScroll = () => {
         window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");

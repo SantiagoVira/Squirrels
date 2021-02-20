@@ -2,7 +2,6 @@ import React from "react";
 import "./Person.css";
 
 function Person(props) {
-    console.log(props.src);
     return (
         <div>
             <div className="white">

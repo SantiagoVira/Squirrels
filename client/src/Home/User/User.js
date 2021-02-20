@@ -54,7 +54,7 @@ function User() {
     return (
         <div className="user">
             <Row>
-                <div class="circular--portrait">
+                <div className="circular--portrait">
                     <img src={url} className={direction} />
                 </div>
                 <h1>Barack O.</h1>

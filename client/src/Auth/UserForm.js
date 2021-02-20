@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import api from "../api";
+import history from "../history";
 import "./UserForm.css";
 
 function UserForm(props) {
@@ -10,9 +11,11 @@ function UserForm(props) {
         try {
             e.preventDefault();
             const response = await api.post(props.path, form);
+            
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
-            props.changeUser({ isLoggedIn: true, username: response.data.user.username });
+            await props.changeUser({ isLoggedIn: true, username: response.data.user.username });
+            history.push("/")
         } catch (err) {
             if (err.response && err.response.status === 400) {
                 setError("Your username and/or password is incorrect");

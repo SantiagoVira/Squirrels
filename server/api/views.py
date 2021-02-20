@@ -34,9 +34,6 @@ class SquirreLogViewSet(viewsets.ViewSet):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def list(self, request):
-        print(self.permission_classes)
-        print(request.auth)
-        print(request.user.id)
         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
         serializer = SquirreLogSerializer(queryset, many=True)
         return Response(serializer.data)
@@ -54,8 +51,6 @@ class SquirreLogViewSet(viewsets.ViewSet):
         return Response(serializer.data)
 
     def vote(self, request, **kwargs):
-        print(self.permission_classes)
-        print(request.auth)
         log = SquirreLog.objects.get(id=kwargs['pk'])
 
         if request.data['upvote']:
@@ -71,8 +66,6 @@ class SquirreLogViewSet(viewsets.ViewSet):
 
     def destroy(self, request, **kwargs):
         serializer = SquirreLog.objects.get(id=kwargs['pk'])
-        print(request.user)
-        print(serializer.owner)
         self.check_object_permissions(request, serializer)
         serializer.delete()
         return Response(kwargs['pk'])
