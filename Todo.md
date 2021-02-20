@@ -1,5 +1,3 @@
-Decide on:
-
 ## **Frontend:**
 
 -   Adaptable CSS for different screen sizes
@@ -15,7 +13,7 @@ Decide on:
     -   delete posts you created
     -   Only one vote(up/down)
 -   Move squirrel census stories to database
--   Auto-Capitalize each topic in the cards
+-   Auto-Capitalize each topic in the gallery census cards
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
 -   Permission stuff
