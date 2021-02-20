@@ -1,13 +1,8 @@
 Decide on:
 
--
--
--
-
 Frontend:
 
 -   Adaptable CSS for different screen sizes
--   hidden stuff on main page during /card url stays hidden --or-- Menu doesnt update like it used to
 
 Server:
 
@@ -20,10 +15,10 @@ Server:
 -   Sort squirrel stories by topic
 -   Ability to search through the stories by topics and/or story content
 -   foreign key relationship between users and their SquirreLogs
+-   I think we have to do permission stuff
 
 Presentation:
 
 -   Take final result from poll and fill them out on the slides
 -   Write about what the results say on the slides
 -   Take pictures of final home page and put it on the final slides
--   Write about prototype proposal and how our product solves our problem
