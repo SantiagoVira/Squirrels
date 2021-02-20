@@ -25,4 +25,3 @@ Presentation:
 
 -   Take final result from poll and fill them out on the slides
 -   Write about what the results say on the slides
--   Take pictures of final home page and put it on the final slides

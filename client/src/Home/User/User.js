@@ -6,7 +6,7 @@ import Col from "../../Col";
 function User() {
     const [direction, setDirection] = useState();
     const url =
-        "https://pyxis.nymag.com/v1/imgs/6a5/5ba/6e090a007f6e0efc04d65937bfb712e9a3-16-barack-obama.rsquare.w1200.jpg";
+        "https://media.npr.org/assets/img/2017/04/25/istock-115796521-fcf434f36d3d0865301cdcb9c996cfd80578ca99-s800-c85.jpg";
     function getMeta(url) {
         var img = new Image();
         img.onload = function () {
@@ -19,8 +19,8 @@ function User() {
     getMeta(url);
     const UserDataStyles = { fontSize: "20px", fontWeight: "500" };
     const user = {
-        votes: 44,
-        posts: 44,
+        votes: 69,
+        posts: 20,
     };
     return (
         <div className="user">
@@ -28,7 +28,7 @@ function User() {
                 <div className="circular--portrait">
                     <img src={url} className={direction} />
                 </div>
-                <h1>Barack O.</h1>
+                <h1>Squirrel McSquirrel</h1>
             </Row>
             <Row>
                 <Col>
