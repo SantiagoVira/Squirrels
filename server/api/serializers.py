@@ -2,7 +2,7 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User # default django user model
 
-from .models import SquirreLog
+from .models import SquirreLog, SquirrelTopic
 
 # Serializers are used in the views
 class SquirreLogSerializer(serializers.ModelSerializer):
@@ -10,7 +10,14 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'owner')
+        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'topic_name')
+
+class SquirrelTopicSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+
+    class Meta:
+        model = SquirrelTopic
+        fields = ('id', 'topic_name')
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.ReadOnlyField()

@@ -42,7 +42,7 @@ function Card({ post, onDelete}) {
                     justifyContent: "center",
                 }}
             >
-                <h1>{post.topic}</h1>
+                <h1>{post.topic_name}</h1>
                 <div className="tooltip">
                     <IconButton
                         className="copier"
