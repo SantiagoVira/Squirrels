@@ -10,7 +10,7 @@ function Error404() {
             <br />
             <h4>
                 If you are seeing this, check to make sure your url is correct.
-                If it is, this page may have been deleted. Sorry :/
+                If it is, this page may have been deleted. RIP squirrel :(
             </h4>
         </div>
     );

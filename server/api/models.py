@@ -10,22 +10,7 @@ class SquirreLog(models.Model):
     pub_date = models.DateTimeField('date published')
     votes = models.IntegerField(default=0)
     owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
-    # Reporting system
+    # Reporting system?
 
     def __str__(self):
         return self.topic
-
-# With help from:
-# https://simpleisbetterthancomplex.com/tutorial/2016/07/22/how-to-extend-django-user-model.html#onetoone
-# class SquirrelProfile(models.Model):
-#     user = models.OneToOneField(User, on_delete=models.CASCADE)
-#     logs = models.ForeignKey(SquirreLog, on_delete=models.CASCADE, default=1)
-#
-# @receiver(post_save, sender=User)
-# def create_user_profile(sender, instance, created, **kwargs):
-#     if created:
-#         SquirrelProfile.objects.create(user=instance)
-#
-# @receiver(post_save, sender=User)
-# def save_user_profile(sender, instance, **kwargs):
-#     instance.profile.save()

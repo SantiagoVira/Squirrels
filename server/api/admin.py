@@ -10,11 +10,11 @@ class UserSquirreLogs(admin.StackedInline):
     model = SquirreLog
 
 class CustomUserAdmin(UserAdmin):
-    inlines = [UserSquirreLogs] # So we can edit the logs of a user 
+    inlines = [UserSquirreLogs] # So we can edit the logs of a user
 
 class SquirreLogAdmin(admin.ModelAdmin):
     list_display = ('topic', 'pub_date')
 
-admin.site.unregister(User) # Stupid, I know
+admin.site.unregister(User) 
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(SquirreLog, SquirreLogAdmin)

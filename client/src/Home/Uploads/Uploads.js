@@ -10,14 +10,14 @@ function Uploads() {
 
     useEffect(async () => {
         try {
-            const response = await api.get("/api/logs/");
+            const response = await api.get("/api/SquirreLogs/");
             setPosts(response.data);
         } catch(err) {}
     }, []);
 
     const delete_log = async (id) => {
         try {
-            await api.delete(`/api/log/${id}/`);
+            await api.delete(`/api/SquirreLogs/${id}/`);
             setPosts(posts.filter((post) => post.id !== id));
         } catch(err) {}
     };

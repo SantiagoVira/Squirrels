@@ -10,18 +10,14 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        # We could also add function names to the serializer!
         fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'owner')
-
-# CREDIT:
-# https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
     id = serializers.ReadOnlyField()
 
     class Meta:
         model = User
-        fields = ('username',)
+        fields = ('username', 'id')
 
 class UserSerializerWithToken(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
