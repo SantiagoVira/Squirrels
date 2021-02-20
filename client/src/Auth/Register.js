@@ -4,9 +4,12 @@ import UserForm from "./UserForm.js";
 function Register(props) {
     return (
         <UserForm
-            path="/api/user/" 
+            path="/api/user/"
             text="Register"
-            changeUser={props.changeUser} />
+            changeUser={props.changeUser}
+            link="/login"
+            label="Been here before? Log in"
+        />
     );
 }
 

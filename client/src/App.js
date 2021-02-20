@@ -36,10 +36,12 @@ function App() {
         const getUser = async () => {
             try {
                 const token = localStorage.getItem("token");
-                console.log(token)
-                if(token) {
-                    const response = await api.get("/api/current_user/")
-                    setUser({isLoggedIn: true, username: response.data.username})
+                if (token) {
+                    const response = await api.get("/api/current_user/");
+                    setUser({
+                        isLoggedIn: true,
+                        username: response.data.username,
+                    });
                 }
             } catch (err) {}
         };
@@ -55,12 +57,12 @@ function App() {
         useEffect(() => {
             const unlisten = history.listen(() => {
                 setPage(window.location.href);
-            })
-            
+            });
+
             return unlisten;
         }, []);
 
-        return <div></div>
+        return <div></div>;
     };
 
     const Changer = withRouter(ChangeListener);
@@ -73,13 +75,11 @@ function App() {
     return (
         <Router history={history}>
             <>
-                <Cardlink page={page}><Changer /></Cardlink>
+                <Cardlink page={page}>
+                    <Changer />
+                </Cardlink>
                 <Cardlink>
-                    <Menu
-                        page={page}
-                        user={user}
-                        changeUser={changeUser}
-                    />
+                    <Menu page={page} user={user} changeUser={changeUser} />
                 </Cardlink>
                 <Cardlink>
                     <Header />
@@ -92,7 +92,11 @@ function App() {
                             // https://reactrouter.com/web/example/route-config
                             // ^^ Menu can take routes as props
                         }
-                        <Route path="/" exact component={Home}></Route>
+                        <Route
+                            path="/"
+                            exact
+                            render={() => <Home user={user} />}
+                        ></Route>
                         <Route
                             path="/gallery"
                             exact

@@ -11,12 +11,16 @@ function UserForm(props) {
         try {
             e.preventDefault();
             const response = await api.post(props.path, form);
-            
+
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
-            await props.changeUser({ isLoggedIn: true, username: response.data.username });
-            history.push("/")
+            await props.changeUser({
+                isLoggedIn: true,
+                username: response.data.username,
+            });
+            history.push("/");
         } catch (err) {
+            console.log(err.response);
             if (err.response && err.response.status === 400) {
                 setError("Your username and/or password is incorrect");
             } else {
@@ -34,7 +38,7 @@ function UserForm(props) {
     }
 
     return (
-        <div>
+        <div className="UserFormContainer">
             <div>{error}</div>
             <form onSubmit={(e) => onFormSubmit(e, form)}>
                 <div className="inputs">
@@ -60,6 +64,18 @@ function UserForm(props) {
                 </div>
                 <button className="Submit">{props.text}</button>
             </form>
+
+            <div
+                style={{
+                    width: "100%",
+                    textAlign: "center",
+                    paddingTop: "30px",
+                }}
+            >
+                <a className="AuthLinks" href={props.link}>
+                    {props.label}
+                </a>
+            </div>
         </div>
     );
 }

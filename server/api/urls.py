@@ -13,6 +13,7 @@ router.register(r'Topics', views.TopicViewSet)
 urlpatterns = [ # We can actually register the path for our serialized info here
     path('current_user/', views.current_user),
     path('user/', views.UserList.as_view()),
+    # Authenticates and parses username into jwt
     path('authenticate/', obtain_jwt_token),
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),

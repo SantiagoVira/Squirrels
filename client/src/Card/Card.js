@@ -3,13 +3,18 @@ import React, { useState } from "react";
 import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
+import { Redirect } from "react-router-dom";
 
-function Card({ post, onDelete}) {
+function Card({ post, onDelete, isLoggedIn }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
+    const [redirect, setRedirect] = useState();
 
     async function vote(id, op) {
+        if (!isLoggedIn) {
+            setRedirect(<Redirect to="/login" />);
+        }
         try {
             const currentVote = op === "up";
             //Set card's votes in the database to votes variable
@@ -17,7 +22,7 @@ function Card({ post, onDelete}) {
                 upvote: currentVote,
             });
             setVotes(response.data.votes);
-        } catch(err) {}
+        } catch (err) {}
     }
 
     function Arrow(props) {
@@ -27,7 +32,9 @@ function Card({ post, onDelete}) {
                     vote(props.id, props.class);
                 }}
                 className={"voteBtn " + props.class}
-            ></div>
+            >
+                {props.children}
+            </div>
         );
     }
     function getPosition(string, subString, index) {
@@ -61,7 +68,7 @@ function Card({ post, onDelete}) {
                                             3
                                         )
                                     ) + `/card/${post.id}`
-                                }" title="Sqrrlz Card />"`
+                                }" title="Sqrrlz Card" />`
                             );
                         }}
                     >
@@ -84,9 +91,15 @@ function Card({ post, onDelete}) {
                 </div>
             ) : null}
             {/* Renders delete button only if this component is passed onDelete */}
-            {onDelete && (
-                <button onClick={() => onDelete(post.id)}>Delete</button>
-            )}
+            {onDelete && isLoggedIn ? (
+                <button
+                    className="deleteButton"
+                    onClick={() => onDelete(post.id)}
+                >
+                    Delete
+                </button>
+            ) : null}
+            {redirect}
         </div>
     );
 }
