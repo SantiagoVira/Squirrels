@@ -7,6 +7,7 @@ Frontend:
     -   Home page
     -   Gallery page
     -   Create page
+-   link to register/login page on opposite
 
 Server:
 
