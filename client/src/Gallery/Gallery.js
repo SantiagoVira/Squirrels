@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import Card from "../Card/Card.js";
+import Search from "./Search/Search";
 import "./Gallery.css";
 
 function unique() {
@@ -64,6 +65,16 @@ function Gallery() {
 
     return (
         <div>
+            <div
+                style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    margin: "30px",
+                }}
+            >
+                <Search />
+            </div>
             <div className="cards">
                 <RenderSquirrels stories={stories} />
             </div>

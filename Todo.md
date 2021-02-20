@@ -1,10 +1,11 @@
 Decide on:
 
--   Data to display in the user breakdown on the home page (profile picture, username, # of posts, total votes on posts)
+-
+-
+-
 
 Frontend:
 
--   Search bar for the squirrel stories in the gallery
 -   Adaptable CSS for different screen sizes
 -   hidden stuff on main page during /card url stays hidden --or-- Menu doesnt update like it used to
 
