@@ -71,3 +71,9 @@ input {
     padding: 5px 30px;
     font-size: 20px;
 }
+
+a.AuthLinks:link,
+a.AuthLinks:visited {
+    color: var(--cinnamon);
+    text-decoration: none;
+}
