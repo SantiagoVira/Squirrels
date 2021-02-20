@@ -40,6 +40,7 @@ function Card({ post, onDelete, isLoggedIn }) {
     function getPosition(string, subString, index) {
         return string.split(subString, index).join(subString).length;
     }
+    console.log(post.note);
     return (
         <div className="squirrelCard">
             <div
@@ -80,7 +81,7 @@ function Card({ post, onDelete, isLoggedIn }) {
                 </div>
             </div>
             <br />
-            <p>{post.note}</p>
+            <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
             {!post.gallery ? (
                 <div className="buttons">
                     <div className="btnWrapper">
