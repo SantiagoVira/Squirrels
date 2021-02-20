@@ -1,3 +1,5 @@
+import React from "react";
+
 import { Router, Switch, Route, withRouter, matchPath } from "react-router-dom";
 import history from "./history";
 import api from "./api";
@@ -34,6 +36,7 @@ function App() {
         const getUser = async () => {
             try {
                 const token = localStorage.getItem("token");
+                console.log(token)
                 if(token) {
                     const response = await api.get("/api/current_user/")
                     setUser({isLoggedIn: true, username: response.data.username})
@@ -56,7 +59,7 @@ function App() {
             
             return unlisten;
         }, []);
-        
+
         return <div></div>
     };
 

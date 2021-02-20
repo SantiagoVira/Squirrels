@@ -4,6 +4,8 @@ import history from "../history";
 
 import "./Create.css";
 
+// Since we have an owner property, we need a way to find the currently logged in user
+// Maybe this should only be shown when someone is logged in?
 function Create() {
     // Stores form inputs to be sent to server
     const [request, setRequest] = useState({ topic: "", note: "" });
@@ -11,7 +13,7 @@ function Create() {
     const onSubmitClick = async (e) => {
         try {
             e.preventDefault();
-            await api.post("/api/logs/", {
+            await api.post("/api/SquirreLogs/", {
                 ...request,
                 pub_date: new Date().toISOString(), //Gets current date
             });

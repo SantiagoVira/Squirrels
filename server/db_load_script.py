@@ -17,7 +17,7 @@ if choice.lower() == 'y':
                 topics.append(k.replace('story_topic', '').replace('_', ' ').replace('  ', ' ').strip())
         title = ' and '.join(topics)
         story = entry['note_squirrel_park_stories']
-        c.execute('INSERT INTO api_squirrelog (topic, note, pub_date, votes, user_story) VALUES(?, ?, ?, 0, 0)', (title, story, datetime.now().isoformat()))
+        c.execute('INSERT INTO api_squirrelog (topic, note, pub_date, votes, owner_id) VALUES(?, ?, ?, 0, 0)', (title, story, datetime.now().isoformat()))
         conn.commit()
 
     conn.close()

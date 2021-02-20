@@ -7,7 +7,7 @@ function CardLoader(props) {
     const id = props.match.params.id;
     //Ramons job now
     useEffect(async () => {
-        const response = await api.get(`/api/log/${id}`);
+        const response = await api.get(`/api/SquirreLogs/${id}`);
         setCard(response.data);
     }, []);
     return <Card post={card} key={"sdifingjodsfnvuow 3jeifa"} />;
