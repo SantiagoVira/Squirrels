@@ -13,20 +13,17 @@ logs = views.SquirreLogViewSet.as_view({
 })
 
 log = views.SquirreLogViewSet.as_view({
-    'put': 'partial_update',
+    'get': 'retrieve',
+    'put': 'vote',
     'delete': 'destroy',
 })
 
 # These urlpatterns are included in server/urls.py
 urlpatterns = [ # We can actually register the path for our serialized info here
-    # path('auth/', include('rest_framework.urls', namespace='rest_framework')),
-    # path('logs/', views.logs),
-    # path('vote/', views.vote),
-
     path('logs/', logs, name='logs'),
     path('log/<int:pk>/', log, name='log'),
     path('current_user/', views.current_user),
-    path('users/', views.UserList),
+    path('user/', views.UserList.as_view({'get' : 'list'})),
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('authenticate/', obtain_jwt_token)

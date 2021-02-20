@@ -1,21 +1,79 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
 
 # There are so many api views.. maybe we should *eventually* stick to one
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
-from rest_framework import permissions
-from rest_framework.response import Response
-
 from .serializers import * # The file only has serializers
+from .permissions import IsOwner
+
+# Models
 from .models import SquirreLog
 from django.contrib.auth.models import User
+
+@api_view(['GET'])
+def current_user(request):
+    serializer = UserSerializer(request.user)
+    return Response(serializer.data)
+
+class UserList(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = UserTokenSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # There are other kinds of viewsets we could change to
 # Register viewsets in api/urls.py
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
     serializer_class = SquirreLogSerializer
+
+# A lot of these methods should've been in the serializer
+# class SquirreLogViewSet(viewsets.ViewSet):
+#     def get_permissions(self):
+#         if self.request.method == 'GET':
+#             self.permission_classes = [permissions.AllowAny, ]
+#         elif self.request.method in ['POST', 'PUT']:
+#             self.permission_classes = [permissions.IsAuthenticated, ]
+#         else:
+#             self.permission_classes = [IsOwner, ]
+#         return super(SquirreLogViewSet, self).get_permissions()
+#
+#     def list(self, request):
+#         print(self.permission_classes)
+#         print(request.auth)
+#         print(request.user.id)
+#         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
+#         serializer = SquirreLogSerializer(queryset, many=True)
+#         return Response(serializer.data)
+#
+#     def create(self, request):
+#         serializer = SquirreLogSerializer(data=request.data, context={'request': request})
+#         if serializer.is_valid():
+#             serializer.save(owner=request.user)
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#     def retrieve(self, request, **kwargs):
+#         queryset = SquirreLog.objects.get(id=kwargs['pk'])
+#         serializer = SquirreLogSerializer(queryset)
+#         return Response(serializer.data)
+#
+#     def vote(self, request, **kwargs):
+#         print(self.permission_classes)
+#         print(request.auth)
+#         log = SquirreLog.objects.get(id=kwargs['pk'])
+#
+#         if request.data['upvote']:
+#             vote_count = log.votes + 1
+#         else:
+#             vote_count = log.votes - 1
 
 # User stuff is on the logic from
 # https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
@@ -81,3 +139,24 @@ def vote(request):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, **kwargs):
+        serializer = SquirreLog.objects.get(id=kwargs['pk'])
+        print(request.user)
+        print(serializer.owner)
+        self.check_object_permissions(request, serializer)
+        serializer.delete()
+        return Response(kwargs['pk'])
+
+# class SquirreLogViewSet(viewsets.ModelViewSet):
+#     queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
+#     serializer_class =  SquirreLogSerializer
+#     #permission_classes = [IsOwnerOrReadOnly]
+
+#     def perform_create(self, serializer):
+#         serializer.save(owner=self.request.user)
+
+#     def vote(self, serializer):
+#         if self.request.data.upvote:
+#             vote_count = serializer
+#         serializer.votes

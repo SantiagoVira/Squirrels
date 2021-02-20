@@ -1,14 +1,38 @@
 .posts {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    align-items: center;
+
     min-height: 10vh;
+    height: 75vh;
+    max-height: 75vh;
     width: 40vw;
-    flex-grow: 3;
+    flex: 3;
+
     text-align: center;
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 15px;
+    overflow-y: scroll;
 }
 .posts > .squirrelCard {
     max-width: 30vw;
+}
+.posts::-webkit-scrollbar {
+    width: 20px;
+    height: 100%;
+}
+.posts::-webkit-scrollbar-thumb {
+    width: 10px;
+    border: 6px solid rgba(0, 0, 0, 0);
+    border-radius: 25px;
+    background-clip: padding-box;
+    background-color: rgba(0, 0, 0, 0.15);
+}
+.posts::-webkit-scrollbar-button {
+    width: 0;
+    height: 0;
+    display: none;
+}
+.posts::-webkit-scrollbar-corner {
+    background-color: transparent;
 }

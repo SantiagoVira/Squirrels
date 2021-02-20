@@ -4,17 +4,14 @@ from django.contrib.auth.models import User # default django user model
 
 from .models import SquirreLog
 
-# The default user class
-from django.contrib.auth.models import User
-
 # Serializers are used in the views
-class SquirreLogSerializer(serializers.HyperlinkedModelSerializer):
+class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
 
     class Meta:
         model = SquirreLog
         # We could also add function names to the serializer!
-        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'user_story')
+        fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'owner')
 
 # CREDIT:
 # https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a

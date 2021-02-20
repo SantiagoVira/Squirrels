@@ -1,0 +1,14 @@
+.searchContainer {
+    width: fit-content;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+}
+.searchContainer > input {
+    width: 35vw;
+    height: 5vh;
+    margin: 0;
+    background: transparent;
+}
