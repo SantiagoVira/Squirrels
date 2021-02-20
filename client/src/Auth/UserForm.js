@@ -17,6 +17,7 @@ function UserForm(props) {
             await props.changeUser({ isLoggedIn: true, username: response.data.username });
             history.push("/")
         } catch (err) {
+            console.log(err.response)
             if (err.response && err.response.status === 400) {
                 setError("Your username and/or password is incorrect");
             } else {
