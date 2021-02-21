@@ -6,8 +6,6 @@
     -   Allow admins to remove any story (django has a way to check)
 -   Show existing topics when you add stories
 -   Adaptable CSS for different screen sizes
-    -   Menu
-    -   Hamburger menu for smaller screens
     -   Home page
 
 ## **Server:**
