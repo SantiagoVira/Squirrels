@@ -11,29 +11,30 @@ function unique() {
     ).toString();
 }
 
+function titleGen(log) {
+    let topics = [];
+    for (const property in log) {
+        if (property.startsWith("story_topic")) {
+            topics.push(
+                property.replace("story_topic", "").replaceAll("_", " ")
+            );
+        }
+    }
+    topics.forEach((topic, index) => {
+        topics[index] = topic
+            .trim()
+            .toLowerCase()
+            .split(" ")
+            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+            .join(" ");
+    });
+    return topics.join(", ");
+}
+
 function RenderSquirrels(props) {
     //Render the stories, raises: can't render an object
     return props.stories.map((log) => {
-        let topics = [];
-        for (const property in log) {
-            if (property.startsWith("story_topic")) {
-                topics.push(
-                    property.replace("story_topic", "").replaceAll("_", " ")
-                );
-            }
-        }
-        function titleGen(topics) {
-            topics.forEach((topic, index) => {
-                topics[index] = topic
-                    .trim()
-                    .toLowerCase()
-                    .split(" ")
-                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                    .join(" ");
-            });
-            return topics.join(", ");
-        }
-        let title = titleGen(topics);
+        let title = titleGen(log);
         const post = {
             topic: title,
             note: log.note_squirrel_park_stories,
@@ -56,19 +57,49 @@ function Gallery() {
         });
 
         setData(response.data);
-        randomizeStories(response.data);
+        getStories(response.data, "");
     }, []);
 
-    function randomizeStories(stories) {
+    function getStories(stories, search) {
         // We should have a way to find stories again
-        let randomStories = [];
-        let randomInt = 0;
+        if (search === "") {
+            let randomStories = [];
+            let randomInt = 0;
 
-        for (let i = 0; i < 10; i++) {
-            randomInt = Math.floor(Math.random() * stories.length);
-            randomStories.push(stories[randomInt]);
+            for (let i = 0; i < 10; i++) {
+                randomInt = Math.floor(Math.random() * stories.length);
+                randomStories.push(stories[randomInt]);
+            }
+            setStories(randomStories);
+        } else {
+            const searchedStories = [];
+            stories.forEach((log) => {
+                let topics = [];
+                for (const property in log) {
+                    if (property.startsWith("story_topic")) {
+                        topics.push(
+                            property
+                                .replace("story_topic", "")
+                                .replaceAll("_", " ")
+                        );
+                    }
+                }
+                console.log(topics);
+                topics.some((topic) => {
+                    if (
+                        topic
+                            .trim()
+                            .toLowerCase()
+                            .includes(search.toLowerCase())
+                    ) {
+                        searchedStories.push(log);
+                        return true;
+                    }
+                });
+            });
+
+            setStories(searchedStories.slice(0, 10));
         }
-        setStories(randomStories);
     }
 
     if (!stories) {
@@ -85,15 +116,12 @@ function Gallery() {
                     margin: "30px",
                 }}
             >
-                <Search />
+                <Search stories={data} getStories={getStories} />
             </div>
             <div className="cards">
                 <RenderSquirrels stories={stories} />
             </div>
-            <div
-                onClick={() => randomizeStories(data)}
-                className="generate-btn"
-            >
+            <div onClick={() => getStories(data, "")} className="generate-btn">
                 Generate more!
             </div>
         </div>

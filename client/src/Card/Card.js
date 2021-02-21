@@ -73,7 +73,7 @@ function Card({ post, onDelete, user, changeUser }) {
             >
                 <h1>{
                   // It's topic_name in the database, but I'm keeping post.topic for the examples
-                  post.topic_name ? post.topic_name : post.topic
+                  post.name ? post.name : post.topic
                 }</h1>
                 <div className="tooltip">
                     <IconButton
