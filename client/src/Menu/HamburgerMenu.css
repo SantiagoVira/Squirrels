@@ -1,0 +1,22 @@
+.MenuIconButton {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.MenuIcon {
+    color: var(--text);
+    font-size: 1.5rem;
+}
+
+.dropdown-content {
+    border-radius: 12px;
+    border: 2px solid #7c3b0c;
+    background: var(--cinnamon);
+
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+
+    margin: 10px;
+    padding: 5px;
+}
