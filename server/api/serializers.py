@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from django.contrib.auth.models import User # default django user model
+from .models import User
 
 from .models import SquirreLog
 
@@ -12,17 +13,17 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         model = SquirreLog
         fields = ('id', 'topic', 'note', 'pub_date', 'votes', 'owner')
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    id = serializers.ReadOnlyField()
+# Removing this serializer to make it simpler to add fields
+# class UserSerializer(serializers.HyperlinkedModelSerializer):
+#     class Meta:
+#         model = User
+#         fields = ('username',)
 
-    class Meta:
-        model = User
-        fields = ('username', 'id')
-
-class UserSerializerWithToken(serializers.ModelSerializer): # For handling signups
+class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
+    liked_posts = serializers.PrimaryKeyRelatedField(many=True, queryset=SquirreLog.objects.all())
 
     def get_token(self, obj):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -42,4 +43,4 @@ class UserSerializerWithToken(serializers.ModelSerializer): # For handling signu
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'token')
+        fields = ('username', 'password', 'token', 'liked_posts')

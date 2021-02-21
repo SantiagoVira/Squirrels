@@ -109,6 +109,10 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# Auth Settings
+
+AUTH_USER_MODEL = 'api.User'
+
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'server.utils.jwt_response_handler',
     'JWT_EXPIRATION_DELTA': datetime.timedelta(hours=6),

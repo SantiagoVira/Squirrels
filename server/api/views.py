@@ -13,7 +13,8 @@ from .permissions import IsOwner
 
 # Models
 from .models import SquirreLog
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
+User = get_user_model() # checks the most updated User model (api.User)
 
 
 # User stuff can be loosely based on this article:
@@ -35,7 +36,7 @@ class UserList(APIView):
     permission_classes = (permissions.AllowAny,)
 
     def post(self, request, format=None):
-        serializer = UserSerializerWithToken(data=request.data)
+        serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -75,12 +76,19 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             vote_count = log.votes + 1
         else:
             vote_count = log.votes - 1
-        serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
+        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
 
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        if log_serializer.is_valid():
+            log_serializer.save()
+            user = User.objects.get(id=request.user.id)
+            print(user.liked_posts)
+            user_serializer = UserSerializer(user, data={'liked_posts': 
+                user.liked_posts.append(log.id)}, partial=True)
+            if user_serializer.is_valid:
+                user_serializer.save()
+                return Response(log_serializer.data, status=status.HTTP_200_OK)
+            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # I think ModelViewSet handles list and stuff
 # https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/
