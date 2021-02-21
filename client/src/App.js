@@ -8,6 +8,7 @@ import api from "./api";
 
 // The header
 import Menu from "./Menu/Menu.js";
+import HamburgerMenu from "./Menu/HamburgerMenu.js";
 import Header from "./Header/Header.js";
 
 // Content
@@ -30,10 +31,11 @@ import CardLoader from "./CardLoader";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ 
-        isLoggedIn: null, 
-        profile: null
+    const [user, setUser] = useState({
+        isLoggedIn: null,
+        profile: null,
     });
+    const [size, setSize] = useState(window.innerWidth);
 
     useEffect(() => {
         const getUser = async () => {
@@ -43,12 +45,15 @@ function App() {
                     const response = await api.get("/api/current_user/");
                     setUser({
                         isLoggedIn: true,
-                        profile: response.data
+                        profile: response.data,
                     });
                 }
             } catch (err) {}
         };
         getUser();
+        window.addEventListener("resize", () => {
+            setSize(window.innerWidth);
+        });
     }, []);
 
     // To change user in children components
@@ -82,7 +87,15 @@ function App() {
                     <Changer />
                 </Cardlink>
                 <Cardlink>
-                    <Menu page={page} user={user} changeUser={changeUser} />
+                    {size >= 935 ? (
+                        <Menu page={page} user={user} changeUser={changeUser} />
+                    ) : (
+                        <HamburgerMenu
+                            page={page}
+                            user={user}
+                            changeUser={changeUser}
+                        />
+                    )}
                 </Cardlink>
                 <Cardlink>
                     <Header />
@@ -98,7 +111,9 @@ function App() {
                         <Route
                             path="/"
                             exact
-                            render={() => <Home user={user} changeUser={changeUser} />}
+                            render={() => (
+                                <Home user={user} changeUser={changeUser} />
+                            )}
                         ></Route>
                         <Route
                             path="/gallery"

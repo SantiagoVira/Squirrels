@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
@@ -10,7 +10,20 @@ function Card({ post, onDelete, user, changeUser }) {
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
+    const [voteType, setVoteType] = useState("none")
 
+    useEffect(() => {
+        if(user.profile && user.profile.liked_posts.includes(post.id)) {
+            setVoteType("liked");
+        }
+        if(user.profile && user.profile.disliked_posts.includes(post.id)) {
+            setVoteType("disliked");
+        }
+        if(!user.profile) {
+            setVoteType("none")
+        }
+    }, [user]);
+    
     async function vote(id, op) {
         if (!user.isLoggedIn) {
             setRedirect(<Redirect to="/login" />);
@@ -29,6 +42,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 profile: response.data.user
             })
             setVotes(response.data.log.votes);
+            setVoteType(response.data.result);
         } catch (err) {}
     }
 
@@ -38,7 +52,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 onClick={() => {
                     vote(props.id, props.class);
                 }}
-                className={"voteBtn " + props.class}
+                className={`voteBtn  ${props.class} ${voteType}`}
             >
                 {props.children}
             </div>

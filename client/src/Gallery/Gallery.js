@@ -41,7 +41,8 @@ function RenderSquirrels(props) {
             key: unique(),
             gallery: true,
         };
-        return <Card post={post} key={unique()} />;
+        // Placeholder user prop because it must be passed into card
+        return <Card post={post} key={unique()} user={{profile: null}} />;
     });
 }
 

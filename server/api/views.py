@@ -1,5 +1,7 @@
 # Register viewsets in api/urls.py!!!
 
+from django.core import serializers as s
+
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
@@ -72,6 +74,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
+    @action(methods=['get'], detail=True, url_path='user', url_name='user')
+    def filter(self, request, **kwargs):
+        logs = SquirreLog.objects.filter(owner=kwargs['pk'])
+        data = s.serialize('json', list(logs))
+        return Response(data=data, status=status.HTTP_200_OK)
+
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
         log = SquirreLog.objects.get(id=kwargs['pk'])
@@ -88,24 +96,28 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             if previously_liked:
                 vote_count = log.votes - 1
                 user.liked_posts.remove(log.id)
+                vote_type = "none"
             # Like and un-dislike
             else:
                 vote_count = (log.votes + 2 if previously_disliked
                     else log.votes + 1)
                 user.liked_posts.add(log.id)
                 user.disliked_posts.remove(log.id)
+                vote_type = "liked"
         # When disliking
         elif not request.data['upvote']:
             # Un-dislike
             if previously_disliked:
                 vote_count = log.votes + 1
                 user.disliked_posts.remove(log.id)
+                vote_type = "none"
             # Dislike and un-like
             else:
                 vote_count = (log.votes - 2 if previously_liked
                     else log.votes - 1)
                 user.disliked_posts.add(log.id)
                 user.liked_posts.remove(log.id)
+                vote_type = "disliked"
         
         log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
         user_serializer = UserSerializer(user)
@@ -113,7 +125,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             log_serializer.save()
             return Response({
                 'log': log_serializer.data, 
-                'user': user_serializer.data
+                'user': user_serializer.data,
+                'result': vote_type
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
