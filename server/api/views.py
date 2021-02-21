@@ -88,24 +88,28 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             if previously_liked:
                 vote_count = log.votes - 1
                 user.liked_posts.remove(log.id)
+                vote_type = "none"
             # Like and un-dislike
             else:
                 vote_count = (log.votes + 2 if previously_disliked
                     else log.votes + 1)
                 user.liked_posts.add(log.id)
                 user.disliked_posts.remove(log.id)
+                vote_type = "liked"
         # When disliking
         elif not request.data['upvote']:
             # Un-dislike
             if previously_disliked:
                 vote_count = log.votes + 1
                 user.disliked_posts.remove(log.id)
+                vote_type = "none"
             # Dislike and un-like
             else:
                 vote_count = (log.votes - 2 if previously_liked
                     else log.votes - 1)
                 user.disliked_posts.add(log.id)
                 user.liked_posts.remove(log.id)
+                vote_type = "disliked"
         
         log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
         user_serializer = UserSerializer(user)
@@ -113,7 +117,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             log_serializer.save()
             return Response({
                 'log': log_serializer.data, 
-                'user': user_serializer.data
+                'user': user_serializer.data,
+                'result': vote_type
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

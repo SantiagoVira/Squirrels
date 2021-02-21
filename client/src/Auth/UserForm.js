@@ -15,9 +15,7 @@ function UserForm(props) {
             localStorage.setItem("token", response.data.user.token);
             await props.changeUser({
                 isLoggedIn: true,
-                username: response.data.username,
-                liked_posts: response.data.liked_posts,
-                disliked_posts: response.data.disliked_posts,
+                profile: response.data.user
             });
             history.push("/");
         } catch (err) {
