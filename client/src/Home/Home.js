@@ -6,7 +6,7 @@ import User from "./User/User";
 function Home(props) {
     return (
         <div className="main">
-            <Uploads user={props.user} />
+            <Uploads user={props.user} changeUser={props.changeUser} />
             <User />
         </div>
     );

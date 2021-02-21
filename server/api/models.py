@@ -17,11 +17,11 @@ class SquirreLog(models.Model):
     # topic = models.CharField(max_length=100)
 
     # ForeignKey connections
-    topic = models.ForeignKey(SquirrelTopic, on_delete=models.CASCADE, default="", related_name="SquirreLogs")
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, default=1)
+    topic = models.ForeignKey(SquirrelTopic, on_delete=models.CASCADE, default=None, null=True, related_name="SquirreLogs")
+    owner = models.ForeignKey('User', on_delete=models.CASCADE, default=1)
 
     def __str__(self):
-        return str(self.topic)
+        return str(self.note)
 
     def topic_name(self):
         """
@@ -34,4 +34,6 @@ class SquirreLog(models.Model):
 # You might also need to delete and remake your db.sqlite3, migrations, and __pycache__
 # More Info: https://docs.djangoproject.com/pl/2.1/topics/auth/customizing/#changing-to-a-custom-user-model-mid-project
 class User(AbstractUser):
-    liked_posts = models.ForeignKey(SquirreLog, on_delete=models.CASCADE, default=None, null=True)
+    # Separating likes from dislikes to make sure users can like and dislike one time
+    liked_posts = models.ManyToManyField(SquirreLog, related_name="liked_posts")
+    disliked_posts = models.ManyToManyField(SquirreLog, related_name="disliked_posts")

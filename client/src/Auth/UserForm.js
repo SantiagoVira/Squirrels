@@ -17,6 +17,8 @@ function UserForm(props) {
             await props.changeUser({
                 isLoggedIn: true,
                 username: response.data.username,
+                liked_posts: response.data.liked_posts,
+                disliked_posts: response.data.disliked_posts
             });
             history.push("/");
         } catch (err) {

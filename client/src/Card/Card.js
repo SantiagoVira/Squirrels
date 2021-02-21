@@ -5,23 +5,33 @@ import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
 import { Redirect } from "react-router-dom";
 
-function Card({ post, onDelete, isLoggedIn }) {
+function Card({ post, onDelete, user, changeUser }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
 
     async function vote(id, op) {
-        if (!isLoggedIn) {
+        if (!user.isLoggedIn) {
             setRedirect(<Redirect to="/login" />);
         }
         try {
             const currentVote = op === "up";
+            const tempVoteCount = votes;
             //Set card's votes in the database to votes variable
             const response = await api.put(`/api/SquirreLogs/${id}/vote/`, {
                 upvote: currentVote,
             });
-            setVotes(response.data.votes);
+            console.log(response.data)
+            // Change user's liked posts on the frontend
+            if(response.data.changed) {
+                changeUser({
+                    ...user, 
+                    liked_posts: response.data.user.liked_posts,
+                    disliked_posts: response.data.user.disliked_posts
+                })
+            }
+            setVotes(response.data.log.votes);
         } catch (err) {}
     }
 
@@ -91,7 +101,7 @@ function Card({ post, onDelete, isLoggedIn }) {
                 </div>
             ) : null}
             {/* Renders delete button only if this component is passed onDelete */}
-            {onDelete && isLoggedIn ? (
+            {onDelete && user.isLoggedIn ? (
                 <button
                     className="deleteButton"
                     onClick={() => onDelete(post.id)}

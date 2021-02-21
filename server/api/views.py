@@ -76,22 +76,38 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         log = SquirreLog.objects.get(id=kwargs['pk'])
         self.check_object_permissions(request, log)
 
-        if request.data['upvote']:
-            vote_count = log.votes + 1
-        else:
-            vote_count = log.votes - 1
-        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
+        user = User.objects.get(id=request.user.id)
+        # Checks if user already liked/disliked this post
+        previously_liked = log in user.liked_posts.all()
+        previously_disliked = log in user.disliked_posts.all()
+        changed = True
 
+        if request.data['upvote'] and not previously_liked:
+            vote_count = log.votes + 1
+            if previously_disliked:
+                user.disliked_posts.remove(log.id)
+            else:
+                user.liked_posts.add(log.id)
+        elif not request.data['upvote'] and not previously_disliked:
+            vote_count = log.votes - 1
+            if previously_liked:
+                user.liked_posts.remove(log.id)
+            else:
+                user.disliked_posts.add(log.id)
+        else:
+            # Keeps vote count the same if user tries to upvote/downvote again
+            changed = False
+            vote_count = log.votes
+
+        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
+        user_serializer = UserSerializer(user)
         if log_serializer.is_valid():
             log_serializer.save()
-            user = User.objects.get(id=request.user.id)
-            print(user.liked_posts)
-            user_serializer = UserSerializer(user, data={'liked_posts': 
-                user.liked_posts.append(log.id)}, partial=True)
-            if user_serializer.is_valid:
-                user_serializer.save()
-                return Response(log_serializer.data, status=status.HTTP_200_OK)
-            return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response({
+                'log': log_serializer.data, 
+                'user': user_serializer.data, 
+                'changed': changed
+            }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # I think ModelViewSet handles list and stuff

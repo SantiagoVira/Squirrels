@@ -7,8 +7,7 @@ import Card from "../../Card/Card.js";
 
 function Uploads(props) {
     const [posts, setPosts] = useState([]);
-    console.log(props);
-    const isLoggedIn = props.user.isLoggedIn;
+    const user = props.user;
 
     useEffect(async () => {
         try {
@@ -34,7 +33,8 @@ function Uploads(props) {
                         post={post}
                         key={post.id}
                         onDelete={delete_log}
-                        isLoggedIn={isLoggedIn}
+                        user={user}
+                        changeUser={props.changeUser}
                     />
                 );
             })}
@@ -50,7 +50,7 @@ function Uploads(props) {
                 }}
                 key={13204930}
                 onDelete={delete_log}
-                isLoggedIn={isLoggedIn}
+                user={user}
             />
             <Card
                 post={{
@@ -60,7 +60,7 @@ function Uploads(props) {
                 }}
                 key={432325}
                 onDelete={delete_log}
-                isLoggedIn={isLoggedIn}
+                user={user}
             />
             <Card
                 post={{
@@ -70,7 +70,7 @@ function Uploads(props) {
                 }}
                 key={32223454}
                 onDelete={delete_log}
-                isLoggedIn={isLoggedIn}
+                user={user}
             />
         </div>
     );

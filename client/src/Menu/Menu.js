@@ -23,7 +23,8 @@ function Menu(props) {
 
     function logout() {
         localStorage.removeItem("token");
-        props.changeUser({ isLoggedIn: false, username: "" });
+        props.changeUser({ isLoggedIn: false, username: "", 
+            liked_posts: [], disliked_posts: [] });
     }
 
     function renderAuth(page) {

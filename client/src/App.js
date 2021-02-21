@@ -30,7 +30,12 @@ import CardLoader from "./CardLoader";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({ isLoggedIn: null, username: "" });
+    const [user, setUser] = useState({ 
+        isLoggedIn: null, 
+        username: "", 
+        liked_posts: [],
+        disliked_posts: []
+    });
 
     useEffect(() => {
         const getUser = async () => {
@@ -41,6 +46,8 @@ function App() {
                     setUser({
                         isLoggedIn: true,
                         username: response.data.username,
+                        liked_posts: response.data.liked_posts,
+                        disliked_posts: response.data.disliked_posts
                     });
                 }
             } catch (err) {}
@@ -95,7 +102,7 @@ function App() {
                         <Route
                             path="/"
                             exact
-                            render={() => <Home user={user} />}
+                            render={() => <Home user={user} changeUser={changeUser} />}
                         ></Route>
                         <Route
                             path="/gallery"

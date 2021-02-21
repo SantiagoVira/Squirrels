@@ -19,7 +19,6 @@ class SquirrelTopicAdmin(admin.ModelAdmin):
 class SquirreLogAdmin(admin.ModelAdmin):
     list_display = ('topic_name', 'pub_date')
 
-admin.site.unregister(User)
 admin.site.register(User, CustomUserAdmin)
 
 admin.site.register(SquirreLog, SquirreLogAdmin)
