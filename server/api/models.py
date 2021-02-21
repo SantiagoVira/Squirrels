@@ -5,6 +5,7 @@ from django.db.models.signals import post_save
 
 class SquirrelTopic(models.Model):
     topic_name = models.CharField(max_length=100)
+    logs = models.ManyToManyField('SquirreLog', through='TopicalSquirrel', related_name='SquirrelTopics')
 
     def __str__(self):
         return self.topic_name
@@ -14,20 +15,25 @@ class SquirreLog(models.Model):
     note = models.TextField(max_length=400) # Arbitrary length of a note
     pub_date = models.DateTimeField('date published')
     votes = models.IntegerField(default=0)
-    # topic = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default=None, null=True)
 
-    # ForeignKey connections
-    topic = models.ForeignKey(SquirrelTopic, on_delete=models.CASCADE, default=None, null=True, related_name="SquirreLogs")
+    # Foreign connections
+    # https://docs.djangoproject.com/en/2.2/topics/db/models/#intermediary-manytomany
     owner = models.ForeignKey('User', on_delete=models.CASCADE, default=1)
+    topics = models.ManyToManyField('SquirrelTopic', through='TopicalSquirrel', related_name="SquirreLogs")
 
     def __str__(self):
-        return str(self.note)
+        return str(self.name)
 
-    def topic_name(self):
+    def log_name(self):
         """
         Clearer than serializing the __str__ property
         """
-        return str(self.topic)
+        return str(self.name)
+
+class TopicalSquirrel(models.Model):
+    topic = models.ForeignKey('SquirrelTopic', on_delete=models.CASCADE, default=None, null=True)
+    log = models.ForeignKey('SquirreLog', on_delete=models.CASCADE)
 
 # Note: When migrating new user model, comment out admin.site in urls and settings
 # and then run `python ./manage.py makemigrations api`
