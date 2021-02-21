@@ -23,8 +23,7 @@ function Menu(props) {
 
     function logout() {
         localStorage.removeItem("token");
-        props.changeUser({ isLoggedIn: false, username: "", 
-            liked_posts: [], disliked_posts: [] });
+        props.changeUser({ isLoggedIn: false, profile: null});
     }
 
     function renderAuth(page) {
@@ -61,7 +60,6 @@ function Menu(props) {
         { to: "/", name: "Home" },
         { to: "/about", name: "About" },
         { to: "/gallery", name: "Gallery" },
-        { to: "/create", name: "Create" },
     ];
     return (
         <div className={`menu ${scrolled}`}>
@@ -77,6 +75,9 @@ function Menu(props) {
                         </Link>
                     )
                 )}
+                {props.user.isLoggedIn &&
+                    <Link to="/create">Create</Link>
+                }
             </div>
             <div className="right">{renderAuth(page)}</div>
         </div>

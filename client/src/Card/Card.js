@@ -26,8 +26,7 @@ function Card({ post, onDelete, user, changeUser }) {
             // Change user's liked posts on the frontend
             changeUser({
                 ...user,
-                liked_posts: response.data.user.liked_posts,
-                disliked_posts: response.data.user.disliked_posts
+                profile: response.data.user
             })
             setVotes(response.data.log.votes);
         } catch (err) {}
@@ -45,6 +44,7 @@ function Card({ post, onDelete, user, changeUser }) {
             </div>
         );
     }
+
     function getPosition(string, subString, index) {
         return string.split(subString, index).join(subString).length;
     }
@@ -102,7 +102,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 </div>
             ) : null}
             {/* Renders delete button only if this component is passed onDelete */}
-            {onDelete && user.isLoggedIn ? (
+            {onDelete && user.isLoggedIn && user.profile && post.owner == user.profile.id ? (
                 <button
                     className="deleteButton"
                     onClick={() => onDelete(post.id)}

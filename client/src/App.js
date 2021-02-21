@@ -32,9 +32,7 @@ function App() {
     const [page, setPage] = useState(window.location.href);
     const [user, setUser] = useState({ 
         isLoggedIn: null, 
-        username: "", 
-        liked_posts: [],
-        disliked_posts: []
+        profile: null
     });
 
     useEffect(() => {
@@ -45,9 +43,7 @@ function App() {
                     const response = await api.get("/api/current_user/");
                     setUser({
                         isLoggedIn: true,
-                        username: response.data.username,
-                        liked_posts: response.data.liked_posts,
-                        disliked_posts: response.data.disliked_posts
+                        profile: response.data
                     });
                 }
             } catch (err) {}
