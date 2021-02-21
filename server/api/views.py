@@ -39,7 +39,8 @@ class UserList(APIView):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            # Response should be the same as obtain_jwt_token (data inside user property)
+            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # I put the article's class below, but I think something like this could work?

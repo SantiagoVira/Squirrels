@@ -64,4 +64,4 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('username', 'password', 'token', 'liked_posts', 'disliked_posts')
+        fields = ('id', 'username', 'password', 'token', 'liked_posts', 'disliked_posts')

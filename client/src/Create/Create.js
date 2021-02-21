@@ -23,7 +23,7 @@ function Create() {
 
     return (
         <div>
-            <form onSubmit={(e) => onSubmitClick(e)}>
+            <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
                     <h2 style={{ textAlign: "center" }}>Submit a New Story</h2>
                     <input
