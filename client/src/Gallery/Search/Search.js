@@ -4,7 +4,6 @@ import SearchIcon from "@material-ui/icons/Search";
 
 function Search(props) {
     const [value, setValue] = useState("");
-    const [posts, setPosts] = useState([]);
 
     function search(e) {
         e.preventDefault();

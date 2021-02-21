@@ -42,7 +42,7 @@ function RenderSquirrels(props) {
             gallery: true,
         };
         // Placeholder user prop because it must be passed into card
-        return <Card post={post} key={unique()} user={{profile: null}} />;
+        return <Card post={post} key={unique()} user={{ profile: null }} />;
     });
 }
 
@@ -74,28 +74,17 @@ function Gallery() {
         } else {
             const searchedStories = [];
             stories.forEach((log) => {
-                let topics = [];
-                for (const property in log) {
-                    if (property.startsWith("story_topic")) {
-                        topics.push(
-                            property
-                                .replace("story_topic", "")
-                                .replaceAll("_", " ")
-                        );
-                    }
+                const story = log.note_squirrel_park_stories;
+
+                if (
+                    story
+                        .trim()
+                        .toLowerCase()
+                        .includes(search.trim().toLowerCase())
+                ) {
+                    searchedStories.push(log);
+                    return true;
                 }
-                
-                topics.some((topic) => {
-                    if (
-                        topic
-                            .trim()
-                            .toLowerCase()
-                            .includes(search.toLowerCase())
-                    ) {
-                        searchedStories.push(log);
-                        return true;
-                    }
-                });
             });
 
             setStories(searchedStories.slice(0, 10));
