@@ -21,6 +21,7 @@
 }
 .UserFormInput {
     outline: none;
+    border: none;
     background: rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     padding: 1rem;

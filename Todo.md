@@ -3,7 +3,6 @@
 -   Add "create" to a user profile (?)
     -   Show sorting for gallery search by topic/content
 -   Adapting to permissions
-    -   Allow people to add likes/dislikes from the official squirrel census
     -   Allow admins to remove any story (django has a way to check)
 -   Show existing topics when you add stories
 -   Adaptable CSS for different screen sizes

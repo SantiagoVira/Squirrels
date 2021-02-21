@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
+import HamburgerMenu from "./HamburgerMenu";
 
 function Menu(props) {
     const [scrolled, setScrolled] = useState("");
@@ -8,7 +9,7 @@ function Menu(props) {
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll);
-        return () => window.removeEventListener("scroll", onScroll)
+        return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
     const onScroll = () => {
@@ -23,7 +24,7 @@ function Menu(props) {
 
     function logout() {
         localStorage.removeItem("token");
-        props.changeUser({ isLoggedIn: false, profile: null});
+        props.changeUser({ isLoggedIn: false, profile: null });
     }
 
     function renderAuth(page) {
@@ -75,9 +76,7 @@ function Menu(props) {
                         </Link>
                     )
                 )}
-                {props.user.isLoggedIn &&
-                    <Link to="/create">Create</Link>
-                }
+                {props.user.isLoggedIn && <Link to="/create">Create</Link>}
             </div>
             <div className="right">{renderAuth(page)}</div>
         </div>
