@@ -1,5 +1,7 @@
 # Register viewsets in api/urls.py!!!
 
+from django.core import serializers as s
+
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
@@ -71,6 +73,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+    @action(methods=['get'], detail=True, url_path='user', url_name='user')
+    def filter(self, request, **kwargs):
+        logs = SquirreLog.objects.filter(owner=kwargs['pk'])
+        data = s.serialize('json', list(logs))
+        return Response(data=data, status=status.HTTP_200_OK)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
