@@ -23,7 +23,7 @@ function Card({ post, onDelete, user, changeUser }) {
             setVoteType("none")
         }
     }, [user]);
-    
+
     async function vote(id, op) {
         if (!user.isLoggedIn) {
             setRedirect(<Redirect to="/login" />);
@@ -64,67 +64,61 @@ function Card({ post, onDelete, user, changeUser }) {
     }
     return (
         <div className="squirrelCard">
-            <div
-                style={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                }}
-            >
-                <h1>{
-                  // It's name in the database, but I'm keeping post.topic for the examples
-                  post.name ? post.name : post.topic
-                }</h1>
-                <div className="tooltip">
-                    <IconButton
-                        className="copier"
-                        onMouseOut={() => {
-                            setCopied("Copy Embed Link");
-                        }}
-                        onClick={() => {
-                            setCopied("Copied!");
-                            navigator.clipboard.writeText(
-                                `<iframe src="${
-                                    window.location.href.slice(
-                                        0,
-                                        getPosition(
-                                            window.location.href,
-                                            "/",
-                                            3
-                                        )
-                                    ) + `/card/${post.id}`
-                                }" title="Sqrrlz Card" />`
-                            );
-                        }}
-                    >
-                        <span className="tooltiptext" id="myTooltip">
-                            {copied}
-                        </span>
-                        <CodeIcon className="codeIcon" />
-                    </IconButton>
-                </div>
-            </div>
-            <br />
-            <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
             {!post.gallery ? (
                 <div className="buttons">
-                    <div className="btnWrapper">
-                        <Arrow class="up" id={post.id} />
-                        <p className="votes">{votes}</p>
-                        <Arrow class="down" id={post.id} />
-                    </div>
+                    <Arrow class="up" id={post.id} />
+                    <p className="votes">{votes}</p>
+                    <Arrow class="down" id={post.id} />
                 </div>
             ) : null}
-            {/* Renders delete button only if this component is passed onDelete */}
-            {onDelete && user.isLoggedIn && user.profile && post.owner == user.profile.id ? (
-                <button
-                    className="deleteButton"
-                    onClick={() => onDelete(post.id)}
-                >
-                    Delete
-                </button>
-            ) : null}
-            {redirect}
+            <div>
+                <div className="topicWrapper">
+                    <h1>{
+                    // It's topic_name in the database, but I'm keeping post.topic for the examples
+                    post.name ? post.name : post.topic
+                    }</h1>
+                    <div className="tooltip">
+                        <IconButton
+                            className="copier"
+                            onMouseOut={() => {
+                                setCopied("Copy Embed Link");
+                            }}
+                            onClick={() => {
+                                setCopied("Copied!");
+                                navigator.clipboard.writeText(
+                                    `<iframe src="${
+                                        window.location.href.slice(
+                                            0,
+                                            getPosition(
+                                                window.location.href,
+                                                "/",
+                                                3
+                                            )
+                                        ) + `/card/${post.id}`
+                                    }" title="Sqrrlz Card" />`
+                                );
+                            }}
+                        >
+                            <span className="tooltiptext" id="myTooltip">
+                                {copied}
+                            </span>
+                            <CodeIcon className="codeIcon" />
+                        </IconButton>
+                    </div>
+                </div>
+                <br />
+                <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
+                {/* Renders delete button only if this component is passed onDelete */}
+                {onDelete && user.isLoggedIn && user.profile && post.owner == user.profile.id ? (
+                    <button
+                        className="deleteButton"
+                        onClick={() => onDelete(post.id)}
+                    >
+                        Delete
+                    </button>
+                ) : null}
+                {redirect}
+            </div>
         </div>
     );
 }
