@@ -22,15 +22,13 @@ function Card({ post, onDelete, user, changeUser }) {
             const response = await api.put(`/api/SquirreLogs/${id}/vote/`, {
                 upvote: currentVote,
             });
-            console.log(response.data)
+            
             // Change user's liked posts on the frontend
-            if(response.data.changed) {
-                changeUser({
-                    ...user, 
-                    liked_posts: response.data.user.liked_posts,
-                    disliked_posts: response.data.user.disliked_posts
-                })
-            }
+            changeUser({
+                ...user, 
+                liked_posts: response.data.user.liked_posts,
+                disliked_posts: response.data.user.disliked_posts
+            })
             setVotes(response.data.log.votes);
         } catch (err) {}
     }

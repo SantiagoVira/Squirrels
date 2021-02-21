@@ -80,33 +80,39 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         # Checks if user already liked/disliked this post
         previously_liked = log in user.liked_posts.all()
         previously_disliked = log in user.disliked_posts.all()
-        changed = True
 
-        if request.data['upvote'] and not previously_liked:
-            vote_count = log.votes + 1
-            if previously_disliked:
-                user.disliked_posts.remove(log.id)
-            else:
-                user.liked_posts.add(log.id)
-        elif not request.data['upvote'] and not previously_disliked:
-            vote_count = log.votes - 1
+        # When liking
+        if request.data['upvote']:
+            # Un-like
             if previously_liked:
+                vote_count = log.votes - 1
                 user.liked_posts.remove(log.id)
+            # Like and un-dislike
             else:
+                vote_count = (log.votes + 2 if previously_disliked
+                    else log.votes + 1)
+                user.liked_posts.add(log.id)
+                user.disliked_posts.remove(log.id)
+        # When disliking
+        elif not request.data['upvote']:
+            # Un-dislike
+            if previously_disliked:
+                vote_count = log.votes + 1
+                user.disliked_posts.remove(log.id)
+            # Dislike and un-like
+            else:
+                vote_count = (log.votes - 2 if previously_liked
+                    else log.votes - 1)
                 user.disliked_posts.add(log.id)
-        else:
-            # Keeps vote count the same if user tries to upvote/downvote again
-            changed = False
-            vote_count = log.votes
-
+                user.liked_posts.remove(log.id)
+        
         log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
         user_serializer = UserSerializer(user)
         if log_serializer.is_valid():
             log_serializer.save()
             return Response({
                 'log': log_serializer.data, 
-                'user': user_serializer.data, 
-                'changed': changed
+                'user': user_serializer.data
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
