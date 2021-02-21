@@ -22,7 +22,18 @@ function RenderSquirrels(props) {
                 );
             }
         }
-        let title = topics.join(" and ");
+        function titleGen(topics) {
+            topics.forEach((topic, index) => {
+                topics[index] = topic
+                    .trim()
+                    .toLowerCase()
+                    .split(" ")
+                    .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
+                    .join(" ");
+            });
+            return topics.join(", ");
+        }
+        let title = titleGen(topics);
         const post = {
             topic: title,
             note: log.note_squirrel_park_stories,

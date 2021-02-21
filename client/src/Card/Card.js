@@ -40,7 +40,6 @@ function Card({ post, onDelete, isLoggedIn }) {
     function getPosition(string, subString, index) {
         return string.split(subString, index).join(subString).length;
     }
-    console.log(post.note);
     return (
         <div className="squirrelCard">
             <div
@@ -50,7 +49,7 @@ function Card({ post, onDelete, isLoggedIn }) {
                     justifyContent: "center",
                 }}
             >
-                <h1>{post.topic_name}</h1>
+                <h1>{post.topic}</h1>
                 <div className="tooltip">
                     <IconButton
                         className="copier"

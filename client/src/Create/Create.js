@@ -18,14 +18,14 @@ function Create() {
                 pub_date: new Date().toISOString(), //Gets current date
             });
             history.push("/");
-        } catch(err) {}
+        } catch (err) {}
     };
 
     return (
         <div>
             <form onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
-                    <h2>Submit a New Story</h2>
+                    <h2 style={{ textAlign: "center" }}>Submit a New Story</h2>
                     <input
                         value={request.topic}
                         onChange={(e) =>
