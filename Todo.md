@@ -3,7 +3,8 @@
 -   Add "create" to a user profile (?)
 -   Adapting to permissions
     -   Allow admins to remove any story (django has a way to check)
--   Show existing topics when you add stories
+-   topics function as tags on a post (kinda like stack overflow)
+-   Show existing topics when you add stories (Wait until we implement new topics)
 -   Adaptable CSS for different screen sizes
     -   Home page
 
