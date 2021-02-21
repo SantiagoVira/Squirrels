@@ -22,10 +22,10 @@ function Card({ post, onDelete, user, changeUser }) {
             const response = await api.put(`/api/SquirreLogs/${id}/vote/`, {
                 upvote: currentVote,
             });
-            
+
             // Change user's liked posts on the frontend
             changeUser({
-                ...user, 
+                ...user,
                 liked_posts: response.data.user.liked_posts,
                 disliked_posts: response.data.user.disliked_posts
             })
@@ -57,7 +57,10 @@ function Card({ post, onDelete, user, changeUser }) {
                     justifyContent: "center",
                 }}
             >
-                <h1>{post.topic}</h1>
+                <h1>{
+                  // It's topic_name in the database, but I'm keeping post.topic for the examples
+                  post.topic_name ? post.topic_name : post.topic
+                }</h1>
                 <div className="tooltip">
                     <IconButton
                         className="copier"
