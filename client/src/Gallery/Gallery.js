@@ -84,7 +84,7 @@ function Gallery() {
                         );
                     }
                 }
-                console.log(topics);
+                
                 topics.some((topic) => {
                     if (
                         topic
