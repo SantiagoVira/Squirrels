@@ -13,7 +13,7 @@ function Col(props) {
                 },
                 props.style
             )}
-            className="ColComponent"
+            className={`ColComponent ${props.className}`}
         >
             {props.children}
         </div>
