@@ -8,6 +8,7 @@
     max-height: 75vh;
     width: 40vw;
     flex: 3;
+    padding: 20px;
 
     text-align: center;
     background-color: rgba(0, 0, 0, 0.2);
@@ -15,7 +16,7 @@
     overflow-y: scroll;
 }
 .posts > .squirrelCard {
-    max-width: 30vw;
+    width: 90%;
 }
 .posts::-webkit-scrollbar {
     width: 20px;

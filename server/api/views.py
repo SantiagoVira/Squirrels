@@ -12,7 +12,7 @@ from .serializers import * # The file only has serializers
 from .permissions import IsOwner
 
 # Models
-from .models import SquirreLog
+from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
 User = get_user_model() # checks the most updated User model (api.User)
 
@@ -50,6 +50,10 @@ class UserList(APIView):
 #
 #     serializer_class = UserSerializerWithToken
 #     queryset = User.objects.all()
+
+class TopicViewSet(viewsets.ModelViewSet):
+    queryset = SquirrelTopic.objects.all()
+    serializer_class = SquirrelTopicSerializer
 
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().order_by('pub_date') # most recent

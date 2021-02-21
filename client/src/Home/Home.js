@@ -3,10 +3,10 @@ import "./Home.css";
 import Uploads from "./Uploads/Uploads";
 import User from "./User/User";
 
-function Home() {
+function Home(props) {
     return (
         <div className="main">
-            <Uploads />
+            <Uploads user={props.user} />
             <User />
         </div>
     );

@@ -92,6 +92,7 @@
     margin: 10px;
     flex-grow: 4;
     user-select: none;
+    text-align: center;
 }
 
 /*Iframe copy button pop up*/
@@ -132,4 +133,15 @@
 .tooltip:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+}
+
+.deleteButton {
+    border: none;
+    outline: none;
+    background-color: rgb(172, 0, 0);
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text);
 }
