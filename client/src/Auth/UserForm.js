@@ -15,7 +15,9 @@ function UserForm(props) {
             localStorage.setItem("token", response.data.user.token);
             await props.changeUser({
                 isLoggedIn: true,
-                profile: response.data.user
+                username: response.data.username,
+                liked_posts: response.data.liked_posts,
+                disliked_posts: response.data.disliked_posts,
             });
             history.push("/");
         } catch (err) {
@@ -39,7 +41,10 @@ function UserForm(props) {
     return (
         <div className="UserFormContainer">
             <div>{error}</div>
-            <form onSubmit={(e) => onFormSubmit(e, form)}>
+            <form
+                className="UserFormForm"
+                onSubmit={(e) => onFormSubmit(e, form)}
+            >
                 <div className="inputs">
                     <Label>Username:</Label>
                     <input
@@ -50,6 +55,7 @@ function UserForm(props) {
                         }
                         maxLength={20}
                         required={true}
+                        className="UserFormInput"
                     />
                     <Label>Password:</Label>
                     <input
@@ -59,6 +65,7 @@ function UserForm(props) {
                             setForm({ ...form, password: e.target.value })
                         }
                         required={true}
+                        className="UserFormInput"
                     />
                 </div>
                 <button className="Submit">{props.text}</button>

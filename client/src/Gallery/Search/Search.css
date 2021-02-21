@@ -6,9 +6,14 @@
     align-items: center;
     padding: 8px;
 }
-.searchContainer > input {
+.gallerySearchBar {
+    border: none;
+    outline: none;
+    color: var(--text);
     width: 35vw;
     height: 5vh;
     margin: 0;
     background: transparent;
+    font-size: 1.2rem;
+    padding: 5px;
 }
