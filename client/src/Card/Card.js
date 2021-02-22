@@ -4,7 +4,10 @@ import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
 import DeleteIcon from "@material-ui/icons/Delete";
+import CreateIcon from "@material-ui/icons/Create";
 import { Redirect } from "react-router-dom";
+import Row from "../Row";
+import Col from "../Col";
 
 function unique() {
     return Math.floor(
@@ -99,15 +102,15 @@ function Card({ post, onDelete, user, changeUser }) {
     }
     function Hashtags(props) {
         return (
-            <div>
+            <Row className={props.className}>
                 {props.children.map((topic) => {
-                    return (
+                    return topic.trim() !== "" ? (
                         <div className="hashtagWrappper" key={unique()}>
-                            <p>#{topic}</p>
+                            <p>#{topic.trim()}</p>
                         </div>
-                    );
+                    ) : null;
                 })}
-            </div>
+            </Row>
         );
     }
     return (
@@ -123,12 +126,20 @@ function Card({ post, onDelete, user, changeUser }) {
                     user.isLoggedIn &&
                     user.profile &&
                     post.owner == user.profile.id ? (
-                        <IconButton
-                            className="deleteButton"
-                            onClick={() => onDelete(post.id)}
-                        >
-                            <DeleteIcon />
-                        </IconButton>
+                        <Col>
+                            <IconButton
+                                className="deleteButton"
+                                onClick={() => onDelete(post.id)}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                className="deleteButton"
+                                onClick={() => onDelete(post.id)}
+                            >
+                                <CreateIcon />
+                            </IconButton>
+                        </Col>
                     ) : null}
                     <GetEmbedLink />
                 </div>
@@ -138,21 +149,13 @@ function Card({ post, onDelete, user, changeUser }) {
                 </div>
             )}
             <div>
-                <div className="topicWrapper">
-                    <Hashtags>{post.topics}</Hashtags>
-                    <h1>
-                        {
-                            // It's topic_name in the database, but I'm keeping post.topic for the examples
-                            post.name ? post.name : post.topic
-                        }
-                    </h1>
-                </div>
                 <br />
-                <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
+                <p className="CardStory">{post.note}</p>
                 {/* Renders delete button only if this component is passed onDelete */}
 
                 {redirect}
             </div>
+            <Hashtags className="HashtagsRow">{post.topics}</Hashtags>
         </div>
     );
 }

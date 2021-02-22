@@ -11,12 +11,18 @@ function Create() {
     const [request, setRequest] = useState({ topic: "", note: "" });
 
     const onSubmitClick = async (e) => {
+        request.topic.split("#").forEach((r) => {
+            console.log("#" + r.trim());
+        });
         try {
             e.preventDefault();
+
             await api.post("/api/SquirreLogs/", {
                 ...request,
+                topics: request.topic.split("#"),
                 pub_date: new Date().toISOString(), //Gets current date
             });
+
             history.push("/");
         } catch (err) {}
     };
@@ -26,19 +32,6 @@ function Create() {
             <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
                     <h2 style={{ textAlign: "center" }}>Submit a New Story</h2>
-                    <input
-                        value={request.topic}
-                        onChange={(e) =>
-                            setRequest({ ...request, topic: e.target.value })
-                        }
-                        placeholder="Topics"
-                        className="Topics"
-                        maxLength={400}
-                        rows={1}
-                        required={true}
-                    />
-                    <br />
-                    <div style={{ marginBottom: "10px" }} />
                     <textarea
                         value={request.note}
                         onChange={(e) =>
@@ -49,6 +42,19 @@ function Create() {
                         maxLength={400}
                         required={true}
                         rows={3}
+                    />
+                    <br />
+                    <div style={{ marginBottom: "10px" }} />
+                    <input
+                        value={request.topic}
+                        onChange={(e) =>
+                            setRequest({ ...request, topic: e.target.value })
+                        }
+                        placeholder="e.g. #Squirrels yo #I <3 Sqrrlz"
+                        className="Topics"
+                        maxLength={400}
+                        rows={1}
+                        required={true}
                     />
                 </div>
                 <button className="Submit">Post</button>
