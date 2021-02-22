@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
+import DeleteIcon from "@material-ui/icons/Delete";
 import { Redirect } from "react-router-dom";
 
 function Card({ post, onDelete, user, changeUser }) {
@@ -10,17 +11,17 @@ function Card({ post, onDelete, user, changeUser }) {
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
-    const [voteType, setVoteType] = useState("none")
+    const [voteType, setVoteType] = useState("none");
 
     useEffect(() => {
-        if(user.profile && user.profile.liked_posts.includes(post.id)) {
+        if (user.profile && user.profile.liked_posts.includes(post.id)) {
             setVoteType("liked");
         }
-        if(user.profile && user.profile.disliked_posts.includes(post.id)) {
+        if (user.profile && user.profile.disliked_posts.includes(post.id)) {
             setVoteType("disliked");
         }
-        if(!user.profile) {
-            setVoteType("none")
+        if (!user.profile) {
+            setVoteType("none");
         }
     }, [user]);
 
@@ -39,8 +40,8 @@ function Card({ post, onDelete, user, changeUser }) {
             // Change user's liked posts on the frontend
             changeUser({
                 ...user,
-                profile: response.data.user
-            })
+                profile: response.data.user,
+            });
             setVotes(response.data.log.votes);
             setVoteType(response.data.result);
         } catch (err) {}
@@ -65,18 +66,33 @@ function Card({ post, onDelete, user, changeUser }) {
     return (
         <div className="squirrelCard">
             {!post.gallery ? (
-                <div className="buttons">
-                    <Arrow class="up" id={post.id} />
-                    <p className="votes">{votes}</p>
-                    <Arrow class="down" id={post.id} />
+                <div className="leftSideWrapper">
+                    <div className="buttons">
+                        <Arrow class="up" id={post.id} />
+                        <p className="votes">{votes}</p>
+                        <Arrow class="down" id={post.id} />
+                    </div>
+                    {onDelete &&
+                    user.isLoggedIn &&
+                    user.profile &&
+                    post.owner == user.profile.id ? (
+                        <IconButton
+                            className="deleteButton"
+                            onClick={() => onDelete(post.id)}
+                        >
+                            <DeleteIcon />
+                        </IconButton>
+                    ) : null}
                 </div>
             ) : null}
             <div>
                 <div className="topicWrapper">
-                    <h1>{
-                    // It's topic_name in the database, but I'm keeping post.topic for the examples
-                    post.name ? post.name : post.topic
-                    }</h1>
+                    <h1>
+                        {
+                            // It's topic_name in the database, but I'm keeping post.topic for the examples
+                            post.name ? post.name : post.topic
+                        }
+                    </h1>
                     <div className="tooltip">
                         <IconButton
                             className="copier"
@@ -109,14 +125,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 <br />
                 <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
                 {/* Renders delete button only if this component is passed onDelete */}
-                {onDelete && user.isLoggedIn && user.profile && post.owner == user.profile.id ? (
-                    <button
-                        className="deleteButton"
-                        onClick={() => onDelete(post.id)}
-                    >
-                        Delete
-                    </button>
-                ) : null}
+
                 {redirect}
             </div>
         </div>

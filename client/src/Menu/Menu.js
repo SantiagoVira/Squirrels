@@ -4,7 +4,9 @@ import "./Menu.css";
 import HamburgerMenu from "./HamburgerMenu";
 
 function Menu(props) {
-    const [scrolled, setScrolled] = useState("");
+    const [scrolled, setScrolled] = useState(
+        window.pageYOffset > 0 ? "scrolled" : ""
+    );
     const page = props.page;
 
     useEffect(() => {
