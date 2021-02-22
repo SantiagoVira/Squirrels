@@ -78,7 +78,11 @@ function Menu(props) {
                         </Link>
                     )
                 )}
-                {props.user.isLoggedIn && <Link to="/create">Create</Link>}
+                {
+                    /*props.user.isLoggedIn*/ true && (
+                        <Link to="/create">Create</Link>
+                    )
+                }
             </div>
             <div className="right">{renderAuth(page)}</div>
         </div>

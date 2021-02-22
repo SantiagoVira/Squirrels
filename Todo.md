@@ -3,10 +3,16 @@
 -   Add "create" to a user profile (?)
 -   Show delete button for admins
 
--   topics as hashtags function as tags on a post (kinda like stack overflow)
--   Show existing topics when you add stories (Wait until we implement new topics)
+-   Edit create form for hashtags
+-   Show existing topics when you add stories
 -   Edit posts
--   #of posts links to a list of your posts (if possible)
+
+    -   Functionality
+
+    ## If We Have Time
+
+    -   #of posts links to a list of your posts
+    -   on post clear inputs and redirect to home page
 
 ## **Server:**
 
@@ -15,7 +21,10 @@
     -   Admins can delete any posts
 -   Move squirrel census stories to database and acces them from the database in react
 -   Ability to search through the stories by topics and/or story content
+
     -   Adding multiple topics
+
+    ## If We Have Time:
 
 ## **Presentation:**
 

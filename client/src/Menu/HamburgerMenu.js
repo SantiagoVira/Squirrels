@@ -94,6 +94,9 @@ function HamburgerMenu(props) {
                                 </Link>
                             )
                         )}
+                        {props.user.isLoggedIn && (
+                            <Link to="/create">Create</Link>
+                        )}
                         {renderAuth(page)}
                     </Col>
                 </div>
