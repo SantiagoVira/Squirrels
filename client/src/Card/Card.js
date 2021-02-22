@@ -16,6 +16,7 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
+    const areURLs = post.SquirrelTopics ? true : false;
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
@@ -103,13 +104,19 @@ function Card({ post, onDelete, user, changeUser }) {
     function Hashtags(props) {
         return (
             <Row className={props.className}>
-                {props.children && props.children.map((topic) => {
-                    return topic.trim() !== "" ? (
-                        <div className="hashtagWrappper" key={unique()}>
-                            <p>#{topic.trim()}</p>
-                        </div>
-                    ) : null;
-                })}
+                {props.children &&
+                    props.children.map((topic) => {
+                        return topic.trim() !== "" ? (
+                            <div className="hashtagWrappper" key={unique()}>
+                                <p>
+                                    #
+                                    {areURLs
+                                        ? api.get(topic).topic_name
+                                        : topic.trim()}
+                                </p>
+                            </div>
+                        ) : null;
+                    })}
             </Row>
         );
     }
@@ -155,7 +162,9 @@ function Card({ post, onDelete, user, changeUser }) {
 
                 {redirect}
             </div>
-            <Hashtags className="HashtagsRow">{post.topics}</Hashtags>
+            <Hashtags className="HashtagsRow">
+                {areURLs ? post.SquirrelTopics : post.topics}
+            </Hashtags>
         </div>
     );
 }
