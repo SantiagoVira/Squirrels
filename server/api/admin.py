@@ -23,6 +23,7 @@ class SquirrelTopicAdmin(admin.ModelAdmin):
 
 class SquirreLogAdmin(admin.ModelAdmin):
     list_display = ('log_name', 'pub_date')
+    inlines = [TopicalSquirreLogs]
 
 admin.site.register(User, CustomUserAdmin)
 
