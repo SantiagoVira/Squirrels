@@ -78,11 +78,16 @@ function Menu(props) {
                         </Link>
                     )
                 )}
-                {
-                    /*props.user.isLoggedIn*/ true && (
-                        <Link to="/create">Create</Link>
-                    )
-                }
+                {props.user.isLoggedIn &&
+                    (page.endsWith("/create") ? (
+                        <strong key={unique()}>
+                            <Link to={"/create"}>Create</Link>
+                        </strong>
+                    ) : (
+                        <Link key={unique()} to={"/create"}>
+                            Create
+                        </Link>
+                    ))}
             </div>
             <div className="right">{renderAuth(page)}</div>
         </div>

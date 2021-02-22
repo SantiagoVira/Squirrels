@@ -1,18 +1,10 @@
 ## **Frontend:**
 
--   Add "create" to a user profile (?)
--   Show delete button for admins
+-   Show delete & edit buttons for admins
+-   Actual user data instead of Squirrel McSquirrel
+-   Test create form for hashtags
 
--   Edit create form for hashtags
--   Show existing topics when you add stories
--   Edit posts
-
-    -   Functionality
-
-    ## If We Have Time
-
-    -   #of posts links to a list of your posts
-    -   on post clear inputs and redirect to home page
+-   make Edit posts Functional
 
 ## **Server:**
 
@@ -24,7 +16,13 @@
 
     -   Adding multiple topics
 
-    ## If We Have Time:
+## **If We Have Time**
+
+-   #of posts links to a list of your posts
+-   on post clear inputs and redirect to home page to see new post there
+-   style finsished hashtag in create form
+-   topics tag clickable, bring to a list of those posts
+-   buy Sqqrlz.com
 
 ## **Presentation:**
 

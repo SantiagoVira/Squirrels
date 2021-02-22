@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
+import Default from "./DefaultPfp.png";
 
 function User() {
     const [direction, setDirection] = useState();
@@ -26,7 +27,7 @@ function User() {
         <div className="user">
             <Row>
                 <div className="circular--portrait">
-                    <img src={url} className={direction} />
+                    <img src={Default} className={direction} />
                 </div>
                 <h1>Squirrel McSquirrel</h1>
             </Row>

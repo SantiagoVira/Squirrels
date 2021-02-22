@@ -3,6 +3,14 @@ import api from "../api";
 import history from "../history";
 
 import "./Create.css";
+import Row from "../Row";
+import Col from "../Col";
+
+function unique() {
+    return Math.floor(
+        Math.random() * Math.floor(Math.random() * Date.now())
+    ).toString();
+}
 
 // Since we have an owner property, we need a way to find the currently logged in user
 // Maybe this should only be shown when someone is logged in?
@@ -27,6 +35,22 @@ function Create() {
         } catch (err) {}
     };
 
+    function Hashtags(props) {
+        return (
+            <Row className={props.className}>
+                {props.children.map((topic) => {
+                    return topic.trim() !== "" ? (
+                        <div className="hashtagWrappper" key={unique()}>
+                            <p>#{topic.trim()}</p>
+                        </div>
+                    ) : null;
+                })}
+            </Row>
+        );
+    }
+
+    const commonHashtags = ["Squirrels", "Park", "Dogs", "Poems"];
+
     return (
         <div>
             <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>
@@ -50,12 +74,18 @@ function Create() {
                         onChange={(e) =>
                             setRequest({ ...request, topic: e.target.value })
                         }
-                        placeholder="e.g. #Squirrels yo #I <3 Sqrrlz"
+                        placeholder="#Squirrels_yo #I_<3_Sqrrlz"
                         className="Topics"
                         maxLength={400}
                         rows={1}
                         required={true}
                     />
+                    <Row>
+                        Common:
+                        <Hashtags className="CommonHastagsRow">
+                            {commonHashtags}
+                        </Hashtags>
+                    </Row>
                 </div>
                 <button className="Submit">Post</button>
             </form>
