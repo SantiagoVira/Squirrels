@@ -61,20 +61,38 @@ function Gallery() {
         } else {
             const searchedStories = [];
             stories.forEach((log) => {
+                //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
                 const story = log.note_squirrel_park_stories;
+                const topics = topicsGen(log);
 
-                if (
-                    story
-                        .trim()
-                        .toLowerCase()
-                        .includes(search.trim().toLowerCase())
-                ) {
-                    searchedStories.push(log);
-                    return true;
+                if (search.startsWith("#")) {
+                    topics.some((topic) => {
+                        if (
+                            search
+                                .slice(1)
+                                .trim()
+                                .toLowerCase()
+                                .includes(topic.trim().toLowerCase())
+                        ) {
+                            searchedStories.push(log);
+                            return true;
+                        }
+                    });
+                } else {
+                    if (
+                        story
+                            .trim()
+                            .toLowerCase()
+                            .includes(search.trim().toLowerCase())
+                    ) {
+                        searchedStories.push(log);
+                        return true;
+                    }
                 }
             });
 
-            setStories(searchedStories.slice(0, 10));
+            const storyNum = Math.random() * searchedStories.length;
+            setStories(searchedStories.slice(storyNum, storyNum + 10));
         }
     }
 

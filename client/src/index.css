@@ -99,4 +99,8 @@ button {
     .posts {
         width: 95% !important;
     }
+    /*Create Page*/
+    .inputs {
+        width: 80vw !important;
+    }
 }
