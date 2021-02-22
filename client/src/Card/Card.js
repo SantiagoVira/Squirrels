@@ -103,7 +103,7 @@ function Card({ post, onDelete, user, changeUser }) {
     function Hashtags(props) {
         return (
             <Row className={props.className}>
-                {props.children.map((topic) => {
+                {props.children && props.children.map((topic) => {
                     return topic.trim() !== "" ? (
                         <div className="hashtagWrappper" key={unique()}>
                             <p>#{topic.trim()}</p>

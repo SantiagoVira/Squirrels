@@ -72,6 +72,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
+        print(self.request.data)
         serializer.save(owner=self.request.user)
 
     @action(methods=['get'], detail=True, url_path='user', url_name='user')
