@@ -10,8 +10,6 @@
 
 ## **Server:**
 
--   User accounts
-    -   Delete posts you created
 -   Move squirrel census stories to database
 -   Ability to search through the stories by topics and/or story content
     -   Adding multiple topics
