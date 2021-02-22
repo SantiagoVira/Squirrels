@@ -23,11 +23,9 @@
     width: clamp(100px, 100px+10%, 400px);
 
     /* Color stuff */
-    border-style: solid;
-    border-width: 2px;
+    border: 2px solid #7c3b0c;
     border-radius: 12px;
     /* margin: 1vh 1vw; */
-    border-color: #7c3b0c;
     background: var(--cinnamon);
 }
 
@@ -45,17 +43,23 @@
     font-size: clamp(20px, 2vw, 25px);
     float: left;
 }
-.squirrelCard .copier {
-    float: right;
-    color: var(--text);
-}
 .codeIcon {
-    width: 12px !important;
-    height: 12px !important;
+    color: #60300e;
+    font-size: 1rem;
+    font-weight: 500;
 }
 
 .squirrelCard p {
     font-size: 20px;
+}
+
+.leftSideWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    float: left;
+    height: 100%;
 }
 
 .buttons {
@@ -64,7 +68,6 @@
     justify-content: left;
     flex-direction: column;
     float: left;
-    flex: 1;
 }
 .voteBtn {
     width: 15px;
@@ -151,5 +154,24 @@
     padding: 6px 10px;
     font-size: 1rem;
     font-weight: 500;
+}
+.hashtagWrappper {
+    border: none;
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.2);
+
+    padding: 5px;
+    margin: 0px 5px;
     color: var(--text);
+}
+.hashtagWrappper > p {
+    margin: 0 !important;
+    font-size: 1.1rem;
+}
+.CardStory {
+    white-space: pre-wrap;
+    margin-top: 30px;
+}
+.HashtagsRow {
+    justify-content: flex-start !important;
 }

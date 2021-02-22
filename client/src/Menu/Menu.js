@@ -4,7 +4,9 @@ import "./Menu.css";
 import HamburgerMenu from "./HamburgerMenu";
 
 function Menu(props) {
-    const [scrolled, setScrolled] = useState("");
+    const [scrolled, setScrolled] = useState(
+        window.pageYOffset > 0 ? "scrolled" : ""
+    );
     const page = props.page;
 
     useEffect(() => {
@@ -76,7 +78,11 @@ function Menu(props) {
                         </Link>
                     )
                 )}
-                {props.user.isLoggedIn && <Link to="/create">Create</Link>}
+                {
+                    /*props.user.isLoggedIn*/ true && (
+                        <Link to="/create">Create</Link>
+                    )
+                }
             </div>
             <div className="right">{renderAuth(page)}</div>
         </div>

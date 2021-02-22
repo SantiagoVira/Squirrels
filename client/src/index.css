@@ -84,3 +84,19 @@ button {
         text-align: center !important;
     }
 }
+@media only screen and (max-width: 935px) {
+    /* Home Page */
+    .homePageMain {
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        align-items: center !important;
+    }
+    .user {
+        margin-top: 5vh;
+        width: 80%;
+    }
+    .posts {
+        width: 95% !important;
+    }
+}

@@ -38,3 +38,7 @@
     transition-delay: 100ms;
     transition-duration: 200ms;
 }
+
+.hamburgerMenuDiv {
+    height: 3rem;
+}

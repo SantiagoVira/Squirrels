@@ -16,7 +16,7 @@
     overflow-y: scroll;
 }
 .posts > .squirrelCard {
-    width: 90%;
+    width: 95%;
 }
 .posts::-webkit-scrollbar {
     width: 20px;
