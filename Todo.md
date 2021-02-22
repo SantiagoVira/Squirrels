@@ -1,11 +1,9 @@
 ## **Frontend:**
 
 -   Add "create" to a user profile (?)
--   Add a delete button only visible when some variable passed from server confirms u as the poster or an admin
+-   Show delete button for admins
 -   topics function as tags on a post (kinda like stack overflow)
 -   Show existing topics when you add stories (Wait until we implement new topics)
--   Adaptable CSS for different screen sizes
-    -   Home page
 
 ## **Server:**
 
@@ -21,4 +19,6 @@
 -   Take final result from poll and fill them out on the slides
 -   Write about what the (very unfiltered and totally accurate) results say on the slides
 -   Site demonstration?
--   Squirrel jokes
+-   Squirrel jokes (https://upjoke.com/squirrel-jokes)
+    -   I got kicked out of the park today for arranging the squirrels by height
+        They didn’t like my critter sizing

@@ -58,13 +58,21 @@
     font-size: 20px;
 }
 
+.leftSideWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    float: left;
+    height: 100%;
+}
+
 .buttons {
     display: flex;
     align-items: center;
     justify-content: left;
     flex-direction: column;
     float: left;
-    flex: 1;
 }
 .voteBtn {
     width: 15px;
@@ -151,5 +159,4 @@
     padding: 6px 10px;
     font-size: 1rem;
     font-weight: 500;
-    color: var(--text);
 }
