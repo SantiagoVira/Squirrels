@@ -6,6 +6,12 @@ import CodeIcon from "@material-ui/icons/Code";
 import DeleteIcon from "@material-ui/icons/Delete";
 import { Redirect } from "react-router-dom";
 
+function unique() {
+    return Math.floor(
+        Math.random() * Math.floor(Math.random() * Date.now())
+    ).toString();
+}
+
 function Card({ post, onDelete, user, changeUser }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
@@ -63,6 +69,47 @@ function Card({ post, onDelete, user, changeUser }) {
     function getPosition(string, subString, index) {
         return string.split(subString, index).join(subString).length;
     }
+    function GetEmbedLink() {
+        return (
+            <div className="tooltip">
+                <IconButton
+                    className="copier"
+                    onMouseOut={() => {
+                        setCopied("Copy Embed Link");
+                    }}
+                    onClick={() => {
+                        setCopied("Copied!");
+                        navigator.clipboard.writeText(
+                            `<iframe src="${
+                                window.location.href.slice(
+                                    0,
+                                    getPosition(window.location.href, "/", 3)
+                                ) + `/card/${post.id}`
+                            }" title="Sqrrlz Card" />`
+                        );
+                    }}
+                >
+                    <span className="tooltiptext" id="myTooltip">
+                        {copied}
+                    </span>
+                    <CodeIcon className="codeIcon" />
+                </IconButton>
+            </div>
+        );
+    }
+    function Hashtags(props) {
+        return (
+            <div>
+                {props.children.map((topic) => {
+                    return (
+                        <div className="hashtagWrappper" key={unique()}>
+                            <p>#{topic}</p>
+                        </div>
+                    );
+                })}
+            </div>
+        );
+    }
     return (
         <div className="squirrelCard">
             {!post.gallery ? (
@@ -83,44 +130,22 @@ function Card({ post, onDelete, user, changeUser }) {
                             <DeleteIcon />
                         </IconButton>
                     ) : null}
+                    <GetEmbedLink />
                 </div>
-            ) : null}
+            ) : (
+                <div className="leftSideWrapper">
+                    <GetEmbedLink />
+                </div>
+            )}
             <div>
                 <div className="topicWrapper">
+                    <Hashtags>{post.topics}</Hashtags>
                     <h1>
                         {
                             // It's topic_name in the database, but I'm keeping post.topic for the examples
                             post.name ? post.name : post.topic
                         }
                     </h1>
-                    <div className="tooltip">
-                        <IconButton
-                            className="copier"
-                            onMouseOut={() => {
-                                setCopied("Copy Embed Link");
-                            }}
-                            onClick={() => {
-                                setCopied("Copied!");
-                                navigator.clipboard.writeText(
-                                    `<iframe src="${
-                                        window.location.href.slice(
-                                            0,
-                                            getPosition(
-                                                window.location.href,
-                                                "/",
-                                                3
-                                            )
-                                        ) + `/card/${post.id}`
-                                    }" title="Sqrrlz Card" />`
-                                );
-                            }}
-                        >
-                            <span className="tooltiptext" id="myTooltip">
-                                {copied}
-                            </span>
-                            <CodeIcon className="codeIcon" />
-                        </IconButton>
-                    </div>
                 </div>
                 <br />
                 <p style={{ whiteSpace: "pre-wrap" }}>{post.note}</p>
