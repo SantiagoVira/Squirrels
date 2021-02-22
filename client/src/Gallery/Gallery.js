@@ -11,32 +11,19 @@ function unique() {
     ).toString();
 }
 
-function titleGen(log) {
-    let topics = [];
-    for (const property in log) {
-        if (property.startsWith("story_topic")) {
-            topics.push(
-                property.replace("story_topic", "").replaceAll("_", " ")
-            );
-        }
-    }
-    topics.forEach((topic, index) => {
-        topics[index] = topic
-            .trim()
-            .toLowerCase()
-            .split(" ")
-            .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-            .join(" ");
-    });
-    return topics.join(", ");
+function topicsGen(log) {
+    return Object.keys(log)
+        .filter((property) => property.startsWith("story_topic"))
+        .map((property) =>
+            property.replace("story_topic", "").replaceAll("_", " ")
+        );
 }
 
 function RenderSquirrels(props) {
     //Render the stories, raises: can't render an object
     return props.stories.map((log) => {
-        let title = titleGen(log);
         const post = {
-            topic: title,
+            topics: topicsGen(log),
             note: log.note_squirrel_park_stories,
             key: unique(),
             gallery: true,
