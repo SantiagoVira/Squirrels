@@ -1,17 +1,26 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-from django.contrib.auth.models import User # default django user model
-from .models import User
+# from django.contrib.auth.models import User # default django user model
+from .models import SquirreLog, SquirrelTopic, User
 
-from .models import SquirreLog, SquirrelTopic
+class TinyTopicSerializer(serializers.ModelSerializer):
+    topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
-# Serializers are used in the views
+    class Meta:
+        model = SquirrelTopic
+        fields = ['topic_name', 'topic_link']
+
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    SquirrelTopics = serializers.StringRelatedField(
-        many=True,
-        read_only=True,
-    )
+
+    # Establishing the fields
+    SquirrelTopics = TinyTopicSerializer(many=True)
+    # serializers.StringRelatedField(many=True, read_only=True)
+    # topic_links = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='squirreltopic-detail'
+    # )
 
     class Meta:
         model = SquirreLog
@@ -29,12 +38,6 @@ class SquirrelTopicSerializer(serializers.ModelSerializer):
         model = SquirrelTopic
         fields = ('id', 'SquirreLogs', 'topic_name',)
 
-# Removing this serializer to make it simpler to add fields
-# class UserSerializer(serializers.HyperlinkedModelSerializer):
-#     class Meta:
-#         model = User
-#         fields = ('username',)
-
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     token = serializers.SerializerMethodField()
@@ -44,6 +47,10 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         queryset=SquirreLog.objects.all(), required=False)
     disliked_posts = serializers.PrimaryKeyRelatedField(many=True,
         queryset=SquirreLog.objects.all(), required=False)
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'password', 'token', 'liked_posts', 'disliked_posts')
 
     def get_token(self, obj):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
@@ -60,7 +67,3 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
             instance.set_password(password) # Security
         instance.save()
         return instance
-
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'password', 'token', 'liked_posts', 'disliked_posts')

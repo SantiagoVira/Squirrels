@@ -1,5 +1,8 @@
 ## **Frontend:**
 
+-   Show delete & edit buttons for admins
+-   Add intersectionobservers to cards (performance)
+    - Just scroll down, not pages
 -   Actual user data instead of Squirrel McSquirrel
 
     -   Posts
