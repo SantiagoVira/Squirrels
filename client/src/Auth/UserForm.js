@@ -10,6 +10,7 @@ function UserForm(props) {
     const onFormSubmit = async (e, form) => {
         try {
             e.preventDefault();
+            localStorage.removeItem("token");
             const response = await api.post(props.path, form);
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.user.token);
