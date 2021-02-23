@@ -22,6 +22,7 @@
 -   Move squirrel census stories to database and access them from the database in react
 -   Ability to search through the stories by topics and/or story content
     -   Adding multiple topics
+-   favicon doesnt load on django site
 
 **Note:**
 
@@ -37,8 +38,6 @@
 
 ## **Presentation:**
 
--   Take final result from poll and fill them out on the slides
--   Write about what the (very unfiltered and totally accurate) results say on the slides
 -   Site demonstration?
 -   Squirrel jokes (https://upjoke.com/squirrel-jokes)
     -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing
