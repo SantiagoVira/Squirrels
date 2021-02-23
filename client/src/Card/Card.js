@@ -149,11 +149,7 @@ function Card({ post, onDelete, user, changeUser }) {
                     }
                     <GetEmbedLink />
                 </div>
-            ) : (
-                <div className="leftSideWrapper">
-                    <GetEmbedLink />
-                </div>
-            )}
+            ) : null}
             <div>
                 <br />
                 <p

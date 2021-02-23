@@ -1,12 +1,8 @@
 ## **Frontend:**
 
--   Show delete & edit buttons for admins
 -   Add intersectionobservers to cards (performance)
-    - Just scroll down, not pages
--   Actual user data instead of Squirrel McSquirrel
 
-    -   Posts
-    -   Votes
+    -   Just scroll down, not pages
 
 -   Hasthtags fall out of div at a certain screen width
 -   search like super broken
@@ -20,6 +16,7 @@
 -   Ability to search through the stories by topics and/or story content
     -   Adding multiple topics
 -   favicon doesnt load on django site
+-   fix hashtag not getting them
 
 **Note:**
 
@@ -36,6 +33,7 @@
 -   fix jenky json
 -   admins
 -   limit hompage post num
+-   gallery embeds
 
 ## **Presentation:**
 
