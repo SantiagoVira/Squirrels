@@ -5,6 +5,7 @@
 -   Test create form for hashtags
 
 -   make Edit posts Functional
+-   fix pfp shape warping
 
 ## **Server:**
 
