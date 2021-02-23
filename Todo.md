@@ -1,11 +1,10 @@
 ## **Frontend:**
 
--   Add intersectionobservers to cards (performance)
-
-    -   Just scroll down, not pages
+-   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
 -   Hasthtags fall out of div at a certain screen width
 -   search like super broken
+-   Embed links call a card component which needs a user
 
 ## **Server:**
 
@@ -37,6 +36,6 @@
 
 ## **Presentation:**
 
--   Site demonstration?
+-   Site demonstration? (change all localhost:8000's to normal ./)
 -   Squirrel jokes (https://upjoke.com/squirrel-jokes)
     -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing
