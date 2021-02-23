@@ -8,10 +8,9 @@ from .models import SquirreLog, SquirrelTopic
 # Serializers are used in the views
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    SquirrelTopics = serializers.HyperlinkedRelatedField(
+    SquirrelTopics = serializers.StringRelatedField(
         many=True,
         read_only=True,
-        view_name='squirreltopic-detail'
     )
 
     class Meta:

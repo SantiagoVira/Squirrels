@@ -16,23 +16,11 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
-    const areURLs = post.SquirrelTopics ? true : false;
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
-    const [topicName, setTopicName] = useState([]);
-
-    const GetTopicFromDumDatabase = async (topics) => {
-        await topics.forEach(async (topic) => {
-            const realTopicName = await api.get(topic);
-            const oldTopicsList = [...topicName];
-            await oldTopicsList.push(realTopicName.data.topic_name);
-            console.log(oldTopicsList);
-            setTopicName(oldTopicsList);
-        });
-    };
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -43,9 +31,6 @@ function Card({ post, onDelete, user, changeUser }) {
         }
         if (!user.profile) {
             setVoteType("none");
-        }
-        if (areURLs) {
-            GetTopicFromDumDatabase(post.SquirrelTopics);
         }
     }, [user]);
 
@@ -173,7 +158,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 {redirect}
             </div>
             <Hashtags className="HashtagsRow">
-                {areURLs ? topicName : post.topics}
+                {post.SquirrelTopics}
             </Hashtags>
         </div>
     );
