@@ -24,6 +24,7 @@ function Card({ post, onDelete, user, changeUser }) {
     const [voteType, setVoteType] = useState("none");
     const [topicName, setTopicName] = useState([]);
 
+<<<<<<< HEAD
     useEffect(() => {
         const getTopicName = async() => {
             const temp_topics = [];
@@ -39,6 +40,17 @@ function Card({ post, onDelete, user, changeUser }) {
             getTopicName();
         }
     }, [post]);
+=======
+    const GetTopicFromDumDatabase = async (topics) => {
+        await topics.forEach(async (topic) => {
+            const realTopicName = await api.get(topic);
+            const oldTopicsList = [...topicName];
+            await oldTopicsList.push(realTopicName.data.topic_name);
+            console.log(oldTopicsList);
+            setTopicName(oldTopicsList);
+        });
+    };
+>>>>>>> d78cf95bdd8ab18195294ce86e938bab9cd93cac
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -49,6 +61,9 @@ function Card({ post, onDelete, user, changeUser }) {
         }
         if (!user.profile) {
             setVoteType("none");
+        }
+        if (areURLs) {
+            GetTopicFromDumDatabase(post.SquirrelTopics);
         }
     }, [user]);
 
@@ -123,6 +138,7 @@ function Card({ post, onDelete, user, changeUser }) {
             </div>
         );
     }
+
     function Hashtags(props) {
         return (
             <Row className={props.className}>
@@ -130,9 +146,13 @@ function Card({ post, onDelete, user, changeUser }) {
                     props.children.map((topic) => {
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
+<<<<<<< HEAD
                                 <p>
                                     #{topicName}
                                 </p>
+=======
+                                <p>#{topic.trim()}</p>
+>>>>>>> d78cf95bdd8ab18195294ce86e938bab9cd93cac
                             </div>
                         ) : null;
                     })}
@@ -182,7 +202,7 @@ function Card({ post, onDelete, user, changeUser }) {
                 {redirect}
             </div>
             <Hashtags className="HashtagsRow">
-                {areURLs ? post.SquirrelTopics : post.topics}
+                {areURLs ? topicName : post.topics}
             </Hashtags>
         </div>
     );

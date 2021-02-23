@@ -19,8 +19,20 @@ def story_topics(json):
         if section.startswith("story_topic_")
     ])
 
+# Avoiding duplicates by deleting everything first
+def clear_data():
+    # 1 is the default owner and mother of squirrels
+    # SquirreLog.objects.filter(owner_id=1).delete()
+    # SquirrelTopic.objects.filter(owner_id=1).delete()
+    SquirreLog.objects.all().delete()
+    SquirrelTopic.objects.all().delete()
+
+# More on saving many-to-many
+# https://docs.djangoproject.com/en/3.1/topics/db/examples/many_to_many/
 class Command(BaseCommand):
     def handle(self, *args, **options):
+        clear_data()
+
         json = get_official_squirrels() # The json of official stories
         topic_names = story_topics(json) # All unique story topics
 
@@ -47,3 +59,5 @@ class Command(BaseCommand):
             ]
             for seed_topic in seed_topic_names: # Adding the topics
                 seed_log.topics.add(names_to_topics[seed_topic])
+
+        print("Consider thyself seeded")
