@@ -24,23 +24,6 @@ function Card({ post, onDelete, user, changeUser }) {
     const [voteType, setVoteType] = useState("none");
     const [topicName, setTopicName] = useState([]);
 
-<<<<<<< HEAD
-    useEffect(() => {
-        const getTopicName = async() => {
-            const temp_topics = [];
-            for(const topic in post.SquirrelTopics) {
-                console.log(post.SquirrelTopics)
-                const response = await api.get(topic);
-                await temp_topics.push(response.data.topic_name);
-            }
-            setTopicName(temp_topics);
-        }
-
-        if(post.SquirrelTopics) {
-            getTopicName();
-        }
-    }, [post]);
-=======
     const GetTopicFromDumDatabase = async (topics) => {
         await topics.forEach(async (topic) => {
             const realTopicName = await api.get(topic);
@@ -50,7 +33,6 @@ function Card({ post, onDelete, user, changeUser }) {
             setTopicName(oldTopicsList);
         });
     };
->>>>>>> d78cf95bdd8ab18195294ce86e938bab9cd93cac
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -146,13 +128,7 @@ function Card({ post, onDelete, user, changeUser }) {
                     props.children.map((topic) => {
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
-<<<<<<< HEAD
-                                <p>
-                                    #{topicName}
-                                </p>
-=======
                                 <p>#{topic.trim()}</p>
->>>>>>> d78cf95bdd8ab18195294ce86e938bab9cd93cac
                             </div>
                         ) : null;
                     })}

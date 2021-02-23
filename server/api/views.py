@@ -71,8 +71,27 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
+    # **Experimental**
+    # def create(self, request, *args, **kwargs):
+    #     log_serializer = SquirreLogSerializer(data={**request.data, 'SquirrelTopic': [1]}, partial=True)
+    #     if log_serializer.is_valid():
+    #         temp_topics = []
+    #         # for topic in request.data['topics']:
+    #         #     print(log_serializer.data)
+    #         #     topic_serializer = SquirrelTopicSerializer(data={
+    #         #         'topic_name': topic
+    #         #     })
+    #         #     if topic_serializer.is_valid():
+    #         #         temp_topics.append(topic_serializer.data.id)
+    #         # print(temp_topics)
+    #         #log_serializer.data['SquirrelTopic'].add(1)
+    #         print(log_serializer.data)
+
+    #         #log_serializer.save(owner=self.request.data)
+    #         return Response(log_serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def perform_create(self, serializer):
-        print(self.request.data)
         serializer.save(owner=self.request.user)
 
     @action(methods=['get'], detail=True, url_path='user', url_name='user')
