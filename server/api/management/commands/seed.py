@@ -8,55 +8,64 @@ def get_official_squirrels():
         "https://data.cityofnewyork.us/resource/gfqj-f768.json",
         headers={'Content-Type':'application/json'}
         )
-    json = r.json()
-    return json
+    return r.json()
 
-def story_topics(json):
-    return set([
+def make_topics(json):
+    topic_names = set([ # All unique topic names
         section.replace("story_topic_", "", 1)
         for log in json
         for section in log
         if section.startswith("story_topic_")
     ])
 
-# Avoiding duplicates by deleting everything first
-def clear_data():
-    # 1 is the default owner and mother of squirrels
-    # SquirreLog.objects.filter(owner_id=1).delete()
-    # SquirrelTopic.objects.filter(owner_id=1).delete()
-    SquirreLog.objects.all().delete()
-    SquirrelTopic.objects.all().delete()
+    # Making the topics in a dict
+    names_to_topics = {}
+    for topic_name in topic_names:
+        # We don't want to duplicate topics
+        stored_topic = SquirrelTopic.objects.get(topic_name__exact=topic_name)
+        if stored_topic:
+            names_to_topics[topic_name] = stored_topic
+        else:
+            topic = SquirrelTopic(topic_name=topic_name)
+            topic.save()
+            names_to_topics[topic_name] = topic
+
+    return names_to_topics
 
 # More on saving many-to-many
 # https://docs.djangoproject.com/en/3.1/topics/db/examples/many_to_many/
 class Command(BaseCommand):
     def handle(self, *args, **options):
-        clear_data()
+        print("Clearing existing logs for user 1")
+
+        # Removing default user logs
+        SquirreLog.objects.filter(owner_id=1).delete()
+
+        print("Seeding squirrel stories under user 1")
 
         json = get_official_squirrels() # The json of official stories
-        topic_names = story_topics(json) # All unique story topics
-
-        # Making the topics in a dict
-        names_to_topics = {
-            topic_name : SquirrelTopic(topic_name=topic_name)
-            for topic_name in topic_names
-        }
-
-        # Saving all the topics
-        for topic_name in names_to_topics:
-            names_to_topics[topic_name].save()
+        names_to_topics = make_topics(json)
 
         for log in json:
-            # Making the log
-            seed_log = SquirreLog(note=log["note_squirrel_park_stories"], pub_date=timezone.now())
-            seed_log.save()
-
             # The topics related to a squirrel log
             seed_topic_names = [
                 section.replace("story_topic_", "", 1)
                 for section in log
                 if section.startswith("story_topic_")
             ]
+
+            # Making the log
+            name = (
+                ", ".join(seed_topic_names).replace("_", " ") if len(seed_topic_names) >= 1
+                else "Squirrels!"
+                )
+            seed_log = SquirreLog(
+                note=log["note_squirrel_park_stories"],
+                pub_date=timezone.now(),
+                name=name
+                )
+            seed_log.save()
+
             for seed_topic in seed_topic_names: # Adding the topics
                 seed_log.topics.add(names_to_topics[seed_topic])
 
