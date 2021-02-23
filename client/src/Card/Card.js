@@ -21,6 +21,9 @@ function Card({ post, onDelete, user, changeUser }) {
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
+    const [topicName, setTopicName] = useState([]);
+    const [story, setStory] = useState(post.note);
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -124,25 +127,27 @@ function Card({ post, onDelete, user, changeUser }) {
                         <p className="votes">{votes}</p>
                         <Arrow class="down" id={post.id} />
                     </div>
-                    {onDelete &&
+                    {
+                        /*onDelete &&
                     user.isLoggedIn &&
                     user.profile &&
-                    post.owner == user.profile.id ? (
-                        <Col>
-                            <IconButton
-                                className="deleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                className="deleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <CreateIcon />
-                            </IconButton>
-                        </Col>
-                    ) : null}
+                    post.owner == user.profile.id*/ true ? (
+                            <Col>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => onDelete(post.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => setEditing(!editing)}
+                                >
+                                    <CreateIcon />
+                                </IconButton>
+                            </Col>
+                        ) : null
+                    }
                     <GetEmbedLink />
                 </div>
             ) : (
@@ -152,14 +157,17 @@ function Card({ post, onDelete, user, changeUser }) {
             )}
             <div>
                 <br />
-                <p className="CardStory">{post.note}</p>
+                <p
+                    contentEditable={editing}
+                    className={`CardStory ${editing ? "StoryIsEditable" : ""}`}
+                >
+                    {story}
+                </p>
                 {/* Renders delete button only if this component is passed onDelete */}
 
                 {redirect}
             </div>
-            <Hashtags className="HashtagsRow">
-                {post.SquirrelTopics}
-            </Hashtags>
+            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );
 }

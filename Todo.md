@@ -4,15 +4,12 @@
 -   Actual user data instead of Squirrel McSquirrel
 
     -   Posts
-    -   Likes
-    -   Dislikes
-    -   pfp
+    -   Votes
     -   username
 
 -   Show squirrel data from database not opensource API
--   Make edit posts Functional
 -   Sort by topics with the links given by the server
--   fix pfp shape warping
+-   Hasthtags fall out of div at a certain screen width
 
 ## **Server:**
 
@@ -32,9 +29,9 @@
 ## **If We Have Time**
 
 -   #of posts links to a list of your posts
--   on post clear inputs and redirect to home page to see new post there
 -   style finished hashtag in create form
 -   buy Sqqrlz.com
+-   styleize editing
 
 ## **Presentation:**
 
