@@ -22,7 +22,10 @@ def make_topics(json):
     names_to_topics = {}
     for topic_name in topic_names:
         # We don't want to duplicate topics
-        stored_topic = SquirrelTopic.objects.get(topic_name__exact=topic_name)
+        try:
+            stored_topic = SquirrelTopic.objects.get(topic_name__exact=topic_name)
+        except:
+            stored_topic = False 
         if stored_topic:
             names_to_topics[topic_name] = stored_topic
         else:
