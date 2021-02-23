@@ -22,6 +22,23 @@ function Card({ post, onDelete, user, changeUser }) {
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
+    const [topicName, setTopicName] = useState([]);
+
+    useEffect(() => {
+        const getTopicName = async() => {
+            const temp_topics = [];
+            for(const topic in post.SquirrelTopics) {
+                console.log(post.SquirrelTopics)
+                const response = await api.get(topic);
+                await temp_topics.push(response.data.topic_name);
+            }
+            setTopicName(temp_topics);
+        }
+
+        if(post.SquirrelTopics) {
+            getTopicName();
+        }
+    }, [post]);
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -56,6 +73,11 @@ function Card({ post, onDelete, user, changeUser }) {
             setVoteType(response.data.result);
         } catch (err) {}
     }
+
+    const get_topic = async (topic) => {
+        const response = await api.get(topic);
+        setTopicName(response.data.topic_name);
+    };
 
     function Arrow(props) {
         return (
@@ -109,10 +131,7 @@ function Card({ post, onDelete, user, changeUser }) {
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
                                 <p>
-                                    #
-                                    {areURLs
-                                        ? api.get(topic).topic_name
-                                        : topic.trim()}
+                                    #{topicName}
                                 </p>
                             </div>
                         ) : null;
