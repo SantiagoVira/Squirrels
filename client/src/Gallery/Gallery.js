@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import api from "../api";
 
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
@@ -12,11 +13,7 @@ function unique() {
 }
 
 function topicsGen(log) {
-    return Object.keys(log)
-        .filter((property) => property.startsWith("story_topic"))
-        .map((property) =>
-            property.replace("story_topic", "").replaceAll("_", " ")
-        );
+    return log.name.split(",");
 }
 
 function RenderSquirrels(props) {
@@ -24,7 +21,7 @@ function RenderSquirrels(props) {
     return props.stories.map((log) => {
         const post = {
             topics: topicsGen(log),
-            note: log.note_squirrel_park_stories,
+            note: log.note,
             key: unique(),
             gallery: true,
         };
@@ -38,12 +35,12 @@ function Gallery() {
     const [stories, setStories] = useState(null);
 
     useEffect(async () => {
-        const response = await axios({
-            method: "get",
-            url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
-        });
-        setData(response.data);
-        getStories(response.data, "");
+        const response = await api.get("/api/SquirreLogs/1/user");
+        const formattedBullshit = JSON.parse(response.data).map(
+            (object) => object.fields
+        );
+        setData(formattedBullshit);
+        getStories(formattedBullshit, "");
     }, []);
 
     function getStories(stories, search) {
@@ -61,7 +58,7 @@ function Gallery() {
             const searchedStories = [];
             stories.forEach((log) => {
                 //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
-                const story = log.note_squirrel_park_stories;
+                const story = log.note;
                 const topics = topicsGen(log);
 
                 if (search.startsWith("#")) {

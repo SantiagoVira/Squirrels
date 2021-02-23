@@ -21,7 +21,6 @@ function Card({ post, onDelete, user, changeUser }) {
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
-    const [topicName, setTopicName] = useState([]);
     const [story, setStory] = useState(post.note);
     const [editing, setEditing] = useState(false);
 
@@ -167,7 +166,9 @@ function Card({ post, onDelete, user, changeUser }) {
 
                 {redirect}
             </div>
-            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
+            <Hashtags className="HashtagsRow">
+                {post.SquirrelTopics ? post.SquirrelTopics : post.topics}
+            </Hashtags>
         </div>
     );
 }

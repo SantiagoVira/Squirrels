@@ -1,15 +1,15 @@
 ## **Frontend:**
 
 -   Show delete & edit buttons for admins
+-   Add intersectionobservers to cards (performance)
+    - Just scroll down, not pages
 -   Actual user data instead of Squirrel McSquirrel
 
     -   Posts
     -   Votes
-    -   username
 
--   Show squirrel data from database not opensource API
--   Sort by topics with the links given by the server
 -   Hasthtags fall out of div at a certain screen width
+-   search like super broken
 
 ## **Server:**
 
@@ -32,6 +32,10 @@
 -   style finished hashtag in create form
 -   buy Sqqrlz.com
 -   styleize editing
+-   Sort by topics with the links given by the server
+-   fix jenky json
+-   admins
+-   limit hompage post num
 
 ## **Presentation:**
 

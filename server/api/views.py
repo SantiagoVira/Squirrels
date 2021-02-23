@@ -138,56 +138,14 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
                 user.disliked_posts.add(log.id)
                 user.liked_posts.remove(log.id)
                 vote_type = "disliked"
-        
+
         log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
         user_serializer = UserSerializer(user)
         if log_serializer.is_valid():
             log_serializer.save()
             return Response({
-                'log': log_serializer.data, 
+                'log': log_serializer.data,
                 'user': user_serializer.data,
                 'result': vote_type
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# I think ModelViewSet handles list and stuff
-# https://www.django-rest-framework.org/tutorial/6-viewsets-and-routers/
-# class SquirreLogViewSet(viewsets.ViewSet):
-#     def get_permissions(self):
-#         if self.request.method == 'GET':
-#             self.permission_classes = [permissions.AllowAny, ]
-#         elif self.request.method in ['POST', 'PUT']:
-#             self.permission_classes = [permissions.IsAuthenticated, ]
-#         else:
-#             self.permission_classes = [IsOwner, ]
-#         return super(SquirreLogViewSet, self).get_permissions()
-#
-#     def list(self, request):
-#         print(self.permission_classes)
-#         print(request.auth)
-#         print(request.user.id)
-#         queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
-#         serializer = SquirreLogSerializer(queryset, many=True)
-#         return Response(serializer.data)
-#
-#     def create(self, request):
-#         serializer = SquirreLogSerializer(data=request.data, context={'request': request})
-#         if serializer.is_valid():
-#             serializer.save(owner=request.user)
-#             return Response(serializer.data, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     def retrieve(self, request, **kwargs):
-#         queryset = SquirreLog.objects.get(id=kwargs['pk'])
-#         serializer = SquirreLogSerializer(queryset)
-#         return Response(serializer.data)
-#
-#     def vote(self, request, **kwargs):
-#         print(self.permission_classes)
-#         print(request.auth)
-#         log = SquirreLog.objects.get(id=kwargs['pk'])
-#
-#         if request.data['upvote']:
-#             vote_count = log.votes + 1
-#         else:
-#             vote_count = log.votes - 1
