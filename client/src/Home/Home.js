@@ -7,7 +7,7 @@ function Home(props) {
     return (
         <div className="homePageMain">
             <Uploads user={props.user} changeUser={props.changeUser} />
-            <User />
+            <User user={props.user} />
         </div>
     );
 }

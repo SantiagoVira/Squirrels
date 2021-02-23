@@ -2,8 +2,9 @@ import React from "react";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
+import api from "../../api";
 
-function User() {
+function User(props) {
     function getColor() {
         return (
             "hsl(" +
@@ -32,9 +33,11 @@ function User() {
                     className="circular--portrait"
                     style={{ backgroundColor: getColor() }}
                 >
-                    <p style={{ fontSize: pfpTxtSize }}>S</p>
+                    <p style={{ fontSize: pfpTxtSize }}>
+                        {props.user.profile.username.slice(0, 1).toUpperCase()}
+                    </p>
                 </div>
-                <h1>Squirrel McSquirrel</h1>
+                <h1>{props.user.profile.username}</h1>
             </Row>
             <Row>
                 <Col>
