@@ -27,17 +27,19 @@ function Uploads(props) {
 
     return (
         <div className="posts">
-            {posts.map((post) => {
-                return (
-                    <Card
-                        post={post}
-                        key={post.id}
-                        onDelete={delete_log}
-                        user={user}
-                        changeUser={props.changeUser}
-                    />
-                );
-            })}
+            {posts
+                .filter((post) => post.owner > 1)
+                .map((post) => {
+                    return (
+                        <Card
+                            post={post}
+                            key={post.id}
+                            onDelete={delete_log}
+                            user={user}
+                            changeUser={props.changeUser}
+                        />
+                    );
+                })}
             <Card
                 post={{
                     topics: ["Squirrel Poems"],

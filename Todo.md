@@ -7,9 +7,9 @@
 
     -   Posts
     -   Votes
-    -   username
 
 -   Hasthtags fall out of div at a certain screen width
+-   search like super broken
 
 ## **Server:**
 
@@ -35,6 +35,7 @@
 -   Sort by topics with the links given by the server
 -   fix jenky json
 -   admins
+-   limit hompage post num
 
 ## **Presentation:**
 
