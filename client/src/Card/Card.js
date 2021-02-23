@@ -44,7 +44,7 @@ function Card({ post, onDelete, user, changeUser }) {
         try {
             const currentVote = op === "up";
             const tempVoteCount = votes;
-            //Set card's votes in the database to votes variable
+            // Set card's votes in the database to votes variable
             const response = await api.put(`/api/SquirreLogs/${id}/vote/`, {
                 upvote: currentVote,
             });
