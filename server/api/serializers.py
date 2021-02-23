@@ -4,11 +4,11 @@ from rest_framework_jwt.settings import api_settings
 from .models import SquirreLog, SquirrelTopic, User
 
 class TinyTopicSerializer(serializers.ModelSerializer):
-    self_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
+    topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
     class Meta:
         model = SquirrelTopic
-        fields = ['topic_name', 'self_link']
+        fields = ['topic_name', 'topic_link']
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
