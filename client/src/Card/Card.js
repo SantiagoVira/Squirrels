@@ -16,12 +16,12 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
+    console.log(post);
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
-    const [topicName, setTopicName] = useState([]);
     const [story, setStory] = useState(post.note);
     const [editing, setEditing] = useState(false);
 
@@ -167,7 +167,9 @@ function Card({ post, onDelete, user, changeUser }) {
 
                 {redirect}
             </div>
-            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
+            <Hashtags className="HashtagsRow">
+                {post.SquirrelTopics ? post.SquirrelTopics : post.topics}
+            </Hashtags>
         </div>
     );
 }
