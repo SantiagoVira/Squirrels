@@ -1,15 +1,22 @@
 from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
-from django.contrib.auth.models import User # default django user model
-from .models import User
+# from django.contrib.auth.models import User # default django user model
+from .models import SquirreLog, SquirrelTopic, User
 
-from .models import SquirreLog, SquirrelTopic
+class TinyTopicSerializer(serializers.ModelSerializer):
+    self_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
-# Serializers are used in the views
+    class Meta:
+        model = SquirrelTopic
+        fields = ['topic_name', 'self_link']
+
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    SquirrelTopics = serializers.StringRelatedField(many=True)
-    # SquirrelTopics = serializers.HyperlinkedRelatedField(
+
+    # Establishing the fields
+    SquirrelTopics = TinyTopicSerializer(many=True)
+    # serializers.StringRelatedField(many=True, read_only=True)
+    # topic_links = serializers.HyperlinkedRelatedField(
     #     many=True,
     #     read_only=True,
     #     view_name='squirreltopic-detail'
@@ -18,9 +25,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = SquirreLog
         fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
-
-    def create(self, validated_data):
-        return 
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()

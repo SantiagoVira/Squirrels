@@ -146,10 +146,10 @@
     opacity: 1;
 }
 
-.deleteButton {
+.editOrDeleteButton {
     border: none;
     outline: none;
-    background-color: rgb(172, 0, 0);
+    color: #60300e;
     border-radius: 20px;
     padding: 6px 10px;
     font-size: 1rem;
@@ -170,6 +170,8 @@
 .CardStory {
     white-space: pre-wrap;
     margin-top: 30px;
+    outline: none;
+    border: none;
 }
 .HashtagsRow {
     justify-content: flex-start !important;

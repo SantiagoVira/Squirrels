@@ -42,7 +42,6 @@ function Gallery() {
             method: "get",
             url: "https://data.cityofnewyork.us/resource/gfqj-f768.json",
         });
-
         setData(response.data);
         getStories(response.data, "");
     }, []);

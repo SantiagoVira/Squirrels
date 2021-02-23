@@ -25,7 +25,7 @@ def make_topics(json):
         try:
             stored_topic = SquirrelTopic.objects.get(topic_name__exact=topic_name)
         except:
-            stored_topic = False 
+            stored_topic = False
         if stored_topic:
             names_to_topics[topic_name] = stored_topic
         else:
@@ -65,7 +65,7 @@ class Command(BaseCommand):
             seed_log = SquirreLog(
                 note=log["note_squirrel_park_stories"],
                 pub_date=timezone.now(),
-                name=name
+                name=name,
                 )
             seed_log.save()
 

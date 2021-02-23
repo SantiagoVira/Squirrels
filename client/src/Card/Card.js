@@ -16,23 +16,14 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
-    const areURLs = post.SquirrelTopics ? true : false;
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [redirect, setRedirect] = useState();
     const [voteType, setVoteType] = useState("none");
     const [topicName, setTopicName] = useState([]);
-
-    const GetTopicFromDumDatabase = async (topics) => {
-        await topics.forEach(async (topic) => {
-            const realTopicName = await api.get(topic);
-            const oldTopicsList = [...topicName];
-            await oldTopicsList.push(realTopicName.data.topic_name);
-            console.log(oldTopicsList);
-            setTopicName(oldTopicsList);
-        });
-    };
+    const [story, setStory] = useState(post.note);
+    const [editing, setEditing] = useState(false);
 
     useEffect(() => {
         if (user.profile && user.profile.liked_posts.includes(post.id)) {
@@ -43,9 +34,6 @@ function Card({ post, onDelete, user, changeUser }) {
         }
         if (!user.profile) {
             setVoteType("none");
-        }
-        if (areURLs) {
-            GetTopicFromDumDatabase(post.SquirrelTopics);
         }
     }, [user]);
 
@@ -139,25 +127,27 @@ function Card({ post, onDelete, user, changeUser }) {
                         <p className="votes">{votes}</p>
                         <Arrow class="down" id={post.id} />
                     </div>
-                    {onDelete &&
+                    {
+                        /*onDelete &&
                     user.isLoggedIn &&
                     user.profile &&
-                    post.owner == user.profile.id ? (
-                        <Col>
-                            <IconButton
-                                className="deleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                className="deleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <CreateIcon />
-                            </IconButton>
-                        </Col>
-                    ) : null}
+                    post.owner == user.profile.id*/ true ? (
+                            <Col>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => onDelete(post.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => setEditing(!editing)}
+                                >
+                                    <CreateIcon />
+                                </IconButton>
+                            </Col>
+                        ) : null
+                    }
                     <GetEmbedLink />
                 </div>
             ) : (
@@ -167,14 +157,17 @@ function Card({ post, onDelete, user, changeUser }) {
             )}
             <div>
                 <br />
-                <p className="CardStory">{post.note}</p>
+                <p
+                    contentEditable={editing}
+                    className={`CardStory ${editing ? "StoryIsEditable" : ""}`}
+                >
+                    {story}
+                </p>
                 {/* Renders delete button only if this component is passed onDelete */}
 
                 {redirect}
             </div>
-            <Hashtags className="HashtagsRow">
-                {areURLs ? topicName : post.topics}
-            </Hashtags>
+            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );
 }
