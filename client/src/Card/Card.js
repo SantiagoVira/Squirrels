@@ -16,7 +16,6 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
-    console.log(post);
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");

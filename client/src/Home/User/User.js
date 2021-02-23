@@ -1,10 +1,39 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import api from "../../api";
+import { useState } from "react";
 
 function User(props) {
+    const [user, setUser] = useState({ votes: "", posts: "" });
+    useEffect(() => {
+        const getUserData = async () => {
+            if (!props.user.profile) {
+                return null;
+            }
+            console.log(props.user.profile);
+            const dbUserPerson = await api.get(
+                `/api/SquirreLogs/${props.user.profile.id}/user`
+            );
+            const dbFormattedBullshit = JSON.parse(dbUserPerson.data).map(
+                (object) => object.fields
+            );
+            await setUser({
+                votes: dbFormattedBullshit
+                    .map((post) => post.votes)
+                    .reduce((a, b) => a + b, 0),
+                posts: Object.keys(dbFormattedBullshit).length,
+            });
+            console.log(user);
+        };
+        getUserData();
+    }, [props.user]);
+
+    if (!props.user.profile) {
+        return null;
+    }
+
     function getColor() {
         return (
             "hsl(" +
@@ -22,10 +51,7 @@ function User(props) {
         .slice(0, -2)
         .trim();
     const pfpTxtSize = pfpSize / Math.sqrt(2);
-    const user = {
-        votes: 69,
-        posts: 20,
-    };
+
     return (
         <div className="user">
             <Row>
