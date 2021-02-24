@@ -111,12 +111,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         if (log in user.liked_posts.all()):
             vote_count = log.votes - 1
             user.liked_posts.remove(log.id)
-            vote_type = "none"
         # Like
         else:
             vote_count = log.votes + 1
             user.liked_posts.add(log.id)
-            vote_type = "liked"
 
         log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user)
@@ -124,7 +122,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             log_serializer.save()
             return Response({
                 'log': log_serializer.data,
-                'user': user_serializer.data,
-                'result': vote_type
+                'user': user_serializer.data
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)

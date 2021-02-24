@@ -4,7 +4,6 @@ import history from "../history";
 
 import "./Create.css";
 import Row from "../Row";
-import Col from "../Col";
 
 function unique() {
     return Math.floor(
@@ -20,7 +19,7 @@ function Create() {
 
     const onSubmitClick = async (e) => {
         request.topic.split("#").forEach((r) => {
-            //console.log("#" + r.trim());
+            //("#" + r.trim());
         });
         try {
             e.preventDefault();

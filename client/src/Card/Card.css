@@ -1,6 +1,5 @@
 :root {
     --upvoting: #ff4500;
-    --downvoting: #7193ff;
     --inactive: #565758;
 }
 .cards {
@@ -77,18 +76,9 @@
 .up {
     transform: rotate(225deg);
 }
-.down {
-    transform: rotate(45deg);
-}
 .up.liked,
 .up:hover {
     border: 4px solid var(--upvoting);
-    border-left: 0;
-    border-top: 0;
-}
-.down.disliked,
-.down:hover {
-    border: 4px solid var(--downvoting);
     border-left: 0;
     border-top: 0;
 }
