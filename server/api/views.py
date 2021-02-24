@@ -94,7 +94,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         # return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
-        print(self.request.data)
         # Not all the information goes into the serializer at first?? 
         serializer.save(
             owner=self.request.user,

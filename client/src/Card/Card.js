@@ -18,7 +18,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     const [liked, setLiked] = useState();
 
     useEffect(() => {
-        if (user.isLoggedIn) {
+        if (user && user.isLoggedIn) {
             setLiked(user.profile.liked_posts.includes(post.id));
         }
     }, [user]);

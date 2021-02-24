@@ -68,7 +68,7 @@ function Gallery({ user }) {
         const storyNum = Math.random() * searchedStories.length;
         setStories(searchedStories.slice(storyNum, storyNum + 10));
     }
-
+console.log(stories)
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
