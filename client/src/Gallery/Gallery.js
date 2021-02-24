@@ -33,7 +33,6 @@ function Gallery() {
         }
     }
 
-<<<<<<< HEAD
     // Separating this from getStories for more readability
     function searchStories(stories, search) {
         const searchedStories = [];
@@ -47,29 +46,6 @@ function Gallery() {
                 topics.some((topic) => {
                     const formattedSearch = search.slice(1).trim().toLowerCase();
                     if (formattedSearch.includes(topic.trim().toLowerCase())) {
-=======
-                if (search.startsWith("#")) {
-                    topics.some((topic) => {
-                        if (
-                            search
-                                .slice(1)
-                                .trim()
-                                .toLowerCase()
-                                .includes(topic.trim().toLowerCase())
-                        ) {
-                            searchedStories.push(log);
-                            return true;
-                        }
-                        return false;
-                    });
-                } else {
-                    if (
-                        story
-                            .trim()
-                            .toLowerCase()
-                            .includes(search.trim().toLowerCase())
-                    ) {
->>>>>>> dd70f8b51da29046499cb1ce81ab60533e0d915d
                         searchedStories.push(log);
                         return true;
                     }
