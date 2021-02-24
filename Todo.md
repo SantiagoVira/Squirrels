@@ -2,20 +2,12 @@
 
 -   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
--   Hasthtags fall out of div at a certain screen width
--   search like super broken
--   Embed links call a card component which needs a user
+-   fix hashtag not getting them
 
 ## **Server:**
 
--   User accounts
-    -   Delete posts you created
-    -   Admins can delete any posts
--   Move squirrel census stories to database and access them from the database in react
 -   Ability to search through the stories by topics and/or story content
     -   Adding multiple topics
--   favicon doesnt load on django site
--   fix hashtag not getting them
 
 **Note:**
 
@@ -30,7 +22,7 @@
 -   styleize editing
 -   Sort by topics with the links given by the server
 -   fix jenky json
--   admins
+-   admins (view edit&delete post buttons, those functionalities)
 -   limit hompage post num
 -   gallery embeds
 

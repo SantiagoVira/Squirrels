@@ -13,13 +13,12 @@ function unique() {
 }
 
 function topicsGen(log) {
-    return log.name.split(",");
+    return log.name ? log.name.split(",") : [];
 }
 
 function RenderSquirrels(props) {
     //Render the stories, raises: can't render an object
     return props.stories.map((log) => {
-        console.log(log);
         const post = {
             topics: topicsGen(log),
             note: log.note,

@@ -16,6 +16,7 @@ function unique() {
 }
 
 function Card({ post, onDelete, user, changeUser }) {
+    console.log(post);
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
@@ -126,27 +127,25 @@ function Card({ post, onDelete, user, changeUser }) {
                         <p className="votes">{votes}</p>
                         <Arrow class="down" id={post.id} />
                     </div>
-                    {
-                        /*onDelete &&
+                    {onDelete &&
                     user.isLoggedIn &&
                     user.profile &&
-                    post.owner == user.profile.id*/ true ? (
-                            <Col>
-                                <IconButton
-                                    className="editOrDeleteButton"
-                                    onClick={() => onDelete(post.id)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton
-                                    className="editOrDeleteButton"
-                                    onClick={() => setEditing(!editing)}
-                                >
-                                    <CreateIcon />
-                                </IconButton>
-                            </Col>
-                        ) : null
-                    }
+                    post.owner == user.profile.id ? (
+                        <Col>
+                            <IconButton
+                                className="editOrDeleteButton"
+                                onClick={() => onDelete(post.id)}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                className="editOrDeleteButton"
+                                onClick={() => setEditing(!editing)}
+                            >
+                                <CreateIcon />
+                            </IconButton>
+                        </Col>
+                    ) : null}
                     <GetEmbedLink />
                 </div>
             ) : null}
