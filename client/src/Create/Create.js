@@ -4,7 +4,6 @@ import history from "../history";
 
 import "./Create.css";
 import Row from "../Row";
-import Col from "../Col";
 
 function unique() {
     return Math.floor(
