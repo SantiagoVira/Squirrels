@@ -44,20 +44,25 @@ function Gallery() {
             //Search by tags (topics)
             if (search.startsWith("#")) {
                 topics.some((topic) => {
-                    const formattedSearch = search.slice(1).trim().toLowerCase();
+                    const formattedSearch = search
+                        .slice(1)
+                        .trim()
+                        .toLowerCase();
                     if (formattedSearch.includes(topic.trim().toLowerCase())) {
                         searchedStories.push(log);
                         return true;
                     }
+                    return false;
                 });
-            //Search by story (notes)
+                //Search by story (notes)
             } else {
-                const formattedStory = story.trim().toLowerCase()
+                const formattedStory = story.trim().toLowerCase();
                 if (formattedStory.includes(search.trim().toLowerCase())) {
                     searchedStories.push(log);
                     return true;
                 }
             }
+            return false;
         });
 
         const storyNum = Math.random() * searchedStories.length;
@@ -93,9 +98,7 @@ function Gallery() {
             <div className="searchWrapper">
                 <Search stories={data} getStories={getStories} />
             </div>
-            <div className="cards">
-                {renderSquirrels()}
-            </div>
+            <div className="cards">{renderSquirrels()}</div>
             <div onClick={() => getStories(data, "")} className="generate-btn">
                 Generate more!
             </div>

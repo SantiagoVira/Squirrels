@@ -83,7 +83,6 @@ function Create() {
                         className="Topics"
                         maxLength={400}
                         rows={1}
-                        required={true}
                     />
                     <Row>
                         Common:
