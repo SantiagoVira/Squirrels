@@ -1,7 +1,7 @@
 ## **Frontend:**
 
--   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
-
+-   Post 'topics' list to add topics by name
+-   Post 'name' field from create form (post titles)
 -   fix hashtag not getting them
 
 ## **Server:**
@@ -22,10 +22,10 @@
 -   buy Sqqrlz.com
 -   styleize editing
 -   Sort by topics with the links given by the server
--   fix jenky json
 -   admins (view edit&delete post buttons, those functionalities)
 -   limit hompage post num
 -   gallery embeds and upvoting
+-   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
 ## **Presentation:**
 
