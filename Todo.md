@@ -2,9 +2,8 @@
 
 -   Flickering user icon "feature"
 -   fix hashtag not getting them
--   stop not logged in ppl from seeing create page
 -   put official squirrel stories on home page
-    - Give them the linking and stuff 
+    - Give them the linking and stuff
 
 ## **Server:**
 
