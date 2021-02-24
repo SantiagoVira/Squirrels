@@ -12,7 +12,6 @@ function User(props) {
             if (!props.user.profile) {
                 return null;
             }
-            console.log(props.user.profile);
             const dbUserPerson = await api.get(
                 `/api/SquirreLogs/${props.user.profile.id}/user`
             );

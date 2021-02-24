@@ -35,7 +35,6 @@ function Uploads(props) {
                             onDelete={delete_log}
                             user={user}
                             changeUser={props.changeUser}
-                            enableVoting
                         />
                     );
                 })}
