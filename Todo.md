@@ -1,8 +1,6 @@
 ## **Frontend:**
 
--   Flickering user icon "feature" fix (please)
 -   fix hashtag not getting them
--   stop not logged in ppl from seeing create page
 
 ## **Server:**
 
