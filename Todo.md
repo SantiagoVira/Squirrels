@@ -1,15 +1,10 @@
 ## **Frontend:**
 
--   Show delete & edit buttons for admins
--   Add intersectionobservers to cards (performance)
-    - Just scroll down, not pages
--   Actual user data instead of Squirrel McSquirrel
-
-    -   Posts
-    -   Votes
+-   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
 -   Hasthtags fall out of div at a certain screen width
 -   search like super broken
+-   Embed links call a card component which needs a user
 
 ## **Server:**
 
@@ -20,6 +15,7 @@
 -   Ability to search through the stories by topics and/or story content
     -   Adding multiple topics
 -   favicon doesnt load on django site
+-   fix hashtag not getting them
 
 **Note:**
 
@@ -36,9 +32,10 @@
 -   fix jenky json
 -   admins
 -   limit hompage post num
+-   gallery embeds
 
 ## **Presentation:**
 
--   Site demonstration?
+-   Site demonstration? (change all localhost:8000's to normal ./)
 -   Squirrel jokes (https://upjoke.com/squirrel-jokes)
     -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing

@@ -18,11 +18,13 @@ function topicsGen(log) {
 function RenderSquirrels(props) {
     //Render the stories, raises: can't render an object
     return props.stories.map((log) => {
+        console.log(log);
         const post = {
             topics: topicsGen(log),
             note: log.note,
             key: unique(),
             gallery: true,
+            id: log.id,
         };
         // Placeholder user prop because it must be passed into card
         return <Card post={post} key={unique()} />;

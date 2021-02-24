@@ -143,11 +143,7 @@ function Card({ post, onDelete, user, changeUser, enableVoting }) {
                     }
                     <GetEmbedLink />
                 </div>
-            ) : (
-                <div className="leftSideWrapper">
-                    <GetEmbedLink />
-                </div>
-            )}
+            ) : null}
             <div>
                 <br />
                 <p
