@@ -71,8 +71,22 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
+    # **Experimental**
+    # def create(self, request, *args, **kwargs):
+    #     log_serializer = SquirreLogSerializer(data=request.data, partial=True)
+    #     if log_serializer.is_valid():
+    #         populated_topics = []
+    #         for topic in request.data['topics']:
+    #             topic_serializer = TinyTopicSerializer(data={'topic_name': topic}, context={'request': request})
+    #             if topic_serializer.is_valid():
+    #                 topic_serializer.save()
+    #                 populated_topics.append(topic_serializer)
+    #         log_serializer.save(owner=self.request.user, SquirrelTopics=populated_topics)
+
+    #         return Response(log_serializer.data, status=status.HTTP_201_CREATED)
+    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
     def perform_create(self, serializer):
-        print(self.request.data)
         serializer.save(owner=self.request.user)
 
     @action(methods=['get'], detail=True, url_path='user', url_name='user')
@@ -87,40 +101,21 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         self.check_object_permissions(request, log)
 
         user = User.objects.get(id=request.user.id)
-        # Checks if user already liked/disliked this post
+        # Checks if user already liked this post
         previously_liked = log in user.liked_posts.all()
-        previously_disliked = log in user.disliked_posts.all()
 
-        # When liking
-        if request.data['upvote']:
-            # Un-like
-            if previously_liked:
-                vote_count = log.votes - 1
-                user.liked_posts.remove(log.id)
-                vote_type = "none"
-            # Like and un-dislike
-            else:
-                vote_count = (log.votes + 2 if previously_disliked
-                    else log.votes + 1)
-                user.liked_posts.add(log.id)
-                user.disliked_posts.remove(log.id)
-                vote_type = "liked"
-        # When disliking
-        elif not request.data['upvote']:
-            # Un-dislike
-            if previously_disliked:
-                vote_count = log.votes + 1
-                user.disliked_posts.remove(log.id)
-                vote_type = "none"
-            # Dislike and un-like
-            else:
-                vote_count = (log.votes - 2 if previously_liked
-                    else log.votes - 1)
-                user.disliked_posts.add(log.id)
-                user.liked_posts.remove(log.id)
-                vote_type = "disliked"
+        # Un-like
+        if previously_liked:
+            vote_count = log.votes - 1
+            user.liked_posts.remove(log.id)
+            vote_type = "none"
+        # Like
+        else:
+            vote_count = log.votes + 1
+            user.liked_posts.add(log.id)
+            vote_type = "liked"
 
-        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, partial=True)
+        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user)
         if log_serializer.is_valid():
             log_serializer.save()

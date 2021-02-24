@@ -12,7 +12,7 @@ function Uploads(props) {
     useEffect(async () => {
         try {
             const response = await api.get("/api/SquirreLogs/");
-            setPosts(response.data);
+            setPosts(response.data.filter((post) => post.owner > 1));
         } catch (err) {}
     }, []);
 
@@ -27,9 +27,7 @@ function Uploads(props) {
 
     return (
         <div className="posts">
-            {posts
-                .filter((post) => post.owner > 1)
-                .map((post) => {
+            {posts.map((post) => {
                     return (
                         <Card
                             post={post}
@@ -37,12 +35,13 @@ function Uploads(props) {
                             onDelete={delete_log}
                             user={user}
                             changeUser={props.changeUser}
+                            enableVoting
                         />
                     );
                 })}
             <Card
                 post={{
-                    topics: ["Squirrel Poems"],
+                    topics: [{topic_name: "Squirrel Poems"}],
                     note: `               There once was a squirrel named Ralph,
                 Who wanted to live way down south,
                 The park in the center
@@ -56,7 +55,7 @@ function Uploads(props) {
             />
             <Card
                 post={{
-                    topics: ["Wise Quotes"],
+                    topics: [{topic_name: "Wise Quotes"}],
                     note: `"They say dont reinvent the wheel, but they never said don't reinvent the squirrel" Aramie Ewen 2.12.21`,
                     votes: 10,
                 }}
@@ -66,7 +65,7 @@ function Uploads(props) {
             />
             <Card
                 post={{
-                    topics: ["Insights"],
+                    topics: [{topic_name: "Insights"}],
                     note: "Insquirrelgram. I like it.",
                     votes: 4,
                 }}
