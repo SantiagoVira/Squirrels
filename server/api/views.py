@@ -72,6 +72,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def get_serializer_class(self):
+        # https://stackoverflow.com/a/41313121
+        # Specify the serializer we want for each operation
         if self.request.method in ['GET']:
              return SquirreLogReadSerializer
         return SquirreLogSerializer
@@ -92,7 +94,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         # return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        print(self.request.data)
+        # Not all the information goes into the serializer at first?? 
+        serializer.save(
+            owner=self.request.user,
+            SquirrelTopics=self.request.data['topics']
+        )
 
     @action(methods=['get'], detail=True, url_path='user', url_name='user')
     def filter(self, request, **kwargs):

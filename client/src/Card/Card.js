@@ -79,7 +79,9 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 {props.children &&
                     props.children.map((topic) => {
                         // Uses topic_name for home page uploads
-                        topic = topic.topic_name ? topic.topic_name : topic;
+                        console.log(topic.topic_name)
+                        topic = typeof topic.topic_name != undefined ? topic.topic_name : topic;
+                        console.log(topic);
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
                                 <p>#{topic.trim()}</p>
@@ -132,7 +134,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 {/* Renders delete button only if this component is passed onDelete */}
             </div>
             <Hashtags className="HashtagsRow">
-                {post.SquirrelTopics ? post.SquirrelTopics : post.topics}
+                {post.SquirrelTopics}
             </Hashtags>
         </div>
     );

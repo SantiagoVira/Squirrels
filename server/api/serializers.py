@@ -22,7 +22,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     # Establishing the fields
     # SquirrelTopics = TinyTopicSerializer(many=True)
-    # serializers.StringRelatedField(many=True, read_only=True)
+    serializers.StringRelatedField(many=True, read_only=False)
     # topic_links = serializers.HyperlinkedRelatedField(
     #     many=True,
     #     read_only=True,
@@ -35,21 +35,24 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         print(validated_data)
-        if 'topics' in validated_data: # We're not posting topics?
-            topics = validated_data['topics']
+        if 'SquirrelTopics' in validated_data: # We're not posting topics?
+            topics = validated_data['SquirrelTopics']
         else:
             topics = []
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
             name="", # Client-side doesn't return a name
+            owner=validated_data['owner'],
         )
         for topic in topics:
+            print(topic)
             try: # Finding an existing topic
                 topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic_name)
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
+        print(log.owner)
         return log
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
