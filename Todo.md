@@ -3,12 +3,13 @@
 -   Post 'topics' list to add topics by name
 -   Post 'name' field from create form (post titles)
 -   fix hashtag not getting them
+-   stop not logged in ppl from seeing create page
 
 ## **Server:**
 
 -   Fix posting for SquirreLogSerializer
 -   Add nested serializer for topics
-    - Return the data for each log (so we can display it easier) and a link to the api view of the log
+    -   Return the data for each log (so we can display it easier) and a link to the api view of the log
 
 **Note:**
 
