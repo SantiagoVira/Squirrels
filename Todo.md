@@ -2,6 +2,7 @@
 
 -   Flickering user icon "feature"
 -   fix hashtag not getting them
+-   Remove "home" section of menu and put link in header "sqrrlz"
 -   put official squirrel stories on home page
     - Give them the linking and stuff
 
