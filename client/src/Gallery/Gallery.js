@@ -79,7 +79,7 @@ function Gallery() {
         //Render the stories, raises: can't render an object
         return stories.map((log) => {
             const post = {
-                topics: log.name ? log.name.split(",") : [],
+                SquirrelTopics: log.name ? log.name.split(",") : [],
                 note: log.note,
                 key: unique(),
                 id: log.id,

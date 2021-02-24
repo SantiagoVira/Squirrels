@@ -39,7 +39,7 @@ function Uploads(props) {
             })}
             <Card
                 post={{
-                    topics: [{ topic_name: "Squirrel Poems" }],
+                    SquirrelTopics: ["Squirrel Poems"],
                     note: `               There once was a squirrel named Ralph,
                 Who wanted to live way down south,
                 The park in the center
@@ -53,7 +53,7 @@ function Uploads(props) {
             />
             <Card
                 post={{
-                    topics: [{ topic_name: "Wise Quotes" }],
+                    SquirrelTopics: ["Wise Quotes"],
                     note: `"They say dont reinvent the wheel, but they never said don't reinvent the squirrel" Aramie Ewen 2.12.21`,
                     votes: 10,
                 }}
@@ -63,7 +63,7 @@ function Uploads(props) {
             />
             <Card
                 post={{
-                    topics: [{ topic_name: "Insights" }],
+                    SquirrelTopics: ["Insights"],
                     note: "Insquirrelgram. I like it.",
                     votes: 4,
                 }}
