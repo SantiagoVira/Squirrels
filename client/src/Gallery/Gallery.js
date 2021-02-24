@@ -72,6 +72,7 @@ function Gallery() {
                             searchedStories.push(log);
                             return true;
                         }
+                        return false;
                     });
                 } else {
                     if (

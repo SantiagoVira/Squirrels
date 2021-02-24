@@ -1,11 +1,10 @@
 import api from "../api";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
-import { Redirect } from "react-router-dom";
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
@@ -25,7 +24,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             const response = await api.put(`/api/SquirreLogs/${id}/vote/`);
 
             // Change user's liked posts on the frontend
-            changeUser({...user, profile: response.data.user});
+            changeUser({ ...user, profile: response.data.user });
             setVotes(response.data.log.votes);
         } catch (err) {}
     }
@@ -60,9 +59,15 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     }
 
     function Arrow(props) {
-        const voteColor = user.profile && user.profile.liked_posts.includes(post.id) ? "liked" : "none"
+        const voteColor =
+            user.profile && user.profile.liked_posts.includes(post.id)
+                ? "liked"
+                : "none";
         return (
-            <div onClick={() => vote(props.id)} className={`voteBtn up ${voteColor}`}>
+            <div
+                onClick={() => vote(props.id)}
+                className={`voteBtn up ${voteColor}`}
+            >
                 {props.children}
             </div>
         );
@@ -96,7 +101,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                     {onDelete &&
                     user.isLoggedIn &&
                     user.profile &&
-                    post.owner == user.profile.id ? (
+                    post.owner === user.profile.id ? (
                         <Col>
                             <IconButton
                                 className="editOrDeleteButton"

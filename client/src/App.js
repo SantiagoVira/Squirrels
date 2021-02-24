@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Router, Switch, Route, withRouter, matchPath } from "react-router-dom";
+import { Router, Switch, Route, withRouter } from "react-router-dom";
 import history from "./history";
 import api from "./api";
 
