@@ -3,6 +3,12 @@ from rest_framework_jwt.settings import api_settings
 # from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog, SquirrelTopic, User
 
+# SquirreLog-Topic Structure (is this correct?):
+# SquirreLog creates/updates topic references in string-related field
+# SquirreLogRead gets topics from nested TinyTopic (read-only) 
+# TinyTopic contains a url to SquirrelTopic
+# SquirrelTopic contains Squirrelog urls
+
 class TinyTopicSerializer(serializers.ModelSerializer):
     topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 

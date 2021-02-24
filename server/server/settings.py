@@ -152,3 +152,17 @@ STATICFILES_DIRS = (
 
 # CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True
+
+# Heroku Settings
+# Check if ran from Heroku's current working directories
+cwd = os.getcwd()
+if cwd == "/app" or cwd[:4] == "/tmp":
+    # Configures Postgres
+    import dj_database_url
+    DATABASES = {
+        "default": dj_database_url.config(default="postgres://localhost")
+    }
+    # Honor "X-Forwarded-Proto" header for HTTPS requests
+    SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+    # Ensure Heroku will serve project (no host header bugs)
+    ALLOWED_HOSTS = ["*"]

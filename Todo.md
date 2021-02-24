@@ -30,7 +30,6 @@
 
 ## **Presentation:**
 
--   Site demonstration? (change all localhost:8000's to normal ./)
--   delete static posts on home page
+-   Site demonstration?
 -   Squirrel jokes (https://upjoke.com/squirrel-jokes)
     -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing
