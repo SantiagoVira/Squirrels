@@ -4,6 +4,7 @@ import history from "../history";
 
 import "./Create.css";
 import Row from "../Row";
+import { Redirect } from "react-router-dom";
 
 function unique() {
     return Math.floor(
@@ -13,7 +14,7 @@ function unique() {
 
 // Since we have an owner property, we need a way to find the currently logged in user
 // Maybe this should only be shown when someone is logged in?
-function Create() {
+function Create({ user }) {
     // Stores form inputs to be sent to server
     const [request, setRequest] = useState({ topic: "", note: "" });
 
@@ -26,13 +27,17 @@ function Create() {
 
             console.log({
                 ...request,
-                topics: request.topic.split('#').filter(topic => topic!==''),
+                topics: request.topic
+                    .split("#")
+                    .filter((topic) => topic !== ""),
                 pub_date: new Date().toISOString(), //Gets current date
             });
 
             await api.post("/api/SquirreLogs/", {
                 ...request,
-                topics: request.topic.split('#').filter(topic => topic!==''),
+                topics: request.topic
+                    .split("#")
+                    .filter((topic) => topic !== ""),
                 pub_date: new Date().toISOString(), //Gets current date
             });
 
@@ -56,7 +61,7 @@ function Create() {
 
     const commonHashtags = ["Squirrels", "Park", "Dogs", "Poems"];
 
-    return (
+    return user.isLoggedIn ? (
         <div>
             <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
@@ -94,6 +99,8 @@ function Create() {
                 <button className="Submit">Post</button>
             </form>
         </div>
+    ) : (
+        <Redirect to="/login" />
     );
 }
 

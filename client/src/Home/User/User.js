@@ -5,8 +5,21 @@ import Col from "../../Col";
 import api from "../../api";
 import { useState } from "react";
 
+function getColor() {
+    return (
+        "hsl(" +
+        360 * Math.random() +
+        "," +
+        (25 + 70 * Math.random()) +
+        "%," +
+        (85 + 10 * Math.random()) +
+        "%)"
+    );
+}
+
 function User(props) {
     const [user, setUser] = useState({ votes: "", posts: "" });
+    const [color, setColor] = useState(getColor());
     useEffect(() => {
         const getUserData = async () => {
             if (!props.user.profile) {
@@ -32,17 +45,6 @@ function User(props) {
         return null;
     }
 
-    function getColor() {
-        return (
-            "hsl(" +
-            360 * Math.random() +
-            "," +
-            (25 + 70 * Math.random()) +
-            "%," +
-            (85 + 10 * Math.random()) +
-            "%)"
-        );
-    }
     const UserDataStyles = { fontSize: "20px", fontWeight: "500" };
     const pfpSize = getComputedStyle(document.documentElement)
         .getPropertyValue("--profileSize")
@@ -55,7 +57,7 @@ function User(props) {
             <Row>
                 <div
                     className="circular--portrait"
-                    style={{ backgroundColor: getColor() }}
+                    style={{ backgroundColor: color }}
                 >
                     <p style={{ fontSize: pfpTxtSize }}>
                         {props.user.profile.username.slice(0, 1).toUpperCase()}

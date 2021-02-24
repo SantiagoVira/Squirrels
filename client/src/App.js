@@ -121,7 +121,11 @@ function App() {
                             component={Gallery}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
-                        <Route path="/create" exact component={Create}></Route>
+                        <Route
+                            path="/create"
+                            exact
+                            render={() => <Create user={user} />}
+                        ></Route>
                         <Route
                             path="/login"
                             exact
