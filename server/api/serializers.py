@@ -10,11 +10,18 @@ class TinyTopicSerializer(serializers.ModelSerializer):
         model = SquirrelTopic
         fields = ['topic_name', 'topic_link']
 
+class SquirreLogReadSerializer(serializers.ModelSerializer):
+    SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = SquirreLog
+        fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
+
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
 
     # Establishing the fields
-    SquirrelTopics = TinyTopicSerializer(many=True)
+    # SquirrelTopics = TinyTopicSerializer(many=True)
     # serializers.StringRelatedField(many=True, read_only=True)
     # topic_links = serializers.HyperlinkedRelatedField(
     #     many=True,
@@ -25,6 +32,25 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = SquirreLog
         fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
+
+    def create(self, validated_data):
+        print(validated_data)
+        if 'topics' in validated_data: # We're not posting topics?
+            topics = validated_data['topics']
+        else:
+            topics = []
+        log = SquirreLog.objects.create(
+            note=validated_data['note'],
+            pub_date=validated_data['pub_date'],
+            name="", # Client-side doesn't return a name
+        )
+        for topic in topics:
+            try: # Finding an existing topic
+                topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic_name)
+            except: # When no existing topics
+                topic_obj = SquirrelTopic.objects.create(topic_name=topic)
+            log.topics.add(topic_obj) # Adding topic
+        return log
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -45,12 +71,10 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
     # Creates a many-to-many relationship, similar to User model
     liked_posts = serializers.PrimaryKeyRelatedField(many=True,
         queryset=SquirreLog.objects.all(), required=False)
-    disliked_posts = serializers.PrimaryKeyRelatedField(many=True,
-        queryset=SquirreLog.objects.all(), required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'token', 'liked_posts', 'disliked_posts')
+        fields = ('id', 'username', 'password', 'token', 'liked_posts')
 
     def get_token(self, obj):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

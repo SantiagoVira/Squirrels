@@ -1,25 +1,14 @@
 ## **Frontend:**
 
--   Show delete & edit buttons for admins
--   Add intersectionobservers to cards (performance)
-    - Just scroll down, not pages
--   Actual user data instead of Squirrel McSquirrel
+-   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
-    -   Posts
-    -   Votes
-
--   Hasthtags fall out of div at a certain screen width
--   search like super broken
+-   fix hashtag not getting them
 
 ## **Server:**
 
--   User accounts
-    -   Delete posts you created
-    -   Admins can delete any posts
--   Move squirrel census stories to database and access them from the database in react
--   Ability to search through the stories by topics and/or story content
-    -   Adding multiple topics
--   favicon doesnt load on django site
+-   Fix posting for SquirreLogSerializer
+-   Add nested serializer for topics
+    - Return the data for each log (so we can display it easier) and a link to the api view of the log
 
 **Note:**
 
@@ -34,11 +23,12 @@
 -   styleize editing
 -   Sort by topics with the links given by the server
 -   fix jenky json
--   admins
+-   admins (view edit&delete post buttons, those functionalities)
 -   limit hompage post num
+-   gallery embeds and upvoting
 
 ## **Presentation:**
 
--   Site demonstration?
+-   Site demonstration? (change all localhost:8000's to normal ./)
 -   Squirrel jokes (https://upjoke.com/squirrel-jokes)
     -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing

@@ -25,6 +25,12 @@ function Create() {
         try {
             e.preventDefault();
 
+            console.log({
+                ...request,
+                topics: request.topic.split("#"),
+                pub_date: new Date().toISOString(), //Gets current date
+            });
+
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic.split("#"),

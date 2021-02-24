@@ -12,7 +12,6 @@ function User(props) {
             if (!props.user.profile) {
                 return null;
             }
-            console.log(props.user.profile);
             const dbUserPerson = await api.get(
                 `/api/SquirreLogs/${props.user.profile.id}/user`
             );
@@ -25,7 +24,6 @@ function User(props) {
                     .reduce((a, b) => a + b, 0),
                 posts: Object.keys(dbFormattedBullshit).length,
             });
-            console.log(user);
         };
         getUserData();
     }, [props.user]);

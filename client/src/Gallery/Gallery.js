@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import api from "../api";
 
 import Card from "../Card/Card.js";
@@ -13,7 +12,7 @@ function unique() {
 }
 
 function topicsGen(log) {
-    return log.name.split(",");
+    return log.name ? log.name.split(",") : [];
 }
 
 function RenderSquirrels(props) {
@@ -24,9 +23,10 @@ function RenderSquirrels(props) {
             note: log.note,
             key: unique(),
             gallery: true,
+            id: log.id,
         };
         // Placeholder user prop because it must be passed into card
-        return <Card post={post} key={unique()} user={{ profile: null }} />;
+        return <Card post={post} key={unique()} />;
     });
 }
 
