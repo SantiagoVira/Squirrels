@@ -1,5 +1,5 @@
 :root {
-    --upvoting: #ff4500;
+    --upvoting: #ff0000;
     --inactive: #565758;
 }
 .cards {
@@ -64,23 +64,9 @@
     flex-direction: column;
     float: left;
 }
-.voteBtn {
-    width: 15px;
-    height: 15px;
-    border: 4px solid var(--inactive);
-    border-left: 0;
-    border-top: 0;
-    float: left;
-    margin: 10px;
-}
-.up {
-    transform: rotate(225deg);
-}
 .up.liked,
 .up:hover {
-    border: 4px solid var(--upvoting);
-    border-left: 0;
-    border-top: 0;
+    color: var(--upvoting);
 }
 .votes {
     color: black;
