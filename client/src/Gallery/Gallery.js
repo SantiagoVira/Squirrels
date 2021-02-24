@@ -12,7 +12,7 @@ function unique() {
 }
 
 function topicsGen(log) {
-    return log.name.split(",");
+    return log.name ? log.name.split(",") : [];
 }
 
 function RenderSquirrels(props) {

@@ -24,7 +24,6 @@ function User(props) {
                     .reduce((a, b) => a + b, 0),
                 posts: Object.keys(dbFormattedBullshit).length,
             });
-            
         };
         getUserData();
     }, [props.user]);

@@ -9,14 +9,14 @@
     align-content: stretch;
 }
 
+.content > .squirrelCard {
+    display: flex;
+}
+
 .squirrelCard {
-    /* display: inline-flex; */
     margin-right: 10px;
     margin-bottom: 10px;
     padding: 15px;
-    /* flex-grow: 1; */
-    /* flex-grow: 2; */
-    /* flex-shrink: 2; */
 
     /* Fit so it's more like the NYT website's cards? */
     width: clamp(100px, 100px+10%, 400px);
@@ -32,10 +32,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.squirrelCard > div:not(.buttons) {
-    margin-left: 40px;
 }
 
 .squirrelCard h1 {

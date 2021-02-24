@@ -93,26 +93,25 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                         <Arrow class="up" id={post.id} />
                         <p className="votes">{votes}</p>
                     </div>
-                    {
-                        /*onDelete &&
+                    {onDelete &&
+                    user.isLoggedIn &&
                     user.profile &&
-                    post.owner == user.profile.id*/ true ? (
-                            <Col>
-                                <IconButton
-                                    className="editOrDeleteButton"
-                                    onClick={() => onDelete(post.id)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                                <IconButton
-                                    className="editOrDeleteButton"
-                                    onClick={() => setEditing(!editing)}
-                                >
-                                    <CreateIcon />
-                                </IconButton>
-                            </Col>
-                        ) : null
-                    }
+                    post.owner == user.profile.id ? (
+                        <Col>
+                            <IconButton
+                                className="editOrDeleteButton"
+                                onClick={() => onDelete(post.id)}
+                            >
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton
+                                className="editOrDeleteButton"
+                                onClick={() => setEditing(!editing)}
+                            >
+                                <CreateIcon />
+                            </IconButton>
+                        </Col>
+                    ) : null}
                     <GetEmbedLink />
                 </div>
             ) : null}
