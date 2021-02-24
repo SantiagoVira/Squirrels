@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
@@ -8,20 +8,31 @@ import CreateIcon from "@material-ui/icons/Create";
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 
 function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
+    const [liked, setLiked] = useState();
 
+    useEffect(() => {
+        if (user.isLoggedIn) {
+            setLiked(user.profile.liked_posts.includes(post.id));
+        }
+    }, [user]);
     async function vote(id) {
         if (!user.isLoggedIn) {
             history.push("/login");
         }
+
         try {
+            setLiked(!liked);
             //Set card's votes in the database to votes variable
-            const response = await api.put(`/api/SquirreLogs/${id}/vote/?format=json`);
+            const response = await api.put(
+                `/api/SquirreLogs/${id}/vote/?format=json`
+            );
 
             // Change user's liked posts on the frontend
             changeUser({ ...user, profile: response.data.user });
@@ -58,21 +69,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
         );
     }
 
-    function Arrow(props) {
-        const voteColor =
-            user.profile && user.profile.liked_posts.includes(post.id)
-                ? "liked"
-                : "none";
-        return (
-            <div
-                onClick={() => vote(props.id)}
-                className={`voteBtn up ${voteColor}`}
-            >
-                {props.children}
-            </div>
-        );
-    }
-
     function Hashtags(props) {
         return (
             <Row className={props.className}>
@@ -95,7 +91,14 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             {!disableCardMenu ? (
                 <div className="leftSideWrapper">
                     <div className="buttons">
-                        <Arrow class="up" id={post.id} />
+                        <IconButton
+                            className={`editOrDeleteButton up ${
+                                liked ? "liked" : ""
+                            }`}
+                            onClick={() => vote(post.id)}
+                        >
+                            <FavoriteIcon className="up" />
+                        </IconButton>
                         <p className="votes">{votes}</p>
                     </div>
                     {onDelete &&
@@ -131,9 +134,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 </p>
                 {/* Renders delete button only if this component is passed onDelete */}
             </div>
-            <Hashtags className="HashtagsRow">
-                {post.SquirrelTopics}
-            </Hashtags>
+            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );
 }

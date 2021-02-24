@@ -26,7 +26,7 @@ function Uploads(props) {
 
     return (
         <div className="posts">
-            {posts.map((post) => {
+            {posts.reverse().map((post) => {
                 return (
                     <Card
                         post={post}
