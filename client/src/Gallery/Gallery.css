@@ -1,3 +1,10 @@
+.searchWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 30px;
+}
+
 .generate-btn {
     font-size: clamp(20px, 2vw, 25px); /* Same size as the headings */
     width: fit-content;
