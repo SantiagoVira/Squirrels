@@ -10,7 +10,7 @@ function Gallery() {
     const [stories, setStories] = useState(null);
 
     useEffect(async () => {
-        const response = await api.get("/api/SquirreLogs/1/user");
+        const response = await api.get("/api/SquirreLogs/1/user/?format=json");
         const formattedBullshit = JSON.parse(response.data).map(
             (object) => object.fields
         );
@@ -40,7 +40,7 @@ function Gallery() {
             //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
             const story = log.note;
             const topics = log.name ? log.name.split(",") : [];
-            
+
             //Search by tags (topics)
             if (search.startsWith("#")) {
                 topics.some((topic) => {
@@ -69,7 +69,7 @@ function Gallery() {
             Math.random() * Math.floor(Math.random() * Date.now())
         ).toString();
     }
-    
+
     function renderSquirrels() {
         //Render the stories, raises: can't render an object
         return stories.map((log) => {

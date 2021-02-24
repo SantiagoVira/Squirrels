@@ -21,7 +21,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
         }
         try {
             //Set card's votes in the database to votes variable
-            const response = await api.put(`/api/SquirreLogs/${id}/vote/`);
+            const response = await api.put(`/api/SquirreLogs/${id}/vote/?format=json`);
 
             // Change user's liked posts on the frontend
             changeUser({ ...user, profile: response.data.user });
