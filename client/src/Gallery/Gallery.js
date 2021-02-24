@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import api from "../api";
 
 import Card from "../Card/Card.js";
@@ -26,7 +25,7 @@ function RenderSquirrels(props) {
             gallery: true,
         };
         // Placeholder user prop because it must be passed into card
-        return <Card post={post} key={unique()} user={{ profile: null }} />;
+        return <Card post={post} key={unique()} />;
     });
 }
 

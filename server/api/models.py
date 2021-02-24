@@ -42,4 +42,3 @@ class TopicalSquirrel(models.Model):
 class User(AbstractUser):
     # Separating likes from dislikes to make sure users can like and dislike one time
     liked_posts = models.ManyToManyField(SquirreLog, related_name="liked_posts")
-    disliked_posts = models.ManyToManyField(SquirreLog, related_name="disliked_posts")

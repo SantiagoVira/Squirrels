@@ -26,6 +26,10 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         model = SquirreLog
         fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
 
+    # def create(self, validated_data):
+    #     print(validated_data)
+    #     return instance
+
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     SquirreLogs = serializers.HyperlinkedRelatedField(
@@ -45,12 +49,10 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
     # Creates a many-to-many relationship, similar to User model
     liked_posts = serializers.PrimaryKeyRelatedField(many=True,
         queryset=SquirreLog.objects.all(), required=False)
-    disliked_posts = serializers.PrimaryKeyRelatedField(many=True,
-        queryset=SquirreLog.objects.all(), required=False)
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'token', 'liked_posts', 'disliked_posts')
+        fields = ('id', 'username', 'password', 'token', 'liked_posts')
 
     def get_token(self, obj):
         jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER

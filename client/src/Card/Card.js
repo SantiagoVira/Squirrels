@@ -9,13 +9,7 @@ import { Redirect } from "react-router-dom";
 import Row from "../Row";
 import Col from "../Col";
 
-function unique() {
-    return Math.floor(
-        Math.random() * Math.floor(Math.random() * Date.now())
-    ).toString();
-}
-
-function Card({ post, onDelete, user, changeUser }) {
+function Card({ post, onDelete, user, changeUser, enableVoting }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [copied, setCopied] = useState("Copy Embed Link");
@@ -25,28 +19,23 @@ function Card({ post, onDelete, user, changeUser }) {
     const [editing, setEditing] = useState(false);
 
     useEffect(() => {
-        if (user.profile && user.profile.liked_posts.includes(post.id)) {
-            setVoteType("liked");
-        }
-        if (user.profile && user.profile.disliked_posts.includes(post.id)) {
-            setVoteType("disliked");
-        }
-        if (!user.profile) {
-            setVoteType("none");
+        if(enableVoting) {
+            if (user.profile && user.profile.liked_posts.includes(post.id)) {
+                setVoteType("liked");
+            }
+            if (!user.profile) {
+                setVoteType("none");
+            }
         }
     }, [user]);
 
-    async function vote(id, op) {
+    async function vote(id) {
         if (!user.isLoggedIn) {
             setRedirect(<Redirect to="/login" />);
         }
         try {
-            const currentVote = op === "up";
-            const tempVoteCount = votes;
             //Set card's votes in the database to votes variable
-            const response = await api.put(`/api/SquirreLogs/${id}/vote/`, {
-                upvote: currentVote,
-            });
+            const response = await api.put(`/api/SquirreLogs/${id}/vote/`);
 
             // Change user's liked posts on the frontend
             changeUser({
@@ -58,17 +47,10 @@ function Card({ post, onDelete, user, changeUser }) {
         } catch (err) {}
     }
 
-    function Arrow(props) {
-        return (
-            <div
-                onClick={() => {
-                    vote(props.id, props.class);
-                }}
-                className={`voteBtn  ${props.class} ${voteType}`}
-            >
-                {props.children}
-            </div>
-        );
+    function unique() {
+        return Math.floor(
+            Math.random() * Math.floor(Math.random() * Date.now())
+        ).toString();
     }
 
     function getPosition(string, subString, index) {
@@ -103,11 +85,24 @@ function Card({ post, onDelete, user, changeUser }) {
         );
     }
 
+    function Arrow(props) {
+        return (
+            <div 
+                onClick={() => vote(props.id, props.class)}
+                className={`voteBtn up ${voteType}`}
+            >
+                {props.children}
+            </div>
+        );
+    }
+
     function Hashtags(props) {
         return (
             <Row className={props.className}>
                 {props.children &&
                     props.children.map((topic) => {
+                        // Uses topic_name for home page uploads
+                        topic = topic.topic_name ? topic.topic_name : topic;
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
                                 <p>#{topic.trim()}</p>
@@ -117,6 +112,7 @@ function Card({ post, onDelete, user, changeUser }) {
             </Row>
         );
     }
+
     return (
         <div className="squirrelCard">
             {!post.gallery ? (
@@ -124,11 +120,9 @@ function Card({ post, onDelete, user, changeUser }) {
                     <div className="buttons">
                         <Arrow class="up" id={post.id} />
                         <p className="votes">{votes}</p>
-                        <Arrow class="down" id={post.id} />
                     </div>
                     {
                         /*onDelete &&
-                    user.isLoggedIn &&
                     user.profile &&
                     post.owner == user.profile.id*/ true ? (
                             <Col>
