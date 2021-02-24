@@ -1,13 +1,12 @@
 ## **Frontend:**
 
 -   put official squirrel stories on home page
+
     -   Give them the linking and stuff
 
 ## **Server:**
 
--
-
-**Note:**
+-   **Note:**
 
 -   User 1 = The owner of the official squirrel stories
     -   Default val
@@ -24,6 +23,7 @@
 -   limit hompage post num
 -   gallery embeds and upvoting
 -   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
+-   make edit posts stay in database
 
 ## **Presentation:**
 
