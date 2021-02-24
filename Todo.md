@@ -1,9 +1,5 @@
 ## **Frontend:**
 
--   put official squirrel stories on home page
-
-    -   Give them the linking and stuff
-
 ## **Server:**
 
 -   **Note:**
