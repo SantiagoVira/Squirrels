@@ -3,19 +3,19 @@
 -   Flickering user icon "feature"
 -   fix hashtag not getting them
 -   Remove "home" section of menu and put link in header "sqrrlz"
+-   Show who owns each card
 -   put official squirrel stories on home page
     - Give them the linking and stuff
 -   put official squirrel stories on home page
     -   Give them the linking and stuff
 
+**Performance**
+-   Pagination for the API, intersectionobservers on the cards,
+preloading for components, skeleton preloader
+
 ## **Server:**
 
--
-
-**Note:**
-
--   User 1 = The owner of the official squirrel stories
-    -   Default val
+-   Store who liked each post 
 
 ## **If We Have Time**
 
@@ -26,7 +26,7 @@
 -   styleize editing
 -   Sort by topics with the links given by the server
 -   admins (view edit&delete post buttons, those functionalities)
--   limit hompage post num
+-   limit homepage post num
 -   gallery embeds and upvoting
 -   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
 
