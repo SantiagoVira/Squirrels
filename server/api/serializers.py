@@ -40,7 +40,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
 
     def create(self, validated_data):
-        print(validated_data)
         if 'SquirrelTopics' in validated_data: # We're not posting topics?
             topics = validated_data['SquirrelTopics']
         else:
@@ -51,13 +50,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             owner=validated_data['owner'],
         )
         for topic in topics:
-            print(topic)
             try: # Finding an existing topic
                 topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic_name)
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
-        print(log.owner)
         return log
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):

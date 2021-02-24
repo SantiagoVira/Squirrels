@@ -25,14 +25,6 @@ function Create({ user }) {
         try {
             e.preventDefault();
 
-            console.log({
-                ...request,
-                topics: request.topic
-                    .split("#")
-                    .filter((topic) => topic !== ""),
-                pub_date: new Date().toISOString(), //Gets current date
-            });
-
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic
