@@ -24,7 +24,7 @@ def make_topics(json):
         # We don't want to duplicate topics
         try:
             names_to_topics[topic_name] = SquirrelTopic.objects.get(topic_name__exact=topic_name)
-        except: # When there is no topic found 
+        except: # When there is no topic found
             topic = SquirrelTopic(topic_name=topic_name)
             topic.save()
             names_to_topics[topic_name] = topic
@@ -53,15 +53,9 @@ class Command(BaseCommand):
                 if section.startswith("story_topic_")
             ]
 
-            # Making the log
-            name = (
-                ", ".join(seed_topic_names).replace("_", " ") if len(seed_topic_names) >= 1
-                else "Squirrels!"
-                )
             seed_log = SquirreLog(
                 note=log["note_squirrel_park_stories"],
                 pub_date=timezone.now(),
-                name=name,
                 )
             seed_log.save()
 

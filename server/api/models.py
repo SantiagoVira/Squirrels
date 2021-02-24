@@ -15,7 +15,6 @@ class SquirreLog(models.Model):
     note = models.TextField(max_length=400) # Arbitrary length of a note
     pub_date = models.DateTimeField('date published')
     votes = models.IntegerField(default=0)
-    name = models.CharField(max_length=100, default=None, null=True)
 
     # Foreign connections
     # https://docs.djangoproject.com/en/2.2/topics/db/models/#intermediary-manytomany
@@ -23,13 +22,7 @@ class SquirreLog(models.Model):
     topics = models.ManyToManyField('SquirrelTopic', through='TopicalSquirrel', related_name="SquirreLogs")
 
     def __str__(self):
-        return str(self.name)
-
-    def log_name(self):
-        """
-        Clearer than serializing the __str__ property
-        """
-        return str(self.name)
+        return str(self.note)
 
 class TopicalSquirrel(models.Model):
     topic = models.ForeignKey('SquirrelTopic', on_delete=models.CASCADE, default=None, null=True)

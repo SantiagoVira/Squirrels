@@ -1,15 +1,14 @@
 ## **Frontend:**
 
--   Flickering user icon "feature" fix (please)
+-   Flickering user icon "feature"
 -   fix hashtag not getting them
 -   stop not logged in ppl from seeing create page
+-   put official squirrel stories on home page
+    - Give them the linking and stuff 
 
 ## **Server:**
 
--   Fix posting for SquirreLogSerializer
--   Remove 'name' field from everything
--   Add nested serializer for topics
-    -   Return the data for each log (so we can display it easier) and a link to the api view of the log
+-      
 
 **Note:**
 
@@ -21,6 +20,7 @@
 -   #of posts links to a list of your posts
 -   style finished hashtag in create form
 -   buy Sqqrlz.com
+    - *Change django token in settings if we make the site live (major security flaw oopsies)*
 -   styleize editing
 -   Sort by topics with the links given by the server
 -   admins (view edit&delete post buttons, those functionalities)

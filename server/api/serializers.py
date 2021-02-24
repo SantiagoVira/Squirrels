@@ -15,7 +15,7 @@ class SquirreLogReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
+        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -31,7 +31,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'name', 'owner', 'SquirrelTopics')
+        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
 
     def create(self, validated_data):
         print(validated_data)
@@ -42,7 +42,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
-            name="", # Client-side doesn't return a name
             owner=validated_data['owner'],
         )
         for topic in topics:
