@@ -28,26 +28,26 @@ def current_user(request):
     return Response(serializer.data)
 
 # The article's UserList
-# class UserList(APIView):
-#     """All the users"""
-#
-#     permission_classes = (permissions.AllowAny,)
-#
-#     def post(self, request, format=None):
-#         serializer = UserSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             # Response should be the same as obtain_jwt_token (data inside user property)
-#             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+class UserList(APIView):
+    """All the users"""
+
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # Response should be the same as obtain_jwt_token (data inside user property)
+            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    # def get(self, request, format=None, **kwargs):
+    #     serializer = UserLogsSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         # Response should be the same as obtain_jwt_token (data inside user property)
+    #         return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
 #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-#
-#     def get(self, request, format=None, **kwargs):
-#         serializer = UserLogsSerializer(data=request.data)
-#         if serializer.is_valid():
-#             serializer.save()
-#             # Response should be the same as obtain_jwt_token (data inside user property)
-#             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # FOR THE USER-BASED SQUIRRELOG VIEW
 class UserSquirrelViewSet(viewsets.ModelViewSet):
