@@ -75,7 +75,10 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 {props.children &&
                     props.children.map((topic) => {
                         // Uses topic_name for home page uploads
-                        topic = typeof topic.topic_name != undefined ? topic.topic_name : topic;
+                        topic =
+                            typeof topic.topic_name != undefined
+                                ? topic.topic_name
+                                : topic;
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
                                 <p>#{topic.trim()}</p>

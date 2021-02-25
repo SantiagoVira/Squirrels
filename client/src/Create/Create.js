@@ -24,6 +24,7 @@ function Create({ user }) {
         });
         try {
             e.preventDefault();
+            console.log(request);
 
             await api.post("/api/SquirreLogs/", {
                 ...request,
