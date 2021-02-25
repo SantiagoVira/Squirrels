@@ -1,6 +1,6 @@
 ## **Frontend:**
 
--   stylize errors
+-   style errors
 
 **Performance**
 
@@ -30,5 +30,4 @@
 -   limit homepage post num
 -   gallery embeds and upvoting
 -   make edit posts stay in database
-
-## **Presentation:**
+-   Show who owns each card

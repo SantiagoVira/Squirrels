@@ -11,8 +11,9 @@ function Uploads(props) {
     useEffect(async () => {
         try {
             const response = await api.get("/api/SquirreLogs/");
-            console.log(response)
-            setPosts(response.data.results.filter((post) => post.owner > 1));
+            await setPosts(
+                response.data.results.filter((post) => post.owner > 1)
+            );
         } catch (err) {}
     }, []);
 
