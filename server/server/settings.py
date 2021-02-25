@@ -27,7 +27,7 @@ SECRET_KEY = (os.environ['SECRET_KEY']
     else 'f151u71kopnay_9$a+^mo68^exeml232ip!y+fop)j)5hr+ec=')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
