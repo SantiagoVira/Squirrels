@@ -118,7 +118,7 @@ function App() {
                         <Route
                             path="/gallery"
                             exact
-                            component={Gallery}
+                            render={() => <Gallery user={user} />}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route

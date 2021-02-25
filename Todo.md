@@ -15,7 +15,7 @@ preloading for components, skeleton preloader
 
 ## **Server:**
 
--   Store who liked each post 
+-   Store who liked each post
 
 ## **If We Have Time**
 
@@ -29,9 +29,6 @@ preloading for components, skeleton preloader
 -   limit homepage post num
 -   gallery embeds and upvoting
 -   Add intersectionobservers to cards (performance) (Just scroll down, not pages)
+-   make edit posts stay in database
 
 ## **Presentation:**
-
--   Site demonstration?
--   Squirrel jokes (https://upjoke.com/squirrel-jokes)
-    -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing

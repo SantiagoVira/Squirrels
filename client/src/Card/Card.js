@@ -18,7 +18,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     const [liked, setLiked] = useState();
 
     useEffect(() => {
-        if (user.isLoggedIn) {
+        if (user && user.isLoggedIn) {
             setLiked(user.profile.liked_posts.includes(post.id));
         }
     }, [user]);
@@ -85,6 +85,9 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             </Row>
         );
     }
+    function editPosts(id) {
+        setEditing(!editing);
+    }
 
     return (
         <div className="squirrelCard">
@@ -114,7 +117,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                             </IconButton>
                             <IconButton
                                 className="editOrDeleteButton"
-                                onClick={() => setEditing(!editing)}
+                                onClick={() => editPosts(post.id)}
                             >
                                 <CreateIcon />
                             </IconButton>

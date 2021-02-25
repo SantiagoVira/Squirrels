@@ -53,7 +53,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             owner=validated_data['owner'],
         )
         for topic in topics:
-            print(topic)
             try: # Finding an existing topic
                 topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic_name)
             except: # When no existing topics
