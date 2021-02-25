@@ -10,12 +10,16 @@ function Gallery({ user }) {
     const [stories, setStories] = useState(null);
 
     useEffect(async () => {
-        const response = await api.get("/api/SquirreLogs/1/user/?format=json");
-        const formattedBullshit = JSON.parse(response.data).map(
-            (object) => object.fields
-        );
-        setData(formattedBullshit);
-        getStories(formattedBullshit, "");
+        const response = await api.get("/api/user/1");
+        const d = response.data.results;
+        setData(d);
+        getStories(d, "");
+        while (response.data.next) {
+            console.log(response.data.next);
+            const response = await api.get(response.data.next);
+            const d = response.data.results;
+            setData(data.concat(d));
+        }
     }, []);
 
     function getStories(stories, search) {
