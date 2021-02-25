@@ -17,6 +17,10 @@
 ## **Server:**
 
 -   View for liked posts by user
+-   Validation for usernames
+-   Add the total number of likes to view for users
+-   Sort by owner ids
+-   Don't put user id 1 in squirrelogs view 
 
 ## **If We Have Time**
 
@@ -26,7 +30,7 @@
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
 -   styleize editing
 -   Sort by topics with the links given by the server
-    -   Update topic view to return squirrel logs better 
+    -   Update topic view to return squirrel logs better
 -   admins (view edit&delete post buttons, those functionalities)
 -   limit homepage post num
 -   gallery embeds and upvoting

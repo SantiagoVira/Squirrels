@@ -28,26 +28,43 @@ def current_user(request):
     return Response(serializer.data)
 
 # The article's UserList
-class UserList(APIView):
-    """All the users"""
+class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
+    """User stuff"""
 
     permission_classes = (permissions.AllowAny,)
+    queryset = User.objects.all()
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            # Response should be the same as obtain_jwt_token (data inside user property)
-            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return UserListSerializer
+        return UserSerializer
 
-    # def get(self, request, format=None, **kwargs):
-    #     serializer = UserLogsSerializer(data=request.data)
+    # @action(methods=['GET'], detail=True, url_path='', url_name='')
+    # def posts(self, request, **kwargs):
+    #     logs = SquirreLog.objects.filter(owner_id=kwargs['pk'])
+    #     log_serializer = UserSquirrelSerializer(logs, data={'logs' : logs})
+    #     if log_serializer.is_valid():
+    #         log_serializer.save()
+    #         return Response(log_serializer.data, status=status.HTTP_200_OK)
+    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+        # return Response(UserSquirrelSerializer(logs).data)
+
+    # def post(self, request, format=None):
+    #     serializer = UserSerializer(data=request.data)
     #     if serializer.is_valid():
     #         serializer.save()
     #         # Response should be the same as obtain_jwt_token (data inside user property)
     #         return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    #
+    # def get(self, request, format=None, **kwargs):
+    #     serializer = UserListSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #         # Response should be the same as obtain_jwt_token (data inside user property)
+    #         return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # FOR THE USER-BASED SQUIRRELOG VIEW
 class UserSquirrelViewSet(viewsets.ModelViewSet):
@@ -67,7 +84,7 @@ class TopicViewSet(viewsets.ModelViewSet):
     serializer_class = SquirrelTopicSerializer
 
 class SquirreLogViewSet(viewsets.ModelViewSet):
-    queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
+    queryset = SquirreLog.objects.all().exclude(owner=1).order_by('pub_date')
     # serializer_class = SquirreLogSerializer
 
     def get_permissions(self):
