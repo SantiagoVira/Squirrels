@@ -22,7 +22,3 @@
 -   make edit posts stay in database
 
 ## **Presentation:**
-
--   Site demonstration?
--   Squirrel jokes (https://upjoke.com/squirrel-jokes)
-    -   I got kicked out of the park today for arranging the squirrels by height—they didn’t like my critter sizing
