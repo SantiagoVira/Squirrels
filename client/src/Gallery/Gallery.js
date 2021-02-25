@@ -15,8 +15,8 @@ function Gallery({ user }) {
         setData(d);
         getStories(d, "");
         while (response.data.next) {
-            console.log(response.data.next);
             const response = await api.get(response.data.next);
+            console.log(response)
             const d = response.data.results;
             setData(data.concat(d));
         }
