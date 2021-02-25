@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import history from "../history";
 import "./UserForm.css";
+import Error from "./error/Error";
 
 function UserForm(props) {
     const [form, setForm] = useState({ username: "", password: "" });
@@ -16,7 +17,7 @@ function UserForm(props) {
             localStorage.setItem("token", response.data.user.token);
             await props.changeUser({
                 isLoggedIn: true,
-                profile: response.data.user
+                profile: response.data.user,
             });
             history.push("/");
         } catch (err) {
@@ -39,7 +40,7 @@ function UserForm(props) {
 
     return (
         <div className="UserFormContainer">
-            <div>{error}</div>
+            {error ? <Error>{error}</Error> : null}
             <form
                 className="UserFormForm"
                 onSubmit={(e) => onFormSubmit(e, form)}

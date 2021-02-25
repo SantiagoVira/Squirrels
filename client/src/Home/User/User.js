@@ -26,9 +26,8 @@ function User(props) {
                 return null;
             }
             const dbUserPerson = await api.get(
-                `/api/user/${props.user.profile.id}`
+                `/api/users/${props.user.profile.id}`
             );
-            console.log(dbUserPerson);
             await setUser({
                 votes: 0 /*dbFormattedBullshit
                     .map((post) => post.votes)
