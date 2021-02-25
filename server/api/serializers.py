@@ -9,6 +9,18 @@ from .models import SquirreLog, SquirrelTopic, User
 # TinyTopic contains a url to SquirrelTopic
 # SquirrelTopic contains Squirrelog urls
 
+class SquirrelTopicSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+    SquirreLogs = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='squirrelog-detail'
+    )
+
+    class Meta:
+        model = SquirrelTopic
+        fields = ('id', 'SquirreLogs', 'topic_name',)
+
 class TinyTopicSerializer(serializers.ModelSerializer):
     """To be nested in the read-only version of the SquirreLog serializer"""
 
@@ -59,18 +71,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
         return log
-
-class SquirrelTopicSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField()
-    SquirreLogs = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='squirrelog-detail'
-    )
-
-    class Meta:
-        model = SquirrelTopic
-        fields = ('id', 'SquirreLogs', 'topic_name',)
 
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
