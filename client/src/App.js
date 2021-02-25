@@ -43,7 +43,6 @@ function App() {
                 const token = localStorage.getItem("token");
                 if (token) {
                     const response = await api.get("/api/current_user/");
-                    console.log(response)
                     setUser({
                         isLoggedIn: true,
                         profile: response.data,

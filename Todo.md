@@ -1,7 +1,5 @@
 ## **Frontend:**
 
--   style errors
-
 **Performance**
 
 -   Skeleton preloader
