@@ -28,31 +28,39 @@ def current_user(request):
     return Response(serializer.data)
 
 # The article's UserList
-class UserList(APIView):
-    """
-    Create a new user. It's called 'UserList' because normally we'd have a get
-    method here too, for retrieving a list of all User objects.
-    - https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
-    """
-
-    permission_classes = (permissions.AllowAny,)
-
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            # Response should be the same as obtain_jwt_token (data inside user property)
-            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# I put the article's class below, but I think something like this could work?
-# It'd be so much cleaner
-# class UserList(viewsets.ModelViewSet):
-#     """Make and sign in users"""
-#     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
+# class UserList(APIView):
+#     """All the users"""
 #
-#     serializer_class = UserSerializerWithToken
+#     permission_classes = (permissions.AllowAny,)
+#
+#     def post(self, request, format=None):
+#         serializer = UserSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             # Response should be the same as obtain_jwt_token (data inside user property)
+#             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#
+#     def get(self, request, format=None, **kwargs):
+#         serializer = UserLogsSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             # Response should be the same as obtain_jwt_token (data inside user property)
+#             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+# #         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# FOR THE USER-BASED SQUIRRELOG VIEW
+class UserSquirrelViewSet(viewsets.ModelViewSet):
+    permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
+    serializer_class = UserSquirrelSerializer
+
+    def get_queryset(self):
+        return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
+
+# class UserLogViewSet(viewsets.ModelViewSet): # Make a separate API view
+#     """Show the logs associated with a user"""
 #     queryset = User.objects.all()
+#     serializer_class = UserLogSerializer
 
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
@@ -60,7 +68,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().order_by('pub_date') # most recent
-    serializer_class = SquirreLogSerializer
+    # serializer_class = SquirreLogSerializer
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -94,18 +102,16 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         # return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def perform_create(self, serializer):
-        print(self.request.data)
-        # Not all the information goes into the serializer at first?? 
         serializer.save(
             owner=self.request.user,
             SquirrelTopics=self.request.data['topics']
         )
 
-    @action(methods=['get'], detail=True, url_path='user', url_name='user')
-    def filter(self, request, **kwargs):
-        logs = SquirreLog.objects.filter(owner=kwargs['pk'])
-        data = s.serialize('json', list(logs))
-        return Response(data=data, status=status.HTTP_200_OK)
+    # @action(methods=['get'], detail=True, url_path='user', url_name='user')
+    # def filter(self, request, **kwargs):
+    #     logs = SquirreLog.objects.filter(owner=kwargs['pk'])
+    #     data = s.serialize('json', list(logs))
+    #     return Response(data=data, status=status.HTTP_200_OK)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):

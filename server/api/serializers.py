@@ -5,11 +5,13 @@ from .models import SquirreLog, SquirrelTopic, User
 
 # SquirreLog-Topic Structure (is this correct?):
 # SquirreLog creates/updates topic references in string-related field
-# SquirreLogRead gets topics from nested TinyTopic (read-only) 
+# SquirreLogRead gets topics from nested TinyTopic (read-only)
 # TinyTopic contains a url to SquirrelTopic
 # SquirrelTopic contains Squirrelog urls
 
 class TinyTopicSerializer(serializers.ModelSerializer):
+    """To be nested in the read-only version of the SquirreLog serializer"""
+
     topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
     class Meta:
@@ -17,6 +19,7 @@ class TinyTopicSerializer(serializers.ModelSerializer):
         fields = ['topic_name', 'topic_link']
 
 class SquirreLogReadSerializer(serializers.ModelSerializer):
+    # Returns a list of objs with {'topic_name' : "a_topic_name", "topic_link" : hyperlink}
     SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
 
     class Meta:
@@ -40,7 +43,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
 
     def create(self, validated_data):
-        print(validated_data)
         if 'SquirrelTopics' in validated_data: # We're not posting topics?
             topics = validated_data['SquirrelTopics']
         else:
@@ -57,7 +59,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
-        print(log.owner)
         return log
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
@@ -76,9 +77,12 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
-    # Creates a many-to-many relationship, similar to User model
-    liked_posts = serializers.PrimaryKeyRelatedField(many=True,
-        queryset=SquirreLog.objects.all(), required=False)
+
+    liked_posts = serializers.PrimaryKeyRelatedField(
+        many=True,
+        queryset=SquirreLog.objects.all(),
+        required=False
+    )
 
     class Meta:
         model = User
@@ -99,3 +103,11 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
             instance.set_password(password) # Security
         instance.save()
         return instance
+
+class UserSquirrelSerializer(serializers.ModelSerializer):
+    log_link = serializers.HyperlinkedIdentityField(view_name='squirrelog-detail')
+    SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = SquirreLog
+        fields = ('id', 'note', 'pub_date', 'votes', 'SquirrelTopics', 'log_link')

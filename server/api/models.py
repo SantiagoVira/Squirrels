@@ -18,7 +18,7 @@ class SquirreLog(models.Model):
 
     # Foreign connections
     # https://docs.djangoproject.com/en/2.2/topics/db/models/#intermediary-manytomany
-    owner = models.ForeignKey('User', on_delete=models.CASCADE, default=1)
+    owner = models.ForeignKey('User', on_delete=models.CASCADE, default=1, related_name='owner')
     topics = models.ManyToManyField('SquirrelTopic', through='TopicalSquirrel', related_name="SquirreLogs")
 
     def __str__(self):
