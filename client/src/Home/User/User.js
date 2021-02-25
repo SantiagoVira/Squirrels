@@ -26,16 +26,14 @@ function User(props) {
                 return null;
             }
             const dbUserPerson = await api.get(
-                `/api/SquirreLogs/${props.user.profile.id}/user`
+                `/api/user/${props.user.profile.id}`
             );
-            const dbFormattedBullshit = JSON.parse(dbUserPerson.data).map(
-                (object) => object.fields
-            );
+            console.log(dbUserPerson);
             await setUser({
-                votes: dbFormattedBullshit
+                votes: 0 /*dbFormattedBullshit
                     .map((post) => post.votes)
-                    .reduce((a, b) => a + b, 0),
-                posts: Object.keys(dbFormattedBullshit).length,
+                    .reduce((a, b) => a + b, 0)*/,
+                posts: dbUserPerson.data.count,
             });
         };
         getUserData();

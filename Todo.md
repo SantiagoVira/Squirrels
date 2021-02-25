@@ -1,17 +1,15 @@
 ## **Frontend:**
 
--   Remove "home" section of menu and put link in header "sqrrlz"
--   Show who owns each card
--   disable lots of functionalities on card link
+-   style errors
 
 **Performance**
 
 -   Skeleton preloader
-    - https://css-tricks.com/building-skeleton-screens-css-custom-properties/
+    -   https://css-tricks.com/building-skeleton-screens-css-custom-properties/
 -   Pagination for the API
 -   Intersectionobservers on the cards
-    - We could conditionally load cards instead of paging them
-        - Check if there's a next log returned by the API, if not, go to the next page for content (or something to the same effect)
+    -   We could conditionally load cards instead of paging them
+        -   Check if there's a next log returned by the API, if not, go to the next page for content (or something to the same effect)
 -   Preloading for components
 
 ## **Server:**
@@ -24,6 +22,7 @@
 
 ## **If We Have Time**
 
+-   Show who owns each card
 -   #of posts links to a list of your posts
 -   style finished hashtag in create form
 -   buy Sqqrlz.com
@@ -35,5 +34,4 @@
 -   limit homepage post num
 -   gallery embeds and upvoting
 -   make edit posts stay in database
-
-## **Presentation:**
+-   Show who owns each card

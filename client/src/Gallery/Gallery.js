@@ -6,16 +6,19 @@ import Search from "./Search/Search";
 import "./Gallery.css";
 
 function Gallery({ user }) {
-    const [data, setData] = useState(null);
-    const [stories, setStories] = useState(null);
+    const [data, setData] = useState([]);
+    const [stories, setStories] = useState([]);
 
     useEffect(async () => {
-        const response = await api.get("/api/SquirreLogs/1/user/?format=json");
-        const formattedBullshit = JSON.parse(response.data).map(
-            (object) => object.fields
-        );
-        setData(formattedBullshit);
-        getStories(formattedBullshit, "");
+        var response = await api.get("/api/user/1");
+        var d = response.data.results;
+        setData(d);
+        getStories(d, "");
+        while (response.data.next) {
+            response = await api.get(response.data.next);
+            d = [...d, ...response.data.results];
+            setData(d);
+        }
     }, []);
 
     function getStories(stories, search) {

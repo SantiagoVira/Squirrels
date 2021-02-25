@@ -17,7 +17,14 @@ function CardLoader(props) {
         const response = await api.get(`/api/SquirreLogs/${id}`);
         setCard(response.data);
     }, []);
-    return <Card post={card} key={unique()} user={{ profile: null }} />;
+    return (
+        <Card
+            post={card}
+            key={unique()}
+            user={{ profile: null }}
+            disableCardMenu={true}
+        />
+    );
 }
 
 export default CardLoader;

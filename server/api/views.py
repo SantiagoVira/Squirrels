@@ -103,21 +103,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
              return SquirreLogReadSerializer
         return SquirreLogSerializer
 
-    # **Experimental**
-    # def create(self, request, *args, **kwargs):
-        # log_serializer = SquirreLogSerializer(data=request.data, partial=True)
-        # if log_serializer.is_valid():
-        #     populated_topics = []
-        #     for topic in request.data['topics']:
-        #         topic_serializer = TinyTopicSerializer(data={'topic_name': topic}, context={'request': request})
-        #         if topic_serializer.is_valid():
-        #             topic_serializer.save()
-        #             populated_topics.append(topic_serializer)
-        #     log_serializer.save(owner=self.request.user, SquirrelTopics=populated_topics)
-        #
-        #     return Response(log_serializer.data, status=status.HTTP_201_CREATED)
-        # return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
     def perform_create(self, serializer):
         serializer.save(
             owner=self.request.user,
