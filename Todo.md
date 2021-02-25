@@ -1,7 +1,5 @@
 ## **Frontend:**
 
--   style errors
-
 **Performance**
 
 -   Skeleton preloader
@@ -14,11 +12,11 @@
 
 ## **Server:**
 
--   View for liked posts by user
+-   View for liked posts by user (more than just pk)
 -   Validation for usernames
--   Add the total number of likes to view for users
+-   Add the total number of likes to view for users (likes of all time)
 -   Sort by owner ids
--   Don't put user id 1 in squirrelogs view 
+-   Don't put user id 1 in squirrelogs view
 
 ## **If We Have Time**
 
