@@ -10,7 +10,7 @@ function Gallery({ user }) {
     const [stories, setStories] = useState([]);
 
     useEffect(async () => {
-        var response = await api.get("/api/user/1");
+        var response = await api.get("/api/users/1");
         var d = response.data.results;
         setData(d);
         getStories(d, "");
