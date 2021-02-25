@@ -35,7 +35,8 @@ class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
     def get_serializer_class(self):
         if self.request.method in ['GET']:
             return UserListSerializer
-        return UserSerializer
+        if self.request.method in ['POST']:
+            return UserSerializer
 
     # @action(methods=['GET'], detail=True, url_path='', url_name='')
     # def posts(self, request, **kwargs):
@@ -48,13 +49,13 @@ class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
 
         # return Response(UserSquirrelSerializer(logs).data)
 
-    # def post(self, request, format=None):
-    #     serializer = UserSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         # Response should be the same as obtain_jwt_token (data inside user property)
-    #         return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def post(self, request, format=None):
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            # Response should be the same as obtain_jwt_token (data inside user property)
+            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     #
     # def get(self, request, format=None, **kwargs):
     #     serializer = UserListSerializer(data=request.data)
