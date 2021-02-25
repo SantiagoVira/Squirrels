@@ -2,6 +2,7 @@
 
 -   Remove "home" section of menu and put link in header "sqrrlz"
 -   Show who owns each card
+-   disable lots of functionalities on card link
 
 **Performance**
 
