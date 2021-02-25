@@ -1,17 +1,12 @@
 ## **Frontend:**
 
--   Flickering user icon "feature"
--   fix hashtag not getting them
 -   Remove "home" section of menu and put link in header "sqrrlz"
 -   Show who owns each card
--   put official squirrel stories on home page
-    - Give them the linking and stuff
--   put official squirrel stories on home page
-    -   Give them the linking and stuff
 
 **Performance**
+
 -   Pagination for the API, intersectionobservers on the cards,
-preloading for components, skeleton preloader
+    preloading for components, skeleton preloader
 
 ## **Server:**
 
