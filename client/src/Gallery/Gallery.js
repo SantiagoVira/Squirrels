@@ -6,19 +6,18 @@ import Search from "./Search/Search";
 import "./Gallery.css";
 
 function Gallery({ user }) {
-    const [data, setData] = useState(null);
-    const [stories, setStories] = useState(null);
+    const [data, setData] = useState([]);
+    const [stories, setStories] = useState([]);
 
     useEffect(async () => {
-        const response = await api.get("/api/user/1");
-        const d = response.data.results;
+        var response = await api.get("/api/users/1");
+        var d = response.data.results;
         setData(d);
         getStories(d, "");
         while (response.data.next) {
-            const response = await api.get(response.data.next);
-            console.log(response)
-            const d = response.data.results;
-            setData(data.concat(d));
+            response = await api.get(response.data.next);
+            d = [...d, ...response.data.results];
+            setData(d);
         }
     }, []);
 

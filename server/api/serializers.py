@@ -103,10 +103,19 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         instance.save()
         return instance
 
+class UserListSerializer(serializers.ModelSerializer):
+    """For looking at all the pretty users"""
+
+    posts = serializers.HyperlinkedIdentityField(view_name='user-detail')
+
+    class Meta:
+        model = User
+        fields = ('id', 'username', 'liked_posts', 'posts')
+
 class UserSquirrelSerializer(serializers.ModelSerializer):
     log_link = serializers.HyperlinkedIdentityField(view_name='squirrelog-detail')
     SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'SquirrelTopics', 'log_link')
+        fields = ('id', 'note', 'pub_date', 'votes', 'SquirrelTopics', 'log_link', 'owner')

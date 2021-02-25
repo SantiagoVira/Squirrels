@@ -15,6 +15,10 @@
 ## **Server:**
 
 -   View for liked posts by user
+-   Validation for usernames
+-   Add the total number of likes to view for users
+-   Sort by owner ids
+-   Don't put user id 1 in squirrelogs view 
 
 ## **If We Have Time**
 
