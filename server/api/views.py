@@ -1,7 +1,5 @@
 # Register viewsets in api/urls.py!!!
 
-from django.core import serializers as s
-
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
