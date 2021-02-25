@@ -63,3 +63,8 @@ a.AuthLinks:visited {
     color: var(--cinnamon);
     text-decoration: none;
 }
+.UserFormContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
