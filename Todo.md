@@ -5,12 +5,15 @@
 
 **Performance**
 
--   Pagination for the API, intersectionobservers on the cards,
-    preloading for components, skeleton preloader
+-   Skeleton preloader
+    - https://css-tricks.com/building-skeleton-screens-css-custom-properties/
+-   Pagination for the API
+-   Intersectionobservers on the cards
+-   Preloading for components
 
 ## **Server:**
 
--   Store who liked each post
+-   View for liked posts by user
 
 ## **If We Have Time**
 
