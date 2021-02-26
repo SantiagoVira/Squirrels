@@ -17,6 +17,7 @@
 -   Add the total number of likes to view for users (likes of all time)
 -   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
+-   Actual profile pictures 
 
 ## **If We Have Time**
 

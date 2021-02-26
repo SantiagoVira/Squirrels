@@ -2,6 +2,7 @@ import requests
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 from ...models import SquirreLog, SquirrelTopic
+import sys
 
 def get_official_squirrels():
     r = requests.get(
@@ -34,17 +35,21 @@ def make_topics(json):
 # More on saving many-to-many
 # https://docs.djangoproject.com/en/3.1/topics/db/examples/many_to_many/
 class Command(BaseCommand):
-    def handle(self, *args, **options):
-        print("Clearing existing logs for user 1")
-
-        # Removing default user logs
+    def handle(self, *args, **options):# Removing default user logs
         SquirreLog.objects.filter(owner_id=1).delete()
 
-        print("Seeding squirrel stories under user 1")
+        print("Logs under user 1 have been cleared")
 
         json = get_official_squirrels() # The json of official stories
+
+        print("The official stories have been recieved")
+
         names_to_topics = make_topics(json)
 
+        print("Unique topics have been registered")
+
+        percent_to_add = 100/len(json)
+        current_percent = 0
         for log in json:
             # The topics related to a squirrel log
             seed_topic_names = [
@@ -61,5 +66,10 @@ class Command(BaseCommand):
 
             for seed_topic in seed_topic_names: # Adding the topics
                 seed_log.topics.add(names_to_topics[seed_topic])
+
+            # Percentage tracker
+            current_percent += percent_to_add
+            sys.stdout.write(f"\r~{round(current_percent, 3)}% done saving stories")
+            sys.stdout.flush()
 
         print("Consider thyself seeded")
