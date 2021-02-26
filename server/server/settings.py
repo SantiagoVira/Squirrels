@@ -145,11 +145,14 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# STATICFILES_DIRS can't include STATIC_ROOT directory
 if DEBUG:
+    # Django (development) looks for static files under STATICFILES_DIRS
     STATICFILES_DIRS = (
         os.path.join(BASE_DIR, "static/static"),
     )
 else:
+    # WSGI server (production) runs collectstatic and checks STATIC_ROOT
     STATIC_ROOT = os.path.join(BASE_DIR, 'static/static')
 
 
