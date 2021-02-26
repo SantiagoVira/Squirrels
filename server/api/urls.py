@@ -1,8 +1,7 @@
 from django.urls import include, path
 from rest_framework import routers
-from . import views
-
 from rest_framework_jwt.views import obtain_jwt_token
+from . import views
 
 # Registering viewsets
 router = routers.DefaultRouter()

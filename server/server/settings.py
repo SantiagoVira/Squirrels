@@ -21,10 +21,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 # Set to SECRET_KEY environment variable or a default string
 SECRET_KEY = os.environ.get('SECRET_KEY', 'f151u71kopnay_9$a+^mo68^exeml232ip!y+fop)j)5hr+ec=')
-# Note: Debug = false will stop django from serving static files (may need a work-around)
-DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+# Note: Debug = false will stop django from serving static files (may need a work-around)
+DEBUG = False
+
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 
 # Application definition
@@ -144,10 +145,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-# I want to be able to see the django interface
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, "static/static"),
-)
+if DEBUG:
+    STATICFILES_DIRS = (
+        os.path.join(BASE_DIR, "static/static"),
+    )
+else:
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static/static')
+
 
 # CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True
