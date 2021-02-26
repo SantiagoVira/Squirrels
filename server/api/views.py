@@ -14,6 +14,7 @@ from .permissions import IsOwner
 # Models
 from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
+from server.settings import SECRET_KEY
 User = get_user_model() # checks the most updated User model (api.User)
 
 
@@ -85,7 +86,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().exclude(owner=1).order_by('pub_date')
     # serializer_class = SquirreLogSerializer
-
+    
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             self.permission_classes = [permissions.AllowAny, ]
@@ -99,7 +100,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         # https://stackoverflow.com/a/41313121
         # Specify the serializer we want for each operation
         if self.request.method in ['GET']:
-             return SquirreLogReadSerializer
+            print(SECRET_KEY)
+            return SquirreLogReadSerializer
         return SquirreLogSerializer
 
     def perform_create(self, serializer):
