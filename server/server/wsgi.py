@@ -16,4 +16,5 @@ from whitenoise import WhiteNoise
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'server.settings')
 
 application = Cling(get_wsgi_application())
+# White Noise correctly serves static files when DEBUG=False
 application = WhiteNoise(application, root='static/static')

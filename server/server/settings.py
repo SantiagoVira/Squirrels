@@ -22,9 +22,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Set to SECRET_KEY environment variable or a default string
 SECRET_KEY = os.environ.get('SECRET_KEY', 'f151u71kopnay_9$a+^mo68^exeml232ip!y+fop)j)5hr+ec=')
 
-# Note: Debug = false will stop django from serving static files (may need a work-around)
+# This determines whether error messages are shown by the server
+# False for production server / True for development server
 DEBUG = False
 
+# Add to this list if you want this app to be hosted on another site
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
 
 
