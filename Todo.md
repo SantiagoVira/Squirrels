@@ -17,7 +17,7 @@
 -   Add the total number of likes to view for users (likes of all time)
 -   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
--   Actual profile pictures 
+-   Actual profile pictures
 
 ## **If We Have Time**
 
@@ -33,4 +33,3 @@
 -   limit homepage post num
 -   gallery embeds and upvoting
 -   make edit posts stay in database
--   Show who owns each card
