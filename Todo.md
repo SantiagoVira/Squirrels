@@ -19,11 +19,12 @@
 
     -   click on hashtag shows all posts with that hashtag
 
--   Show who owns each card
 -   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
 
 -   styleize editing
+-   fix the card going nono
+-   ##
 
 ## **Server:**
 
