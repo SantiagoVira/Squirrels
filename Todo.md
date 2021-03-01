@@ -1,5 +1,3 @@
-## **Frontend:**
-
 **Performance**
 
 -   Skeleton preloader
@@ -15,13 +13,17 @@
     -   https://medium.com/front-end-weekly/progressive-image-loading-and-intersectionobserver-d0359b5d90cd
 
 ## **Frontend**
--   Show who owns each card
+
 -   #of posts links to a list of your posts
--   style finished hashtag in create form
--   styleize editing
 -   Sort by topics with the links given by the server
+
+    -   click on hashtag shows all posts with that hashtag
+
+-   Show who owns each card
+-   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
--   Gallery full \*functionalities*
+
+-   styleize editing
 
 ## **Server:**
 

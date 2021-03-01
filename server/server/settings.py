@@ -27,7 +27,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'f151u71kopnay_9$a+^mo68^exeml232ip!y+
 DEBUG = True
 
 # Add to this list if you want this app to be hosted on another site
-ALLOWED_HOSTS = ['localhost', '.herokuapp.com']
+ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '127.0.0.1']
 
 
 # Application definition
