@@ -9,28 +9,32 @@
     -   We could conditionally load cards instead of paging them
         -   Check if there's a next log returned by the API, if not, go to the next page for content (or something to the same effect)
 -   Preloading for components
+-   Examples of efficient websites
+    -   Github: https://github.blog/2021-01-29-making-githubs-new-homepage-fast-and-performant/
+    -   Random site idk: https://css-tricks.com/tour-performant-responsive-css-site/
+    -   https://medium.com/front-end-weekly/progressive-image-loading-and-intersectionobserver-d0359b5d90cd
+
+## **Frontend**
+-   Show who owns each card
+-   #of posts links to a list of your posts
+-   style finished hashtag in create form
+-   styleize editing
+-   Sort by topics with the links given by the server
+-   admins (view edit&delete post buttons, those functionalities)
+-   Gallery full \*functionalities*
 
 ## **Server:**
 
--   View for liked posts by user (more than just pk)
+-   View for liked posts by user
 -   Validation for usernames
 -   Add the total number of likes to view for users (likes of all time)
 -   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
--   Actual profile pictures 
+-   Actual profile pictures
+-   Update topic view to return squirrel logs better
+-   Allow post updating (editing)
 
-## **If We Have Time**
+## **Other**
 
--   Show who owns each card
--   #of posts links to a list of your posts
--   style finished hashtag in create form
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
--   styleize editing
--   Sort by topics with the links given by the server
-    -   Update topic view to return squirrel logs better
--   admins (view edit&delete post buttons, those functionalities)
--   limit homepage post num
--   gallery embeds and upvoting
--   make edit posts stay in database
--   Show who owns each card
