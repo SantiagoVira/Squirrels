@@ -10,6 +10,7 @@
     "@testing-library/user-event": "^12.7.0",
     "axios": "^0.21.1",
     "i": "^0.3.6",
+    "nodelib": "^1.0.0",
     "react": "^17.0.1",
     "react-contenteditable": "^3.3.5",
     "react-dom": "^17.0.1",
