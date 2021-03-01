@@ -23,7 +23,6 @@
 -   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
 
--   style finished hashtag in create form
 -   styleize editing
 
 ## **Server:**
