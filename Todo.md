@@ -31,18 +31,11 @@
 -   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
 -   Actual profile pictures
-<<<<<<< HEAD
--   Update topic view to return squirrel logs better
--   Allow post updating (editing)
-=======
->>>>>>> 51b4dcec6a7764ca84aef2aff58361163012874a
 
 ## **Other**
 
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
-<<<<<<< HEAD
-=======
 -   styleize editing
 -   Sort by topics with the links given by the server
     -   Update topic view to return squirrel logs better
@@ -50,4 +43,3 @@
 -   limit homepage post num
 -   gallery embeds and upvoting
 -   make edit posts stay in database
->>>>>>> 51b4dcec6a7764ca84aef2aff58361163012874a
