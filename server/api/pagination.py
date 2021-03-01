@@ -5,7 +5,6 @@ from .models import SquirreLog
 class UserSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
     def get_paginated_response(self, data):
-        print(data)
         return Response({
             'links': {
                 'next': self.get_next_link(),
