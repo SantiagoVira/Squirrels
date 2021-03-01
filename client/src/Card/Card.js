@@ -19,7 +19,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     const [liked, setLiked] = useState();
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
-    const [editValue, setEditValue] = useState();
+    const [editValue, setEditValue] = useState(post.note);
     const [username, setUsername] = useState("");
 
     useEffect(() => {

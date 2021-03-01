@@ -24,7 +24,7 @@
 
 -   styleize editing
 -   fix the card going nono
--   ##
+-   ## / e.preventDefault() no bueno
 
 ## **Server:**
 
