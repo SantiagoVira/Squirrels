@@ -71,3 +71,13 @@
     margin-top: 10px;
     user-select: none;
 }
+.StyledHashtagsDisplay {
+    margin: 10px;
+    max-width: 100%;
+    flex-wrap: wrap;
+    justify-content: center !important;
+    align-content: space-between !important;
+}
+.StyledHashtagsDisplay > .hashtagWrappper {
+    margin: 5px;
+}

@@ -1,5 +1,3 @@
-## **Frontend:**
-
 **Performance**
 
 -   Skeleton preloader
@@ -15,13 +13,17 @@
     -   https://medium.com/front-end-weekly/progressive-image-loading-and-intersectionobserver-d0359b5d90cd
 
 ## **Frontend**
--   Show who owns each card
+
 -   #of posts links to a list of your posts
--   style finished hashtag in create form
--   styleize editing
 -   Sort by topics with the links given by the server
+
+    -   click on hashtag shows all posts with that hashtag
+
+-   Show who owns each card
+-   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
--   Gallery full \*functionalities*
+
+-   styleize editing
 
 ## **Server:**
 
@@ -31,15 +33,10 @@
 -   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
 -   Actual profile pictures
+-   Update topic view to return squirrel logs better
+-   Allow post updating (editing)
 
 ## **Other**
 
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
--   styleize editing
--   Sort by topics with the links given by the server
-    -   Update topic view to return squirrel logs better
--   admins (view edit&delete post buttons, those functionalities)
--   limit homepage post num
--   gallery embeds and upvoting
--   make edit posts stay in database

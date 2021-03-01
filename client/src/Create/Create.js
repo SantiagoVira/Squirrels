@@ -14,6 +14,7 @@ function unique() {
 
 // Since we have an owner property, we need a way to find the currently logged in user
 // Maybe this should only be shown when someone is logged in?
+
 function Create({ user }) {
     // Stores form inputs to be sent to server
     const [request, setRequest] = useState({ topic: "", note: "" });
@@ -22,14 +23,21 @@ function Create({ user }) {
         request.topic.split("#").forEach((r) => {
             //("#" + r.trim());
         });
+        request.topic
+            .split(" ")
+            .filter((r) => r !== / +/)
+            .map((r) => (r.trim().startsWith("#") ? "" : "#" + r.trim()));
         try {
             e.preventDefault();
 
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic
-                    .split("#")
-                    .filter((topic) => topic !== ""),
+                    .split(" ")
+                    .filter((r) => r !== / +/)
+                    .map((r) =>
+                        r.trim().startsWith("#") ? "" : "#" + r.trim()
+                    ),
                 pub_date: new Date().toISOString(), //Gets current date
             });
 
@@ -43,7 +51,10 @@ function Create({ user }) {
                 {props.children.map((topic) => {
                     return topic.trim() !== "" ? (
                         <div className="hashtagWrappper" key={unique()}>
-                            <p>#{topic.trim()}</p>
+                            <p>
+                                {topic.trim().startsWith("#") ? "" : "#"}
+                                {topic.trim()}
+                            </p>
                         </div>
                     ) : null;
                 })}
@@ -81,6 +92,9 @@ function Create({ user }) {
                         maxLength={400}
                         rows={1}
                     />
+                    <Hashtags className="StyledHashtagsDisplay">
+                        {request.topic.split(" ")}
+                    </Hashtags>
                     <Row>
                         Common:
                         <Hashtags className="CommonHastagsRow">

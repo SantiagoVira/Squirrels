@@ -1,4 +1,5 @@
 from rest_framework import serializers
+
 from rest_framework_jwt.settings import api_settings
 # from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog, SquirrelTopic, User
@@ -31,7 +32,6 @@ class TinyTopicSerializer(serializers.ModelSerializer):
         fields = ['topic_name', 'topic_link']
 
 class SquirreLogReadSerializer(serializers.ModelSerializer):
-    # Returns a list of objs with {'topic_name' : "a_topic_name", "topic_link" : hyperlink}
     SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
 
     class Meta:

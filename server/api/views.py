@@ -8,7 +8,8 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
-from .serializers import * # The file only has serializers
+from .serializers import * # Only serializers
+from .pagination import * # Only paginator classes
 from .permissions import IsOwner
 
 # Models
@@ -69,6 +70,7 @@ class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
     serializer_class = UserSquirrelSerializer
+    pagination_class = UserSquirrelPagination
 
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
@@ -85,7 +87,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().exclude(owner=1).order_by('pub_date')
     # serializer_class = SquirreLogSerializer
-    
+
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
             self.permission_classes = [permissions.AllowAny, ]
