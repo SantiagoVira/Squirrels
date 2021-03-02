@@ -34,7 +34,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             data.data.results.some((res) => {
                 if (res.id === post.owner) {
                     setUsername(res.username);
-                    console.log(res.username);
                     return true;
                 }
                 return false;
@@ -54,13 +53,13 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             const response = await api.put(
                 `/api/SquirreLogs/${post.id}/vote/?format=json`
             );
-
+            console.log("voted");
+            console.log(response.data);
             // Change user's liked posts on the frontend
-            changeUser({ ...user, profile: response.data.user });
             setVotes(response.data.log.votes);
+            changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }
-
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
@@ -102,7 +101,10 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                                 : topic;
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
-                                <p>#{topic.trim()}</p>
+                                <p>
+                                    {topic.trim().startsWith("#") ? "" : "#"}
+                                    {topic.trim()}
+                                </p>
                             </div>
                         ) : null;
                     })}
@@ -156,9 +158,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 <br />
                 <Row>
                     <ContentEditable
-                        className={`CardStory ${
-                            editing ? "StoryIsEditable" : ""
-                        }`}
+                        className="CardStory StoryIsEditable"
                         disabled={!editing}
                         html={editValue}
                         onChange={(e) =>
@@ -171,7 +171,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                         }
                     />
                 </Row>
-
                 {/* Renders delete button only if this component is passed onDelete */}
             </Col>
 

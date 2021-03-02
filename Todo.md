@@ -19,10 +19,10 @@
     -   click on hashtag shows all posts with that hashtag
 -   Show who owns each card
 -   Gallery full functionalities
--   admins (view edit&delete post buttons, those functionalities)
 -   styleize editing
 -   fix the card going nono
--   ## / e.preventDefault() no bueno
+    -   hashtags and text go over side this is bad plz fix k thx
+-   Gallery embeds
 
 ## **Server:**
 
@@ -33,10 +33,9 @@
 -   Update topic view to return squirrel logs better
 -   Allow post updating (editing)
 -   Save who liked a post
-    - Many-to-many 
+    - Many-to-many
 
 ## **Other**
 
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
--   consistent naming

@@ -81,15 +81,14 @@ function Gallery({ user }) {
         //Render the stories, raises: can't render an object
         return stories.map((log) => {
             const post = {
-                SquirrelTopics: log.name ? log.name.split(",") : [],
+                SquirrelTopics: log.SquirrelTopics,
                 note: log.note,
                 key: unique(),
                 id: log.id,
+                votes: log.votes,
             };
             // disableCardMenu removes need to pass in user
-            return (
-                <Card post={post} key={unique()} disableCardMenu user={user} />
-            );
+            return <Card post={post} key={unique()} user={user} />;
         });
     }
 

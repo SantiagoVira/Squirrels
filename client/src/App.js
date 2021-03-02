@@ -48,7 +48,13 @@ function App() {
                         profile: response.data,
                     });
                 }
-            } catch (err) {}
+            } catch (err) {
+                // If JWT is invalid, remove it from localstorage and refresh page
+                if(err.response.status === 401) {
+                    localStorage.removeItem("token");
+                    history.go(0);
+                }
+            }
         };
         getUser();
         window.addEventListener("resize", () => {
@@ -56,7 +62,7 @@ function App() {
         });
     }, []);
 
-    // To change user in children components
+    // Passed to children components to change user
     const changeUser = (data) => {
         setUser(data);
     };

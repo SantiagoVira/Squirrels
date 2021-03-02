@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
+import AddBoxIcon from "@material-ui/icons/AddBox";
+import CollectionsIcon from "@material-ui/icons/Collections";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import HomeIcon from "@material-ui/icons/Home";
 
 function Menu(props) {
     const [scrolled, setScrolled] = useState(
@@ -32,13 +38,13 @@ function Menu(props) {
         if (props.user.isLoggedIn) {
             return (
                 <Link to="#" onClick={() => logout()}>
-                    Logout
+                    <ExitToAppIcon />
                 </Link>
             );
         } else {
             const links = [
-                { to: "/login", name: "Login" },
-                { to: "/register", name: "Register" },
+                { to: "/login", name: <AccountCircleIcon /> },
+                { to: "/register", name: <PersonAddIcon /> },
             ];
             return (
                 <React.Fragment>
@@ -59,8 +65,8 @@ function Menu(props) {
     }
 
     const links = [
-        { to: "/about", name: "About" },
-        { to: "/gallery", name: "Gallery" },
+        { to: "/", name: <HomeIcon /> },
+        { to: "/gallery", name: <CollectionsIcon /> },
     ];
     return (
         <div className={`menu ${scrolled}`}>
@@ -79,11 +85,13 @@ function Menu(props) {
                 {props.user.isLoggedIn &&
                     (page.endsWith("/create") ? (
                         <strong key={unique()}>
-                            <Link to={"/create"}>Create</Link>
+                            <Link to={"/create"}>
+                                <AddBoxIcon />
+                            </Link>
                         </strong>
                     ) : (
                         <Link key={unique()} to={"/create"}>
-                            Create
+                            <AddBoxIcon />
                         </Link>
                     ))}
             </div>
