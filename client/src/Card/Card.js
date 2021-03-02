@@ -56,7 +56,8 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             console.log("voted");
             console.log(response.data);
             // Change user's liked posts on the frontend
-            setVotes(response.data.log.votes);
+            await setVotes(response.data.log.votes);
+            console.log(votes);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }

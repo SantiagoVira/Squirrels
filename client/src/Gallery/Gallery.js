@@ -5,7 +5,7 @@ import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Gallery.css";
 
-function Gallery({ user }) {
+function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState([]);
 
@@ -88,7 +88,14 @@ function Gallery({ user }) {
                 votes: log.votes,
             };
             // disableCardMenu removes need to pass in user
-            return <Card post={post} key={unique()} user={user} />;
+            return (
+                <Card
+                    post={post}
+                    key={unique()}
+                    user={user}
+                    changeUser={changeUser}
+                />
+            );
         });
     }
 
