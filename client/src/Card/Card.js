@@ -34,7 +34,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             data.data.results.some((res) => {
                 if (res.id === post.owner) {
                     setUsername(res.username);
-                    console.log(res.username);
                     return true;
                 }
                 return false;
@@ -60,7 +59,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             setVotes(response.data.log.votes);
         } catch (err) {}
     }
-console.log(editValue)
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
@@ -162,9 +160,14 @@ console.log(editValue)
                         className="CardStory StoryIsEditable"
                         disabled={!editing}
                         html={editValue}
-                        onChange={e => setEditValue(e.currentTarget.textContent)}
-                        onBlur={e => api.patch(`/api/SquirreLogs/${post.id}/`, 
-                            {note: e.currentTarget.textContent})}
+                        onChange={(e) =>
+                            setEditValue(e.currentTarget.textContent)
+                        }
+                        onBlur={(e) =>
+                            api.patch(`/api/SquirreLogs/${post.id}/`, {
+                                note: e.currentTarget.textContent,
+                            })
+                        }
                     />
                 </Row>
                 {/* Renders delete button only if this component is passed onDelete */}

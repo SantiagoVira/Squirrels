@@ -18,10 +18,10 @@
 -   Sort by topics with the links given by the server
     -   click on hashtag shows all posts with that hashtag
 -   Gallery full functionalities
--   admins (view edit&delete post buttons, those functionalities)
 -   styleize editing
 -   fix the card going nono
     -   hashtags and text go over side this is bad plz fix k thx
+-   Gallery embeds
 
 ## **Server:**
 
@@ -37,4 +37,3 @@
 
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
--   consistent naming
