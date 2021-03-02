@@ -56,7 +56,7 @@ function App() {
         });
     }, []);
 
-    // To change user in children components
+    // Passed to children components to change user
     const changeUser = (data) => {
         setUser(data);
     };

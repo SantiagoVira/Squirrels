@@ -53,6 +53,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = SquirreLog
         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
+        extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def create(self, validated_data):
         if 'SquirrelTopics' in validated_data: # We're not posting topics?

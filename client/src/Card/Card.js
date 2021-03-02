@@ -44,7 +44,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             setVotes(response.data.log.votes);
         } catch (err) {}
     }
-
+console.log(editValue)
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
@@ -135,7 +135,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             <div>
                 <br />
                 <ContentEditable
-                    className={`CardStory ${editing ? "StoryIsEditable" : ""}`}
+                    className="CardStory StoryIsEditable"
                     disabled={!editing}
                     html={editValue}
                     onChange={e => setEditValue(e.currentTarget.textContent)}
