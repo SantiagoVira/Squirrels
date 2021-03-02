@@ -87,9 +87,7 @@ function Gallery({ user }) {
                 id: log.id,
             };
             // disableCardMenu removes need to pass in user
-            return (
-                <Card post={post} key={unique()} disableCardMenu user={user} />
-            );
+            return <Card post={post} key={unique()} user={user} />;
         });
     }
 
