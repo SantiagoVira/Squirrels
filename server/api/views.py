@@ -51,14 +51,6 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
 
-# Liked posts for a user
-class UserLikedViewSet(viewsets.ModelViewSet):
-    serializer_class = UserSquirrelSerializer
-
-    def get_queryset(self):
-        # TODO: GET A LIST OF OBJECTS THAT ARE THE LIKED POSTS OF A USER
-        return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
-
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()

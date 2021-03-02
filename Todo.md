@@ -26,12 +26,13 @@
 ## **Server:**
 
 -   View for liked posts by user
+    -   Make like posts view for users; we need a separate API view
 -   Validation for usernames
--   Don't put user id 1 in squirrelogs view
 -   Actual profile pictures
 -   Update topic view to return squirrel logs better
 -   Allow post updating (editing)
 -   Save who liked a post
+    -   Many-to-many
 
 ## **Other**
 
