@@ -22,7 +22,6 @@
 -   styleize editing
 -   fix the card going nono
     -   hashtags and text go over side this is bad plz fix k thx
--   ## / e.preventDefault() no bueno
 
 ## **Server:**
 
