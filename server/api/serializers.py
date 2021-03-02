@@ -90,9 +90,16 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         return instance
 
 class UserListSerializer(serializers.ModelSerializer):
-    """For looking at all the pretty users"""
-
-    posts = serializers.HyperlinkedIdentityField(view_name='user-detail')
+    liked_posts = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='squirrelog-detail',
+        )
+    posts = serializers.HyperlinkedIdentityField(
+        # many=True,
+        read_only=True,
+        view_name='user-detail'
+        )
 
     class Meta:
         model = User

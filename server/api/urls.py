@@ -13,9 +13,8 @@ router.register(r'users', views.UserViewSet)
 urlpatterns = [ # We can actually register the path for our serialized info here
     path('current_user/', views.current_user),
 
-    path('users/', views.UserViewSet.as_view({'get':'list'})),
+    # Custom router view
     path('users/<int:pk>/', views.UserSquirrelViewSet.as_view({'get':'list'})),
-    path('users/<int:pk>/liked/', views.UserLikedViewSet.as_view({'get':'list'})),
 
     # Authenticates and parses username into jwt
     path('authenticate/', obtain_jwt_token),
