@@ -49,6 +49,16 @@
     font-size: 20px;
 }
 
+.CardStory {
+    font-size: 20px;
+    margin-top: 30px;
+    padding-left: 50px;
+    outline: none;
+    border: none;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+}
+
 .leftSideWrapper {
     display: flex;
     flex-direction: column;
@@ -139,12 +149,6 @@
 }
 .hashtagWrappper > p {
     margin: 0 !important;
-}
-.CardStory {
-    white-space: pre-wrap;
-    margin-top: 30px;
-    outline: none;
-    border: none;
 }
 .HashtagsRow {
     justify-content: flex-start !important;
