@@ -53,10 +53,11 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             const response = await api.put(
                 `/api/SquirreLogs/${post.id}/vote/?format=json`
             );
-
+            console.log("voted");
+            console.log(response.data);
             // Change user's liked posts on the frontend
-            changeUser({ ...user, profile: response.data.user });
             setVotes(response.data.log.votes);
+            changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }
     function unique() {
