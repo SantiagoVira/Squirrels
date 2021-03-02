@@ -17,10 +17,16 @@
 -   #of posts links to a list of your posts
 -   Sort by topics with the links given by the server
     -   click on hashtag shows all posts with that hashtag
+<<<<<<< HEAD
 -   Show who owns each card
+=======
+
+>>>>>>> a8776f011b1f60c8020fa75c50217d753a6b69c4
 -   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
 -   styleize editing
+-   fix the card going nono
+-   ## / e.preventDefault() no bueno
 
 ## **Server:**
 

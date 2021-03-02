@@ -29,9 +29,7 @@ function User(props) {
                 `/api/users/${props.user.profile.id}`
             );
             await setUser({
-                votes: 0 /*dbFormattedBullshit
-                    .map((post) => post.votes)
-                    .reduce((a, b) => a + b, 0)*/,
+                votes: dbUserPerson.data.total_votes,
                 posts: dbUserPerson.data.count,
             });
         };

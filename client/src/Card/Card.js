@@ -1,27 +1,48 @@
 import api from "../api";
 import React, { useEffect, useState } from "react";
 import "./Card.css";
+//Using this library because it fixes mouse movement bug
+//More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
+import ContentEditable from "react-contenteditable";
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
+import FavoriteIcon from "@material-ui/icons/Favorite";
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
-import FavoriteIcon from "@material-ui/icons/Favorite";
 
 function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
+    const [liked, setLiked] = useState();
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
-    const [liked, setLiked] = useState();
+    const [editValue, setEditValue] = useState(post.note);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         if (user && user.isLoggedIn) {
             setLiked(user.profile.liked_posts.includes(post.id));
         }
     }, [user]);
+
+    useEffect(() => {
+        const getUsername = async () => {
+            const data = await api.get(`/api/users/`);
+            data.data.results.some((res) => {
+                if (res.id === post.owner) {
+                    setUsername(res.username);
+                    console.log(res.username);
+                    return true;
+                }
+                return false;
+            });
+            return true;
+        };
+        getUsername();
+    }, []);
     async function vote(id) {
         if (!user.isLoggedIn) {
             history.push("/login");
@@ -31,7 +52,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             setLiked(!liked);
             //Set card's votes in the database to votes variable
             const response = await api.put(
-                `/api/SquirreLogs/${id}/vote/?format=json`
+                `/api/SquirreLogs/${post.id}/vote/?format=json`
             );
 
             // Change user's liked posts on the frontend
@@ -88,9 +109,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             </Row>
         );
     }
-    function editPosts(id) {
-        setEditing(!editing);
-    }
 
     return (
         <div className="squirrelCard">
@@ -101,7 +119,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                             className={`editOrDeleteButton up ${
                                 liked ? "liked" : ""
                             }`}
-                            onClick={() => vote(post.id)}
+                            onClick={() => vote()}
                         >
                             <FavoriteIcon className="up" />
                         </IconButton>
@@ -120,7 +138,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                             </IconButton>
                             <IconButton
                                 className="editOrDeleteButton"
-                                onClick={() => editPosts(post.id)}
+                                onClick={() => setEditing(!editing)}
                             >
                                 <CreateIcon />
                             </IconButton>
@@ -130,16 +148,33 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                 </div>
             ) : null}
 
-            <div>
+            <Col>
+                <Row>
+                    <h4>{username}</h4>
+                </Row>
+
                 <br />
-                <p
-                    contentEditable={editing}
-                    className={`CardStory ${editing ? "StoryIsEditable" : ""}`}
-                >
-                    {post.note}
-                </p>
+                <Row>
+                    <ContentEditable
+                        className={`CardStory ${
+                            editing ? "StoryIsEditable" : ""
+                        }`}
+                        disabled={!editing}
+                        html={editValue}
+                        onChange={(e) =>
+                            setEditValue(e.currentTarget.textContent)
+                        }
+                        onBlur={(e) =>
+                            api.patch(`/api/SquirreLogs/${post.id}/`, {
+                                note: e.currentTarget.textContent,
+                            })
+                        }
+                    />
+                </Row>
+
                 {/* Renders delete button only if this component is passed onDelete */}
-            </div>
+            </Col>
+
             <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );

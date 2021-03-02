@@ -20,23 +20,27 @@ function Create({ user }) {
     const [request, setRequest] = useState({ topic: "", note: "" });
 
     const onSubmitClick = async (e) => {
-        request.topic.split("#").forEach((r) => {
-            //("#" + r.trim());
-        });
-        request.topic
-            .split(" ")
-            .filter((r) => r !== / +/)
-            .map((r) => (r.trim().startsWith("#") ? "" : "#" + r.trim()));
         try {
+            console.log(
+                "help me this is an endless void of errors yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy"
+            );
             e.preventDefault();
+
+            console.log(
+                request.topic
+                    .split(" ")
+                    .filter((r) => r.trim() !== "")
+                    .trim()
+                    .startsWith("#")
+            );
 
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic
                     .split(" ")
-                    .filter((r) => r !== / +/)
-                    .map((r) =>
-                        r.trim().startsWith("#") ? "" : "#" + r.trim()
+                    .filter((r) => r.trim() !== "")
+                    .map(
+                        (r) => (r.trim().startsWith("#") ? "" : "#") + r.trim()
                     ),
                 pub_date: new Date().toISOString(), //Gets current date
             });
