@@ -85,6 +85,7 @@ function Gallery({ user }) {
                 note: log.note,
                 key: unique(),
                 id: log.id,
+                votes: log.votes,
             };
             // disableCardMenu removes need to pass in user
             return <Card post={post} key={unique()} user={user} />;

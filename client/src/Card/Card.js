@@ -34,7 +34,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             data.data.results.some((res) => {
                 if (res.id === post.owner) {
                     setUsername(res.username);
-                    console.log(res.username);
                     return true;
                 }
                 return false;
@@ -60,7 +59,6 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             setVotes(response.data.log.votes);
         } catch (err) {}
     }
-console.log(editValue)
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
@@ -112,7 +110,7 @@ console.log(editValue)
             </Row>
         );
     }
-console.log(editValue)
+
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (
