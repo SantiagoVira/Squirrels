@@ -20,6 +20,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(post.note);
+    const [username, setUsername] = useState("");
 
     useEffect(() => {
         if (user && user.isLoggedIn) {
@@ -27,7 +28,22 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
         }
     }, [user]);
 
-    async function vote() {
+    useEffect(() => {
+        const getUsername = async () => {
+            const data = await api.get(`/api/users/`);
+            data.data.results.some((res) => {
+                if (res.id === post.owner) {
+                    setUsername(res.username);
+                    console.log(res.username);
+                    return true;
+                }
+                return false;
+            });
+            return true;
+        };
+        getUsername();
+    }, []);
+    async function vote(id) {
         if (!user.isLoggedIn) {
             history.push("/login");
         }
@@ -132,18 +148,25 @@ console.log(editValue)
                 </div>
             ) : null}
 
-            <div>
+            <Col>
+                <Row>
+                    <h4>{username}</h4>
+                </Row>
+
                 <br />
-                <ContentEditable
-                    className="CardStory StoryIsEditable"
-                    disabled={!editing}
-                    html={editValue}
-                    onChange={e => setEditValue(e.currentTarget.textContent)}
-                    onBlur={e => api.patch(`/api/SquirreLogs/${post.id}/`, 
-                        {note: e.currentTarget.textContent})}
-                />
+                <Row>
+                    <ContentEditable
+                        className="CardStory StoryIsEditable"
+                        disabled={!editing}
+                        html={editValue}
+                        onChange={e => setEditValue(e.currentTarget.textContent)}
+                        onBlur={e => api.patch(`/api/SquirreLogs/${post.id}/`, 
+                            {note: e.currentTarget.textContent})}
+                    />
+                </Row>
                 {/* Renders delete button only if this component is passed onDelete */}
-            </div>
+            </Col>
+
             <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );

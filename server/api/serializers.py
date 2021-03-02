@@ -4,10 +4,10 @@ from rest_framework_jwt.settings import api_settings
 # from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog, SquirrelTopic, User
 
-# SquirreLog-Topic Structure (is this correct?):
+# SquirreLog-Topic Structure (is this correct?): # Yep
 # SquirreLog creates/updates topic references in string-related field
 # SquirreLogRead gets topics from nested TinyTopic (read-only)
-# TinyTopic contains a url to SquirrelTopic
+# TinyTopic contains a url to SquirrelTopic and the names of topics
 # SquirrelTopic contains Squirrelog urls
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
@@ -40,15 +40,7 @@ class SquirreLogReadSerializer(serializers.ModelSerializer):
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-
-    # Establishing the fields
-    # SquirrelTopics = TinyTopicSerializer(many=True)
     serializers.StringRelatedField(many=True, read_only=False)
-    # topic_links = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name='squirreltopic-detail'
-    # )
 
     class Meta:
         model = SquirreLog
@@ -77,12 +69,6 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
-
-    liked_posts = serializers.PrimaryKeyRelatedField(
-        many=True,
-        queryset=SquirreLog.objects.all(),
-        required=False
-    )
 
     class Meta:
         model = User
