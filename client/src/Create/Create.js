@@ -20,8 +20,15 @@ function Create({ user }) {
     const [request, setRequest] = useState({ topic: "", note: "" });
 
     const onSubmitClick = async (e) => {
-        e.preventDefault();
+        console.log(
+            request.topic
+                .split(" ")
+                .filter((r) => r.trim() !== "")
+                .map((r) => (r.trim().startsWith("#") ? "" : "#") + r.trim())
+        );
         try {
+            e.preventDefault();
+
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic

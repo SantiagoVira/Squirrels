@@ -102,7 +102,10 @@ console.log(editValue)
                                 : topic;
                         return topic.trim() !== "" ? (
                             <div className="hashtagWrappper" key={unique()}>
-                                <p>#{topic.trim()}</p>
+                                <p>
+                                    {topic.trim().startsWith("#") ? "" : "#"}
+                                    {topic.trim()}
+                                </p>
                             </div>
                         ) : null;
                     })}
