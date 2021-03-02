@@ -17,17 +17,12 @@ from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
 User = get_user_model() # checks the most updated User model (api.User)
 
-
-# User stuff can be loosely based on this article:
-# https://medium.com/@dakota.lillie/django-react-jwt-authentication-5015ee00ef9a
-
 @api_view(['GET'])
 def current_user(request):
     serializer = UserSerializer(request.user)
     return Response(serializer.data)
 
-# The article's UserList
-class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
+class UserViewSet(viewsets.ModelViewSet):
     """User stuff"""
 
     permission_classes = (permissions.AllowAny,)
@@ -39,17 +34,6 @@ class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
         if self.request.method in ['POST']:
             return UserSerializer
 
-    # @action(methods=['GET'], detail=True, url_path='', url_name='')
-    # def posts(self, request, **kwargs):
-    #     logs = SquirreLog.objects.filter(owner_id=kwargs['pk'])
-    #     log_serializer = UserSquirrelSerializer(logs, data={'logs' : logs})
-    #     if log_serializer.is_valid():
-    #         log_serializer.save()
-    #         return Response(log_serializer.data, status=status.HTTP_200_OK)
-    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-        # return Response(UserSquirrelSerializer(logs).data)
-
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -57,16 +41,8 @@ class UserViewSet(viewsets.ModelViewSet): # Instead of APIView
             # Response should be the same as obtain_jwt_token (data inside user property)
             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    #
-    # def get(self, request, format=None, **kwargs):
-    #     serializer = UserListSerializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         # Response should be the same as obtain_jwt_token (data inside user property)
-    #         return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# FOR THE USER-BASED SQUIRRELOG VIEW
+# Logs by user
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
     serializer_class = UserSquirrelSerializer
@@ -75,18 +51,22 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
 
-# class UserLogViewSet(viewsets.ModelViewSet): # Make a separate API view
-#     """Show the logs associated with a user"""
-#     queryset = User.objects.all()
-#     serializer_class = UserLogSerializer
+# Liked posts for a user
+class UserLikedViewSet(viewsets.ModelViewSet):
+    serializer_class = UserSquirrelSerializer
 
+    def get_queryset(self):
+        # TODO: GET A LIST OF OBJECTS THAT ARE THE LIKED POSTS OF A USER
+        return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
+
+# Topic view
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
+# SquirreLog gen view
 class SquirreLogViewSet(viewsets.ModelViewSet):
     queryset = SquirreLog.objects.all().exclude(owner=1).order_by('pub_date')
-    # serializer_class = SquirreLogSerializer
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -109,12 +89,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             owner=self.request.user,
             SquirrelTopics=self.request.data['topics']
         )
-
-    # @action(methods=['get'], detail=True, url_path='user', url_name='user')
-    # def filter(self, request, **kwargs):
-    #     logs = SquirreLog.objects.filter(owner=kwargs['pk'])
-    #     data = s.serialize('json', list(logs))
-    #     return Response(data=data, status=status.HTTP_200_OK)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):

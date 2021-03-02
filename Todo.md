@@ -16,27 +16,24 @@
 
 -   #of posts links to a list of your posts
 -   Sort by topics with the links given by the server
-
     -   click on hashtag shows all posts with that hashtag
-
 -   Show who owns each card
 -   Gallery full functionalities
 -   admins (view edit&delete post buttons, those functionalities)
-
 -   styleize editing
 
 ## **Server:**
 
 -   View for liked posts by user
 -   Validation for usernames
--   Add the total number of likes to view for users (likes of all time)
--   Sort by owner ids
 -   Don't put user id 1 in squirrelogs view
 -   Actual profile pictures
 -   Update topic view to return squirrel logs better
 -   Allow post updating (editing)
+-   Save who liked a post 
 
 ## **Other**
 
 -   buy Sqqrlz.com
     -   _Change django token in settings if we make the site live (major security flaw oopsies)_
+-   consistent naming
