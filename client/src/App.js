@@ -50,7 +50,7 @@ function App() {
                 }
             } catch (err) {
                 // If JWT is invalid, remove it from localstorage and refresh page
-                if(err.response.status === 401) {
+                if (err.response.status === 401) {
                     localStorage.removeItem("token");
                     history.go(0);
                 }

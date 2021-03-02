@@ -17,7 +17,7 @@
 -   #of posts links to a list of your posts
 -   Sort by topics with the links given by the server
     -   click on hashtag shows all posts with that hashtag
--   Gallery full functionalities
+-   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
 -   fix the card going nono
     -   hashtags and text go over side this is bad plz fix k thx
@@ -26,12 +26,13 @@
 ## **Server:**
 
 -   View for liked posts by user
+    -   Make like posts view for users; we need a separate API view
 -   Validation for usernames
--   Don't put user id 1 in squirrelogs view
 -   Actual profile pictures
 -   Update topic view to return squirrel logs better
 -   Allow post updating (editing)
 -   Save who liked a post
+    -   Many-to-many
 
 ## **Other**
 
