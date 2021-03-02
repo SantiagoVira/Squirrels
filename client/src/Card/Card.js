@@ -112,7 +112,7 @@ console.log(editValue)
             </Row>
         );
     }
-
+console.log(editValue)
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (
@@ -162,9 +162,9 @@ console.log(editValue)
                         className="CardStory StoryIsEditable"
                         disabled={!editing}
                         html={editValue}
-                        onChange={e => setEditValue(e.currentTarget.textContent)}
+                        onChange={e => setEditValue(e.target.value)}
                         onBlur={e => api.patch(`/api/SquirreLogs/${post.id}/`, 
-                            {note: e.currentTarget.textContent})}
+                            {note: editValue})}
                     />
                 </Row>
                 {/* Renders delete button only if this component is passed onDelete */}

@@ -11,6 +11,7 @@
     font-size: 8vw;
     font-family: "Courgette", cursive;
     letter-spacing: 0.05em;
+    cursor: pointer;
 }
 .top {
     fill: var(--top); /* Variable from index.css */
