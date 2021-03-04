@@ -35,13 +35,8 @@ function Uploads(props) {
                     topics[i].topic_name.toString().replace("#", "").trim() ===
                     name.toString().replace("#", "").trim()
                 ) {
-                    const logResponse = await api.get(topics[i].SquirreLogs);
-                    console.log(logResponse)
-                    if(i === 0) {
-                        setPosts([topicResponse]);
-                    } else {
-                        setPosts([...posts, topicResponse]);
-                    }
+                    const thePostThingies = await api.get(topics[i].SquirreLogs);
+                    setPosts(thePostThingies.data.results);
                 }
             }
             // response.data.results.forEach((topic) => {

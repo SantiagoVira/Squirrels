@@ -15,9 +15,10 @@ function UserForm(props) {
             const response = await api.post(props.path, form);
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
+            const profile = response.data.user ? response.data.user : response.data;
             await props.changeUser({
                 isLoggedIn: true,
-                profile: response.data,
+                profile: profile,
             });
             history.push("/");
         } catch (err) {
