@@ -66,6 +66,13 @@ class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
+class TopicLogsViewSet(viewsets.ModelViewSet):
+    serializer_class = SquirreLogReadSerializer
+
+    def get_queryset(self):
+        topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
+        return SquirreLog.objects.filter(topics=topic)
+
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
     "Okay everyone is welcome in this view, even user 1 🙄"

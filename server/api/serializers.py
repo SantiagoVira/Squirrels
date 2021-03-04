@@ -12,11 +12,7 @@ from .models import SquirreLog, SquirrelTopic, User
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    SquirreLogs = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='squirrelog-detail'
-    )
+    SquirreLogs = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
     class Meta:
         model = SquirrelTopic
@@ -42,7 +38,7 @@ class SquirreLogReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+        fields = ('id', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
