@@ -110,7 +110,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             </Row>
         );
     }
-    console.log(editValue)
+
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (
