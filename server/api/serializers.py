@@ -34,9 +34,15 @@ class TinyTopicSerializer(serializers.ModelSerializer):
 class SquirreLogReadSerializer(serializers.ModelSerializer):
     SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
 
+    liked_by = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='user-detail',
+        )
+
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
+        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -97,7 +103,6 @@ class UserListSerializer(serializers.ModelSerializer):
         view_name='squirrelog-detail',
         )
     posts = serializers.HyperlinkedIdentityField(
-        # many=True,
         read_only=True,
         view_name='user-detail'
         )

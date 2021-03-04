@@ -18,5 +18,5 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
     def get_total_votes(self, owner_id):
         data = SquirreLog.objects.filter(owner_id=owner_id)
         return sum([
-            log.votes for log in data
+            log.votes() for log in data
         ])

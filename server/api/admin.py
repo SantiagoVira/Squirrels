@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import SquirreLog, SquirrelTopic, User, TopicalSquirrel
+from .models import SquirreLog, SquirrelTopic, User, TopicalSquirrel, Liker
 
 # There are a bunch of other things we could do
 # https://docs.djangoproject.com/en/3.1/intro/tutorial07/
@@ -13,6 +13,10 @@ class TopicalSquirreLogs(admin.StackedInline):
     model = TopicalSquirrel # Holds: a topic and corresponding log
     extra = 0
 
+class LikedAndUsers(admin.StackedInline):
+    model = Liker
+    extra = 0
+
 class CustomUserAdmin(UserAdmin):
     # So we can edit the logs of a user
     inlines = [LookAtSquirreLogs]
@@ -23,7 +27,7 @@ class SquirrelTopicAdmin(admin.ModelAdmin):
 
 class SquirreLogAdmin(admin.ModelAdmin):
     list_display = ('__str__', 'pub_date')
-    inlines = [TopicalSquirreLogs]
+    inlines = [TopicalSquirreLogs, LikedAndUsers]
 
 admin.site.register(User, CustomUserAdmin)
 

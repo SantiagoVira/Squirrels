@@ -26,16 +26,12 @@
 
 ## **Server:**
 
--   View for liked posts by user
-    - Make like posts view for users; we need a separate API view
 -   Validation for usernames
 -   Actual profile pictures
--   Update topic view to return squirrel logs better
+-   Update topic view to return squirrel logs "better"
+    - Like how the posts for a user are shown; minimal info but enough to move through
 -   Allow post updating (editing)
--   Save who liked a post
-    - Many-to-many
 
 ## **Other**
 
 -   buy Sqqrlz.com
-    -   _Change django token in settings if we make the site live (major security flaw oopsies)_
