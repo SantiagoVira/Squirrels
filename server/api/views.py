@@ -15,6 +15,8 @@ from .permissions import IsOwner
 # Models
 from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
+
+
 User = get_user_model() # checks the most updated User model (api.User)
 
 @api_view(['GET'])
@@ -51,14 +53,24 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
 
+# Liked logs by user
+class UserLikedViewSet(viewsets.ModelViewSet):
+    def get_queryset(self):
+        return User.objects.filter(owner_id=self.kwargs['pk'])
+
+    def get_serializer_class(self):
+        return UserListSerializer
+
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
-# SquirreLog gen view
+# ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
-    queryset = SquirreLog.objects.all().exclude(owner=1).order_by('pub_date')
+    "Okay everyone is welcome in this view, even user 1 🙄"
+
+    queryset = SquirreLog.objects.all().order_by('pub_date')
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -89,16 +101,16 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
 
         user = User.objects.get(id=request.user.id)
 
-        # Un-like
+        # Un-like if the user liked already
         if (log in user.liked_posts.all()):
-            vote_count = log.votes - 1
+            who_liked = log.liked_by.remove(user.id)
             user.liked_posts.remove(log.id)
         # Like
         else:
-            vote_count = log.votes + 1
+            who_liked = log.liked_by.add(user.id)
             user.liked_posts.add(log.id)
 
-        log_serializer = SquirreLogSerializer(log, data={'votes': vote_count}, context={'request': request}, partial=True)
+        log_serializer = SquirreLogSerializer(log, data={'who_liked': who_liked}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user)
         if log_serializer.is_valid():
             log_serializer.save()
@@ -107,3 +119,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
                 'user': user_serializer.data
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# Excluding user 1; we need at least one view with all
+class NoOneSquireLogViewset(viewsets.ModelViewSet):
+    "This view excludes user 1; we hate them :)"
+
+    queryset = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
+    serializer_class = SquirreLogReadSerializer
