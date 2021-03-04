@@ -16,7 +16,7 @@
 
 -   #of posts links to a list of your posts
 -   Sort by topics with the links given by the server
-    -   click on hashtag shows all posts with that hashtag
+    ~ click on hashtag shows all posts with that hashtag
 -   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
 -   fix the card going nono
