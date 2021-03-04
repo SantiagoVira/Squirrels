@@ -12,11 +12,7 @@ from .models import SquirreLog, SquirrelTopic, User
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    SquirreLogs = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='squirrelog-detail'
-    )
+    SquirreLogs = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
     class Meta:
         model = SquirrelTopic
