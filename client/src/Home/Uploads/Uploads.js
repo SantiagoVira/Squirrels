@@ -25,30 +25,28 @@ function Uploads(props) {
         } catch (err) {}
     };
     const loadByHashtag = async (name) => {
+        const doTheThing = async (topic) => {
+            const thePostThingies = await api.get(topic.SquirreLogs);
+            for (
+                var topicIndex = 0;
+                topicIndex < thePostThingies.data.results.length;
+                topicIndex++
+            ) {
+                const topicResponse = thePostThingies.data.results[topicIndex];
+                if (topicIndex === 0) {
+                    setPosts([topicResponse]);
+                } else {
+                    setPosts([...posts, topicResponse]);
+                }
+            }
+        };
         try {
             const response = await api.get("/api/Topics/");
             response.data.results.forEach(async (topic) => {
-                console.log(name.toString().replace("#", ""));
                 if (
                     topic.topic_name.toString().replace("#", "").trim() ===
                     name.toString().replace("#", "").trim()
                 ) {
-                    const doTheThing = async () => {
-                        const thePostThingies = await api.get(
-                            topic.SquirreLogs
-                        );
-                        thePostThingies.data.results.forEach(
-                            async (topicLink, topicIndex) => {
-                                const topicsResponse = await api.get(topicLink);
-                                console.log(topicIndex);
-                                if (topicIndex === 0) {
-                                    setPosts([topicsResponse.data]);
-                                } else {
-                                    setPosts([...posts, topicsResponse.data]);
-                                }
-                            }
-                        );
-                    };
                     doTheThing(topic);
                 }
             });

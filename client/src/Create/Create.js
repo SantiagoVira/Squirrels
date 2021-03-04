@@ -28,9 +28,7 @@ function Create({ user }) {
                 topics: request.topic
                     .split(" ")
                     .filter((r) => r.trim() !== "")
-                    .map(
-                        (r) => (r.trim().startsWith("#") ? "" : "#") + r.trim()
-                    ),
+                    .map((r) => r.replace("#", "").trim()),
                 pub_date: new Date().toISOString(), //Gets current date
             });
 
