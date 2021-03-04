@@ -60,9 +60,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
+        log.save()
+
         for topic in topics:
             try: # Finding an existing topic
-                topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic_name)
+                topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic)
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic

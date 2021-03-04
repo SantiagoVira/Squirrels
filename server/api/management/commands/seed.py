@@ -69,7 +69,7 @@ class Command(BaseCommand):
 
             # Percentage tracker
             current_percent += percent_to_add
-            sys.stdout.write(f"\r~{round(current_percent, 3)}% done saving stories")
+            sys.stdout.write(f"\r~{round(current_percent, 2)}% done saving stories")
             sys.stdout.flush()
 
         print("Consider thyself seeded")
