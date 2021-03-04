@@ -38,7 +38,7 @@ class SquirreLogReadSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
