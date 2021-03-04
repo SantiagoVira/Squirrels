@@ -12,6 +12,7 @@ function Uploads(props) {
         try {
             const response = await api.get("/api/NoOneSquireLogs/");
             await setPosts(response.data.results);
+            //loadByHashtag("abc");
         } catch (err) {}
     }, []);
 
@@ -23,15 +24,37 @@ function Uploads(props) {
             );
         } catch (err) {}
     };
-    const loadByHashtag = async (post, name) => {
+    const loadByHashtag = async (name) => {
         try {
             const response = await api.get("/api/Topics/");
-            response.some(async (topic) => {
-                if (topic.topic_name === name) {
-                    setPosts(topic.map((topicLink) => {}));
+            response.data.results.forEach(async (topic) => {
+                console.log(name.toString().replace("#", ""));
+                if (
+                    topic.topic_name.toString().replace("#", "").trim() ===
+                    name.toString().replace("#", "").trim()
+                ) {
+                    const doTheThing = async () => {
+                        const thePostThingies = await api.get(
+                            topic.SquirreLogs
+                        );
+                        thePostThingies.data.results.forEach(
+                            async (topicLink, topicIndex) => {
+                                const topicsResponse = await api.get(topicLink);
+                                console.log(topicIndex);
+                                if (topicIndex === 0) {
+                                    setPosts([topicsResponse.data]);
+                                } else {
+                                    setPosts([...posts, topicsResponse.data]);
+                                }
+                            }
+                        );
+                    };
+                    doTheThing(topic);
                 }
             });
-        } catch (err) {}
+        } catch (err) {
+            console.log(err);
+        }
     };
     //loadPosts((post) => checkForHashtags(post, "Sqqrlz"));
 
@@ -54,6 +77,7 @@ function Uploads(props) {
                         onDelete={delete_log}
                         user={user}
                         changeUser={props.changeUser}
+                        findHashtag={loadByHashtag}
                     />
                 );
             })}

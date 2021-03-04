@@ -13,7 +13,14 @@ import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
 
-function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
+function Card({
+    post,
+    onDelete,
+    user,
+    changeUser,
+    disableCardMenu,
+    findHashtag,
+}) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
     const [liked, setLiked] = useState();
@@ -99,7 +106,16 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                                 ? topic.topic_name
                                 : topic;
                         return topic.trim() !== "" ? (
-                            <div className="hashtagWrappper" key={unique()}>
+                            <div
+                                className="hashtagWrappper"
+                                key={unique()}
+                                onClick={() => {
+                                    if (findHashtag) {
+                                        console.log("clicked");
+                                        findHashtag(topic.trim());
+                                    }
+                                }}
+                            >
                                 <p>
                                     {topic.trim().startsWith("#") ? "" : "#"}
                                     {topic.trim()}

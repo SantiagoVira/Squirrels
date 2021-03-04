@@ -72,11 +72,6 @@ function Gallery({ user, changeUser }) {
         const storyNum = Math.random() * searchedStories.length;
         setStories(searchedStories.slice(storyNum, storyNum + 10));
     }
-    function unique() {
-        return Math.floor(
-            Math.random() * Math.floor(Math.random() * Date.now())
-        ).toString();
-    }
 
     function renderSquirrels() {
         //Render the stories, raises: can't render an object
