@@ -54,6 +54,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             topics = validated_data['SquirrelTopics']
         else:
             topics = []
+
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
