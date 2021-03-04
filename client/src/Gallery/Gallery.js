@@ -5,7 +5,7 @@ import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Gallery.css";
 
-function Gallery({ user }) {
+function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState([]);
 
@@ -23,14 +23,15 @@ function Gallery({ user }) {
 
     function getStories(stories, search) {
         if (search === "") {
-            let randomStories = [];
-            let randomInt = 0;
+            // let randomStories = [];
+            // let randomInt = 0;
 
-            for (let i = 0; i < 10; i++) {
-                randomInt = Math.floor(Math.random() * stories.length);
-                randomStories.push(stories[randomInt]);
-            }
-            setStories(randomStories);
+            // for (let i = 0; i < 10; i++) {
+            //     randomInt = Math.floor(Math.random() * stories.length);
+            //     randomStories.push(stories[randomInt]);
+            // }
+            // setStories(randomStories);
+            setStories(stories.slice(0, 10));
         } else {
             searchStories(stories, search);
         }
@@ -83,12 +84,17 @@ function Gallery({ user }) {
             const post = {
                 SquirrelTopics: log.SquirrelTopics,
                 note: log.note,
-                key: unique(),
                 id: log.id,
                 votes: log.votes,
             };
-            // disableCardMenu removes need to pass in user
-            return <Card post={post} key={unique()} user={user} />;
+            return (
+                <Card 
+                    post={post} 
+                    key={post.id} 
+                    user={user} 
+                    changeUser={changeUser} 
+                />
+            );
         });
     }
 

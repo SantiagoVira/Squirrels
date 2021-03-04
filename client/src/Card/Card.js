@@ -48,18 +48,17 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
         }
 
         try {
-            setLiked(!liked);
             //Set card's votes in the database to votes variable
             const response = await api.put(
                 `/api/SquirreLogs/${post.id}/vote/?format=json`
             );
-            console.log("voted");
-            console.log(response.data);
             // Change user's liked posts on the frontend
+            setLiked(!liked);
             setVotes(response.data.log.votes);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }
+    
     function unique() {
         return Math.floor(
             Math.random() * Math.floor(Math.random() * Date.now())
@@ -111,7 +110,7 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
             </Row>
         );
     }
-
+    console.log(editValue)
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (
@@ -161,14 +160,9 @@ function Card({ post, onDelete, user, changeUser, disableCardMenu }) {
                         className="CardStory StoryIsEditable"
                         disabled={!editing}
                         html={editValue}
-                        onChange={(e) =>
-                            setEditValue(e.currentTarget.textContent)
-                        }
-                        onBlur={(e) =>
-                            api.patch(`/api/SquirreLogs/${post.id}/`, {
-                                note: e.currentTarget.textContent,
-                            })
-                        }
+                        onChange={e => setEditValue(e.currentTarget.textContent)}
+                        onBlur={e => api.patch(`/api/SquirreLogs/${post.id}/`, 
+                            {note: e.currentTarget.textContent})}
                     />
                 </Row>
                 {/* Renders delete button only if this component is passed onDelete */}

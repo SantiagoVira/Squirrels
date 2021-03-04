@@ -50,7 +50,7 @@ function App() {
                 }
             } catch (err) {
                 // If JWT is invalid, remove it from localstorage and refresh page
-                if(err.response.status === 401) {
+                if (err.response.status === 401) {
                     localStorage.removeItem("token");
                     history.go(0);
                 }
@@ -124,7 +124,7 @@ function App() {
                         <Route
                             path="/gallery"
                             exact
-                            render={() => <Gallery user={user} />}
+                            render={() => <Gallery user={user} changeUser={changeUser} />}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route

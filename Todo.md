@@ -17,8 +17,7 @@
 -   #of posts links to a list of your posts
 -   Sort by topics with the links given by the server
     -   click on hashtag shows all posts with that hashtag
--   Show who owns each card
--   Gallery full functionalities
+-   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
 -   fix the card going nono
     -   hashtags and text go over side this is bad plz fix k thx
@@ -26,11 +25,21 @@
 
 ## **Server:**
 
+<<<<<<< HEAD
+=======
+-   View for liked posts by user
+    -   Make like posts view for users; we need a separate API view
+>>>>>>> cf9384e31f791615f9e18c7c8498bc72e0812b18
 -   Validation for usernames
 -   Actual profile pictures
 -   Update topic view to return squirrel logs "better"
     - Like how the posts for a user are shown; minimal info but enough to move through
 -   Allow post updating (editing)
+<<<<<<< HEAD
+=======
+-   Save who liked a post
+    -   Many-to-many
+>>>>>>> cf9384e31f791615f9e18c7c8498bc72e0812b18
 
 ## **Other**
 
