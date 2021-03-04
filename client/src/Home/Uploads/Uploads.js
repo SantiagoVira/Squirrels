@@ -25,37 +25,40 @@ function Uploads(props) {
         } catch (err) {}
     };
     const loadByHashtag = async (name) => {
-        const doTheThing = async (topic) => {
-            const thePostThingies = await api.get(topic.SquirreLogs);
-            for (
-                var topicIndex = 0;
-                topicIndex < thePostThingies.data.results.length;
-                topicIndex++
-            ) {
-                const topicResponse = thePostThingies.data.results[topicIndex];
-                if (topicIndex === 0) {
-                    setPosts([topicResponse]);
-                } else {
-                    setPosts([...posts, topicResponse]);
-                }
-            }
-        };
         try {
-            const response = await api.get("/api/Topics/");
-            response.data.results.forEach(async (topic) => {
+            const topicResponse = await api.get("/api/Topics/");
+            const topics = topicResponse.data.results
+            console.log(topics)
+            for(var i = 0; i < topics; i++) {
+                console.log("a")
                 if (
-                    topic.topic_name.toString().replace("#", "").trim() ===
+                    topics[i].topic_name.toString().replace("#", "").trim() ===
                     name.toString().replace("#", "").trim()
                 ) {
-                    doTheThing(topic);
+                    const logResponse = await api.get(topics[i].SquirreLogs);
+                    console.log(logResponse)
+                    if(i === 0) {
+                        setPosts([topicResponse]);
+                    } else {
+                        setPosts([...posts, topicResponse]);
+                    }
                 }
-            });
+            }
+            // response.data.results.forEach((topic) => {
+            //     if (
+            //         topic.topic_name.toString().replace("#", "").trim() ===
+            //         name.toString().replace("#", "").trim()
+            //     ) {
+            //         console.log(topic)
+            //         doTheThing(topic);
+            //     }
+            // });
         } catch (err) {
             console.log(err);
         }
     };
     //loadPosts((post) => checkForHashtags(post, "Sqqrlz"));
-
+console.log(posts)
     const delete_log = async (id) => {
         try {
             if (window.confirm("Are you sure you want to delete this post?")) {
