@@ -19,8 +19,6 @@
     ~ click on hashtag shows all posts with that hashtag
 -   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
--   fix the card going nono
-    -   hashtags and text go over side this is bad plz fix k thx
 -   Gallery embeds
 
 ## **Server:**
@@ -29,7 +27,6 @@
 -   Actual profile pictures
 -   Update topic view to return squirrel logs "better"
     -   Like how the posts for a user are shown; minimal info but enough to move through
--   Allow post updating (editing)
 -   When a topic list is empty prob should be deleted
 
 ## **Other**
