@@ -1,9 +1,8 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import api from "../../api";
-import { useState } from "react";
 
 function getColor() {
     return (
@@ -19,7 +18,8 @@ function getColor() {
 
 function User(props) {
     const [user, setUser] = useState({ votes: "", posts: "" });
-    const [color, setColor] = useState(getColor());
+    const bgColor = useRef(getColor());
+
     useEffect(() => {
         const getUserData = async () => {
             if (!props.user.profile) {
@@ -52,7 +52,7 @@ function User(props) {
             <Row>
                 <div
                     className="circular--portrait"
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: bgColor.current }}
                 >
                     <p style={{ fontSize: pfpTxtSize }}>
                         {props.user.profile.username.slice(0, 1).toUpperCase()}
