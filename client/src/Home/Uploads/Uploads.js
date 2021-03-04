@@ -10,12 +10,30 @@ function Uploads(props) {
 
     useEffect(async () => {
         try {
-            const response = await api.get("/api/SquirreLogs/");
-            await setPosts(
-                response.data.results.filter((post) => post.owner > 1)
-            );
+            const response = await api.get("/api/NoOneSquireLogs/");
+            await setPosts(response.data.results);
         } catch (err) {}
     }, []);
+
+    const loadPosts = async (Filter) => {
+        try {
+            const response = await api.get("/api/NoOneSquireLogs/");
+            await setPosts(
+                response.data.results.filter((post) => Filter(post))
+            );
+        } catch (err) {}
+    };
+    const loadByHashtag = async (post, name) => {
+        try {
+            const response = await api.get("/api/Topics/");
+            response.some(async (topic) => {
+                if (topic.topic_name === name) {
+                    setPosts(topic.map((topicLink) => {}));
+                }
+            });
+        } catch (err) {}
+    };
+    //loadPosts((post) => checkForHashtags(post, "Sqqrlz"));
 
     const delete_log = async (id) => {
         try {
