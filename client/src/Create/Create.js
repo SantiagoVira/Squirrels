@@ -20,12 +20,6 @@ function Create({ user }) {
     const [request, setRequest] = useState({ topic: "", note: "" });
 
     const onSubmitClick = async (e) => {
-        console.log(
-            request.topic
-                .split(" ")
-                .filter((r) => r.trim() !== "")
-                .map((r) => (r.trim().startsWith("#") ? "" : "#") + r.trim())
-        );
         try {
             e.preventDefault();
 

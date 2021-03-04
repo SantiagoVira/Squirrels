@@ -14,10 +14,10 @@ function UserForm(props) {
             localStorage.removeItem("token");
             const response = await api.post(props.path, form);
             //Set JWT in localstorage
-            localStorage.setItem("token", response.data.user.token);
+            localStorage.setItem("token", response.data.token);
             await props.changeUser({
                 isLoggedIn: true,
-                profile: response.data.user,
+                profile: response.data,
             });
             history.push("/");
         } catch (err) {
