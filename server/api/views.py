@@ -3,6 +3,7 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
+from rest_framework import filters
 
 # There are so many api views.. maybe we should *eventually* stick to one
 from rest_framework.decorators import api_view
@@ -92,6 +93,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     "Okay everyone is welcome in this view, even user 1 🙄"
 
     queryset = SquirreLog.objects.all().order_by('pub_date')
+
+    # Adds searching functionality
+    search_fields = ['note', 'owner__username', 'topics__topic_name']
+    filter_backends = (filters.SearchFilter,)
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
