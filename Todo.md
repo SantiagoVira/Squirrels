@@ -22,15 +22,15 @@
 -   fix the card going nono
     -   hashtags and text go over side this is bad plz fix k thx
 -   Gallery embeds
+-   Tiny suggestion: <sub><sup>Infinite scrolling could be cool for the gallery</sub></sup>  
+    -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
 ## **Server:**
 
 -   Validation for usernames
 -   Actual profile pictures
--   Update topic view to return squirrel logs "better"
-    -   Like how the posts for a user are shown; minimal info but enough to move through
--   Allow post updating (editing)
 -   When a topic list is empty prob should be deleted
+-   Add a view like that of topics for user liked posts 
 
 ## **Other**
 
