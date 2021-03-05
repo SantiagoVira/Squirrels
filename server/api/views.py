@@ -26,7 +26,7 @@ def current_user(request):
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
-    """User stuff"""
+    "\"Humans\" view I guess."
 
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
@@ -47,17 +47,19 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
-        user = User.objects.get(id=pk)
-        logs = SquirreLog.objects.filter(liked_by=user)
+        logs = SquirreLog.objects.filter(liked_by__id=pk)
 
-        notes = [
-            log.note for log in logs
-        ]
+        data = []
+        for log in logs:
+            # Django encourages using data and context, but we don't seem to need to??
+            # This feels djanky
+            log_serializer = SquirreLogReadSerializer(log, data={}, context={'request': request}, partial=True)
 
-        log_serializer = SquirreLogReadSerializer(logs, data={'notes': notes}, context={'request': request}, partial=True)
-        if log_serializer.is_valid():
-            return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if log_serializer.is_valid():
+                data.append(log_serializer.data)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(data, status=status.HTTP_200_OK)
 
 # Logs by user
 class UserSquirrelViewSet(viewsets.ModelViewSet):
@@ -76,17 +78,21 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     #     if log_serializer.is_valid():
     #         return Response(log_serializer.data, status=status.HTTP_200_OK)
     #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
+    "Topics, what else?"
+
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
 class TopicLogsViewSet(viewsets.ModelViewSet):
+    "Squirrels of the topical sort"
+
     serializer_class = SquirreLogReadSerializer
 
     def get_queryset(self):
-        topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
-        return SquirreLog.objects.filter(topics=topic)
+        return SquirreLog.objects.filter(topics__id=self.kwargs['pk'])
 
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
