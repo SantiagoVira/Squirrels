@@ -14,6 +14,7 @@
 
 ## **Frontend**
 
+-   Search functionality w/ backend!
 -   #of posts links to a list of your posts
 -   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
@@ -27,6 +28,8 @@
 -   Actual profile pictures
 -   When a topic list is empty prob should be deleted
 -   Add a view like that of topics for user liked posts
+-   Nested serializer view for who liked a post
+    - Return username and relevant info so we don't have to get
 
 ## **Other**
 
