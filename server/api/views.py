@@ -158,3 +158,7 @@ class NoOneSquireLogViewset(viewsets.ModelViewSet):
 
     queryset = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
     serializer_class = SquirreLogReadSerializer
+
+    # Basic search
+    search_fields = ['note', 'owner__username', 'topics__topic_name']
+    filter_backends = (filters.SearchFilter,)
