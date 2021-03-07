@@ -3,6 +3,7 @@
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
+from rest_framework import filters
 
 # There are so many api views.. maybe we should *eventually* stick to one
 from rest_framework.decorators import api_view
@@ -44,6 +45,20 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @action(methods=['get'], detail=True, url_path='liked', name='liked')
+    def liked(self, request, pk=None):
+        user = User.objects.get(id=pk)
+        logs = SquirreLog.objects.filter(liked_by=user)
+
+        notes = [
+            log.note for log in logs
+        ]
+
+        log_serializer = SquirreLogReadSerializer(logs, data={'notes': notes}, context={'request': request}, partial=True)
+        if log_serializer.is_valid():
+            return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 # Logs by user
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
@@ -53,14 +68,14 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
 
-# Liked logs by user
-class UserLikedViewSet(viewsets.ModelViewSet):
-    def get_queryset(self):
-        return User.objects.filter(owner_id=self.kwargs['pk'])
-
-    def get_serializer_class(self):
-        return UserListSerializer
-
+    # @action(methods=['get'], detail=True, url_path='liked', name='liked')
+    # def liked(self, request, pk=None):
+    #     user = SquirreLog.objects.filter(liked_by__id=pk)
+    #
+    #     log_serializer = SquirreLogSerializer(user, partial=True)
+    #     if log_serializer.is_valid():
+    #         return Response(log_serializer.data, status=status.HTTP_200_OK)
+    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
@@ -78,6 +93,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     "Okay everyone is welcome in this view, even user 1 🙄"
 
     queryset = SquirreLog.objects.all().order_by('pub_date')
+
+    # Adds searching functionality
+    search_fields = ['note', 'owner__username', 'topics__topic_name']
+    filter_backends = (filters.SearchFilter,)
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:

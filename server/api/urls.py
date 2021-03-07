@@ -20,7 +20,6 @@ urlpatterns = [ # We can actually register the path for our serialized info here
 
     # Custom router views # probably a better way :pensive:
     path('users/<int:pk>/', views.UserSquirrelViewSet.as_view({'get':'list'})),
-    path('users/<int:pk>/liked/', views.UserLikedViewSet.as_view({'get':'list'})),
 
     path("Topics/<int:pk>/", views.TopicLogsViewSet.as_view({'get':'list'})),
 

@@ -14,23 +14,22 @@
 
 ## **Frontend**
 
+-   Search functionality w/ backend!
 -   #of posts links to a list of your posts
--   Sort by topics with the links given by the server
-    ~ click on hashtag shows all posts with that hashtag
 -   Gallery cards set votes doesnt work when update user is passed
 -   styleize editing
--   fix the card going nono
-    -   hashtags and text go over side this is bad plz fix k thx
 -   Gallery embeds
+-   Tiny suggestion: <sub><sup>Infinite scrolling could be cool for the gallery</sub></sup>  
+    -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
 ## **Server:**
 
 -   Validation for usernames
 -   Actual profile pictures
--   Update topic view to return squirrel logs "better"
-    -   Like how the posts for a user are shown; minimal info but enough to move through
--   Allow post updating (editing)
 -   When a topic list is empty prob should be deleted
+-   Add a view like that of topics for user liked posts
+-   Nested serializer view for who liked a post
+    - Return username and relevant info so we don't have to get
 
 ## **Other**
 
