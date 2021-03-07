@@ -61,7 +61,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(data, status=status.HTTP_200_OK)
 
-# Logs by user
+# Logs by user detail 
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
     serializer_class = UserSquirrelSerializer
@@ -69,15 +69,6 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
-
-    # @action(methods=['get'], detail=True, url_path='liked', name='liked')
-    # def liked(self, request, pk=None):
-    #     user = SquirreLog.objects.filter(liked_by__id=pk)
-    #
-    #     log_serializer = SquirreLogSerializer(user, partial=True)
-    #     if log_serializer.is_valid():
-    #         return Response(log_serializer.data, status=status.HTTP_200_OK)
-    #     return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
