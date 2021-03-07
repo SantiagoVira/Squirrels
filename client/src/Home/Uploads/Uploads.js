@@ -27,7 +27,6 @@ function Uploads(props) {
                 const topicResponse = await api.get("/api/Topics/");
                 const topics = topicResponse.data.results
                 const newPosts = [];
-                
                 for(let i = 0; i < topics.length; i++) {
                     if (
                         topics[i].topic_name.toString().replace("#", "").trim() ===

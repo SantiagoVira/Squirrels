@@ -22,7 +22,7 @@ User = get_user_model() # checks the most updated User model (api.User)
 
 @api_view(['GET'])
 def current_user(request):
-    serializer = UserSerializer(request.user)
+    serializer = UserSerializer(request.user, context={'request': request})
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
@@ -30,12 +30,13 @@ class UserViewSet(viewsets.ModelViewSet):
 
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return UserListSerializer
-        if self.request.method in ['POST']:
-            return UserSerializer
+    # def get_serializer_class(self):
+    #     if self.request.method in ['GET']:
+    #         return UserListSerializer
+    #     if self.request.method in ['POST']:
+    #         return UserSerializer
 
     def post(self, request, format=None):
         serializer = UserSerializer(data=request.data)
@@ -54,7 +55,7 @@ class UserViewSet(viewsets.ModelViewSet):
             log.note for log in logs
         ]
 
-        log_serializer = SquirreLogReadSerializer(logs, data={'notes': notes}, context={'request': request}, partial=True)
+        log_serializer = SquirreLogSerializer(logs, data={'notes': notes}, context={'request': request}, partial=True)
         if log_serializer.is_valid():
             return Response(log_serializer.data, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -82,7 +83,7 @@ class TopicViewSet(viewsets.ModelViewSet):
     serializer_class = SquirrelTopicSerializer
 
 class TopicLogsViewSet(viewsets.ModelViewSet):
-    serializer_class = SquirreLogReadSerializer
+    serializer_class = SquirreLogSerializer
 
     def get_queryset(self):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
@@ -93,6 +94,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     "Okay everyone is welcome in this view, even user 1 🙄"
 
     queryset = SquirreLog.objects.all().order_by('pub_date')
+    serializer_class = SquirreLogSerializer
 
     # Adds searching functionality
     search_fields = ['note', 'owner__username', 'topics__topic_name']
@@ -107,12 +109,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
-    def get_serializer_class(self):
-        # https://stackoverflow.com/a/41313121
-        # Specify the serializer we want for each operation
-        if self.request.method in ['GET']:
-            return SquirreLogReadSerializer
-        return SquirreLogSerializer
+    # def get_serializer_class(self):
+    #     # https://stackoverflow.com/a/41313121
+    #     # Specify the serializer we want for each operation
+    #     if self.request.method in ['GET']:
+    #         return SquirreLogReadSerializer
+    #     return SquirreLogSerializer
 
     def perform_create(self, serializer):
         serializer.save(
@@ -120,24 +122,36 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             SquirrelTopics=self.request.data['topics']
         )
 
+    def destroy(self, request, *args, **kwargs):
+        # Delete related topics that won't have any associated logs after 
+        # squirrelog deletion
+        topics = SquirrelTopic.objects.filter(logs=kwargs['pk'])
+        for topic in topics:
+            # Topics with 1 or less logs will be empty after this method
+            if topic.logs.count() <= 1:
+                topic.delete()
+
+        return super(SquirreLogViewSet, self).destroy(request, *args, **kwargs)
+
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
         log = SquirreLog.objects.get(id=kwargs['pk'])
-        self.check_object_permissions(request, log)
-
+        self.check_object_permissions(request, log) # checking permissions
         user = User.objects.get(id=request.user.id)
 
         # Un-like if the user liked already
         if (log in user.liked_posts.all()):
             who_liked = log.liked_by.remove(user.id)
             user.liked_posts.remove(log.id)
-        # Like
+        # Otherwise, like
         else:
             who_liked = log.liked_by.add(user.id)
             user.liked_posts.add(log.id)
 
-        log_serializer = SquirreLogSerializer(log, data={'who_liked': who_liked}, context={'request': request}, partial=True)
-        user_serializer = UserSerializer(user)
+        log_serializer = SquirreLogSerializer(log, data={'liked_by': 
+            who_liked}, context={'request': request}, partial=True)
+        user_serializer = UserSerializer(user, context={'request': request})
+        
         if log_serializer.is_valid():
             log_serializer.save()
             return Response({
@@ -151,4 +165,4 @@ class NoOneSquireLogViewset(viewsets.ModelViewSet):
     "This view excludes user 1; we hate them :)"
 
     queryset = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
-    serializer_class = SquirreLogReadSerializer
+    serializer_class = SquirreLogSerializer

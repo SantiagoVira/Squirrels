@@ -31,7 +31,7 @@ function Card({
 
     useEffect(() => {
         if (user && user.isLoggedIn) {
-            setLiked(user.profile.liked_posts.includes(post.id));
+            setLiked(user.profile.liked_posts.includes(post.url));
         }
     }, [user]);
 
@@ -57,10 +57,10 @@ function Card({
         try {
             //Set card's votes in the database to votes variable
             const response = await api.put(
-                `/api/SquirreLogs/${post.id}/vote/?format=json`
+                `/api/SquirreLogs/${post.id}/vote/`
             );
             // Change user's liked posts on the frontend
-            setLiked(!liked);
+            setLiked(response.data.user.liked_posts.includes(response.data.log.url));
             setVotes(response.data.log.votes);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
@@ -111,7 +111,6 @@ function Card({
                                 key={unique()}
                                 onClick={() => {
                                     if (findHashtag) {
-                                        console.log("clicked");
                                         findHashtag(topic.trim());
                                     }
                                 }}
@@ -126,6 +125,7 @@ function Card({
             </Row>
         );
     }
+
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (
@@ -174,7 +174,7 @@ function Card({
                     <ContentEditable
                         className="CardStory StoryIsEditable"
                         disabled={!editing}
-                        html={editValue}
+                        html={editValue || ""}
                         onChange={(e) =>
                             setEditValue(e.currentTarget.textContent)
                         }
