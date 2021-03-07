@@ -6,36 +6,44 @@ import Card from "../../Card/Card.js";
 
 function Uploads(props) {
     const [posts, setPosts] = useState([]);
+    const [hashtagSearching, setHashtagSearching] = useState(false);
     const user = props.user;
 
-    useEffect(async () => {
-        try {
-            const response = await api.get("/api/NoOneSquireLogs/");
-            await setPosts(response.data.results);
-            //loadByHashtag("abc");
-        } catch (err) {}
+    useEffect(() => {
+        loadAllPosts();
     }, []);
-
-    const loadPosts = async (Filter) => {
+    
+    //Loads all custom posts (excluding user 1)
+    const loadAllPosts = async () => {
         try {
             const response = await api.get("/api/NoOneSquireLogs/");
-            await setPosts(
-                response.data.results.filter((post) => Filter(post))
-            );
-        } catch (err) {}
+            setPosts(response.data.results);
+        } catch(err) {}
     };
+
     const loadByHashtag = async (name) => {
         try {
-            const response = await api.get("/api/Topics/");
-            response.data.results.forEach(async (topic) => {
-                if (
-                    topic.topic_name.toString().replace("#", "").trim() ===
-                    name.toString().replace("#", "").trim()
-                ) {
-                    const thePostThingies = await api.get(topic.SquirreLogs);
-                    setPosts(thePostThingies.data.results);
+            if(!hashtagSearching) {
+                const topicResponse = await api.get("/api/Topics/");
+                const topics = topicResponse.data.results
+                const newPosts = [];
+                
+                for(let i = 0; i < topics.length; i++) {
+                    if (
+                        topics[i].topic_name.toString().replace("#", "").trim() ===
+                        name.toString().replace("#", "").trim()
+                    ) {
+                        const logResponse = await api.get(topics[i].SquirreLogs);
+                        newPosts.push(logResponse.data.results[0]);
+                    }
                 }
-            });
+                setPosts(newPosts);
+                setHashtagSearching(true);
+            } else {
+                loadAllPosts();
+                setHashtagSearching(false);
+
+            }
         } catch (err) {
             console.log(err);
         }
