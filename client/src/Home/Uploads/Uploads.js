@@ -16,8 +16,8 @@ function Uploads(props) {
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
         try {
-            const response = await api.get("/api/NoOneSquireLogs/");
-            setPosts(response.data.results);
+            const response = await api.get("/api/SquirreLogs/uploads/");
+            setPosts(response.data);
         } catch(err) {}
     };
 
@@ -25,18 +25,15 @@ function Uploads(props) {
         try {
             if(!hashtagSearching) {
                 const topicResponse = await api.get("/api/Topics/");
-                const topics = topicResponse.data.results
-                const newPosts = [];
-                for(let i = 0; i < topics.length; i++) {
-                    if (
-                        topics[i].topic_name.toString().replace("#", "").trim() ===
-                        name.toString().replace("#", "").trim()
-                    ) {
-                        const logResponse = await api.get(topics[i].SquirreLogs);
-                        newPosts.push(logResponse.data.results[0]);
-                    }
-                }
-                setPosts(newPosts);
+                //Since topics are unique, you can find exactly one match
+                const foundTopic = topicResponse.data.results.find(topic => (
+                    topic.topic_name.toString().replace("#", "").trim() ===
+                    name.toString().replace("#", "").trim()
+                ))
+                
+                //Detail route returns topic info and list of associated logs
+                const logResponse = await api.get(foundTopic.SquirreLogs);
+                setPosts(logResponse.data.results);
                 setHashtagSearching(true);
             } else {
                 loadAllPosts();

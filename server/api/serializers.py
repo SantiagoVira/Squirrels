@@ -1,14 +1,7 @@
 from rest_framework import serializers
 
 from rest_framework_jwt.settings import api_settings
-# from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog, SquirrelTopic, User
-
-# SquirreLog-Topic Structure (is this correct?): # Yep
-# SquirreLog creates/updates topic references in string-related field
-# SquirreLogRead gets topics from nested TinyTopic (read-only)
-# TinyTopic contains a url to SquirrelTopic and the names of topics
-# SquirrelTopic contains Squirrelog urls
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
