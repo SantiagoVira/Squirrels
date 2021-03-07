@@ -96,11 +96,10 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         return instance
 
 class UserListSerializer(serializers.ModelSerializer):
-    liked_posts = serializers.HyperlinkedIdentityField(
-        read_only=True,
-        view_name='user-detail',
-        lookup_field='liked_by',
-        )
+    # liked_posts = serializers.HyperlinkedIdentityField(
+    #     read_only=True,
+    #     view_name='liked-detail',
+    #     )
     posts = serializers.HyperlinkedIdentityField(
         read_only=True,
         view_name='user-detail'
