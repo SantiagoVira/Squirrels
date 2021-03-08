@@ -75,7 +75,7 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
         user = SquirreLog.objects.filter(liked_by__id=pk)
-    
+
         log_serializer = SquirreLogSerializer(user, partial=True)
         if log_serializer.is_valid():
             return Response(log_serializer.data, status=status.HTTP_200_OK)
@@ -89,10 +89,12 @@ class TopicViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         logs = SquirreLog.objects.filter(topics=topic)
+        
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
         log_serializer = SquirreLogSerializer(logs, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return Response({
-            **topic_serializer.data, 
+            **topic_serializer.data,
             'results': log_serializer.data
         }, status=status.HTTP_200_OK)
 
@@ -137,7 +139,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         )
 
     def destroy(self, request, *args, **kwargs):
-        # Delete related topics that won't have any associated logs after 
+        # Delete related topics that won't have any associated logs after
         # squirrelog deletion
         topics = SquirrelTopic.objects.filter(logs=kwargs['pk'])
         for topic in topics:
@@ -168,10 +170,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             who_liked = log.liked_by.add(user.id)
             user.liked_posts.add(log.id)
 
-        log_serializer = SquirreLogSerializer(log, data={'liked_by': 
+        log_serializer = SquirreLogSerializer(log, data={'liked_by':
             who_liked}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user, context={'request': request})
-        
+
         if log_serializer.is_valid():
             log_serializer.save()
             return Response({
