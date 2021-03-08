@@ -52,7 +52,7 @@
 .CardStory {
     font-size: 20px;
     margin-top: 30px;
-    padding-left: 50px;
+    padding: 4px;
     outline: none;
     border: none;
     word-wrap: break-word;
@@ -152,4 +152,9 @@
 }
 .HashtagsRow {
     justify-content: flex-start !important;
+}
+
+.StoryIsEditable {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
 }

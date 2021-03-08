@@ -7,12 +7,24 @@ import Card from "../../Card/Card.js";
 function Uploads(props) {
     const [posts, setPosts] = useState([]);
     const [hashtagSearching, setHashtagSearching] = useState(false);
+    const [MeSearching, setMeSearching] = useState(false);
     const user = props.user;
 
     useEffect(() => {
         loadAllPosts();
     }, []);
-    
+
+    useEffect(() => {
+        if (props.searching) {
+            loadByMe();
+        }
+    }, [props.searching]);
+    useEffect(() => {
+        if (!props.special) {
+            loadAllPosts();
+        }
+    }, [props.special]);
+
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
         try {
@@ -29,7 +41,7 @@ function Uploads(props) {
 
     const loadByHashtag = async (name) => {
         try {
-            if(!hashtagSearching) {
+            if (!hashtagSearching) {
                 const topicResponse = await api.get("/api/Topics/");
                 //Since topics are unique, you can find exactly one match
                 const foundTopic = topicResponse.data.results.find(topic => (
@@ -50,13 +62,29 @@ function Uploads(props) {
             } else {
                 loadAllPosts();
                 setHashtagSearching(false);
-
             }
         } catch (err) {
             console.log(err);
         }
     };
-    //loadPosts((post) => checkForHashtags(post, "Sqqrlz"));
+    const loadByMe = async () => {
+        try {
+            if (!MeSearching) {
+                const MyApi = await api.get(
+                    `/api/users/${props.user.profile.id}/`
+                );
+                const MyPosts = MyApi.data.results;
+                setPosts(MyPosts);
+                setMeSearching(true);
+                props.setSpecial(true);
+            } else {
+                loadAllPosts();
+                setMeSearching(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const delete_log = async (id) => {
         try {
