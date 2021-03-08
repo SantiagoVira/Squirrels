@@ -103,7 +103,8 @@ class TopicViewSet(viewsets.ModelViewSet):
 
     # pk-related detailview editing
     def retrieve(self, request, *args, **kwargs):
-        logs = SquirreLog.objects.filter(topics__id=self.kwargs['pk'])
+        topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
+        logs = SquirreLog.objects.filter(topics=topic)
 
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
 
