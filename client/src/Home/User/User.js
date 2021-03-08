@@ -69,7 +69,6 @@ function User(props) {
                         style={UserDataStyles}
                         onClick={() => {
                             props.setSearching(true);
-                            console.log(props.searching);
                         }}
                     >
                         Posts: <strong>{user.posts}</strong>

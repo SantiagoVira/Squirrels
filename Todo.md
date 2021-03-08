@@ -15,7 +15,6 @@
 ## **Frontend**
 
 -   Search functionality w/ backend!
--   #of posts links to a list of your posts
 -   small exit button that reloads all posts when different posts are displayed
 -   Gallery embeds
 -   Infinite scrolling for the gallery
