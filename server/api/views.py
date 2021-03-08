@@ -27,8 +27,6 @@ def current_user(request):
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
-    "\"Humans\" view"
-
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -85,11 +83,10 @@ class UserSquirrelViewSet(viewsets.ModelViewSet):
 
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
-    "Topics, what else?"
-
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
+    # pk-related detailview editing
     def retrieve(self, request, *args, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         logs = SquirreLog.objects.filter(topics=topic)
@@ -111,8 +108,6 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
-    "Okay everyone is welcome in this view, even user 1 🙄"
-
     queryset = SquirreLog.objects.all().order_by('pub_date')
     serializer_class = SquirreLogSerializer
 
