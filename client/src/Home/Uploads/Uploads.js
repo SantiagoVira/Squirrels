@@ -12,37 +12,38 @@ function Uploads(props) {
     useEffect(() => {
         loadAllPosts();
     }, []);
-    
+
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
         try {
             const response = await api.get("/api/NoOneSquireLogs/");
             setPosts(response.data.results);
-        } catch(err) {}
+        } catch (err) {}
     };
 
     const loadByHashtag = async (name) => {
         try {
-            if(!hashtagSearching) {
+            if (!hashtagSearching) {
                 const topicResponse = await api.get("/api/Topics/");
-                const topics = topicResponse.data.results
-                const newPosts = [];
-                
-                for(let i = 0; i < topics.length; i++) {
+                const topics = topicResponse.data.results;
+
+                for (let i = 0; i < topics.length; i++) {
                     if (
-                        topics[i].topic_name.toString().replace("#", "").trim() ===
-                        name.toString().replace("#", "").trim()
+                        topics[i].topic_name
+                            .toString()
+                            .replace("#", "")
+                            .trim() === name.toString().replace("#", "").trim()
                     ) {
-                        const logResponse = await api.get(topics[i].SquirreLogs);
-                        newPosts.push(logResponse.data.results[0]);
+                        const logResponse = await api.get(
+                            topics[i].SquirreLogs
+                        );
+                        setPosts(logResponse.data.results);
+                        setHashtagSearching(true);
                     }
                 }
-                setPosts(newPosts);
-                setHashtagSearching(true);
             } else {
                 loadAllPosts();
                 setHashtagSearching(false);
-
             }
         } catch (err) {
             console.log(err);
