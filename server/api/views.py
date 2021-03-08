@@ -160,7 +160,13 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
         serializer = SquirreLogSerializer(uploads, context={'request': request}, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(uploads, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(log_serializer.data)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
