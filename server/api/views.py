@@ -47,10 +47,10 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-        
+
         # Gets a user object from the request
         user = authenticate(
-            username=request.data['username'], 
+            username=request.data['username'],
             password=request.data['password']
         )
         # Turns user object into jwt
@@ -123,15 +123,12 @@ class TopicViewSet(viewsets.ModelViewSet):
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
 
         # http://www.django-rest-framework.org/api-guide/pagination/
-        paginator = PageNumberPagination()
+        paginator = TopicSquirrelPagination()
         paginator.page_size = 20
         result_page = paginator.paginate_queryset(logs, request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response({
-            **topic_serializer.data,
-            'results': log_serializer.data
-        })
+        return paginator.get_paginated_response(log_serializer.data, str(topic))
 
 # class TopicLogsViewSet(viewsets.ModelViewSet):
 #     serializer_class = SquirreLogSerializer
