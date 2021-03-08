@@ -1,14 +1,7 @@
 from rest_framework import serializers
 
 from rest_framework_jwt.settings import api_settings
-# from django.contrib.auth.models import User # default django user model
 from .models import SquirreLog, SquirrelTopic, User
-
-# SquirreLog-Topic Structure (is this correct?): # Yep
-# SquirreLog creates/updates topic references in string-related field
-# SquirreLogRead gets topics from nested TinyTopic (read-only)
-# TinyTopic contains a url to SquirrelTopic and the names of topics
-# SquirrelTopic contains Squirrelog urls
 
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
@@ -18,35 +11,41 @@ class SquirrelTopicSerializer(serializers.ModelSerializer):
         model = SquirrelTopic
         fields = ('id', 'SquirreLogs', 'topic_name',)
 
-class TinyTopicSerializer(serializers.ModelSerializer):
-    """To be nested in the read-only version of the SquirreLog serializer"""
+# class TinyTopicSerializer(serializers.ModelSerializer):
+#     """To be nested in the read-only version of the SquirreLog serializer"""
 
-    topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
+#     topic_link = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
 
-    class Meta:
-        model = SquirrelTopic
-        fields = ['topic_name', 'topic_link']
+#     class Meta:
+#         model = SquirrelTopic
+#         fields = ['topic_name', 'topic_link']
 
-class SquirreLogReadSerializer(serializers.ModelSerializer):
-    SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
+# class SquirreLogReadSerializer(serializers.ModelSerializer):
+#     SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
 
+#     liked_by = serializers.HyperlinkedRelatedField(
+#         many=True,
+#         read_only=True,
+#         view_name='user-detail',
+#         )
+
+#     class Meta:
+#         model = SquirreLog
+#         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+
+class SquirreLogSerializer(serializers.ModelSerializer):
+    id = serializers.ReadOnlyField()
+    #serializers.StringRelatedField(many=True, read_only=False)
+    SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
     liked_by = serializers.HyperlinkedRelatedField(
         many=True,
         read_only=True,
         view_name='user-detail',
-        )
+    )
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
-
-class SquirreLogSerializer(serializers.ModelSerializer):
-    id = serializers.ReadOnlyField()
-    serializers.StringRelatedField(many=True, read_only=False)
-
-    class Meta:
-        model = SquirreLog
-        fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics')
+        fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def create(self, validated_data):
@@ -72,20 +71,19 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
-    token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
+    liked_posts = serializers.HyperlinkedIdentityField(
+        read_only=True,
+        view_name='user-liked',
+        ) # Link to users/<int:pk>/liked
+    posts = serializers.HyperlinkedIdentityField(
+        read_only=True,
+        view_name='user-detail'
+    )
 
     class Meta:
         model = User
-        fields = ('id', 'username', 'password', 'token', 'liked_posts')
-
-    def get_token(self, obj):
-        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-        payload = jwt_payload_handler(obj)
-        token = jwt_encode_handler(payload)
-        return token
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts')
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -95,23 +93,39 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         instance.save()
         return instance
 
-class UserListSerializer(serializers.ModelSerializer):
-    liked_posts = serializers.HyperlinkedIdentityField(
-        read_only=True,
-        view_name='user-liked',
-        ) # Link to users/<int:pk>/liked
-    posts = serializers.HyperlinkedIdentityField(
-        read_only=True,
-        view_name='user-detail'
-        )
+# class UserListSerializer(serializers.ModelSerializer):
+#     liked_posts = serializers.HyperlinkedRelatedField(
+#         many=True,
+#         read_only=True,
+#         view_name='squirrelog-detail',
+#         )
+#     posts = serializers.HyperlinkedIdentityField(
+#         read_only=True,
+#         view_name='user-detail'
+#         )
 
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'liked_posts', 'posts')
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'liked_posts', 'posts')
+
+# Didn't change this because it's used in pagination
+# class UserListSerializer(serializers.ModelSerializer):
+#     liked_posts = serializers.HyperlinkedIdentityField(
+#         read_only=True,
+#         view_name='user-liked',
+#         ) # Link to users/<int:pk>/liked
+#     posts = serializers.HyperlinkedIdentityField(
+#         read_only=True,
+#         view_name='user-detail'
+#         )
+#
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'liked_posts', 'posts')
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
     log_link = serializers.HyperlinkedIdentityField(view_name='squirrelog-detail')
-    SquirrelTopics = TinyTopicSerializer(many=True, read_only=True)
+    SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
 
     class Meta:
         model = SquirreLog

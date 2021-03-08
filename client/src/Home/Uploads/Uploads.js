@@ -28,32 +28,37 @@ function Uploads(props) {
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
         try {
-            const response = await api.get("/api/NoOneSquireLogs/");
-            setPosts(response.data.results);
-        } catch (err) {}
+            var response = await api.get("/api/SquirreLogs/uploads/");
+            var tmp_posts = response.data.results;
+            setPosts(tmp_posts);
+            while (response.data.next !== null) {
+                response = await api.get(response.data.next);
+                setPosts([...tmp_posts, ...response.data.results]);
+                tmp_posts = response.data.results;
+            }
+        } catch(err) {}
     };
 
     const loadByHashtag = async (name) => {
         try {
             if (!hashtagSearching) {
                 const topicResponse = await api.get("/api/Topics/");
-                const topics = topicResponse.data.results;
-
-                for (let i = 0; i < topics.length; i++) {
-                    if (
-                        topics[i].topic_name
-                            .toString()
-                            .replace("#", "")
-                            .trim() === name.toString().replace("#", "").trim()
-                    ) {
-                        const logResponse = await api.get(
-                            topics[i].SquirreLogs
-                        );
-                        setPosts(logResponse.data.results);
-                        setHashtagSearching(true);
-                        props.setSpecial(true);
-                    }
+                //Since topics are unique, you can find exactly one match
+                const foundTopic = topicResponse.data.results.find(topic => (
+                    topic.topic_name.toString().replace("#", "").trim() ===
+                    name.toString().replace("#", "").trim()
+                ))
+                
+                //Detail route returns topic info and list of associated logs
+                var logResponse = await api.get(foundTopic.SquirreLogs);
+                var tmp_posts = logResponse.data.results.results;
+                setPosts(tmp_posts);
+                while (logResponse.data.next !== null) {
+                    logResponse = await api.get(logResponse.data.next);
+                    setPosts([...tmp_posts, ...logResponse.data.results.results]);
+                    tmp_posts = logResponse.data.results.results;
                 }
+                setHashtagSearching(true);
             } else {
                 loadAllPosts();
                 setHashtagSearching(false);

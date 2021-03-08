@@ -43,7 +43,7 @@ function Gallery({ user, changeUser }) {
         stories.forEach((log) => {
             //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
             const story = log.note;
-            const topics = log.name ? log.name.split(",") : [];
+            const topics = log.SquirrelTopics;
 
             //Search by tags (topics)
             if (search.startsWith("#")) {
@@ -52,7 +52,7 @@ function Gallery({ user, changeUser }) {
                         .slice(1)
                         .trim()
                         .toLowerCase();
-                    if (formattedSearch.includes(topic.trim().toLowerCase())) {
+                    if (topic.topic_name.trim().toLowerCase().includes(formattedSearch)) {
                         searchedStories.push(log);
                         return true;
                     }
