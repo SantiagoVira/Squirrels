@@ -56,7 +56,7 @@ class UserViewSet(viewsets.ModelViewSet):
         for log in logs:
             # Django encourages using data and context, but we don't seem to need to??
             # This feels djanky
-            log_serializer = SquirreLogReadSerializer(log, data={}, context={'request': request}, partial=True)
+            log_serializer = SquirreLogSerializer(log, data={}, context={'request': request}, partial=True)
 
             if log_serializer.is_valid():
                 data.append(log_serializer.data)
