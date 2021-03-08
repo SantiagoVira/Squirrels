@@ -19,6 +19,11 @@ function Uploads(props) {
             loadByMe();
         }
     }, [props.searching]);
+    useEffect(() => {
+        if (!props.special) {
+            loadAllPosts();
+        }
+    }, [props.special]);
 
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
@@ -46,6 +51,7 @@ function Uploads(props) {
                         );
                         setPosts(logResponse.data.results);
                         setHashtagSearching(true);
+                        props.setSpecial(true);
                     }
                 }
             } else {
@@ -65,6 +71,7 @@ function Uploads(props) {
                 const MyPosts = MyApi.data.results;
                 setPosts(MyPosts);
                 setMeSearching(true);
+                props.setSpecial(true);
             } else {
                 loadAllPosts();
                 setMeSearching(false);
