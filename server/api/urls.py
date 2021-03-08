@@ -10,7 +10,6 @@ router = routers.DefaultRouter()
 # ^ One gallery-feed instead of separate
 #router.register(r'NoOneSquireLogs', views.NoOneSquireLogViewset, basename="NoOneSquireLogs") # For gallery
 router.register(r'SquirreLogs', views.SquirreLogViewSet)
-
 router.register(r'Topics', views.TopicViewSet)
 router.register(r'users', views.UserViewSet)
 
@@ -20,7 +19,6 @@ urlpatterns = [ # We can actually register the path for our serialized info here
 
     # Custom router views # probably a better way :pensive:
     # path('users/<int:pk>/', views.UserSquirrelViewSet.as_view({'get':'list'})),
-
     # path("Topics/<int:pk>/", views.TopicLogsViewSet.as_view({'get':'list'})),
 
     # Authenticates and parses username into jwt
