@@ -26,7 +26,7 @@ def current_user(request):
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
-    "\"Humans\" view I guess."
+    "\"Humans\" view"
 
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
@@ -61,7 +61,7 @@ class UserViewSet(viewsets.ModelViewSet):
                 return Response(status=status.HTTP_400_BAD_REQUEST)
         return Response(data, status=status.HTTP_200_OK)
 
-# Logs by user detail 
+# Logs by user detail
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
     serializer_class = UserSquirrelSerializer
