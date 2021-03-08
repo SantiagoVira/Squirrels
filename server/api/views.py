@@ -11,8 +11,11 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
 from .serializers import * # Only serializers
-from .pagination import * # Only paginator classes
 from .permissions import IsOwner
+
+# Pagination
+from .pagination import * # Only paginator classes
+from rest_framework.pagination import PageNumberPagination
 
 # Models
 from .models import SquirreLog, SquirrelTopic
@@ -28,8 +31,6 @@ def current_user(request):
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
-    """User stuff"""
-
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -61,54 +62,76 @@ class UserViewSet(viewsets.ModelViewSet):
             **serializer.data
         }, status=status.HTTP_201_CREATED, headers=headers)
 
+    def retrieve(self, request, *args, **kwargs):
+        logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
+
+        # http://www.django-rest-framework.org/api-guide/pagination/
+        paginator = UserSquirrelPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(logs, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(log_serializer.data)
+
+
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
-        user = User.objects.get(id=pk)
-        logs = SquirreLog.objects.filter(liked_by=user)
+        logs = SquirreLog.objects.filter(liked_by__id=pk)
 
-        notes = [
-            log.note for log in logs
-        ]
+        data = []
+        for log in logs:
+            # Django encourages using data and context, but we don't seem to need to??
+            # This feels djanky
+            log_serializer = SquirreLogSerializer(log, data={}, context={'request': request}, partial=True)
 
-        log_serializer = SquirreLogSerializer(logs, data={'notes': notes}, context={'request': request}, partial=True)
-        if log_serializer.is_valid():
-            return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            if log_serializer.is_valid():
+                data.append(log_serializer.data)
+            else:
+                return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(data, status=status.HTTP_200_OK)
 
-# Logs by user
-class UserSquirrelViewSet(viewsets.ModelViewSet):
-    permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
-    serializer_class = UserSquirrelSerializer
-    pagination_class = UserSquirrelPagination
-
-    def get_queryset(self):
-        return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
-
-    # Sort of duplicated from UserViewSet; maybe some way to combine them
-    @action(methods=['get'], detail=True, url_path='liked', name='liked')
-    def liked(self, request, pk=None):
-        user = SquirreLog.objects.filter(liked_by__id=pk)
-    
-        log_serializer = SquirreLogSerializer(user, partial=True)
-        if log_serializer.is_valid():
-            return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# Logs by user detail
+# class UserSquirrelViewSet(viewsets.ModelViewSet):
+#     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
+#     serializer_class = UserSquirrelSerializer
+#     pagination_class = UserSquirrelPagination
+#
+#     def get_queryset(self):
+#         return SquirreLog.objects.filter(owner_id=self.kwargs['pk'])
+#
+#     # Sort of duplicated from UserViewSet; maybe some way to combine them
+#     @action(methods=['get'], detail=True, url_path='liked', name='liked')
+#     def liked(self, request, pk=None):
+#         user = SquirreLog.objects.filter(liked_by__id=pk)
+#
+#         log_serializer = SquirreLogSerializer(user, partial=True)
+#         if log_serializer.is_valid():
+#             return Response(log_serializer.data, status=status.HTTP_200_OK)
+#         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
     queryset = SquirrelTopic.objects.all()
     serializer_class = SquirrelTopicSerializer
 
+    # pk-related detailview editing
     def retrieve(self, request, *args, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         logs = SquirreLog.objects.filter(topics=topic)
+
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
-        log_serializer = SquirreLogSerializer(logs, context={'request': request}, many=True)
-        return Response({
-            **topic_serializer.data, 
+
+        # http://www.django-rest-framework.org/api-guide/pagination/
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(logs, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response({
+            **topic_serializer.data,
             'results': log_serializer.data
-        }, status=status.HTTP_200_OK)
+        })
 
 # class TopicLogsViewSet(viewsets.ModelViewSet):
 #     serializer_class = SquirreLogSerializer
@@ -119,8 +142,6 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
-    "Okay everyone is welcome in this view, even user 1 🙄"
-
     queryset = SquirreLog.objects.all().order_by('pub_date')
     serializer_class = SquirreLogSerializer
 
@@ -151,7 +172,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         )
 
     def destroy(self, request, *args, **kwargs):
-        # Delete related topics that won't have any associated logs after 
+        # Delete related topics that won't have any associated logs after
         # squirrelog deletion
         topics = SquirrelTopic.objects.filter(logs=kwargs['pk'])
         for topic in topics:
@@ -165,7 +186,13 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
         serializer = SquirreLogSerializer(uploads, context={'request': request}, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(uploads, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(log_serializer.data)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
@@ -182,10 +209,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
             who_liked = log.liked_by.add(user.id)
             user.liked_posts.add(log.id)
 
-        log_serializer = SquirreLogSerializer(log, data={'liked_by': 
+        log_serializer = SquirreLogSerializer(log, data={'liked_by':
             who_liked}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user, context={'request': request})
-        
+
         if log_serializer.is_valid():
             log_serializer.save()
             return Response({
@@ -197,6 +224,9 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
 # Excluding user 1; we need at least one view with all
 # class NoOneSquireLogViewset(viewsets.ModelViewSet):
 #     "This view excludes user 1; we hate them :)"
-
-#     queryset = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
-#     serializer_class = SquirreLogSerializer
+    # queryset = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
+    # serializer_class = SquirreLogReadSerializer
+    #
+    # # Basic search
+    # search_fields = ['note', 'owner__username', 'topics__topic_name']
+    # filter_backends = (filters.SearchFilter,)

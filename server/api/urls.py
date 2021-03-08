@@ -18,8 +18,8 @@ urlpatterns = [ # We can actually register the path for our serialized info here
     path('current_user/', views.current_user),
 
     # Custom router views # probably a better way :pensive:
-    path('users/<int:pk>/', views.UserSquirrelViewSet.as_view({'get':'list'})),
-    #path("Topics/<int:pk>/", views.TopicLogsViewSet.as_view({'get':'list'})),
+    # path('users/<int:pk>/', views.UserSquirrelViewSet.as_view({'get':'list'})),
+    # path("Topics/<int:pk>/", views.TopicLogsViewSet.as_view({'get':'list'})),
 
     # Authenticates and parses username into jwt
     path('authenticate/', obtain_jwt_token),

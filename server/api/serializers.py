@@ -72,11 +72,10 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     password = serializers.CharField(write_only=True)
-    liked_posts = serializers.HyperlinkedRelatedField(
-        many=True,
+    liked_posts = serializers.HyperlinkedIdentityField(
         read_only=True,
-        view_name='squirrelog-detail',
-    )
+        view_name='user-liked',
+        ) # Link to users/<int:pk>/liked
     posts = serializers.HyperlinkedIdentityField(
         read_only=True,
         view_name='user-detail'
@@ -110,6 +109,20 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 #         fields = ('id', 'username', 'liked_posts', 'posts')
 
 # Didn't change this because it's used in pagination
+# class UserListSerializer(serializers.ModelSerializer):
+#     liked_posts = serializers.HyperlinkedIdentityField(
+#         read_only=True,
+#         view_name='user-liked',
+#         ) # Link to users/<int:pk>/liked
+#     posts = serializers.HyperlinkedIdentityField(
+#         read_only=True,
+#         view_name='user-detail'
+#         )
+#
+#     class Meta:
+#         model = User
+#         fields = ('id', 'username', 'liked_posts', 'posts')
+
 class UserSquirrelSerializer(serializers.ModelSerializer):
     log_link = serializers.HyperlinkedIdentityField(view_name='squirrelog-detail')
     SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
