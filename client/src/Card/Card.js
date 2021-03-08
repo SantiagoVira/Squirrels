@@ -172,7 +172,7 @@ function Card({
                 <br />
                 <Row>
                     <ContentEditable
-                        className="CardStory StoryIsEditable"
+                        className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
                         html={editValue}
                         onChange={(e) =>

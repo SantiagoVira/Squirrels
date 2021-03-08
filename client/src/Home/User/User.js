@@ -65,7 +65,13 @@ function User(props) {
                     <p style={UserDataStyles}>
                         Total Votes: <strong>{user.votes}</strong>
                     </p>
-                    <p style={UserDataStyles}>
+                    <p
+                        style={UserDataStyles}
+                        onClick={() => {
+                            props.setSearching(true);
+                            console.log(props.searching);
+                        }}
+                    >
                         Posts: <strong>{user.posts}</strong>
                     </p>
                 </Col>

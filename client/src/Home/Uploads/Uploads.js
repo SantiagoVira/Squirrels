@@ -7,11 +7,18 @@ import Card from "../../Card/Card.js";
 function Uploads(props) {
     const [posts, setPosts] = useState([]);
     const [hashtagSearching, setHashtagSearching] = useState(false);
+    const [MeSearching, setMeSearching] = useState(false);
     const user = props.user;
 
     useEffect(() => {
         loadAllPosts();
     }, []);
+
+    useEffect(() => {
+        if (props.searching) {
+            loadByMe();
+        }
+    }, [props.searching]);
 
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
@@ -49,7 +56,23 @@ function Uploads(props) {
             console.log(err);
         }
     };
-    //loadPosts((post) => checkForHashtags(post, "Sqqrlz"));
+    const loadByMe = async () => {
+        try {
+            if (!MeSearching) {
+                const MyApi = await api.get(
+                    `/api/users/${props.user.profile.id}/`
+                );
+                const MyPosts = MyApi.data.results;
+                setPosts(MyPosts);
+                setMeSearching(true);
+            } else {
+                loadAllPosts();
+                setMeSearching(false);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    };
 
     const delete_log = async (id) => {
         try {
