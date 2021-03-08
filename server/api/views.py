@@ -27,7 +27,7 @@ def current_user(request):
     return Response(serializer.data)
 
 class UserViewSet(viewsets.ModelViewSet):
-    """User stuff"""
+    "\"Humans\" view"
 
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
@@ -62,7 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response(log_serializer.data, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# Logs by user
+# Logs by user detail
 class UserSquirrelViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny] # They don't need to be signed in to sign up
     serializer_class = UserSquirrelSerializer
@@ -89,7 +89,7 @@ class TopicViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         logs = SquirreLog.objects.filter(topics=topic)
-        
+
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
         log_serializer = SquirreLogSerializer(logs, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
