@@ -48,6 +48,18 @@ class UserViewSet(viewsets.ModelViewSet):
             return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def retrieve(self, request, *args, **kwargs):
+        logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
+
+        # http://www.django-rest-framework.org/api-guide/pagination/
+        paginator = UserSquirrelPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(logs, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(log_serializer.data)
+
+
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
@@ -91,8 +103,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 
     # pk-related detailview editing
     def retrieve(self, request, *args, **kwargs):
-        topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
-        logs = SquirreLog.objects.filter(topics=topic)
+        logs = SquirreLog.objects.filter(topics__id=self.kwargs['pk'])
 
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
 
