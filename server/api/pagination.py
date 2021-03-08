@@ -10,10 +10,8 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
         except IndexError:
             total = 0
         return Response({
-            'links': {
-                'next': self.get_next_link(),
-                'previous': self.get_previous_link()
-            },
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
             'count': self.page.paginator.count,
             'total_votes': total,
             'results': data,
@@ -29,10 +27,8 @@ class TopicSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
     def get_paginated_response(self, data, topic_name):
         return Response({
-            'links': {
-                'next': self.get_next_link(),
-                'previous': self.get_previous_link()
-            },
+            'next': self.get_next_link(),
+            'previous': self.get_previous_link(),
             'count': self.page.paginator.count,
             'topic_name': topic_name,
             'results': data,
