@@ -71,7 +71,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
-    token = serializers.SerializerMethodField()
     password = serializers.CharField(write_only=True)
     liked_posts = serializers.HyperlinkedRelatedField(
         many=True,
@@ -85,15 +84,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'password', 'token', 'liked_posts', 'posts')
-
-    def get_token(self, obj):
-        jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-        jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-
-        payload = jwt_payload_handler(obj)
-        token = jwt_encode_handler(payload)
-        return token
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts')
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

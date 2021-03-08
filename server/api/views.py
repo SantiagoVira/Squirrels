@@ -1,5 +1,6 @@
 # Register viewsets in api/urls.py!!!
 
+from django.contrib.auth import authenticate
 from rest_framework import viewsets, status, permissions
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
@@ -39,13 +40,26 @@ class UserViewSet(viewsets.ModelViewSet):
     #     if self.request.method in ['POST']:
     #         return UserSerializer
 
-    def post(self, request, format=None):
-        serializer = UserSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            # Response should be the same as obtain_jwt_token (data inside user property)
-            return Response({'user': serializer.data}, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    # Custom register route with token
+    def create(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        
+        # Gets a user object from the request
+        user = authenticate(
+            username=request.data['username'], 
+            password=request.data['password']
+        )
+        # Turns user object into jwt
+        payload = api_settings.JWT_PAYLOAD_HANDLER(user)
+        token = api_settings.JWT_ENCODE_HANDLER(payload)
+
+        return Response({
+            'token': token,
+            **serializer.data
+        }, status=status.HTTP_201_CREATED, headers=headers)
 
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
