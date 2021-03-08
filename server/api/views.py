@@ -10,8 +10,11 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 
 from .serializers import * # Only serializers
-from .pagination import * # Only paginator classes
 from .permissions import IsOwner
+
+# Pagination
+from .pagination import * # Only paginator classes
+from rest_framework.pagination import PageNumberPagination
 
 # Models
 from .models import SquirreLog, SquirrelTopic
@@ -92,12 +95,17 @@ class TopicViewSet(viewsets.ModelViewSet):
         logs = SquirreLog.objects.filter(topics=topic)
 
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
-        log_serializer = SquirreLogSerializer(logs, context={'request': request}, many=True)
+
+        # http://www.django-rest-framework.org/api-guide/pagination/
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(logs, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return Response({
+        return paginator.get_paginated_response({
             **topic_serializer.data,
             'results': log_serializer.data
-        }, status=status.HTTP_200_OK)
+        })
 
 # class TopicLogsViewSet(viewsets.ModelViewSet):
 #     serializer_class = SquirreLogSerializer
