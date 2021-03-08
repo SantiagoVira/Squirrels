@@ -79,17 +79,22 @@ class UserViewSet(viewsets.ModelViewSet):
     def liked(self, request, pk=None):
         logs = SquirreLog.objects.filter(liked_by__id=pk)
 
-        data = []
-        for log in logs:
-            # Django encourages using data and context, but we don't seem to need to??
-            # This feels djanky
-            log_serializer = SquirreLogSerializer(log, data={}, context={'request': request}, partial=True)
+        # data = []
+        # for log in logs:
+        #     # Django encourages using data and context, but we don't seem to need to??
+        #     # This feels djanky
+        #     log_serializer = SquirreLogSerializer(log, data={}, context={'request': request}, partial=True)
+        #
+        #     if log_serializer.is_valid():
+        #         data.append(log_serializer.data)
+        #     else:
+        #         return Response(status=status.HTTP_400_BAD_REQUEST)
 
-            if log_serializer.is_valid():
-                data.append(log_serializer.data)
-            else:
-                return Response(status=status.HTTP_400_BAD_REQUEST)
-        return Response(data, status=status.HTTP_200_OK)
+        paginator = UserSquirrelPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(logs, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        return paginator.get_paginated_response(log_serializer.data)
 
 # Logs by user detail
 # class UserSquirrelViewSet(viewsets.ModelViewSet):
