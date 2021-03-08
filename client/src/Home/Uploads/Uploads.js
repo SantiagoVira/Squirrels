@@ -51,12 +51,12 @@ function Uploads(props) {
                 
                 //Detail route returns topic info and list of associated logs
                 var logResponse = await api.get(foundTopic.SquirreLogs);
-                var tmp_posts = logResponse.data.results.results;
+                var tmp_posts = logResponse.data.results;
                 setPosts(tmp_posts);
                 while (logResponse.data.next !== null) {
                     logResponse = await api.get(logResponse.data.next);
-                    setPosts([...tmp_posts, ...logResponse.data.results.results]);
-                    tmp_posts = logResponse.data.results.results;
+                    setPosts([...tmp_posts, ...logResponse.data.results]);
+                    tmp_posts = logResponse.data.results;
                 }
                 setHashtagSearching(true);
             } else {
