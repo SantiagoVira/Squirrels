@@ -16,8 +16,14 @@ function Uploads(props) {
     //Loads all custom posts (excluding user 1)
     const loadAllPosts = async () => {
         try {
-            const response = await api.get("/api/SquirreLogs/uploads/");
-            setPosts(response.data);
+            var response = await api.get("/api/SquirreLogs/uploads/");
+            var tmp_posts = response.data.results;
+            setPosts(tmp_posts);
+            while (response.data.next !== null) {
+                response = await api.get(response.data.next);
+                setPosts([...tmp_posts, ...response.data.results]);
+                tmp_posts = response.data.results;
+            }
         } catch(err) {}
     };
 
@@ -32,8 +38,14 @@ function Uploads(props) {
                 ))
                 
                 //Detail route returns topic info and list of associated logs
-                const logResponse = await api.get(foundTopic.SquirreLogs);
-                setPosts(logResponse.data.results);
+                var logResponse = await api.get(foundTopic.SquirreLogs);
+                var tmp_posts = logResponse.data.results.results;
+                setPosts(tmp_posts);
+                while (logResponse.data.next !== null) {
+                    logResponse = await api.get(logResponse.data.next);
+                    setPosts([...tmp_posts, ...logResponse.data.results.results]);
+                    tmp_posts = logResponse.data.results.results;
+                }
                 setHashtagSearching(true);
             } else {
                 loadAllPosts();
