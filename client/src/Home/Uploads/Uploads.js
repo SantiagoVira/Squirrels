@@ -44,20 +44,22 @@ function Uploads(props) {
             if (!hashtagSearching) {
                 const topicResponse = await api.get("/api/Topics/");
                 //Since topics are unique, you can find exactly one match
+                //Note: this will NOT attempt to find hashtags with '#', since they are broken and pointless
                 const foundTopic = topicResponse.data.results.find(topic => (
-                    topic.topic_name.toString().replace("#", "").trim() ===
+                    topic.topic_name.toString().trim() ===
                     name.toString().replace("#", "").trim()
                 ))
                 
                 //Detail route returns topic info and list of associated logs
-                var logResponse = await api.get(foundTopic.SquirreLogs);
-                var tmp_posts = logResponse.data.results;
-                setPosts(tmp_posts);
+                let logResponse = await api.get(foundTopic.SquirreLogs);
+                //Note: maybe we should change the pagination to make this look nicer?
+                let tmp_posts = logResponse.data.results.results;
                 while (logResponse.data.next !== null) {
                     logResponse = await api.get(logResponse.data.next);
-                    setPosts([...tmp_posts, ...logResponse.data.results]);
-                    tmp_posts = logResponse.data.results;
+                    tmp_posts = [...tmp_posts, ...logResponse.data.results];
                 }
+
+                setPosts(tmp_posts);
                 setHashtagSearching(true);
             } else {
                 loadAllPosts();
