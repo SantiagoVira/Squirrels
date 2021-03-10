@@ -34,7 +34,7 @@ function Card({
             if (user && user.isLoggedIn) {
                 const response = await api.get(user.profile.liked_posts);
                 //'Find' returns truthy if current post is found in liked posts
-                setLiked(response.data.find(liked_post => liked_post.id === post.id));
+                setLiked(response.data.results.find(liked_post => liked_post.id === post.id));
             }
         }
         getUserVote();

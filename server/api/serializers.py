@@ -62,7 +62,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         log.save()
 
         for topic in topics:
-            print(topic)
             topic.replace("#", "")
             try: # Finding an existing topic
                 topic_obj = SquirrelTopic.objects.get(topic_name__exact=topic)

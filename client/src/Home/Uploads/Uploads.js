@@ -52,13 +52,11 @@ function Uploads(props) {
                 
                 //Detail route returns topic info and list of associated logs
                 let logResponse = await api.get(foundTopic.SquirreLogs);
-                //Note: maybe we should change the pagination to make this look nicer?
-                let tmp_posts = logResponse.data.results.results;
+                let tmp_posts = logResponse.data.results;
                 while (logResponse.data.next !== null) {
                     logResponse = await api.get(logResponse.data.next);
                     tmp_posts = [...tmp_posts, ...logResponse.data.results];
                 }
-
                 setPosts(tmp_posts);
                 setHashtagSearching(true);
             } else {
