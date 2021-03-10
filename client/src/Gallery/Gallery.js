@@ -22,16 +22,16 @@ function Gallery({ user, changeUser }) {
     }, []);
 
     function getStories(stories, search) {
+        console.log(search)
         if (search === "") {
-            // let randomStories = [];
-            // let randomInt = 0;
+            let randomStories = [];
+            let randomInt = 0;
 
-            // for (let i = 0; i < 10; i++) {
-            //     randomInt = Math.floor(Math.random() * stories.length);
-            //     randomStories.push(stories[randomInt]);
-            // }
-            // setStories(randomStories);
-            setStories(stories.slice(0, 10));
+            for (let i = 0; i < 10; i++) {
+                randomInt = Math.floor(Math.random() * stories.length);
+                randomStories.push(stories[randomInt]);
+            }
+            setStories(randomStories);
         } else {
             searchStories(stories, search);
         }
@@ -85,7 +85,7 @@ function Gallery({ user, changeUser }) {
             return (
                 <Card 
                     post={post} 
-                    key={post.id} 
+                    key={log.id} 
                     user={user} 
                     changeUser={changeUser} 
                 />

@@ -30,9 +30,14 @@ function Card({
     const [username, setUsername] = useState("");
 
     useEffect(() => {
-        if (user && user.isLoggedIn) {
-            setLiked(user.profile.liked_posts.includes(post.url));
+        const getUserVote = async () => {
+            if (user && user.isLoggedIn) {
+                const response = await api.get(user.profile.liked_posts);
+                //'Find' returns truthy if current post is found in liked posts
+                setLiked(response.data.find(liked_post => liked_post.id === post.id));
+            }
         }
+        getUserVote();
     }, [user]);
 
     useEffect(() => {
@@ -59,8 +64,11 @@ function Card({
             const response = await api.put(
                 `/api/SquirreLogs/${post.id}/vote/`
             );
-            // Change user's liked posts on the frontend
-            setLiked(response.data.user.liked_posts.includes(response.data.log.url));
+            
+            // Liked_by stores a list of user urls
+            setLiked(response.data.log.liked_by.find(url => (
+                url === response.data.user.url
+            )));
             setVotes(response.data.log.votes);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}

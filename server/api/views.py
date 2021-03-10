@@ -47,10 +47,10 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-
+        
         # Gets a user object from the request
         user = authenticate(
-            username=request.data['username'],
+            username=request.data['username'], 
             password=request.data['password']
         )
         # Turns user object into jwt
@@ -78,23 +78,8 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
         logs = SquirreLog.objects.filter(liked_by__id=pk)
-
-        # data = []
-        # for log in logs:
-        #     # Django encourages using data and context, but we don't seem to need to??
-        #     # This feels djanky
-        #     log_serializer = SquirreLogSerializer(log, data={}, context={'request': request}, partial=True)
-        #
-        #     if log_serializer.is_valid():
-        #         data.append(log_serializer.data)
-        #     else:
-        #         return Response(status=status.HTTP_400_BAD_REQUEST)
-
-        paginator = UserSquirrelPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        return paginator.get_paginated_response(log_serializer.data)
+        serializer = SquirreLogSerializer(logs, context={'request': request}, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
 
 # Logs by user detail
 # class UserSquirrelViewSet(viewsets.ModelViewSet):
@@ -128,12 +113,15 @@ class TopicViewSet(viewsets.ModelViewSet):
         topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
 
         # http://www.django-rest-framework.org/api-guide/pagination/
-        paginator = TopicSquirrelPagination()
+        paginator = PageNumberPagination()
         paginator.page_size = 20
         result_page = paginator.paginate_queryset(logs, request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response(log_serializer.data, str(topic))
+        return paginator.get_paginated_response({
+            **topic_serializer.data,
+            'results': log_serializer.data
+        })
 
 # class TopicLogsViewSet(viewsets.ModelViewSet):
 #     serializer_class = SquirreLogSerializer
