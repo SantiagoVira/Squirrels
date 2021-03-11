@@ -17,7 +17,6 @@ function CardLoader(props) {
     useEffect(async () => {
         const response = await api.get(`/api/SquirreLogs/${id}`);
         setCard(response.data);
-        console.log("HELO");
     }, []);
     if (card.owner === 1) {
         gallery = true;
