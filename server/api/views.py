@@ -62,7 +62,8 @@ class UserViewSet(viewsets.ModelViewSet):
             **serializer.data
         }, status=status.HTTP_201_CREATED, headers=headers)
 
-    def retrieve(self, request, *args, **kwargs):
+    @action(methods=['get'], detail=True, url_path='posts', name='posts')
+    def posts(self, request, *args, **kwargs):
         logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
 
         # http://www.django-rest-framework.org/api-guide/pagination/

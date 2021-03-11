@@ -10,7 +10,7 @@ function Gallery({ user, changeUser }) {
     const [stories, setStories] = useState([]);
 
     useEffect(async () => {
-        var response = await api.get("/api/users/1");
+        var response = await api.get("/api/users/1/posts");
         var d = response.data.results;
         setData(d);
         getStories(d, "");
@@ -81,6 +81,7 @@ function Gallery({ user, changeUser }) {
                 note: log.note,
                 id: log.id,
                 votes: log.votes,
+                owner: log.owner
             };
             return (
                 <Card 

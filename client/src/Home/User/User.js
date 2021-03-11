@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
+import {Link} from "react-router-dom";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
@@ -17,7 +18,7 @@ function getColor() {
 }
 
 function User(props) {
-    const [user, setUser] = useState({ votes: "", posts: "" });
+    const [userData, setUserData] = useState({ votes: "", posts: "" });
     const bgColor = useRef(getColor());
 
     useEffect(() => {
@@ -25,12 +26,12 @@ function User(props) {
             if (!props.user.profile) {
                 return null;
             }
-            const dbUserPerson = await api.get(
-                `/api/users/${props.user.profile.id}`
+            const response = await api.get(
+                `/api/users/${props.user.profile.id}/posts/`
             );
-            await setUser({
-                votes: dbUserPerson.data.total_votes,
-                posts: dbUserPerson.data.count,
+            await setUserData({
+                votes: response.data.total_votes,
+                posts: response.data.count,
             });
         };
         getUserData();
@@ -63,16 +64,15 @@ function User(props) {
             <Row>
                 <Col>
                     <p style={UserDataStyles}>
-                        Total Votes: <strong>{user.votes}</strong>
+                        Total Votes: <strong>{userData.votes}</strong>
                     </p>
-                    <p
+                    <Link
+                        className="link"
                         style={UserDataStyles}
-                        onClick={() => {
-                            props.setSearching(true);
-                        }}
+                        to={`/?user=${props.user.profile.id}`}
                     >
-                        Posts: <strong>{user.posts}</strong>
-                    </p>
+                        Posts: <strong>{userData.posts}</strong>
+                    </Link>
                 </Col>
             </Row>
         </div>

@@ -42,19 +42,12 @@ function Card({
 
     useEffect(() => {
         const getUsername = async () => {
-            const data = await api.get(`/api/users/`);
-            data.data.results.some((res) => {
-                if (res.id === post.owner) {
-                    setUsername(res.username);
-                    return true;
-                }
-                return false;
-            });
-            return true;
+            const response = await api.get(`/api/users/${post.owner}`);
+            setUsername(response.data.username);
         };
         getUsername();
     }, []);
-    async function vote(id) {
+    async function vote() {
         if (!user.isLoggedIn) {
             history.push("/login");
         }

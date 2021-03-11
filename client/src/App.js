@@ -117,8 +117,8 @@ function App() {
                         <Route
                             path="/"
                             exact
-                            render={() => (
-                                <Home user={user} changeUser={changeUser} />
+                            render={(match) => (
+                                <Home user={user} changeUser={changeUser} match={match} />
                             )}
                         ></Route>
                         <Route
