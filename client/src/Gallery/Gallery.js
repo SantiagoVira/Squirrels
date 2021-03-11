@@ -4,10 +4,12 @@ import api from "../api";
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Gallery.css";
+import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState([]);
+    const [isBottom, setIsBottom] = useState(false);
 
     useEffect(async () => {
         var response = await api.get("/api/users/1");
@@ -20,6 +22,33 @@ function Gallery({ user, changeUser }) {
             setData(d);
         }
     }, []);
+
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    useEffect(() => {
+        if (isBottom) {
+            //Add the stuff
+            const index = stories.length + 1;
+            setStories([...stories, ...data.slice(index, index + 20)]);
+            setIsBottom(false);
+        }
+    }, [isBottom]);
+
+    function handleScroll() {
+        const scrollTop =
+            (document.documentElement && document.documentElement.scrollTop) ||
+            document.body.scrollTop;
+        const scrollHeight =
+            (document.documentElement &&
+                document.documentElement.scrollHeight) ||
+            document.body.scrollHeight;
+        if (scrollTop + window.innerHeight + 500 >= scrollHeight) {
+            setIsBottom(true);
+        }
+    }
 
     function getStories(stories, search) {
         console.log(search);
@@ -97,13 +126,18 @@ function Gallery({ user, changeUser }) {
 
     return (
         <div>
+            <button
+                className="GoBackUpToTheTop"
+                onClick={() => {
+                    window.scrollTo(0, 0);
+                }}
+            >
+                <ArrowUpwardRoundedIcon />
+            </button>
             <div className="searchWrapper">
                 <Search stories={data} getStories={getStories} />
             </div>
             <div className="cards">{renderSquirrels()}</div>
-            <div onClick={() => getStories(data, "")} className="generate-btn">
-                Generate more!
-            </div>
         </div>
     );
 }

@@ -10,9 +10,7 @@
     width: fit-content;
     display: block;
     padding: 5px;
-    border-radius: 3px;
-    border-style: solid;
-    border-color: var(--cinnamon);
+    border: 3px solid var(--cinnamon);
     background-color: #7c3b0c;
     color: inherit;
     font: inherit;
@@ -25,4 +23,23 @@
     transform: translate(-1px, -1px);
     box-shadow: 3px 3px 3px black;
     transition-duration: 100ms; /* phasing into hover */
+}
+.GoBackUpToTheTop {
+    z-index: 1;
+    position: sticky;
+    top: 15vh;
+    left: 5vw;
+
+    width: 40px;
+    height: 40px;
+
+    border: 3px solid #7c3b0c;
+    outline: none;
+    background-color: var(--cinnamon);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
 }

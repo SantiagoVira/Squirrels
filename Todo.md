@@ -13,13 +13,11 @@
 
 ## **Frontend**
 
--   Search functionality w/ backend
+-   HTML element not full width
+-   on screen too small cards overflow
 -   Little hover thing for icons
 -   Liking color highlights
 -   Favicon
--   Back to top button gallery
--   Infinite scrolling for the gallery
-    -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
 ## **Server:**
 
