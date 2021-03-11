@@ -14,7 +14,7 @@
 
 ## **Frontend**
 
--   Search functionality w/ backend!
+-   Back to top button gallery
 -   Infinite scrolling for the gallery
     -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
