@@ -32,16 +32,40 @@ class SquirrelTopicSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = SquirreLog
 #         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+class UserSerializer(serializers.ModelSerializer): # For handling signups
+    # We're using token-based authentication
+    # password = serializers.CharField(write_only=True)
+    liked_posts = serializers.HyperlinkedIdentityField(
+        read_only=True,
+        view_name='user-liked',
+        ) # Link to users/<int:pk>/liked
+    posts = serializers.HyperlinkedIdentityField(
+        read_only=True,
+        view_name='user-detail'
+    )
+
+    class Meta:
+        model = User
+        fields = ('id', 'url', 'username', 'liked_posts', 'posts') # removed 'password' for security
+
+    def create(self, validated_data):
+        password = validated_data.pop('password', None)
+        instance = self.Meta.model(**validated_data)
+        if password is not None:
+            instance.set_password(password) # Security
+        instance.save()
+        return instance
 
 class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     #serializers.StringRelatedField(many=True, read_only=False)
     SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
-    liked_by = serializers.HyperlinkedRelatedField(
-        many=True,
-        read_only=True,
-        view_name='user-detail',
-    )
+    # liked_by = serializers.HyperlinkedRelatedField(
+    #     many=True,
+    #     read_only=True,
+    #     view_name='user-detail',
+    # )
+    liked_by = UserSerializer(many=True, read_only=True)
 
     class Meta:
         model = SquirreLog
@@ -69,30 +93,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
         return log
-
-class UserSerializer(serializers.ModelSerializer): # For handling signups
-    # We're using token-based authentication
-    password = serializers.CharField(write_only=True)
-    liked_posts = serializers.HyperlinkedIdentityField(
-        read_only=True,
-        view_name='user-liked',
-        ) # Link to users/<int:pk>/liked
-    posts = serializers.HyperlinkedIdentityField(
-        read_only=True,
-        view_name='user-detail'
-    )
-
-    class Meta:
-        model = User
-        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts')
-
-    def create(self, validated_data):
-        password = validated_data.pop('password', None)
-        instance = self.Meta.model(**validated_data)
-        if password is not None:
-            instance.set_password(password) # Security
-        instance.save()
-        return instance
 
 # class UserListSerializer(serializers.ModelSerializer):
 #     liked_posts = serializers.HyperlinkedRelatedField(
