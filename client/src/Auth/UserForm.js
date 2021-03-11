@@ -13,7 +13,6 @@ function UserForm(props) {
             e.preventDefault();
             localStorage.removeItem("token");
             const response = await api.post(props.path, form);
-            console.log(response)
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
             const profile = response.data.user ? response.data.user : response.data;

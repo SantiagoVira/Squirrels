@@ -1,37 +1,33 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {Link} from "react-router-dom";
 import "./Home.css";
 import Uploads from "./Uploads/Uploads";
 import User from "./User/User";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import IconButton from "@material-ui/core/IconButton";
+
 function Home(props) {
-    const [searching, setSearching] = useState(false);
-    const [special, setSpecial] = useState(false);
+    const [showBackButton, setShowBackButton] = useState(false);
+
+    const changeShowBackButton = (value) => {
+        setShowBackButton(value);
+    };
+
     return (
         <div className="homePageMain">
-            <IconButton
-                className="exitSpecialCardsButton"
-                onClick={() => {
-                    setSpecial(false);
-                }}
-            >
-                <ExitToAppIcon
-                    className={`exitSpecialCardsIcon ${!special && "hide"}`}
-                />
-            </IconButton>
+            {showBackButton && 
+                <Link to="/">
+                    <ExitToAppIcon className="exitSpecialCardsIcon" />
+                </Link>
+            }
 
             <Uploads
                 user={props.user}
                 changeUser={props.changeUser}
-                searching={searching}
-                setSpecial={setSpecial}
-                special={special}
+                changeShowBackButton={changeShowBackButton}
+                match={props.match}
             />
-            <User
-                user={props.user}
-                searching={searching}
-                setSearching={setSearching}
-            />
+            <User user={props.user} />
         </div>
     );
 }
