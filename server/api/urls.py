@@ -9,7 +9,7 @@ router = routers.DefaultRouter()
 # Maybe we should just combine them and mix with users' posts
 # ^ One gallery-feed instead of separate
 #router.register(r'NoOneSquireLogs', views.NoOneSquireLogViewset, basename="NoOneSquireLogs") # For gallery
-router.register(r'SquirreLogs', views.SquirreLogViewSet)
+router.register(r'SquirreLogs', views.SquirreLogViewSet, basename="squirrelog")
 router.register(r'Topics', views.TopicViewSet)
 router.register(r'users', views.UserViewSet)
 

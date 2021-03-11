@@ -21,6 +21,8 @@ from rest_framework.pagination import PageNumberPagination
 from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
 
+# Misc
+import random
 
 User = get_user_model() # checks the most updated User model (api.User)
 
@@ -134,8 +136,8 @@ class TopicViewSet(viewsets.ModelViewSet):
 
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
-    queryset = SquirreLog.objects.all().order_by('pub_date')
     serializer_class = SquirreLogSerializer
+    # queryset = SquirreLog.objects.all()
 
     # Adds searching functionality
     search_fields = ['note', 'owner__username', 'topics__topic_name']
@@ -149,6 +151,10 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         else:
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
+
+    def get_queryset(self):
+        # VERY EXPENSIVE 
+        return SquirreLog.objects.all().order_by("?")
 
     # def get_serializer_class(self):
     #     # https://stackoverflow.com/a/41313121

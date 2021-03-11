@@ -12,17 +12,22 @@ function unique() {
 function CardLoader(props) {
     const [card, setCard] = useState("");
     const id = props.match.params.id;
+    let gallery = false;
     //Ramons job now
     useEffect(async () => {
         const response = await api.get(`/api/SquirreLogs/${id}`);
         setCard(response.data);
     }, []);
+    if (card.owner === 1) {
+        gallery = true;
+    }
     return (
         <Card
             post={card}
             key={unique()}
             user={{ profile: null }}
             disableCardMenu={true}
+            disableUsername={gallery}
         />
     );
 }
