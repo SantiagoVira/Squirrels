@@ -24,14 +24,7 @@ function Gallery({ user, changeUser }) {
     function getStories(stories, search) {
         console.log(search);
         if (search === "") {
-            let randomStories = [];
-            let randomInt = 0;
-
-            for (let i = 0; i < 10; i++) {
-                randomInt = Math.floor(Math.random() * stories.length);
-                randomStories.push(stories[randomInt]);
-            }
-            setStories(randomStories);
+            setStories(stories);
         } else {
             searchStories(stories, search);
         }
@@ -39,14 +32,12 @@ function Gallery({ user, changeUser }) {
 
     // Separating this from getStories for more readability
     function searchStories(stories, search) {
-        const searchedStories = [];
-        stories.forEach((log) => {
-            //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
-            const story = log.note;
-            const topics = log.SquirrelTopics;
-
-            //Search by tags (topics)
-            if (search.startsWith("#")) {
+        //Search by tags (topics)
+        if (search.startsWith("#")) {
+            const searchedStories = [];
+            stories.forEach((log) => {
+                //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
+                const topics = log.SquirrelTopics;
                 topics.some((topic) => {
                     const formattedSearch = search
                         .slice(1)
@@ -63,19 +54,20 @@ function Gallery({ user, changeUser }) {
                     }
                     return false;
                 });
-                //Search by story (notes)
-            } else {
-                const formattedStory = story.trim().toLowerCase();
-                if (formattedStory.includes(search.trim().toLowerCase())) {
-                    searchedStories.push(log);
-                    return true;
-                }
-            }
-            return false;
-        });
-
-        const storyNum = Math.random() * searchedStories.length;
-        setStories(searchedStories.slice(storyNum, storyNum + 10));
+                return false;
+            });
+            const storyNum = Math.random() * searchedStories.length;
+            setStories(searchedStories.slice(storyNum, storyNum + 10));
+            //Search by story (notes)
+        } else {
+            const getDatabaseStories = async () => {
+                const results = await api.get(
+                    `http://localhost:8000/api/SquirreLogs/?search=${search}`
+                );
+                setStories(results.data.results);
+            };
+            getDatabaseStories();
+        }
     }
 
     function renderSquirrels() {
