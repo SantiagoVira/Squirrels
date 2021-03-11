@@ -152,9 +152,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def get_queryset(self):
-        objects = list(SquirreLog.objects.all())
-        result = random.sample(objects, len(objects))
-        return result
+        # VERY EXPENSIVE 
+        return SquirreLog.objects.all().order_by("?")
 
     # def get_serializer_class(self):
     #     # https://stackoverflow.com/a/41313121
