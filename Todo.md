@@ -13,6 +13,7 @@
 
 ## **Frontend**
 
+-   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
 -   HTML element not full width
 -   on screen too small cards overflow
 -   Little hover thing for icons
