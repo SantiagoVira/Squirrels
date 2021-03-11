@@ -22,7 +22,7 @@ function Gallery({ user, changeUser }) {
     }, []);
 
     function getStories(stories, search) {
-        console.log(search)
+        console.log(search);
         if (search === "") {
             let randomStories = [];
             let randomInt = 0;
@@ -52,7 +52,12 @@ function Gallery({ user, changeUser }) {
                         .slice(1)
                         .trim()
                         .toLowerCase();
-                    if (topic.topic_name.trim().toLowerCase().includes(formattedSearch)) {
+                    if (
+                        topic.topic_name
+                            .trim()
+                            .toLowerCase()
+                            .includes(formattedSearch)
+                    ) {
                         searchedStories.push(log);
                         return true;
                     }
@@ -83,11 +88,12 @@ function Gallery({ user, changeUser }) {
                 votes: log.votes,
             };
             return (
-                <Card 
-                    post={post} 
-                    key={log.id} 
-                    user={user} 
-                    changeUser={changeUser} 
+                <Card
+                    post={post}
+                    key={log.id}
+                    user={user}
+                    changeUser={changeUser}
+                    disableUsername={true}
                 />
             );
         });

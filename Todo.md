@@ -15,8 +15,6 @@
 ## **Frontend**
 
 -   Search functionality w/ backend!
--   Gallery embeds
--   Liking color higlights
 -   Infinite scrolling for the gallery
     -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
@@ -28,7 +26,7 @@
 -   Nested serializer view for who liked a post
     -   Return username and relevant info so we don't have to get
 -   topics/<int:pk>/uploads
-    - Or something to that effect 
+    -   Or something to that effect
 
 ## **Other**
 

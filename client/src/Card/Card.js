@@ -20,6 +20,7 @@ function Card({
     changeUser,
     disableCardMenu,
     findHashtag,
+    disableUsername,
 }) {
     //When we call the card component, pass the id to access it on the server
     const [votes, setVotes] = useState(post.votes);
@@ -34,9 +35,13 @@ function Card({
             if (user && user.isLoggedIn) {
                 const response = await api.get(user.profile.liked_posts);
                 //'Find' returns truthy if current post is found in liked posts
-                setLiked(response.data.results.find(liked_post => liked_post.id === post.id));
+                setLiked(
+                    response.data.results.find(
+                        (liked_post) => liked_post.id === post.id
+                    )
+                );
             }
-        }
+        };
         getUserVote();
     }, [user]);
 
@@ -61,14 +66,14 @@ function Card({
 
         try {
             //Set card's votes in the database to votes variable
-            const response = await api.put(
-                `/api/SquirreLogs/${post.id}/vote/`
-            );
-            
+            const response = await api.put(`/api/SquirreLogs/${post.id}/vote/`);
+
             // Liked_by stores a list of user urls
-            setLiked(response.data.log.liked_by.find(url => (
-                url === response.data.user.url
-            )));
+            setLiked(
+                response.data.log.liked_by.find(
+                    (url) => url === response.data.user.url
+                )
+            );
             setVotes(response.data.log.votes);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
@@ -174,7 +179,7 @@ function Card({
 
             <Col>
                 <Row>
-                    <h4>{username}</h4>
+                    <h4>{disableUsername ? "Gallery" : username}</h4>
                 </Row>
 
                 <br />
