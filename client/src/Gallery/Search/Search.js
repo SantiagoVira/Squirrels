@@ -4,6 +4,7 @@ import SearchIcon from "@material-ui/icons/Search";
 
 function Search(props) {
     const [value, setValue] = useState("");
+    //http://localhost:8000/api/SquirreLogs/?search=#abc
 
     function search(e) {
         e.preventDefault();

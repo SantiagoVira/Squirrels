@@ -3,7 +3,7 @@
 -   Skeleton preloader
     -   https://css-tricks.com/building-skeleton-screens-css-custom-properties/
 -   Pagination for the API
--   Little hover thing for icons 
+-   Little hover thing for icons
 -   Intersectionobservers on the cards
     -   We could conditionally load cards instead of paging them
         -   Check if there's a next log returned by the API, if not, go to the next page for content (or something to the same effect)
@@ -19,6 +19,7 @@
 -   Gallery embeds
 -   Liking color highlights
 -   Favicon
+-   Back to top button gallery
 -   Infinite scrolling for the gallery
     -   <sub><sup>https://blog.logrocket.com/infinite-scroll-techniques-in-react-adcfd7ff32bd/</sub></sup>
 
