@@ -38,11 +38,6 @@ body {
     overflow-y: scroll;
     min-width: fit-content;
 }
-
-::-webkit-scrollbar-thumb {
-    background-color: var(--cinnamon);
-}
-
 .content {
     padding: 1rem calc(5% + 1rem); /* Making it line up */
 }
