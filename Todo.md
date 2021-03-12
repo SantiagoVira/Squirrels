@@ -14,11 +14,11 @@
 ## **Frontend**
 
 -   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
--   HTML element not full width
--   on screen too small cards overflow
+-   on screen too small cards overflow in the gallery
 -   Little hover thing for icons
 -   Liking color highlights
 -   Favicon
+-   hide go up button when you are not scrolling down
 
 ## **Server:**
 
