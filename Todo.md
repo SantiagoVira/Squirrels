@@ -21,12 +21,9 @@
 
 ## **Server:**
 
--   Actual profile pictures
--   Nested serializer view for who liked a post
-    -   Return username and relevant info so we don't have to get
--   topics/<int:pk>/uploads
-    -   Or something to that effect
+-   Liked post thing?
 
 ## **Other**
 
 -   buy Sqqrlz.com
+-   Profile pics :sunglasses:

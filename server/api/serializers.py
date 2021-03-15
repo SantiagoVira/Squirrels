@@ -42,7 +42,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         ) # Link to users/<int:pk>/liked
     posts = serializers.HyperlinkedIdentityField(
         read_only=True,
-        view_name='user-detail'
+        view_name='user-posts'
     )
 
     class Meta:
