@@ -60,17 +60,29 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     #serializers.StringRelatedField(many=True, read_only=False)
     SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
-    # liked_by = serializers.HyperlinkedRelatedField(
-    #     many=True,
-    #     read_only=True,
-    #     view_name='user-detail',
-    # )
     liked_by = UserSerializer(many=True, read_only=True)
+    liked = serializers.SerializerMethodField()
+    owner_name = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+        fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner', 
+            'owner_name', 'SquirrelTopics', 'liked_by', 'liked')
         extra_kwargs = {'note': {'trim_whitespace': False}}
+
+    def get_liked(self, obj):
+        try:
+            request = self.context.get('request', None)
+            current_user = User.objects.get(id=request.user.id)
+            for post in current_user.liked_posts.all():
+                if obj.id == post.id:
+                    return True
+            return False
+        except:
+            return False
+
+    def get_owner_name(self, obj):
+        return obj.owner.username
 
     def create(self, validated_data):
         if 'SquirrelTopics' in validated_data: # We're not posting topics?

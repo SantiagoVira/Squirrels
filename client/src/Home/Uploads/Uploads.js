@@ -74,7 +74,7 @@ function Uploads(props) {
             {posts.map((post) => {
                 return (
                     <Card
-                        post={post}
+                        story={post}
                         key={post.id}
                         onDelete={delete_log}
                         user={user}

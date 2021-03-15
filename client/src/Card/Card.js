@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
@@ -14,7 +14,7 @@ import Col from "../Col";
 import history from "../history";
 
 function Card({
-    post,
+    story,
     onDelete,
     user,
     changeUser,
@@ -23,35 +23,11 @@ function Card({
     disableUsername,
 }) {
     //When we call the card component, pass the id to access it on the server
-    const [votes, setVotes] = useState(post.votes);
-    const [liked, setLiked] = useState();
+    const [post, setPost] = useState(story);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(post.note);
-    const [username, setUsername] = useState("");
-
-    useEffect(() => {
-        const getUserVote = async () => {
-            if (user && user.isLoggedIn) {
-                const response = await api.get(user.profile.liked_posts);
-                //'Find' returns truthy if current post is found in liked posts
-                setLiked(
-                    response.data.results.find(
-                        (liked_post) => liked_post.id === post.id
-                    )
-                );
-            }
-        };
-        getUserVote();
-    }, [user]);
-
-    useEffect(() => {
-        const getUsername = async () => {
-            const response = await api.get(`/api/users/${post.owner}`);
-            setUsername(response.data.username);
-        };
-        getUsername();
-    }, []);
+    
     async function vote() {
         if (!user.isLoggedIn) {
             history.push("/login");
@@ -61,13 +37,7 @@ function Card({
             //Set card's votes in the database to votes variable
             const response = await api.put(`/api/SquirreLogs/${post.id}/vote/`);
 
-            // Liked_by stores a list of user urls
-            setLiked(
-                response.data.log.liked_by.find(
-                    (url) => url === response.data.user.url
-                )
-            );
-            setVotes(response.data.log.votes);
+            setPost(response.data.log)
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }
@@ -139,13 +109,13 @@ function Card({
                     <div className="buttons">
                         <IconButton
                             className={`editOrDeleteButton up ${
-                                liked ? "liked" : ""
+                                post.liked ? "liked" : ""
                             }`}
                             onClick={() => vote()}
                         >
                             <FavoriteIcon className="up" />
                         </IconButton>
-                        <p className="votes">{votes}</p>
+                        <p className="votes">{post.votes}</p>
                     </div>
                     {onDelete &&
                     user.isLoggedIn &&
@@ -172,7 +142,7 @@ function Card({
 
             <Col>
                 <Row>
-                    <h4>{disableUsername ? "Gallery" : username}</h4>
+                    <h4>{disableUsername ? "Gallery" : post.owner_name}</h4>
                 </Row>
 
                 <br />

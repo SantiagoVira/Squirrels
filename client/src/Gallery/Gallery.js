@@ -51,7 +51,6 @@ function Gallery({ user, changeUser }) {
     }
 
     function getStories(stories, search) {
-        console.log(search);
         if (search === "") {
             setStories(stories);
         } else {
@@ -111,7 +110,7 @@ function Gallery({ user, changeUser }) {
             };
             return (
                 <Card
-                    post={post}
+                    story={post}
                     key={log.id}
                     user={user}
                     changeUser={changeUser}
