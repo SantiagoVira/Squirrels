@@ -18,6 +18,8 @@
 -   Little hover desc for icons
 -   Favicon
 -   Infinite scrolling for the home page, too
+    -   home page expand uploads for unlimited scrolling
+    -   when the screen gets smaller user section goes to the top
 
 ## **Server:**
 
