@@ -10,6 +10,9 @@ function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState([]);
     const [isBottom, setIsBottom] = useState(false);
+    const [scrolled, setScrolled] = useState(
+        window.pageYOffset > 250 ? "" : "scrolled"
+    );
 
     useEffect(async () => {
         var response = await api.get("/api/users/1/posts");
@@ -48,6 +51,7 @@ function Gallery({ user, changeUser }) {
         if (scrollTop + window.innerHeight + 500 >= scrollHeight) {
             setIsBottom(true);
         }
+        window.pageYOffset > 250 ? setScrolled("") : setScrolled("scrolled");
     }
 
     function getStories(stories, search) {
@@ -107,7 +111,7 @@ function Gallery({ user, changeUser }) {
                 note: log.note,
                 id: log.id,
                 votes: log.votes,
-                owner: log.owner
+                owner: log.owner,
             };
             return (
                 <Card
@@ -127,14 +131,18 @@ function Gallery({ user, changeUser }) {
 
     return (
         <div>
-            <button
-                className="GoBackUpToTheTop"
-                onClick={() => {
-                    window.scrollTo(0, 0);
-                }}
-            >
-                <ArrowUpwardRoundedIcon />
-            </button>
+            <div className="backuptotopdiv">
+                <button
+                    className={`GoBackUpToTheTop ${
+                        scrolled && "hidethebutton"
+                    }`}
+                    onClick={() => {
+                        window.scrollTo(0, 0);
+                    }}
+                >
+                    <ArrowUpwardRoundedIcon />
+                </button>
+            </div>
             <div className="searchWrapper">
                 <Search stories={data} getStories={getStories} />
             </div>

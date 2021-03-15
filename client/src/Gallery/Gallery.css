@@ -43,3 +43,11 @@
     align-items: center;
     color: var(--text);
 }
+.backuptotopdiv {
+    position: absolute;
+    left: 10px;
+    height: 100%;
+}
+.hidethebutton {
+    display: none !important;
+}

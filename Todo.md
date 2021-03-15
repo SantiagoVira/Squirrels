@@ -18,7 +18,6 @@
 -   Little hover thing for icons
 -   Liking color highlights
 -   Favicon
--   hide go up button when you are not scrolling down
 
 ## **Server:**
 
