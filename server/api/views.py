@@ -127,6 +127,20 @@ class TopicViewSet(viewsets.ModelViewSet):
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return paginator.get_paginated_response(log_serializer.data, str(topic))
 
+    # Gets all squirrelogs except for superuser's (user 1) squirrelogs
+    @action(methods=['get'], detail=True, url_path='uploads', url_name='uploads')
+    def uploads(self, request, **kwargs):
+        topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
+        uploads = SquirreLog.objects.all().exclude(owner_id=1).filter(topics=topic).order_by("pub_date")
+        serializer = SquirreLogSerializer(uploads, context={'request': request}, many=True)
+
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(uploads, request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        # return Response(log_serializer.data, status=status.HTTP_200_OK)
+        return paginator.get_paginated_response(log_serializer.data)
+
 # class TopicLogsViewSet(viewsets.ModelViewSet):
 #     serializer_class = SquirreLogSerializer
 
@@ -153,7 +167,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def get_queryset(self):
-        # VERY EXPENSIVE 
+        # VERY EXPENSIVE
         return SquirreLog.objects.all().order_by("?")
 
     # def get_serializer_class(self):

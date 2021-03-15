@@ -15,10 +15,10 @@
 
 -   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
 -   on screen too small cards overflow in the gallery
--   Little hover thing for icons
--   Liking color highlights
+-   Little hover desc for icons
 -   Favicon
 -   hide go up button when you are not scrolling down
+-   Infinite scrolling for the home page, too 
 
 ## **Server:**
 
