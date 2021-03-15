@@ -20,6 +20,9 @@
 -   Infinite scrolling for the home page, too
     -   home page expand uploads for unlimited scrolling
     -   when the screen gets smaller user section goes to the top
+-   fix footer moving
+-   home page go up button should always be next to uploads
+-   home page up button functional
 
 ## **Server:**
 
