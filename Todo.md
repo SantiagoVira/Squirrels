@@ -15,19 +15,15 @@
 
 -   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
 -   on screen too small cards overflow in the gallery
--   Little hover thing for icons
--   Liking color highlights
+-   Little hover desc for icons
 -   Favicon
--   hide go up button when you are not scrolling down
+-   Infinite scrolling for the home page, too
 
 ## **Server:**
 
--   Actual profile pictures
--   Nested serializer view for who liked a post
-    -   Return username and relevant info so we don't have to get
--   topics/<int:pk>/uploads
-    -   Or something to that effect
+-   Liked post thing?
 
 ## **Other**
 
 -   buy Sqqrlz.com
+-   Profile pics :sunglasses:

@@ -32,6 +32,7 @@ class SquirrelTopicSerializer(serializers.ModelSerializer):
 #     class Meta:
 #         model = SquirreLog
 #         fields = ('id', 'note', 'pub_date', 'votes', 'owner', 'SquirrelTopics', 'liked_by')
+
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
     # password = serializers.CharField(write_only=True)
@@ -41,7 +42,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         ) # Link to users/<int:pk>/liked
     posts = serializers.HyperlinkedIdentityField(
         read_only=True,
-        view_name='user-detail'
+        view_name='user-posts'
     )
 
     class Meta:
