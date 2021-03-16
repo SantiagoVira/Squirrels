@@ -161,7 +161,7 @@ function App() {
                     </Switch>
                 </div>
 
-                {noFooters.indexOf(page) !== -1 && (
+                {noFooters.indexOf(page) === -1 && (
                     <Cardlink>
                         <Footer />
                     </Cardlink>
