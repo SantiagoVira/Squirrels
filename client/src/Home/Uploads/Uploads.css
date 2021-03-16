@@ -4,7 +4,7 @@
     align-items: center;
 
     min-height: 10vh;
-    height: 75vh;
+    height: fit-content;
     width: 40vw;
     flex: 3;
     padding: 20px;

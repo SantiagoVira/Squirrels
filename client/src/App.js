@@ -86,6 +86,9 @@ function App() {
             : props.children;
         //<Cardlink page={page}></Cardlink>
     }
+
+    const noFooters = ["/gallery", "/"];
+
     return (
         <Router history={history}>
             <>
@@ -118,13 +121,19 @@ function App() {
                             path="/"
                             exact
                             render={(match) => (
-                                <Home user={user} changeUser={changeUser} match={match} />
+                                <Home
+                                    user={user}
+                                    changeUser={changeUser}
+                                    match={match}
+                                />
                             )}
                         ></Route>
                         <Route
                             path="/gallery"
                             exact
-                            render={() => <Gallery user={user} changeUser={changeUser} />}
+                            render={() => (
+                                <Gallery user={user} changeUser={changeUser} />
+                            )}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route
@@ -152,9 +161,11 @@ function App() {
                     </Switch>
                 </div>
 
-                <Cardlink>
-                    <Footer />
-                </Cardlink>
+                {noFooters.indexOf(page) !== -1 && (
+                    <Cardlink>
+                        <Footer />
+                    </Cardlink>
+                )}
             </>
         </Router>
     );
