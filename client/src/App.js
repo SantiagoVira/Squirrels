@@ -36,6 +36,7 @@ function App() {
         profile: null,
     });
     const [size, setSize] = useState(window.innerWidth);
+    const [footer, setFooter] = useState(false);
 
     useEffect(() => {
         const getUser = async () => {
@@ -62,6 +63,10 @@ function App() {
         });
     }, []);
 
+    useEffect(() => {
+        setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
+        console.log(!(page.endsWith("/") || page.endsWith("/gallery")));
+    }, [page]);
     // Passed to children components to change user
     const changeUser = (data) => {
         setUser(data);
@@ -86,8 +91,6 @@ function App() {
             : props.children;
         //<Cardlink page={page}></Cardlink>
     }
-
-    const noFooters = ["/gallery", "/"];
 
     return (
         <Router history={history}>
@@ -161,7 +164,7 @@ function App() {
                     </Switch>
                 </div>
 
-                {noFooters.indexOf(page) === -1 && (
+                {footer && (
                     <Cardlink>
                         <Footer />
                     </Cardlink>
