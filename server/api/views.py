@@ -197,7 +197,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=False, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
-        serializer = SquirreLogSerializer(uploads, context={'request': request}, many=True)
 
         paginator = PageNumberPagination()
         paginator.page_size = 20
