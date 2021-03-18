@@ -151,6 +151,9 @@
 }
 .HashtagsRow {
     justify-content: flex-start !important;
+    margin-left: 40px;
+    margin-top: 20px;
+    width: fit-content;
 }
 
 .StoryIsEditable {
