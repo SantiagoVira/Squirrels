@@ -32,9 +32,9 @@
 
     margin-right: 10px;
 }
-.BlurbFooterLinks > span,
-.BlurbFooterLinks > a {
+.AboutTextLink {
     color: var(--text);
     text-decoration: none;
     cursor: pointer;
+    margin-top: 30px;
 }

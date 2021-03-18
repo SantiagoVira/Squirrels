@@ -28,4 +28,4 @@
 
 -   buy Sqqrlz.com
 -   Profile pics :sunglasses:
--   our contacts in the about page
+-   our contacts in the aboutpage
