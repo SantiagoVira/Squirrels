@@ -14,7 +14,7 @@
 ## **Frontend**
 
 -   on screen too small cards overflow in the gallery
--   Little hover desc for icons
+-   Little word desc under icons
 -   Favicon on live site
 
 ## **Server:**
