@@ -105,16 +105,9 @@ function Gallery({ user, changeUser }) {
     function renderSquirrels() {
         //Render the stories, raises: can't render an object
         return stories.map((log) => {
-            const post = {
-                SquirrelTopics: log.SquirrelTopics,
-                note: log.note,
-                id: log.id,
-                votes: log.votes,
-                owner: log.owner,
-            };
             return (
                 <Card
-                    story={post}
+                    story={log}
                     key={log.id}
                     user={user}
                     changeUser={changeUser}
