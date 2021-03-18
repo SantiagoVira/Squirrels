@@ -74,7 +74,7 @@ function User(props) {
                         Posts: <strong>{userData.posts}</strong>
                     </Link>
                     <Link to="/about" className="AboutTextLink">
-                        ⋅ About
+                        ⋅ About ⋅
                     </Link>
                 </Col>
             </Row>
