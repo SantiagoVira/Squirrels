@@ -9,7 +9,6 @@ from rest_framework import filters
 # There are so many api views.. maybe we should *eventually* stick to one
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
-
 from .serializers import * # Only serializers
 from .permissions import IsOwner
 
@@ -49,12 +48,13 @@ class UserViewSet(viewsets.ModelViewSet):
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
         headers = self.get_success_headers(serializer.data)
-
+        
         # Gets a user object from the request
         user = authenticate(
             username=request.data['username'],
             password=request.data['password']
         )
+        
         # Turns user object into jwt
         payload = api_settings.JWT_PAYLOAD_HANDLER(user)
         token = api_settings.JWT_ENCODE_HANDLER(payload)

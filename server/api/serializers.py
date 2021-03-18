@@ -35,7 +35,7 @@ class SquirrelTopicSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer): # For handling signups
     # We're using token-based authentication
-    # password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=True)
     liked_posts = serializers.HyperlinkedIdentityField(
         read_only=True,
         view_name='user-liked',
@@ -47,7 +47,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'liked_posts', 'posts') # removed 'password' for security
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts') # removed 'password' for security
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

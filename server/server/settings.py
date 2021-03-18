@@ -24,7 +24,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'f151u71kopnay_9$a+^mo68^exeml232ip!y+
 
 # This determines whether error messages are shown by the server
 # False for production server / True for development server
-DEBUG = False
+DEBUG = True
 
 # Add to this list if you want this app to be hosted on another site
 ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '127.0.0.1']
@@ -112,6 +112,10 @@ AUTH_PASSWORD_VALIDATORS = [
 # Auth Settings
 
 AUTH_USER_MODEL = 'api.User'
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+)
 
 JWT_AUTH = {
     'JWT_RESPONSE_PAYLOAD_HANDLER': 'server.utils.jwt_response_handler',
