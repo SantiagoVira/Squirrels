@@ -16,8 +16,6 @@
 -   on screen too small cards overflow in the gallery
 -   Little hover desc for icons
 -   Favicon on live site
--   Infinite scrolling for the home page, too
-    -   when the screen gets smaller user section goes to the top
 
 ## **Server:**
 

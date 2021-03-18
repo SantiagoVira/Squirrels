@@ -40,6 +40,7 @@ function Home(props) {
                 )
             )}
 
+            {window.innerWidth < 935 && <User user={props.user} />}
             <Uploads
                 user={props.user}
                 changeUser={props.changeUser}
@@ -47,7 +48,7 @@ function Home(props) {
                 match={props.match}
                 setScrolled={setScrolled}
             />
-            <User user={props.user} />
+            {window.innerWidth > 935 && <User user={props.user} />}
         </div>
     );
 }
