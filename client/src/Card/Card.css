@@ -1,5 +1,6 @@
 :root {
     --upvoting: #ff0000;
+    --likeHover: #6b0000;
     --inactive: #565758;
 }
 .cards {
@@ -75,9 +76,11 @@
     flex-direction: column;
     float: left;
 }
-.up.liked,
-.up:hover {
+.up.liked {
     color: var(--upvoting);
+}
+.up:hover {
+    color: var(--likeHover);
 }
 .votes {
     color: black;
