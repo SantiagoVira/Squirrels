@@ -4,7 +4,6 @@ import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import api from "../../api";
-import BlurbFooter from "../BlurbFooter";
 
 function getColor() {
     return (
@@ -74,7 +73,9 @@ function User(props) {
                     >
                         Posts: <strong>{userData.posts}</strong>
                     </Link>
-                    <BlurbFooter />
+                    <Link to="/about" className="AboutTextLink">
+                        ⋅ About
+                    </Link>
                 </Col>
             </Row>
         </div>
