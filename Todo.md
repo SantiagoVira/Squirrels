@@ -13,17 +13,19 @@
 
 ## **Frontend**
 
--   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
 -   on screen too small cards overflow in the gallery
 -   Little hover desc for icons
--   Favicon
+-   Favicon on live site
 -   Infinite scrolling for the home page, too
+    -   when the screen gets smaller user section goes to the top
 
 ## **Server:**
 
 -   Liked post thing?
+-   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
 
 ## **Other**
 
 -   buy Sqqrlz.com
 -   Profile pics :sunglasses:
+-   contact page

@@ -16,3 +16,25 @@
 .exitSpecialCardsButton {
     align-self: flex-start;
 }
+.homepagebacktotop {
+    width: 40px;
+    height: 40px;
+
+    border: 3px solid #7c3b0c;
+    outline: none;
+    background-color: var(--cinnamon);
+    border-radius: 10px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+
+    margin-right: 10px;
+}
+.BlurbFooterLinks > span,
+.BlurbFooterLinks > a {
+    color: var(--text);
+    text-decoration: none;
+    cursor: pointer;
+}

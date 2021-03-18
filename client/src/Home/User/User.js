@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import api from "../../api";
+import BlurbFooter from "../BlurbFooter";
 
 function getColor() {
     return (
@@ -73,6 +74,7 @@ function User(props) {
                     >
                         Posts: <strong>{userData.posts}</strong>
                     </Link>
+                    <BlurbFooter />
                 </Col>
             </Row>
         </div>

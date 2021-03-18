@@ -36,6 +36,7 @@ function App() {
         profile: null,
     });
     const [size, setSize] = useState(window.innerWidth);
+    const [footer, setFooter] = useState(false);
 
     useEffect(() => {
         const getUser = async () => {
@@ -62,6 +63,10 @@ function App() {
         });
     }, []);
 
+    useEffect(() => {
+        setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
+        console.log(!(page.endsWith("/") || page.endsWith("/gallery")));
+    }, [page]);
     // Passed to children components to change user
     const changeUser = (data) => {
         setUser(data);
@@ -86,6 +91,7 @@ function App() {
             : props.children;
         //<Cardlink page={page}></Cardlink>
     }
+
     return (
         <Router history={history}>
             <>
@@ -118,13 +124,19 @@ function App() {
                             path="/"
                             exact
                             render={(match) => (
-                                <Home user={user} changeUser={changeUser} match={match} />
+                                <Home
+                                    user={user}
+                                    changeUser={changeUser}
+                                    match={match}
+                                />
                             )}
                         ></Route>
                         <Route
                             path="/gallery"
                             exact
-                            render={() => <Gallery user={user} changeUser={changeUser} />}
+                            render={() => (
+                                <Gallery user={user} changeUser={changeUser} />
+                            )}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
                         <Route
@@ -152,9 +164,11 @@ function App() {
                     </Switch>
                 </div>
 
-                <Cardlink>
-                    <Footer />
-                </Cardlink>
+                {footer && (
+                    <Cardlink>
+                        <Footer />
+                    </Cardlink>
+                )}
             </>
         </Router>
     );

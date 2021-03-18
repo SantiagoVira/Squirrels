@@ -1,31 +1,51 @@
 import React, { useEffect, useState } from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import "./Home.css";
 import Uploads from "./Uploads/Uploads";
 import User from "./User/User";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import IconButton from "@material-ui/core/IconButton";
+import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Home(props) {
     const [showBackButton, setShowBackButton] = useState(false);
+    const [scrolled, setScrolled] = useState(
+        window.pageYOffset > 250 ? "" : "scrolled"
+    );
+    useEffect(() => {
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
 
-    const changeShowBackButton = (value) => {
-        setShowBackButton(value);
-    };
-
+    function handleScroll() {
+        window.pageYOffset > 250 ? setScrolled("") : setScrolled("scrolled");
+    }
     return (
         <div className="homePageMain">
-            {showBackButton && 
+            {showBackButton ? (
                 <Link to="/">
                     <ExitToAppIcon className="exitSpecialCardsIcon" />
                 </Link>
-            }
+            ) : (
+                !scrolled && (
+                    <div className="backuptotopdiv">
+                        <button
+                            className={`GoBackUpToTheTop`}
+                            onClick={() => {
+                                window.scrollTo(0, 0);
+                            }}
+                        >
+                            <ArrowUpwardRoundedIcon />
+                        </button>
+                    </div>
+                )
+            )}
 
             <Uploads
                 user={props.user}
                 changeUser={props.changeUser}
-                changeShowBackButton={changeShowBackButton}
+                changeShowBackButton={setShowBackButton}
                 match={props.match}
+                setScrolled={setScrolled}
             />
             <User user={props.user} />
         </div>
