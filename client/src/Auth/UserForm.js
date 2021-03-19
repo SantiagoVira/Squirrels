@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import api from "../api";
-import history from "../history";
+//import history from "../history";
 import "./UserForm.css";
 import Error from "./error/Error";
 
@@ -15,12 +15,15 @@ function UserForm(props) {
             const response = await api.post(props.path, form);
             //Set JWT in localstorage
             localStorage.setItem("token", response.data.token);
-            const profile = response.data.user ? response.data.user : response.data;
+            const profile = response.data.user
+                ? response.data.user
+                : response.data;
             await props.changeUser({
                 isLoggedIn: true,
                 profile: profile,
             });
-            history.push("/");
+            //history.push("/");
+            window.location.href = "/";
         } catch (err) {
             if (err.response && err.response.status === 400) {
                 // Get response's default error message
