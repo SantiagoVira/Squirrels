@@ -13,12 +13,7 @@
 
 ## **Frontend**
 
--   on screen too small cards overflow in the gallery
--   login page transfer makes footer on the home page
-
 ## **Server:**
-
--   Favicon on live site
 
 ## **Other**
 
@@ -28,3 +23,4 @@
 ## **Watch Out For:**
 
 -   Load Posts isnt happening every time the match is changed
+-   we used window.location.href instead of history.push()

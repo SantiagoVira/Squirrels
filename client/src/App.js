@@ -64,9 +64,10 @@ function App() {
     }, []);
 
     useEffect(() => {
+        const page = window.location.href;
+        console.log(page);
         setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
-        console.log(!(page.endsWith("/") || page.endsWith("/gallery")));
-    }, [page]);
+    }, [window.location.href]);
 
     const ChangeListener = ({ history }) => {
         useEffect(() => {

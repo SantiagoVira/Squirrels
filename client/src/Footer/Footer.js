@@ -10,8 +10,8 @@ function Footer() {
             <div className="footer">
                 <p className="footerBlurb">
                     Sqrrlz was made by
-                    <Link to="/about">4 talented idiots</Link> who chose to make
-                    an app to share stories of tree rodents rather than...
+                    <Link to="/about"> 4 talented idiots</Link> who chose to
+                    make an app to share stories of tree rodents rather than...
                     literally anything else. <br />
                     But, let's be honest, nothing is better than "squirrels"
                     spelled in a hip way.

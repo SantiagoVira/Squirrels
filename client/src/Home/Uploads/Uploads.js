@@ -22,7 +22,6 @@ function Uploads(props) {
     }, []);
 
     useEffect(() => {
-        console.log(isBottom);
         if (isBottom) {
             //Add the stuff
 
