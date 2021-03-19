@@ -16,6 +16,7 @@
 -   on screen too small cards overflow in the gallery
 -   Little word desc under icons
 -   Favicon on live site
+-   login page transfer makes footer on the home page
 
 ## **Server:**
 
