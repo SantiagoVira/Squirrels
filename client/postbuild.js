@@ -67,15 +67,30 @@ function copyFolderRecursiveSync(source, target, root = false) {
     }
 }
 
+function flattenStatic(static_folder) {
+    const inner_static = path.join(static_folder, "static");
+    var files = fs.readdirSync(inner_static);
+    files.forEach(function (file) {
+        const curSource = path.join(inner_static, file);
+        if (fs.lstatSync(curSource).isDirectory()) {
+            copyFolderRecursiveSync(curSource, static_folder);
+        } else {
+            copyFileSync(curSource, static_folder);
+        }
+    });
+    rimraf(inner_static);
+}
+
 // Calculate absolute paths using the relative paths we defined at the top
 const sourceFolder = path.resolve(targetSource);
 const destinationFolder = path.resolve(targetDestination);
 
 // Remove destination folder if it exists to clear it
 if (fs.existsSync(destinationFolder)) {
-    rimraf(destinationFolder)
+    rimraf(destinationFolder);
 }
 
 // Copy the build over
-copyFolderRecursiveSync(sourceFolder, destinationFolder, true)
+copyFolderRecursiveSync(sourceFolder, destinationFolder, true);
+flattenStatic(destinationFolder);
 

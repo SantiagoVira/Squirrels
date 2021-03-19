@@ -155,11 +155,11 @@ STATIC_URL = '/static/'
 if DEBUG:
     # Django (development) looks for static files under STATICFILES_DIRS
     STATICFILES_DIRS = (
-        os.path.join(BASE_DIR, "static/static"),
+        os.path.join(BASE_DIR, "static"),
     )
 else:
     # WSGI server (production) runs collectstatic and checks STATIC_ROOT
-    STATIC_ROOT = os.path.join(BASE_DIR, 'static/static')
+    STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
 # CORS Settings
