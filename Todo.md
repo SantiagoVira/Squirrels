@@ -14,14 +14,12 @@
 ## **Frontend**
 
 -   on screen too small cards overflow in the gallery
--   Little word desc under icons
--   Favicon on live site
 -   login page transfer makes footer on the home page
+-   all cards get re rendered when one is liked
 
 ## **Server:**
 
--   Liked post thing?
--   Fix how the styling on liked posts works, basically we need to make the user load them, instead of individual cards
+-   Favicon on live site
 
 ## **Other**
 

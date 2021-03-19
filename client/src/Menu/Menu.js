@@ -8,6 +8,8 @@ import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
 
+import Row from "../Row";
+
 function Menu(props) {
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 0 ? "scrolled" : ""
@@ -34,51 +36,64 @@ function Menu(props) {
         props.changeUser({ isLoggedIn: false, profile: null });
     }
 
+    function IconLabel(props) {
+        return <p className="menuBarIconLabel">{props.children}</p>;
+    }
+
     function renderAuth(page) {
         if (props.user.isLoggedIn) {
             return (
                 <Link to="#" onClick={() => logout()}>
                     <ExitToAppIcon />
+                    <IconLabel>Logout</IconLabel>
                 </Link>
             );
         } else {
             const links = [
-                { to: "/login", name: <AccountCircleIcon /> },
-                { to: "/register", name: <PersonAddIcon /> },
+                { to: "/login", name: <AccountCircleIcon />, word: "Login" },
+                { to: "/register", name: <PersonAddIcon />, word: "Register" },
             ];
             return (
-                <React.Fragment>
+                <Row>
                     {links.map((link) =>
                         page.endsWith(link.to) ? (
                             <strong key={unique()}>
-                                <Link to={link.to}>{link.name}</Link>
+                                <Link to={link.to}>
+                                    {link.name}
+                                    <IconLabel>{link.word}</IconLabel>
+                                </Link>
                             </strong>
                         ) : (
                             <Link key={unique()} to={link.to}>
                                 {link.name}
+                                <IconLabel>{link.word}</IconLabel>
                             </Link>
                         )
                     )}
-                </React.Fragment>
+                </Row>
             );
         }
     }
 
     const links = [
-        { to: "/", name: <HomeIcon /> },
-        { to: "/gallery", name: <CollectionsIcon /> },
+        { to: "/", name: <HomeIcon />, word: "Home" },
+        { to: "/gallery", name: <CollectionsIcon />, word: "Gallery" },
     ];
     return (
         <div className={`menu ${scrolled}`}>
-            <div className="left">
+            <Row className="left">
                 {links.map((link) =>
                     page.endsWith(link.to) ? (
                         <strong key={unique()}>
-                            <Link to={link.to}>{link.name}</Link>
+                            <Link to={link.to}>
+                                {link.name}
+                                <IconLabel>{link.word}</IconLabel>
+                            </Link>
                         </strong>
                     ) : (
                         <Link key={unique()} to={link.to}>
                             {link.name}
+                            <IconLabel>{link.word}</IconLabel>
                         </Link>
                     )
                 )}
@@ -87,14 +102,16 @@ function Menu(props) {
                         <strong key={unique()}>
                             <Link to={"/create"}>
                                 <AddBoxIcon />
+                                <IconLabel>Create</IconLabel>
                             </Link>
                         </strong>
                     ) : (
                         <Link key={unique()} to={"/create"}>
                             <AddBoxIcon />
+                            <IconLabel>Create</IconLabel>
                         </Link>
                     ))}
-            </div>
+            </Row>
             <div className="right">{renderAuth(page)}</div>
         </div>
     );
