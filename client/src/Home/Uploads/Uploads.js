@@ -13,7 +13,6 @@ function Uploads(props) {
     useEffect(() => {
         loadPosts();
     }, [props.match]);
-
     //Infinite Scrolling
 
     useEffect(() => {
@@ -22,10 +21,8 @@ function Uploads(props) {
     }, []);
 
     useEffect(() => {
-        console.log(isBottom);
         if (isBottom) {
             //Add the stuff
-
             const index = currentPosts.length + 1;
             setCurrentPosts([
                 ...currentPosts,
