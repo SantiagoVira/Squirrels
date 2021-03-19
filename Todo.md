@@ -24,7 +24,6 @@
 
 -   buy Sqqrlz.com
 -   Profile pics :sunglasses:
--   our contacts in the aboutpage
 
 ## **Watch Out For:**
 
