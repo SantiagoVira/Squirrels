@@ -3,16 +3,13 @@
     --likeHover: #6b0000;
     --inactive: #565758;
 }
+
 .cards {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
     align-content: stretch;
-}
-
-.content > .squirrelCard {
-    display: flex;
-    flex-direction: column;
+    justify-content: center;
 }
 
 .squirrelCard {
@@ -21,7 +18,7 @@
     padding: 15px;
 
     /* Fit so it's more like the NYT website's cards? */
-    width: clamp(100px, 100px+10%, 400px);
+    /* width: clamp(100px, 100px+10%, 400px); */
 
     /* Color stuff */
     border: 2px solid #7c3b0c;

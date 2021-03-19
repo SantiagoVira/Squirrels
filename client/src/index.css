@@ -38,8 +38,10 @@ body {
     overflow-y: scroll;
     min-width: fit-content;
 }
+
 .content {
-    padding: 1rem calc(5% + 1rem); /* Making it line up */
+    box-sizing: border-box;
+    padding: 1rem calc(5% + 1rem);
 }
 
 #root {
@@ -47,6 +49,10 @@ body {
     display: flex; /* Dynamically resizes height to children */
     flex-direction: column; /* Stacks footer vertically */
     min-height: 100%; /* Makes screen height the minimum, even if there isn't enough content */
+}
+
+#root > * {
+    width: 100vw;
 }
 
 /* We don't use this anywhere—yet */
