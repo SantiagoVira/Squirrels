@@ -12,7 +12,7 @@ function Uploads(props) {
 
     useEffect(() => {
         loadPosts();
-    }, [props.match]);
+    }, []);
 
     //Infinite Scrolling
 

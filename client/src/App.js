@@ -67,10 +67,6 @@ function App() {
         setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
         console.log(!(page.endsWith("/") || page.endsWith("/gallery")));
     }, [page]);
-    // Passed to children components to change user
-    const changeUser = (data) => {
-        setUser(data);
-    };
 
     const ChangeListener = ({ history }) => {
         useEffect(() => {
@@ -100,12 +96,12 @@ function App() {
                 </Cardlink>
                 <Cardlink>
                     {size >= 935 ? (
-                        <Menu page={page} user={user} changeUser={changeUser} />
+                        <Menu page={page} user={user} changeUser={setUser} />
                     ) : (
                         <HamburgerMenu
                             page={page}
                             user={user}
-                            changeUser={changeUser}
+                            changeUser={setUser}
                         />
                     )}
                 </Cardlink>
@@ -126,7 +122,7 @@ function App() {
                             render={(match) => (
                                 <Home
                                     user={user}
-                                    changeUser={changeUser}
+                                    changeUser={setUser}
                                     match={match}
                                 />
                             )}
@@ -135,7 +131,7 @@ function App() {
                             path="/gallery"
                             exact
                             render={() => (
-                                <Gallery user={user} changeUser={changeUser} />
+                                <Gallery user={user} changeUser={setUser} />
                             )}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>
@@ -147,12 +143,12 @@ function App() {
                         <Route
                             path="/login"
                             exact
-                            render={() => <Login changeUser={changeUser} />}
+                            render={() => <Login changeUser={setUser} />}
                         ></Route>
                         <Route
                             path="/register"
                             exact
-                            render={() => <Register changeUser={changeUser} />}
+                            render={() => <Register changeUser={setUser} />}
                         ></Route>
                         <Route
                             path="/card/undefined"

@@ -15,7 +15,6 @@
 
 -   on screen too small cards overflow in the gallery
 -   login page transfer makes footer on the home page
--   all cards get re rendered when one is liked
 
 ## **Server:**
 
@@ -26,3 +25,7 @@
 -   buy Sqqrlz.com
 -   Profile pics :sunglasses:
 -   our contacts in the aboutpage
+
+## **Watch Out For:**
+
+-   Load Posts isnt happening every time the match is changed
