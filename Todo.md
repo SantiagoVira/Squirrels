@@ -13,12 +13,13 @@
 
 ## **Frontend**
 
+-   style Profile pic stuff
+
 ## **Server:**
 
 ## **Other**
 
 -   buy Sqqrlz.com
--   Profile pics :sunglasses:
 
 ## **Watch Out For:**
 

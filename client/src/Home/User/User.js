@@ -5,6 +5,8 @@ import Row from "../../Row";
 import Col from "../../Col";
 import api from "../../api";
 
+import Avatar from "react-avatar-edit";
+
 function getColor() {
     return (
         "hsl(" +
@@ -20,6 +22,23 @@ function getColor() {
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const bgColor = useRef(getColor());
+    const [preview, setPreview] = useState(null);
+
+    function onClose() {
+        setPreview(null);
+    }
+
+    function onCrop(preview) {
+        setPreview(preview);
+        console.log(preview);
+    }
+
+    function onBeforeFileLoad(elem) {
+        if (elem.target.files[0].size > 716800) {
+            alert("File is too big!");
+            elem.target.value = "";
+        }
+    }
 
     useEffect(() => {
         const getUserData = async () => {
@@ -76,6 +95,15 @@ function User(props) {
                     <Link to="/about" className="AboutTextLink">
                         ⋅ About ⋅
                     </Link>
+                    <Avatar
+                        width={390}
+                        height={295}
+                        onCrop={onCrop}
+                        onClose={onClose}
+                        onBeforeFileLoad={onBeforeFileLoad}
+                        labelStyle={{ color: "#fae9cf" }}
+                    />
+                    <img src={preview} alt="" />
                 </Col>
             </Row>
         </div>
