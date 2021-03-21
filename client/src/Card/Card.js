@@ -102,6 +102,10 @@ function Card({
         );
     }
 
+    if(!post) {
+        return null;
+    }
+
     return (
         <div className="squirrelCard">
             {!disableCardMenu ? (

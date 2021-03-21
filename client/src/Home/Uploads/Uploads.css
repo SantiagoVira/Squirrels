@@ -3,7 +3,7 @@
     flex-direction: column;
     align-items: center;
 
-    min-height: 10vh;
+    min-height: 1vh;
     height: fit-content;
     width: 40vw;
     flex: 3;

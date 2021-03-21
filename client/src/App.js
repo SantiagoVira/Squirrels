@@ -37,7 +37,7 @@ function App() {
     });
     const [size, setSize] = useState(window.innerWidth);
     const [footer, setFooter] = useState(false);
-
+    
     useEffect(() => {
         const getUser = async () => {
             try {
@@ -64,7 +64,6 @@ function App() {
 
     useEffect(() => {
         const page = window.location.href;
-        console.log(page);
         setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
     }, [window.location.href]);
 
@@ -123,7 +122,7 @@ function App() {
                                 <Home
                                     user={user}
                                     changeUser={setUser}
-                                    match={match}
+                                    page={page}
                                 />
                             )}
                         ></Route>

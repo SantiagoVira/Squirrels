@@ -7,7 +7,7 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Home(props) {
-    const [showBackButton, setShowBackButton] = useState(false);
+    const [backVisible, setBackVisible] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
     );
@@ -21,7 +21,7 @@ function Home(props) {
     }
     return (
         <div className="homePageMain">
-            {showBackButton ? (
+            {backVisible ? (
                 <Link to="/">
                     <ExitToAppIcon className="exitSpecialCardsIcon" />
                 </Link>
@@ -44,8 +44,8 @@ function Home(props) {
             <Uploads
                 user={props.user}
                 changeUser={props.changeUser}
-                changeShowBackButton={setShowBackButton}
-                match={props.match}
+                changeBackVisible={setBackVisible}
+                page={props.page}
                 setScrolled={setScrolled}
             />
             {window.innerWidth > 935 && <User user={props.user} />}

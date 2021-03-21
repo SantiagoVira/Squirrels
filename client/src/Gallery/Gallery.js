@@ -9,7 +9,7 @@ import "./Gallery.css";
 
 function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
-    const [stories, setStories] = useState([]);
+    const [stories, setStories] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
@@ -33,7 +33,7 @@ function Gallery({ user, changeUser }) {
     }, []);
 
     useEffect(() => {
-        if (isBottom) {
+        if (isBottom && stories) {
             //Add the stuff
             const index = stories.length + 1;
             setStories([...stories, ...data.slice(index, index + 20)]);
@@ -118,12 +118,16 @@ function Gallery({ user, changeUser }) {
         });
     }
 
-    if (stories.length === 0) {
+    if(!stories) {
         return (
             <div className="loaderWrapper">
-                <CircularProgress color="#fae9cf" />
+                <CircularProgress color="inherit" />
             </div>
         );
+    }
+
+    if (stories.length === 0) {
+        return <div className="noPosts">No posts were found</div>
     }
 
     return (

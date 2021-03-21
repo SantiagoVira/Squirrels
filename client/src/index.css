@@ -66,8 +66,13 @@ button {
 }
 
 .loaderWrapper {
+    color: --text;
     text-align: center;
     margin: 50px 0;
+}
+
+.noPosts {
+    text-align: center;
 }
 
 @media only screen and (max-width: 900px) {
