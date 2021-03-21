@@ -4,10 +4,12 @@
     "scripts": {
         "build": "cd client && npm install && npm run build"
     },
-    "dependencies": {},
+    "dependencies": {
+        "profile-picture": "git+https://github.com/dsalvagni/react-profile-picture.git",
+        "react-avatar-edit": "^1.0.0"
+    },
     "devDependencies": {},
     "cacheDirectories": [
         "client/node_modules"
     ]
 }
-  
