@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import api from "../api";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Gallery.css";
-import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
@@ -117,8 +118,12 @@ function Gallery({ user, changeUser }) {
         });
     }
 
-    if (!stories) {
-        return null;
+    if (stories.length === 0) {
+        return (
+            <div className="loaderWrapper">
+                <CircularProgress color="#fae9cf" />
+            </div>
+        );
     }
 
     return (

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 import "./Uploads.css";
 import Card from "../../Card/Card.js";
@@ -105,22 +106,32 @@ function Uploads(props) {
         } catch (err) {}
     };
 
-    return (
-        <div className="posts">
-            {posts.map((post) => {
-                return (
-                    <Card
-                        story={post}
-                        key={post.id}
-                        onDelete={delete_log}
-                        user={user}
-                        changeUser={props.changeUser}
-                        findHashtag={loadByHashtag}
-                    />
-                );
-            })}
-        </div>
-    );
+    const renderPosts = () => {
+        if(posts.length === 0) {
+            return (
+                <div className="loaderWrapper">
+                    <CircularProgress color="#fae9cf" />
+                </div>
+            );
+        } else {
+            return (
+                posts.map((post) => {
+                    return (
+                        <Card
+                            story={post}
+                            key={post.id}
+                            onDelete={delete_log}
+                            user={user}
+                            changeUser={props.changeUser}
+                            findHashtag={loadByHashtag}
+                        />
+                    );
+                })
+            );
+        }
+    }
+
+    return <div className="posts">{renderPosts()}</div>;
 }
 
 export default Uploads;
