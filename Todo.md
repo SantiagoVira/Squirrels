@@ -14,16 +14,21 @@
 ## **Frontend**
 
 -   style Profile pic stuff
+-   Splash page to welcome people
+-   Change gallery to archive
 
 ## **Server:**
 
 -   Make pfp part of user model
+-   New posts going to the bottom (maybe server?)
 
 ## **Other**
 
 -   buy Sqqrlz.com
+-   Replying
+-   Communities 
 
 ## **Watch Out For:**
 
--   Load Posts isnt happening every time the match is changed
+-   Load Posts isn't happening every time the match is changed
 -   we used window.location.href instead of history.push()
