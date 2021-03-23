@@ -78,7 +78,10 @@ function User(props) {
                     style={{ backgroundColor: bgColor.current }}
                 >
                     <p style={{ fontSize: pfpTxtSize }}>
-                        {props.user.profile.username.slice(0, 1).toUpperCase()}
+                        <img 
+                            src={props.user.profile.avatar} 
+                            alt={props.user.profile.username.slice(0, 1).toUpperCase()}
+                        />
                     </p>
                 </div>
                 <h1>{props.user.profile.username}</h1>
