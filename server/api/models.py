@@ -35,6 +35,8 @@ class SquirreLog(models.Model):
 class User(AbstractUser):
     # Separating likes from dislikes to make sure users can like and dislike one time
     liked_posts = models.ManyToManyField('SquirreLog', through="Liker", related_name="liked_posts")
+    avatar = models.TextField(default=None)
+
 
 # intermediary classes for many to many fields
 class TopicalSquirrel(models.Model):

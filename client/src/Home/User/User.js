@@ -21,23 +21,8 @@ function getColor() {
 
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
-    const bgColor = useRef(getColor());
     const [preview, setPreview] = useState(null);
-
-    function onClose() {
-        setPreview(null);
-    }
-
-    function onCrop(preview) {
-        setPreview(preview);
-    }
-
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 716800) {
-            alert("File is too big!");
-            elem.target.value = "";
-        }
-    }
+    const bgColor = useRef(getColor());
 
     useEffect(() => {
         const getUserData = async () => {
@@ -54,6 +39,25 @@ function User(props) {
         };
         getUserData();
     }, [props.user]);
+
+    function onClose() {
+        setPreview(null);
+    }
+
+    function onCrop(preview) {
+        setPreview(preview);
+    }
+
+    function onBeforeFileLoad(elem) {
+        if (elem.target.files[0].size > 716800) {
+            alert("File is too big!");
+            elem.target.value = "";
+        }
+    }
+console.log(props.user.profile)
+    const onAvatarSubmit = () => {
+        api.patch(`/api/users/${props.user.profile.id}/`, {avatar: preview});
+    }
 
     if (!props.user.profile) {
         return null;
@@ -102,6 +106,9 @@ function User(props) {
                         onBeforeFileLoad={onBeforeFileLoad}
                         labelStyle={{ color: "#fae9cf" }}
                     />
+                    <button onClick={() => onAvatarSubmit()}>
+                        Submit
+                    </button>
                     <img src={preview} alt="" />
                 </Col>
             </Row>
