@@ -55,6 +55,10 @@ function Create({ user }) {
 
     const commonHashtags = ["Squirrels", "Park", "Dogs", "Poems"];
 
+    if(user.isLoggedIn === null) {
+        return null;
+    }
+
     return user.isLoggedIn ? (
         <div>
             <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>

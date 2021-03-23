@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from "react";
 import api from "../api";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Gallery.css";
-import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
-    const [stories, setStories] = useState([]);
+    const [stories, setStories] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
@@ -32,7 +33,7 @@ function Gallery({ user, changeUser }) {
     }, []);
 
     useEffect(() => {
-        if (isBottom) {
+        if (isBottom && stories) {
             //Add the stuff
             const index = stories.length + 1;
             setStories([...stories, ...data.slice(index, index + 20)]);
@@ -117,8 +118,16 @@ function Gallery({ user, changeUser }) {
         });
     }
 
-    if (!stories) {
-        return null;
+    if(!stories) {
+        return (
+            <div className="loaderWrapper">
+                <CircularProgress color="inherit" />
+            </div>
+        );
+    }
+
+    if (stories.length === 0) {
+        return <div className="noPosts">No posts were found</div>
     }
 
     return (
