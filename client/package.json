@@ -12,6 +12,7 @@
     "i": "^0.3.6",
     "nodelib": "^1.0.0",
     "react": "^17.0.1",
+    "react-avatar-edit": "^1.0.0",
     "react-contenteditable": "^3.3.5",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",

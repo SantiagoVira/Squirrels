@@ -17,6 +17,8 @@
 
 ## **Server:**
 
+-   Make pfp part of user model
+
 ## **Other**
 
 -   buy Sqqrlz.com
