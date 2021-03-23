@@ -1,11 +1,5 @@
 import React from "react";
 import "./About.css";
-import Person from "./Person/Person";
-
-import Dashiell from "./Images/Dashiell.jpg";
-import Santiago from "./Images/Santiago.jpg";
-import Aramie from "./Images/Aramie.jpg";
-import Ramon from "./Images/Ramon.jpg";
 
 function About() {
     return (
@@ -14,9 +8,9 @@ function About() {
                 <strong>Our Story</strong>
                 <br />
                 <p className="storyText">
-                    You may be wondering.... wtf? Why? Wha... wh.. why though?
-                    Don't worry, we got you. This is the story of our
-                    Squirrel-cial media site.
+                    You may be wondering.... why? Wha... wh.. why though? Don't
+                    worry, we got you. This is the story of our Squirrel-cial
+                    media site.
                     <br />
                     <br />
                     In early February 2021, 4 young programmers were tasked with
@@ -42,39 +36,8 @@ function About() {
                     <br />
                     And that is how <strong>Sqrrlz</strong> was formed. Taking
                     these silly squirrel stories and posting them, just to share
-                    a litle bit of laughter in this ****storm of a time. You're
-                    Welcome.
+                    a litle bit of laughter in these times. You're Welcome.
                 </p>
-                <br />
-                <br />
-                <strong>Meet the Devs</strong>
-                <div style={{ marginBottom: "20px" }} />
-            </div>
-            <div className="container">
-                <Person
-                    src={Santiago}
-                    side="left"
-                    name="Santiago"
-                    desc="We are making Squirrel-cial Media"
-                />
-                <Person
-                    src={Aramie}
-                    side="center"
-                    name="Aramie"
-                    desc="Thats what the mainstream dog media wants you to believe"
-                />
-                <Person
-                    src={Ramon}
-                    side="center"
-                    name="Ramon"
-                    desc="This is our new invention: squirrels"
-                />
-                <Person
-                    src={Dashiell}
-                    side="left"
-                    name="Dashiell"
-                    desc="I dont like facial recognition, but if it's being used on squirrels it's worth it"
-                />
             </div>
         </div>
     );

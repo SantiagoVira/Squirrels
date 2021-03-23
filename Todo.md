@@ -17,8 +17,7 @@
 -   searching twice doesnt work
 -   individual cards is broken
 -   Splash page to welcome people
--   Change gallery to archive
--   update about page
+-   hashtags overflow aaaaah
 
 ## **Server:**
 
