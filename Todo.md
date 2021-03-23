@@ -18,6 +18,7 @@
 -   individual cards is broken
 -   Splash page to welcome people
 -   Change gallery to archive
+-   update about page
 
 ## **Server:**
 

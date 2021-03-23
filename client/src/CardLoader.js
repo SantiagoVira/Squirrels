@@ -23,7 +23,7 @@ function CardLoader(props) {
     }
     return (
         <Card
-            post={card}
+            story={card}
             key={unique()}
             user={{ profile: null }}
             disableCardMenu={true}
