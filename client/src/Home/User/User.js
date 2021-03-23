@@ -54,7 +54,7 @@ function User(props) {
             elem.target.value = "";
         }
     }
-console.log(props.user.profile)
+
     const onAvatarSubmit = () => {
         api.patch(`/api/users/${props.user.profile.id}/`, {avatar: preview});
     }
