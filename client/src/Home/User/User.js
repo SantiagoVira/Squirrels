@@ -30,7 +30,6 @@ function User(props) {
 
     function onCrop(preview) {
         setPreview(preview);
-        console.log(preview);
     }
 
     function onBeforeFileLoad(elem) {
@@ -96,8 +95,8 @@ function User(props) {
                         ⋅ About ⋅
                     </Link>
                     <Avatar
-                        width={390}
-                        height={295}
+                        width={200}
+                        height={200}
                         onCrop={onCrop}
                         onClose={onClose}
                         onBeforeFileLoad={onBeforeFileLoad}
