@@ -14,6 +14,8 @@
 ## **Frontend**
 
 -   style Profile pic stuff
+-   searching twice doesnt work
+-   individual cards is broken
 
 ## **Server:**
 
