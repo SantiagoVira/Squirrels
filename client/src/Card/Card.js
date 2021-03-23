@@ -26,8 +26,8 @@ function Card({
     const [post, setPost] = useState(story);
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
-    const [editValue, setEditValue] = useState(post.note);
-    
+    const [editValue, setEditValue] = useState(story.note);
+
     async function vote() {
         if (!user.isLoggedIn) {
             history.push("/login");
@@ -37,7 +37,7 @@ function Card({
             //Set card's votes in the database to votes variable
             const response = await api.put(`/api/SquirreLogs/${post.id}/vote/`);
 
-            setPost(response.data.log)
+            setPost(response.data.log);
             changeUser({ ...user, profile: response.data.user });
         } catch (err) {}
     }
@@ -102,7 +102,7 @@ function Card({
         );
     }
 
-    if(!post) {
+    if (!post) {
         return null;
     }
 

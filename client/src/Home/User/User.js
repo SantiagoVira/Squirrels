@@ -21,24 +21,8 @@ function getColor() {
 
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
-    const bgColor = useRef(getColor());
     const [preview, setPreview] = useState(null);
-
-    function onClose() {
-        setPreview(null);
-    }
-
-    function onCrop(preview) {
-        setPreview(preview);
-        console.log(preview);
-    }
-
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 716800) {
-            alert("File is too big!");
-            elem.target.value = "";
-        }
-    }
+    const bgColor = useRef(getColor());
 
     useEffect(() => {
         const getUserData = async () => {
@@ -55,6 +39,25 @@ function User(props) {
         };
         getUserData();
     }, [props.user]);
+
+    function onClose() {
+        setPreview(null);
+    }
+
+    function onCrop(preview) {
+        setPreview(preview);
+    }
+
+    function onBeforeFileLoad(elem) {
+        if (elem.target.files[0].size > 716800) {
+            alert("File is too big!");
+            elem.target.value = "";
+        }
+    }
+
+    const onAvatarSubmit = () => {
+        api.patch(`/api/users/${props.user.profile.id}/`, {avatar: preview});
+    }
 
     if (!props.user.profile) {
         return null;
@@ -75,7 +78,10 @@ function User(props) {
                     style={{ backgroundColor: bgColor.current }}
                 >
                     <p style={{ fontSize: pfpTxtSize }}>
-                        {props.user.profile.username.slice(0, 1).toUpperCase()}
+                        <img 
+                            src={props.user.profile.avatar} 
+                            alt={props.user.profile.username.slice(0, 1).toUpperCase()}
+                        />
                     </p>
                 </div>
                 <h1>{props.user.profile.username}</h1>
@@ -96,13 +102,16 @@ function User(props) {
                         ⋅ About ⋅
                     </Link>
                     <Avatar
-                        width={390}
-                        height={295}
+                        width={200}
+                        height={200}
                         onCrop={onCrop}
                         onClose={onClose}
                         onBeforeFileLoad={onBeforeFileLoad}
                         labelStyle={{ color: "#fae9cf" }}
                     />
+                    <button onClick={() => onAvatarSubmit()}>
+                        Submit
+                    </button>
                     <img src={preview} alt="" />
                 </Col>
             </Row>

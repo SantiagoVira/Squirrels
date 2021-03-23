@@ -26,7 +26,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts', 'pfp')
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts', 'pfp') # avatar 
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)

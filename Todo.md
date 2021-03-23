@@ -14,8 +14,11 @@
 ## **Frontend**
 
 -   style Profile pic stuff
+-   searching twice doesnt work
+-   individual cards is broken
 -   Splash page to welcome people
 -   Change gallery to archive
+-   update about page
 
 ## **Server:**
 
@@ -26,7 +29,7 @@
 
 -   buy Sqqrlz.com
 -   Replying
--   Communities 
+-   Communities
 
 ## **Watch Out For:**
 
