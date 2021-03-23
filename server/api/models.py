@@ -14,7 +14,6 @@ class SquirrelTopic(models.Model):
 class SquirreLog(models.Model):
     note = models.TextField(max_length=400) # Arbitrary length of a note
     pub_date = models.DateTimeField('date published')
-    # votes = models.IntegerField(default=0) # We can now render the length of who it's liked by
 
     # Foreign connections
     # https://docs.djangoproject.com/en/2.2/topics/db/models/#intermediary-manytomany
@@ -26,7 +25,7 @@ class SquirreLog(models.Model):
         return str(self.note)
 
     def votes(self):
-        return self.liked_by.count() # Maybe something better? Idk 
+        return self.liked_by.count() # Maybe there's something better? Idk
 
 # Note: When migrating new user model, comment out admin.site in urls and settings
 # and then run `python ./manage.py makemigrations api`
@@ -35,6 +34,7 @@ class SquirreLog(models.Model):
 class User(AbstractUser):
     # Separating likes from dislikes to make sure users can like and dislike one time
     liked_posts = models.ManyToManyField('SquirreLog', through="Liker", related_name="liked_posts")
+    pfp = models.ImageField(null=True, upload_to="pfps") 
 
 # intermediary classes for many to many fields
 class TopicalSquirrel(models.Model):

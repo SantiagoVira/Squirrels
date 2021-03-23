@@ -148,8 +148,14 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# https://docs.djangoproject.com/en/3.1/topics/security/#user-uploaded-content-security
+# https://docs.djangoproject.com/en/3.1/ref/models/fields/#filefield
+# https://docs.djangoproject.com/en/3.1/ref/settings/#std:setting-MEDIA_URL
+# ^ Do we also want to set a media url??
 
 # STATICFILES_DIRS can't include STATIC_ROOT directory
 if DEBUG:
