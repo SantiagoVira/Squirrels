@@ -196,8 +196,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
     @action(methods=['get'], detail=False, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
-        uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date')
-
+        uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
         paginator = PageNumberPagination()
         paginator.page_size = 20
         result_page = paginator.paginate_queryset(uploads, request)

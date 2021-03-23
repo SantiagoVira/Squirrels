@@ -10,7 +10,7 @@ function Uploads(props) {
     const [posts, setPosts] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
     const user = props.user;
-
+console.log(posts)
     useEffect(() => {
         loadPosts();
     }, [props.page]);
