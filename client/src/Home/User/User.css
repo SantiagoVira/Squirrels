@@ -25,6 +25,7 @@
 .UserBreakdownUploadIcon {
     position: absolute;
     color: transparent;
+    pointer-events: none;
 }
 .circular--portrait:hover .UserBreakdownUploadIcon {
     color: #636363;
