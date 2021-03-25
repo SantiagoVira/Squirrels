@@ -12,7 +12,7 @@ import HamburgerMenu from "./Menu/HamburgerMenu.js";
 import Header from "./Header/Header.js";
 
 // Content
-import Gallery from "./Gallery/Gallery.js";
+import Archive from "./Archive/Archive";
 import Home from "./Home/Home.js";
 import About from "./About/About.js";
 import Create from "./Create/Create.js";
@@ -37,16 +37,16 @@ function App() {
     });
     const [size, setSize] = useState(window.innerWidth);
     const [footer, setFooter] = useState(false);
-    
+
     useEffect(() => {
         const getUser = async () => {
             try {
                 const token = localStorage.getItem("token");
                 if (token) {
                     const response = await api.get("/api/current_user/");
-                    setUser({isLoggedIn: true, profile: response.data});
+                    setUser({ isLoggedIn: true, profile: response.data });
                 } else {
-                    setUser({isLoggedIn: false, profile: null});
+                    setUser({ isLoggedIn: false, profile: null });
                 }
             } catch (err) {
                 // If JWT is invalid, remove it from localstorage and refresh page
@@ -127,10 +127,10 @@ function App() {
                             )}
                         ></Route>
                         <Route
-                            path="/gallery"
+                            path="/archive"
                             exact
                             render={() => (
-                                <Gallery user={user} changeUser={setUser} />
+                                <Archive user={user} changeUser={setUser} />
                             )}
                         ></Route>
                         <Route path="/about" exact component={About}></Route>

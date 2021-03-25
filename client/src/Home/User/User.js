@@ -6,6 +6,7 @@ import Col from "../../Col";
 import api from "../../api";
 
 import Avatar from "react-avatar-edit";
+import PublishIcon from "@material-ui/icons/Publish";
 
 function getColor() {
     return (
@@ -23,6 +24,28 @@ function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const [preview, setPreview] = useState(null);
     const bgColor = useRef(getColor());
+    const [pfpOp, setPfpOp] = useState(
+        getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
+    );
+    const [pfpLoadSize, setPfpLoadSize] = useState(75);
+
+    function onClose() {
+        setPreview(null);
+        setPfpLoadSize(75);
+    }
+
+    function onCrop(preview) {
+        setPreview(preview);
+    }
+
+    function onBeforeFileLoad(elem) {
+        if (elem.target.files[0].size > 255000) {
+            alert("File is too big!");
+            elem.target.value = "";
+        } else {
+            setPfpLoadSize(150);
+        }
+    }
 
     useEffect(() => {
         const getUserData = async () => {
@@ -40,24 +63,9 @@ function User(props) {
         getUserData();
     }, [props.user]);
 
-    function onClose() {
-        setPreview(null);
-    }
-
-    function onCrop(preview) {
-        setPreview(preview);
-    }
-
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 716800) {
-            alert("File is too big!");
-            elem.target.value = "";
-        }
-    }
-
     const onAvatarSubmit = () => {
-        api.patch(`/api/users/${props.user.profile.id}/`, {avatar: preview});
-    }
+        api.patch(`/api/users/${props.user.profile.id}/`, { avatar: preview });
+    };
 
     if (!props.user.profile) {
         return null;
@@ -72,20 +80,47 @@ function User(props) {
 
     return (
         <div className="user">
-            <Row>
+            <div
+                className="UserBreakdownTopDiv"
+                style={{ flexDirection: preview ? "column" : "row" }}
+            >
                 <div
                     className="circular--portrait"
-                    style={{ backgroundColor: bgColor.current }}
+                    onMouseEnter={() => {
+                        setPfpOp(0.1);
+                    }}
+                    onMouseLeave={() => {
+                        setPfpOp(1);
+                    }}
                 >
-                    <p style={{ fontSize: pfpTxtSize }}>
-                        <img 
-                            src={props.user.profile.avatar} 
-                            alt={props.user.profile.username.slice(0, 1).toUpperCase()}
-                        />
-                    </p>
+                    <Avatar
+                        width={pfpLoadSize}
+                        height={pfpLoadSize}
+                        onCrop={onCrop}
+                        onClose={onClose}
+                        onBeforeFileLoad={onBeforeFileLoad}
+                        labelStyle={{ color: "black", opacity: pfpOp }}
+                        borderStyle={{
+                            borderRadius: "50%",
+                            textAlign: "center",
+                            backgroundColor: bgColor.current,
+                            backgroundImage: preview /*/////////////////////////////////set the users pfp from the database*/,
+                            fontSize: pfpTxtSize,
+                        }}
+                        label={props.user.profile.username
+                            .slice(0, 1)
+                            .toUpperCase()}
+                    />
+                    {!preview && (
+                        <PublishIcon className="UserBreakdownUploadIcon" />
+                    )}
                 </div>
-                <h1>{props.user.profile.username}</h1>
-            </Row>
+
+                <Row className="UserBreakdownUsernameAndImage">
+                    <img src={preview} alt="" />{" "}
+                    <h1>{props.user.profile.username}</h1>
+                </Row>
+            </div>
             <Row>
                 <Col>
                     <p style={UserDataStyles}>
@@ -101,18 +136,6 @@ function User(props) {
                     <Link to="/about" className="AboutTextLink">
                         ⋅ About ⋅
                     </Link>
-                    <Avatar
-                        width={200}
-                        height={200}
-                        onCrop={onCrop}
-                        onClose={onClose}
-                        onBeforeFileLoad={onBeforeFileLoad}
-                        labelStyle={{ color: "#fae9cf" }}
-                    />
-                    <button onClick={() => onAvatarSubmit()}>
-                        Submit
-                    </button>
-                    <img src={preview} alt="" />
                 </Col>
             </Row>
         </div>

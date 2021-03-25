@@ -16,25 +16,31 @@
 }
 
 .circular--portrait {
-    min-width: var(--profileSize) !important;
-    min-height: var(--profileSize) !important;
-    border-radius: 50%;
-    margin-right: 0 !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 10px;
-}
-.circular--portrait > p {
-    color: black;
-    padding: 0;
-    margin: 0;
+    margin-right: 3px;
 }
 
+.UserBreakdownUploadIcon {
+    position: absolute;
+    color: transparent;
+}
+.circular--portrait:hover .UserBreakdownUploadIcon {
+    color: #636363;
+}
+.UserBreakdownUploadIcon:hover {
+    color: black !important;
+}
 .link {
     color: inherit;
     text-decoration: none;
 }
-.UserSectionPFPeditor {
-    height: 50vh;
+.UserBreakdownTopDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.UserBreakdownUsernameAndImage {
+    margin-top: 10px;
 }

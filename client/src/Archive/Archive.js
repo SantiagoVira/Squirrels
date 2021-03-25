@@ -5,7 +5,7 @@ import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
-import "./Gallery.css";
+import "./Archive.css";
 
 function Gallery({ user, changeUser }) {
     const [data, setData] = useState([]);
@@ -118,7 +118,7 @@ function Gallery({ user, changeUser }) {
         });
     }
 
-    if(!stories) {
+    if (!stories) {
         return (
             <div className="loaderWrapper">
                 <CircularProgress color="inherit" />
@@ -127,7 +127,7 @@ function Gallery({ user, changeUser }) {
     }
 
     if (stories.length === 0) {
-        return <div className="noPosts">No posts were found</div>
+        return <div className="noPosts">No posts were found</div>;
     }
 
     return (

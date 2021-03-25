@@ -22,7 +22,7 @@ function HamburgerMenu(props) {
 
     const links = [
         { to: "/about", name: "About" },
-        { to: "/gallery", name: "Gallery" },
+        { to: "/archive", name: "Archive" },
     ];
     function logout() {
         localStorage.removeItem("token");

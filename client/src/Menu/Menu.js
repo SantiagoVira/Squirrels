@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import "./Menu.css";
 import AddBoxIcon from "@material-ui/icons/AddBox";
-import CollectionsIcon from "@material-ui/icons/Collections";
+import AppsIcon from "@material-ui/icons/Apps";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
@@ -77,7 +77,7 @@ function Menu(props) {
 
     const links = [
         { to: "/", name: <HomeIcon />, word: "Home" },
-        { to: "/gallery", name: <CollectionsIcon />, word: "Gallery" },
+        { to: "/archive", name: <AppsIcon />, word: "Archive" },
     ];
     return (
         <div className={`menu ${scrolled}`}>
