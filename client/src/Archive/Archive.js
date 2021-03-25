@@ -97,6 +97,7 @@ function Gallery({ user, changeUser }) {
                 const results = await api.get(
                     `http://localhost:8000/api/SquirreLogs/?search=${search}`
                 );
+                console.log(results.data.results);
                 setStories(results.data.results);
             };
             getDatabaseStories();

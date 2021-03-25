@@ -8,6 +8,7 @@ import api from "../../api";
 import Avatar from "react-avatar-edit";
 import PublishIcon from "@material-ui/icons/Publish";
 import imog from "./foxcirc.png";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 function getColor() {
     return (
@@ -24,16 +25,16 @@ function getColor() {
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const [preview, setPreview] = useState(null);
-    const [uPFP, setUPFP] = useState(imog);
+    const [uPFP, setUPFP] = useState(null);
     const bgColor = useRef(getColor());
     const [pfpOp, setPfpOp] = useState(
         getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
     );
-    const [pfpLoadSize, setPfpLoadSize] = useState(75);
+    const [pfpLoadSize, setPfpLoadSize] = useState({ width: 75, height: 75 });
 
     function onClose() {
         setPreview(null);
-        setPfpLoadSize(75);
+        setPfpLoadSize({ width: 75, height: 75 });
     }
 
     function onCrop(preview) {
@@ -45,7 +46,7 @@ function User(props) {
             alert("File is too big!");
             elem.target.value = "";
         } else {
-            setPfpLoadSize(150);
+            setPfpLoadSize({ height: 150 });
         }
     }
 
@@ -96,8 +97,8 @@ function User(props) {
                     }}
                 >
                     <Avatar
-                        width={pfpLoadSize}
-                        height={pfpLoadSize}
+                        width={pfpLoadSize.width}
+                        height={pfpLoadSize.height}
                         onCrop={onCrop}
                         onClose={onClose}
                         onBeforeFileLoad={onBeforeFileLoad}
@@ -121,10 +122,23 @@ function User(props) {
                     {!preview && !uPFP && (
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
+                    {preview && !uPFP && (
+                        <CheckCircleOutlineIcon
+                            className="UserBreakdownSubmitPfp"
+                            onClick={() => {
+                                onClose();
+                                Avatar.onCloseClick();
+                            }}
+                        />
+                    )}
                 </div>
 
                 <Row className="UserBreakdownUsernameAndImage">
-                    <img src={preview} alt="" />{" "}
+                    <img
+                        src={preview}
+                        alt=""
+                        className="UserBreakdownPreview"
+                    />{" "}
                     <h1>{props.user.profile.username}</h1>
                 </Row>
             </div>
