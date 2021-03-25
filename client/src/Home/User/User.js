@@ -27,6 +27,7 @@ function User(props) {
     const [preview, setPreview] = useState(null);
     const [uPFP, setUPFP] = useState(null);
     const bgColor = useRef(getColor());
+    const [avRef, setAvRef] = useState(null);
     const [pfpOp, setPfpOp] = useState(
         getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
     );
@@ -103,6 +104,7 @@ function User(props) {
                         onClose={onClose}
                         onBeforeFileLoad={onBeforeFileLoad}
                         labelStyle={{ color: "black", opacity: pfpOp }}
+                        ref={(ref) => setAvRef(ref)}
                         borderStyle={{
                             borderRadius: "50%",
                             textAlign: "center",
@@ -126,8 +128,8 @@ function User(props) {
                         <CheckCircleOutlineIcon
                             className="UserBreakdownSubmitPfp"
                             onClick={() => {
-                                onClose();
-                                Avatar.onCloseClick();
+                                avRef.onCloseClick();
+                                onAvatarSubmit();
                             }}
                         />
                     )}
