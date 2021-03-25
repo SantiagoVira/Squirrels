@@ -22,11 +22,11 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         read_only=True,
         view_name='user-posts'
     )
-    pfp = serializers.ImageField(use_url=True)
+    pfp = serializers.ImageField(use_url=False)
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts', 'pfp') # avatar 
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts', 'pfp') # avatar
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
