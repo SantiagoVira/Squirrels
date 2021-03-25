@@ -21,7 +21,6 @@
 
 ## **Server:**
 
--   Make pfp part of user model
 -   New posts going to the bottom (maybe server?)
 
 ## **Other**
