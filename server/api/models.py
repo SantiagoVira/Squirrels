@@ -37,7 +37,6 @@ class User(AbstractUser):
     pfp = models.ImageField(null=True, upload_to="pfps")
     # avatar = models.TextField(default="")
 
-
 # intermediary classes for many to many fields
 class TopicalSquirrel(models.Model):
     topic = models.ForeignKey('SquirrelTopic', on_delete=models.CASCADE, default=None, null=True)
