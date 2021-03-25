@@ -7,6 +7,7 @@ import api from "../../api";
 
 import Avatar from "react-avatar-edit";
 import PublishIcon from "@material-ui/icons/Publish";
+import imog from "./foxcirc.png";
 
 function getColor() {
     return (
@@ -23,6 +24,7 @@ function getColor() {
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const [preview, setPreview] = useState(null);
+    const [uPFP, setUPFP] = useState(imog);
     const bgColor = useRef(getColor());
     const [pfpOp, setPfpOp] = useState(
         getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
@@ -103,15 +105,20 @@ function User(props) {
                         borderStyle={{
                             borderRadius: "50%",
                             textAlign: "center",
-                            backgroundColor: bgColor.current,
-                            backgroundImage: preview /*/////////////////////////////////set the users pfp from the database*/,
+                            backgroundColor: !uPFP && bgColor.current,
+                            backgroundImage: `url(${uPFP})` /*/////////////////////////////////set the users pfp from the database*/,
                             fontSize: pfpTxtSize,
+                            backgroundPosition: "center",
+                            backgroundSize: "100% auto",
                         }}
-                        label={props.user.profile.username
-                            .slice(0, 1)
-                            .toUpperCase()}
+                        label={
+                            !uPFP &&
+                            props.user.profile.username
+                                .slice(0, 1)
+                                .toUpperCase()
+                        }
                     />
-                    {!preview && (
+                    {!preview && !uPFP && (
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
                 </div>
