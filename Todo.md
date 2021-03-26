@@ -13,16 +13,16 @@
 
 ## **Frontend**
 
--   style Profile pic stuff
--   searching twice doesnt work
--   individual cards is broken
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
+-   pfp submit
 
 ## **Server:**
 
+-   link pfps with front and back
 -   Make pfp part of user model
 -   New posts going to the bottom (maybe server?)
+-   searching by content doesnt work
 
 ## **Other**
 
