@@ -24,7 +24,7 @@ function getColor() {
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const [preview, setPreview] = useState(null);
-    const [uPFP, setUPFP] = useState(imog);
+    const [uPFP, setUPFP] = useState(null);
     const bgColor = useRef(getColor());
     const [pfpOp, setPfpOp] = useState(
         getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
@@ -40,10 +40,11 @@ function User(props) {
         setPreview(preview);
     }
 
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 255000) {
+    function onBeforeFileLoad(el) {
+        console.log(el.target.files[0])
+        if (el.target.files[0].size > 255000) {
             alert("File is too big!");
-            elem.target.value = "";
+            el.target.value = "";
         } else {
             setPfpLoadSize(150);
         }
@@ -66,7 +67,7 @@ function User(props) {
     }, [props.user]);
 
     const onAvatarSubmit = () => {
-        api.patch(`/api/users/${props.user.profile.id}/`, { avatar: preview });
+        api.patch(`/api/users/${props.user.profile.id}/`, { pfp: preview });
     };
 
     if (!props.user.profile) {
@@ -88,12 +89,8 @@ function User(props) {
             >
                 <div
                     className="circular--portrait"
-                    onMouseEnter={() => {
-                        setPfpOp(0.1);
-                    }}
-                    onMouseLeave={() => {
-                        setPfpOp(1);
-                    }}
+                    onMouseEnter={() => setPfpOp(0.1)}
+                    onMouseLeave={() => setPfpOp(1)}
                 >
                     <Avatar
                         width={pfpLoadSize}
@@ -122,6 +119,9 @@ function User(props) {
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
                 </div>
+                {preview && 
+                    <button onClick={() => onAvatarSubmit()}>Submit</button>
+                }
 
                 <Row className="UserBreakdownUsernameAndImage">
                     <img src={preview} alt="" />{" "}

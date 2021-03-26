@@ -60,6 +60,7 @@ function Uploads(props) {
             } else {
                 let response = await api.get("/api/SquirreLogs/uploads/");
                 let d = [...response.data.results];
+                console.log(response.data)
                 setPosts(d);
                 setCurrentPosts(d);
                 while (response.data.next) {

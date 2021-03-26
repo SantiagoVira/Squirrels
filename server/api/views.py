@@ -63,7 +63,7 @@ class UserViewSet(viewsets.ModelViewSet):
         # http://www.django-rest-framework.org/api-guide/pagination/
         paginator = UserSquirrelPagination()
         paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
+        result_page = paginator.paginate_queryset(logs.order_by("id"), request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return paginator.get_paginated_response(log_serializer.data)
@@ -76,7 +76,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         paginator = UserSquirrelPagination()
         paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
+        result_page = paginator.paginate_queryset(logs.order_by("id"), request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         return paginator.get_paginated_response(log_serializer.data)
 
@@ -95,7 +95,7 @@ class TopicViewSet(viewsets.ModelViewSet):
         # http://www.django-rest-framework.org/api-guide/pagination/
         paginator = TopicSquirrelPagination()
         paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
+        result_page = paginator.paginate_queryset(logs.order_by("id"), request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return paginator.get_paginated_response(log_serializer.data, str(topic))
@@ -109,7 +109,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 
         paginator = PageNumberPagination()
         paginator.page_size = 20
-        result_page = paginator.paginate_queryset(uploads, request)
+        result_page = paginator.paginate_queryset(uploads.order_by("id"), request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
         # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return paginator.get_paginated_response(log_serializer.data)
@@ -117,11 +117,10 @@ class TopicViewSet(viewsets.ModelViewSet):
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet):
     serializer_class = SquirreLogSerializer
-    # queryset = SquirreLog.objects.all()
-
+    queryset = SquirreLog.objects.all()
     # Adds searching functionality
-    search_fields = ['note', 'owner__username', 'topics__topic_name']
-    filter_backends = (filters.SearchFilter,)
+    # search_fields = ['note', 'owner__username', 'topics__topic_name']
+    # filter_backends = (filters.SearchFilter,)
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -131,10 +130,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         else:
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
-
-    def get_queryset(self):
-        # VERY EXPENSIVE
-        return SquirreLog.objects.all().order_by("?")
 
     def perform_create(self, serializer):
         serializer.save(
@@ -151,15 +146,27 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
                 topic.delete()
         return super(SquirreLogViewSet, self).destroy(request, *args, **kwargs)
 
+    @action(methods=['get'], detail=False, url_path='archive', url_name='archive')
+    def archive(self, request, **kwargs):
+        search = request.query_params.get("search")
+        if search:
+            archive = SquirreLog.objects.filter(owner_id=1, note__icontains=search)
+        else:
+            archive = SquirreLog.objects.filter(owner_id=1)
+        paginator = PageNumberPagination()
+        paginator.page_size = 20
+        result_page = paginator.paginate_queryset(archive.order_by("id"), request)
+        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
+        return paginator.get_paginated_response(log_serializer.data)
+
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
     @action(methods=['get'], detail=False, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
         paginator = PageNumberPagination()
         paginator.page_size = 20
-        result_page = paginator.paginate_queryset(uploads, request)
+        result_page = paginator.paginate_queryset(uploads.order_by("id"), request)
         log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        # return Response(log_serializer.data, status=status.HTTP_200_OK)
         return paginator.get_paginated_response(log_serializer.data)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
