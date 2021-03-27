@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import "./Home.css";
 import Uploads from "./Uploads/Uploads";
 import User from "./User/User";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
 
 function Home(props) {
-    const [backVisible, setBackVisible] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
     );
@@ -21,12 +18,7 @@ function Home(props) {
     }
     return (
         <div className="homePageMain">
-            {backVisible ? (
-                <Link to="/">
-                    <ExitToAppIcon className="exitSpecialCardsIcon" />
-                </Link>
-            ) : (
-                !scrolled && (
+            {!scrolled && (
                     <div className="backuptotopdiv">
                         <button
                             className={`GoBackUpToTheTop`}
@@ -38,13 +30,12 @@ function Home(props) {
                         </button>
                     </div>
                 )
-            )}
+            }
 
             {window.innerWidth < 935 && <User user={props.user} />}
             <Uploads
                 user={props.user}
                 changeUser={props.changeUser}
-                changeBackVisible={setBackVisible}
                 page={props.page}
                 setScrolled={setScrolled}
             />

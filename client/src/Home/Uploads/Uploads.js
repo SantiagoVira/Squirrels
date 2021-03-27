@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import api from "../../api";
+import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 
 import "./Uploads.css";
 import Card from "../../Card/Card.js";
@@ -9,9 +11,25 @@ function Uploads(props) {
     const [currentPosts, setCurrentPosts] = useState([]);
     const [posts, setPosts] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
+    const [backVisible, setBackVisible] = useState(false);
     const user = props.user;
 
     useEffect(() => {
+        const loadPosts = async () => {
+            try {
+                const id = (new URL(props.page)).searchParams.get("user");
+                //Get posts by user if querystring is provided
+                if(id) {
+                    const response = await api.get(`/api/users/${id}/posts`);
+                    setPosts(response.data.results);
+                    setBackVisible(true);
+                } else {
+                    loadAllPosts();
+                }
+            } catch(err) {
+                setPosts([]);
+            }
+        }
         loadPosts();
     }, [props.page]);
     
@@ -46,45 +64,29 @@ function Uploads(props) {
         }
     }
 
-    //Loads all custom posts (excluding user 1)
-    const loadPosts = async () => {
-        try {
-            const id = (new URL(props.page)).searchParams.get("user");
-            //Get posts by user if querystring is provided
-            if(id) {
-                const response = await api.get(
-                    `/api/users/${id}/posts`
-                );
-                setPosts(response.data.results);
-                props.changeBackVisible(true);
-            } else {
-                let response = await api.get("/api/SquirreLogs/uploads/");
-                let d = [...response.data.results];
-                setPosts(d);
-                setCurrentPosts(d);
-                while (response.data.next) {
-                    response = await api.get(response.data.next);
-                    d = [...d, ...response.data.results];
-                    setPosts(d);
-                }
-                props.changeBackVisible(false);
-            }
-        } catch (err) {
-            setPosts([]);
+    const loadAllPosts = async () => {
+        let response = await api.get("/api/SquirreLogs/uploads/");
+        let d = [...response.data.results];
+        setPosts(d);
+        setCurrentPosts(d);
+        while (response.data.next) {
+            response = await api.get(response.data.next);
+            d = [...d, ...response.data.results];
+            setPosts(d);
         }
-    };
+        setBackVisible(false);
+    }
 
     const loadByHashtag = async (name) => {
         try {
             const topicResponse = await api.get("/api/Topics/");
-            //Since topics are unique, you can find exactly one matching topic
-            //Note: this will NOT attempt to find hashtags with '#'
+            //This will NOT attempt to find hashtags with '#'
             const foundTopic = topicResponse.data.results.find(topic => (
                     topic.topic_name.toString().trim() ===
                     name.toString().replace("#", "").trim()
                 )
             );
-
+            
             //Detail route returns topic info and list of associated logs
             let logResponse = await api.get(foundTopic.SquirreLogs);
             setPosts(logResponse.data.results);
@@ -92,7 +94,7 @@ function Uploads(props) {
                 logResponse = await api.get(logResponse.data.next);
                 setPosts([...posts, ...logResponse.data.results]);
             }
-            props.changeBackVisible(true);
+            setBackVisible(true);
         } catch (err) {
             console.log(err);
         }
@@ -134,7 +136,16 @@ function Uploads(props) {
         }
     }
 
-    return <div className="posts">{renderPosts()}</div>;
+    return (
+        <div className="posts">
+            {backVisible && 
+                <Link to="/" onClick={() => loadAllPosts()}>
+                    <ExitToAppIcon className="exitSpecialCardsIcon" />
+                </Link>
+            }
+            {renderPosts()}
+        </div>
+    );
 }
 
 export default Uploads;

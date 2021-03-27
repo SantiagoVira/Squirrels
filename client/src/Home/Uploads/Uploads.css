@@ -35,3 +35,20 @@
 .posts::-webkit-scrollbar-corner {
     background-color: transparent;
 }
+.exitSpecialCardsIcon {
+    position: absolute;
+    left: 2vw;
+    transform: rotate(180deg);
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    font-size: 2rem !important;
+    margin: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+    .exitSpecialCardsIcon {
+        left: -5px;
+    }
+}

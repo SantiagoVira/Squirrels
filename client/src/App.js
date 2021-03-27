@@ -76,7 +76,7 @@ function App() {
             return unlisten;
         }, []);
 
-        return <div></div>;
+        return <div />;
     };
 
     const Changer = withRouter(ChangeListener);

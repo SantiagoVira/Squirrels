@@ -13,15 +13,15 @@
 
 ## **Frontend**
 
--   style Profile pic stuff
--   searching twice doesnt work
--   individual cards is broken
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
+-   pfp submit
+-   infinite scolling showing results that don't match search query
 
 ## **Server:**
 
 -   New posts going to the bottom (maybe server?)
+-   searching by content doesnt work
 
 ## **Other**
 

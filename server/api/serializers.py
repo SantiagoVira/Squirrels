@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
         read_only=True,
         view_name='user-posts'
     )
-    pfp = serializers.ImageField(use_url=False)
+    pfp = serializers.ImageField(use_url=False, required=False)
 
     class Meta:
         model = User

@@ -8,6 +8,7 @@ import api from "../../api";
 import Avatar from "react-avatar-edit";
 import PublishIcon from "@material-ui/icons/Publish";
 import imog from "./foxcirc.png";
+import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 function getColor() {
     return (
@@ -24,28 +25,30 @@ function getColor() {
 function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
     const [preview, setPreview] = useState(null);
-    const [uPFP, setUPFP] = useState(imog);
+    const [uPFP, setUPFP] = useState(null);
     const bgColor = useRef(getColor());
+    const [avRef, setAvRef] = useState(null);
     const [pfpOp, setPfpOp] = useState(
         getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
     );
-    const [pfpLoadSize, setPfpLoadSize] = useState(75);
+    const [pfpLoadSize, setPfpLoadSize] = useState({ width: 75, height: 75 });
 
     function onClose() {
         setPreview(null);
-        setPfpLoadSize(75);
+        setPfpLoadSize({ width: 75, height: 75 });
     }
 
     function onCrop(preview) {
         setPreview(preview);
     }
 
-    function onBeforeFileLoad(elem) {
-        if (elem.target.files[0].size > 255000) {
+    function onBeforeFileLoad(el) {
+        console.log(el.target.files[0])
+        if (el.target.files[0].size > 255000) {
             alert("File is too big!");
-            elem.target.value = "";
+            el.target.value = "";
         } else {
-            setPfpLoadSize(150);
+            setPfpLoadSize({ height: 150 });
         }
     }
 
@@ -66,7 +69,7 @@ function User(props) {
     }, [props.user]);
 
     const onAvatarSubmit = () => {
-        api.patch(`/api/users/${props.user.profile.id}/`, { avatar: preview });
+        api.patch(`/api/users/${props.user.profile.id}/`, { pfp: preview });
     };
 
     if (!props.user.profile) {
@@ -88,20 +91,17 @@ function User(props) {
             >
                 <div
                     className="circular--portrait"
-                    onMouseEnter={() => {
-                        setPfpOp(0.1);
-                    }}
-                    onMouseLeave={() => {
-                        setPfpOp(1);
-                    }}
+                    onMouseEnter={() => setPfpOp(0.1)}
+                    onMouseLeave={() => setPfpOp(1)}
                 >
                     <Avatar
-                        width={pfpLoadSize}
-                        height={pfpLoadSize}
+                        width={pfpLoadSize.width}
+                        height={pfpLoadSize.height}
                         onCrop={onCrop}
                         onClose={onClose}
                         onBeforeFileLoad={onBeforeFileLoad}
                         labelStyle={{ color: "black", opacity: pfpOp }}
+                        ref={(ref) => setAvRef(ref)}
                         borderStyle={{
                             borderRadius: "50%",
                             textAlign: "center",
@@ -121,10 +121,26 @@ function User(props) {
                     {!preview && !uPFP && (
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
+                    {preview && !uPFP && (
+                        <CheckCircleOutlineIcon
+                            className="UserBreakdownSubmitPfp"
+                            onClick={() => {
+                                avRef.onCloseClick();
+                                onAvatarSubmit();
+                            }}
+                        />
+                    )}
                 </div>
+                {preview && 
+                    <button onClick={() => onAvatarSubmit()}>Submit</button>
+                }
 
                 <Row className="UserBreakdownUsernameAndImage">
-                    <img src={preview} alt="" />{" "}
+                    <img
+                        src={preview}
+                        alt=""
+                        className="UserBreakdownPreview"
+                    />{" "}
                     <h1>{props.user.profile.username}</h1>
                 </Row>
             </div>

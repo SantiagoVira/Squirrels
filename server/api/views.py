@@ -1,7 +1,7 @@
 # Register viewsets in api/urls.py!!!
 
 from django.contrib.auth import authenticate
-from rest_framework import viewsets, status, permissions
+from rest_framework import viewsets, status, permissions, mixins
 from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.response import Response
 from rest_framework import filters
@@ -33,6 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
+    pagination_class = UserSquirrelPagination
 
     # Custom register route with token
     def create(self, request, *args, **kwargs):
@@ -59,26 +60,13 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, url_path='posts', name='posts')
     def posts(self, request, *args, **kwargs):
         logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
-
-        # http://www.django-rest-framework.org/api-guide/pagination/
-        paginator = UserSquirrelPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response(log_serializer.data)
-
+        return paginated_response(self, logs, SquirreLogSerializer)
 
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
     def liked(self, request, pk=None):
         logs = SquirreLog.objects.filter(liked_by__id=pk)
-
-        paginator = UserSquirrelPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        return paginator.get_paginated_response(log_serializer.data)
+        return paginated_response(self, logs)
 
 # Topic view
 class TopicViewSet(viewsets.ModelViewSet):
@@ -89,39 +77,23 @@ class TopicViewSet(viewsets.ModelViewSet):
     def retrieve(self, request, *args, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         logs = SquirreLog.objects.filter(topics=topic)
-
-        topic_serializer = SquirrelTopicSerializer(topic, context={'request': request})
-
-        # http://www.django-rest-framework.org/api-guide/pagination/
-        paginator = TopicSquirrelPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(logs, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response(log_serializer.data, str(topic))
+        return paginated_response(self, logs, SquirreLogSerializer, TopicSquirrelPagination)
 
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
     @action(methods=['get'], detail=True, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
         topic = SquirrelTopic.objects.get(id=self.kwargs['pk'])
         uploads = SquirreLog.objects.all().exclude(owner_id=1).filter(topics=topic).order_by("pub_date")
-        serializer = SquirreLogSerializer(uploads, context={'request': request}, many=True)
-
-        paginator = PageNumberPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(uploads, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response(log_serializer.data)
+        return paginated_response(self, uploads, SquirreLogSerializer, PageNumberPagination)
 
 # ALL SquirreLog view
-class SquirreLogViewSet(viewsets.ModelViewSet):
+class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     serializer_class = SquirreLogSerializer
-    # queryset = SquirreLog.objects.all()
-
+    queryset = SquirreLog.objects.all()
+    pagination_class = PageNumberPagination
     # Adds searching functionality
-    search_fields = ['note', 'owner__username', 'topics__topic_name']
-    filter_backends = (filters.SearchFilter,)
+    # search_fields = ['note', 'owner__username', 'topics__topic_name']
+    # filter_backends = (filters.SearchFilter,)
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:
@@ -131,10 +103,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
         else:
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
-
-    def get_queryset(self):
-        # VERY EXPENSIVE
-        return SquirreLog.objects.all().order_by("?")
 
     def perform_create(self, serializer):
         serializer.save(
@@ -151,16 +119,20 @@ class SquirreLogViewSet(viewsets.ModelViewSet):
                 topic.delete()
         return super(SquirreLogViewSet, self).destroy(request, *args, **kwargs)
 
+    @action(methods=['get'], detail=False, url_path='archive', url_name='archive')
+    def archive(self, request, **kwargs):
+        search = request.query_params.get("search")
+        if search:
+            archive = SquirreLog.objects.filter(owner_id=1, note__icontains=search)
+        else:
+            archive = SquirreLog.objects.filter(owner_id=1)
+        return paginated_response(self, archive)
+
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
     @action(methods=['get'], detail=False, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
-        paginator = PageNumberPagination()
-        paginator.page_size = 20
-        result_page = paginator.paginate_queryset(uploads, request)
-        log_serializer = SquirreLogSerializer(result_page, context={'request': request}, many=True)
-        # return Response(log_serializer.data, status=status.HTTP_200_OK)
-        return paginator.get_paginated_response(log_serializer.data)
+        return paginated_response(self, uploads)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
