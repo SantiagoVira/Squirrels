@@ -1,6 +1,23 @@
+from inspect import signature
 from rest_framework import pagination
 from rest_framework.response import Response
 from .models import SquirreLog, SquirrelTopic
+
+def paginated_response(viewset, queryset, serializer_class=None, 
+        paginator=None):
+    used_serializer = serializer_class or viewset.get_serializer
+    used_paginator_class = paginator or viewset.pagination_class
+    used_paginator = used_paginator_class()
+
+    # Paginates queryset with specified paginator
+    page = used_paginator.paginate_queryset(queryset.order_by("id"), viewset.request)
+    # Makes specified serializer using paginated queryset
+    serializer = used_serializer(page, many=True, context={'request': viewset.request})
+    # Returns paginated response
+    if signature(used_paginator.get_paginated_response).parameters.get("kwargs"):
+        return used_paginator.get_paginated_response(serializer.data, kwargs=viewset.kwargs)
+    else:
+        return used_paginator.get_paginated_response(serializer.data)
 
 class UserSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
@@ -25,11 +42,12 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
 
 class TopicSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
-    def get_paginated_response(self, data, topic_name):
+    def get_paginated_response(self, data, kwargs):
+        topic = SquirrelTopic.objects.get(id=kwargs['pk'])
         return Response({
             'next': self.get_next_link(),
             'previous': self.get_previous_link(),
             'count': self.page.paginator.count,
-            'topic_name': topic_name,
+            'topic_name': topic.topic_name,
             'results': data,
         })

@@ -16,6 +16,7 @@
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
 -   pfp submit
+-   infinite scolling showing results that don't match search query
 
 ## **Server:**
 
