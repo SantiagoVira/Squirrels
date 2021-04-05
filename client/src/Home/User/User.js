@@ -43,7 +43,6 @@ function User(props) {
     }
 
     function onBeforeFileLoad(el) {
-        console.log(el.target.files[0]);
         if (el.target.files[0].size > 255000) {
             alert("File is too big!");
             el.target.value = "";
@@ -112,24 +111,21 @@ function User(props) {
                             backgroundPosition: "center",
                             backgroundSize: "100% auto",
                         }}
-                        label={
-                            !uPFP &&
-                            props.user.profile.username
-                                .slice(0, 1)
-                                .toUpperCase()
-                        }
+                        label={props.user.profile.username
+                            .slice(0, 1)
+                            .toUpperCase()}
                     />
-                    {!preview && !uPFP && (
+                    {!preview && (
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
-                    {preview && !uPFP && (
+                    {preview && (
                         <CheckCircleOutlineIcon
                             className="UserBreakdownSubmitPfp"
                             onClick={() => {
                                 setUPFP(preview);
                                 avRef.onCloseClick();
                                 onAvatarSubmit();
-                                setPfpOp(1);
+                                setPfpOp(0);
                             }}
                         />
                     )}
