@@ -28,9 +28,7 @@ function User(props) {
     const [uPFP, setUPFP] = useState(null);
     const bgColor = useRef(getColor());
     const [avRef, setAvRef] = useState(null);
-    const [pfpOp, setPfpOp] = useState(
-        getComputedStyle(document.documentElement).getPropertyValue("--pfpOp")
-    );
+    const [pfpOp, setPfpOp] = useState(null);
     const [pfpLoadSize, setPfpLoadSize] = useState({ width: 75, height: 75 });
 
     function onClose() {
@@ -50,6 +48,16 @@ function User(props) {
             setPfpLoadSize({ height: 150 });
         }
     }
+
+    useEffect(() => {
+        uPFP
+            ? setPfpOp(0)
+            : setPfpOp(
+                  getComputedStyle(document.documentElement).getPropertyValue(
+                      "--pfpOp"
+                  )
+              );
+    }, []);
 
     useEffect(() => {
         const getUserData = async () => {
@@ -125,7 +133,6 @@ function User(props) {
                                 setUPFP(preview);
                                 avRef.onCloseClick();
                                 onAvatarSubmit();
-                                setPfpOp(0);
                             }}
                         />
                     )}
