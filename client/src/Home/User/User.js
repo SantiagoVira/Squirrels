@@ -64,6 +64,7 @@ function User(props) {
                 votes: response.data.total_votes,
                 posts: response.data.count,
             });
+            setUPFP(props.user.profile.pfp);
         };
         getUserData();
     }, [props.user]);
@@ -125,8 +126,10 @@ function User(props) {
                         <CheckCircleOutlineIcon
                             className="UserBreakdownSubmitPfp"
                             onClick={() => {
+                                setUPFP(preview);
                                 avRef.onCloseClick();
                                 onAvatarSubmit();
+                                setPfpOp(1);
                             }}
                         />
                     )}
