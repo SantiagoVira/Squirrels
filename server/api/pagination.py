@@ -43,11 +43,15 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
 class TopicSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
     def get_paginated_response(self, data, kwargs):
-        topic = SquirrelTopic.objects.get(id=kwargs['pk'])
+        try:
+            topic_name = SquirrelTopic.objects.get(id=kwargs['pk']).topic_name
+        except:
+            topic_name = ""
+
         return Response({
             'next': self.get_next_link(),
             'previous': self.get_previous_link(),
             'count': self.page.paginator.count,
-            'topic_name': topic.topic_name,
+            'topic_name': topic_name,
             'results': data,
         })

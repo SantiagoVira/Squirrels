@@ -7,7 +7,6 @@ import api from "../../api";
 
 import Avatar from "react-avatar-edit";
 import PublishIcon from "@material-ui/icons/Publish";
-import imog from "./foxcirc.png";
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 
 function getColor() {
@@ -57,6 +56,9 @@ function User(props) {
             if (!props.user.profile) {
                 return null;
             }
+            if (uPFP === null && props.user.profile.pfp) {
+                setUPFP(props.user.profile.pfp);
+            }
             const response = await api.get(
                 `/api/users/${props.user.profile.id}/posts/`
             );
@@ -82,7 +84,7 @@ function User(props) {
         .slice(0, -2)
         .trim();
     const pfpTxtSize = pfpSize / Math.sqrt(2);
-
+    
     return (
         <div className="user">
             <div
@@ -111,17 +113,15 @@ function User(props) {
                             backgroundPosition: "center",
                             backgroundSize: "100% auto",
                         }}
-                        label={
-                            !uPFP &&
-                            props.user.profile.username
+                        label={props.user.profile.username
                                 .slice(0, 1)
                                 .toUpperCase()
                         }
                     />
-                    {!preview && !uPFP && (
+                    {!preview && (
                         <PublishIcon className="UserBreakdownUploadIcon" />
                     )}
-                    {preview && !uPFP && (
+                    {preview && (
                         <CheckCircleOutlineIcon
                             className="UserBreakdownSubmitPfp"
                             onClick={() => {
