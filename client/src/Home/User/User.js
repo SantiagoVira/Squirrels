@@ -43,7 +43,7 @@ function User(props) {
     }
 
     function onBeforeFileLoad(el) {
-        console.log(el.target.files[0])
+        console.log(el.target.files[0]);
         if (el.target.files[0].size > 255000) {
             alert("File is too big!");
             el.target.value = "";
@@ -131,9 +131,6 @@ function User(props) {
                         />
                     )}
                 </div>
-                {preview && 
-                    <button onClick={() => onAvatarSubmit()}>Submit</button>
-                }
 
                 <Row className="UserBreakdownUsernameAndImage">
                     <img
