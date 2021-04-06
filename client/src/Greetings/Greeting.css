@@ -1,0 +1,29 @@
+.greetingWrapper {
+    width: 100vw;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.greetingMainWrapper {
+    position: sticky;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center !important;
+    z-index: 1;
+}
+.greetingMainBottom {
+    top: 0;
+    transform: rotate(180deg);
+    margin-top: -4px;
+}
+.greetingMainTop {
+    bottom: 0;
+    margin-bottom: -4px;
+}
+.greetingMainMiddle {
+    background-color: #00a1e4;
+    width: 100%;
+    height: 20vh;
+}

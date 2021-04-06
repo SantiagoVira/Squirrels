@@ -21,7 +21,7 @@ function HamburgerMenu(props) {
     };
 
     const links = [
-        { to: "/about", name: "About" },
+        { to: "/", name: "Home" },
         { to: "/archive", name: "Archive" },
     ];
     function logout() {

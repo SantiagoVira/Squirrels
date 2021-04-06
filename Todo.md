@@ -15,13 +15,13 @@
 
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
--   pfp submit
--   infinite scolling showing results that don't match search query
+-   infinite scolling showing results that don't match search query in archive
 
 ## **Server:**
 
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
+-   pfp submit
 
 ## **Other**
 
