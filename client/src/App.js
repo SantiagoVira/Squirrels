@@ -28,6 +28,7 @@ import Error404 from "./404/404.js";
 //UseState
 import { useState, useEffect } from "react";
 import CardLoader from "./CardLoader";
+import Greeting from "./Greetings/Greeting";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
@@ -93,6 +94,7 @@ function App() {
                 <Cardlink page={page}>
                     <Changer />
                 </Cardlink>
+                <Greeting />
                 <Cardlink>
                     {size >= 935 ? (
                         <Menu page={page} user={user} changeUser={setUser} />

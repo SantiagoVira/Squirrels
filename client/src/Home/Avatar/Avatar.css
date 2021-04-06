@@ -1,0 +1,40 @@
+.circular--portrait {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 3px;
+    position: relative;
+}
+.UserBreakdownUploadIcon {
+    position: absolute;
+    color: transparent;
+    pointer-events: none;
+}
+.circular--portrait:hover .UserBreakdownUploadIcon {
+    color: #636363;
+}
+.UserBreakdownUploadIcon:hover {
+    color: black !important;
+}
+.UserBreakdownTopDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+.UserBreakdownUsernameAndImage {
+    margin-top: 10px;
+    width: 100%;
+}
+.UserBreakdownPreview {
+    width: var(--profileSize);
+    height: auto;
+}
+
+.UserBreakdownSubmitPfp {
+    position: absolute;
+    right: 10px;
+    top: 7.5px;
+}
+.UserBreakdownSubmitPfp:hover {
+    cursor: pointer;
+}
