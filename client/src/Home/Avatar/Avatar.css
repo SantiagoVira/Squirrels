@@ -38,3 +38,9 @@
 .UserBreakdownSubmitPfp:hover {
     cursor: pointer;
 }
+
+.circular--portrait > div > div > label {
+    display: block;
+    min-height: var(--profileSize);
+    min-width: var(--profileSize);
+}

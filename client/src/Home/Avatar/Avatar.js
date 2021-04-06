@@ -13,56 +13,59 @@ function Avatar(props) {
     const [opacity, setOpacity] = useState(1);
     const [size, setSize] = useState({ width: 75, height: 75 });
     const [avatarRef, setAvatarRef] = useState(null);
-    const bgColor = useRef("hsl(" + 
-        360 * Math.random() + "," +
-        (25 + 70 * Math.random()) + "%," +
-        (85 + 10 * Math.random()) + "%)"
+    const bgColor = useRef(
+        "hsl(" +
+            360 * Math.random() +
+            "," +
+            (25 + 70 * Math.random()) +
+            "%," +
+            (85 + 10 * Math.random()) +
+            "%)"
     );
 
     useEffect(() => {
         try {
-            if(props.user.profile.pfp) {
+            if (props.user.profile.pfp) {
                 setImage(props.user.profile.pfp);
-                setOpacity(0);
             }
-        } catch(err) {}
+        } catch (err) {}
     }, [props.user]);
-    
+
     const onClose = () => {
         setPreview(null);
         setSize({ width: 75, height: 75 });
-    }
+    };
 
     const onBeforeFileLoad = (el) => {
         if (el.target.files[0].size > 255000) {
             alert("File is too big!");
             el.target.value = "";
         } else {
-            setSize({ height: 150 });
+            setSize({ width: 0, height: 150 });
         }
-    }
+    };
 
     const onAvatarSubmit = () => {
         setImage(preview);
         avatarRef.onCloseClick();
         setOpacity(0);
-        api.patch(`/api/users/${props.user.profile.id}/`, {pfp: preview});
+        api.patch(`/api/users/${props.user.profile.id}/`, { pfp: preview });
     };
-    
+
     const renderIcons = () => {
-        if(preview) {
+        if (preview) {
             return (
                 <CheckCircleOutlineIcon
                     className="UserBreakdownSubmitPfp"
                     onClick={() => onAvatarSubmit()}
                 />
-            )
+            );
         } else {
-            return <PublishIcon className="UserBreakdownUploadIcon" />
+            return <PublishIcon className="UserBreakdownUploadIcon" />;
         }
-    }
+    };
 
-    if(!props.user) {
+    if (!props.user) {
         return null;
     }
 
@@ -74,44 +77,47 @@ function Avatar(props) {
             {/* Main avatar and edit box */}
             <div
                 className="circular--portrait"
-                onMouseEnter={() => setOpacity(0.1)}
-                onMouseLeave={() => !image ? setOpacity(1) : null}
+                onMouseEnter={() => !image && setOpacity(0.1)}
+                onMouseLeave={() => !image && setOpacity(1)}
             >
                 <AvatarEditor
                     width={size.width}
                     height={size.height}
-                    onCrop={preview => setPreview(preview)}
+                    onCrop={(preview) => setPreview(preview)}
                     onClose={onClose}
                     onBeforeFileLoad={onBeforeFileLoad}
-                    labelStyle={{ color: "black", opacity: opacity }}
+                    labelStyle={{
+                        color: "black",
+                        opacity: opacity,
+                    }}
                     ref={(ref) => setAvatarRef(ref)}
                     borderStyle={{
                         borderRadius: "50%",
                         textAlign: "center",
                         backgroundColor: !image && bgColor.current,
                         backgroundImage: `url(${image})`,
-                        fontSize: size.width / Math.sqrt(2),
+                        fontSize: 55,
                         backgroundPosition: "center",
                         backgroundSize: "100% auto",
                     }}
-                    label={props.user.profile.username
-                        .slice(0, 1)
-                        .toUpperCase()}
+                    label={
+                        !image &&
+                        props.user.profile.username.slice(0, 1).toUpperCase()
+                    }
                 />
                 {renderIcons()}
             </div>
+
             {/* Bottom avatar (when editing) and username */}
             <Row className="UserBreakdownUsernameAndImage">
-                {preview &&
+                {preview && (
                     <img
                         src={preview}
                         alt=""
                         className="UserBreakdownPreview"
                     />
-                }
-                {props.name &&
-                    <h1>{props.name}</h1>
-                }
+                )}
+                {props.name && <h1>{props.name}</h1>}
             </Row>
         </div>
     );

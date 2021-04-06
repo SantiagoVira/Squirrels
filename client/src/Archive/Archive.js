@@ -7,7 +7,7 @@ import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Archive.css";
 
-function Gallery({ user, changeUser }) {
+function Archive({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
@@ -18,7 +18,7 @@ function Gallery({ user, changeUser }) {
     useEffect(async () => {
         var response = await api.get("/api/SquirreLogs/archive");
         var d = response.data.results;
-        
+
         setData(d);
         getStories(d, "");
         while (response.data.next) {
@@ -45,7 +45,7 @@ function Gallery({ user, changeUser }) {
     async function getStories(stories, search) {
         if (search === "") {
             setStories(stories);
-        } else if(search.startsWith("#")) {
+        } else if (search.startsWith("#")) {
             const searchedStories = [];
             stories.forEach((log) => {
                 //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
@@ -71,7 +71,9 @@ function Gallery({ user, changeUser }) {
             setStories(searchedStories.slice(storyNum, storyNum + 10));
             //Search by story (notes)
         } else {
-            const results = await api.get(`/api/SquirreLogs/archive?search=${search}`);
+            const results = await api.get(
+                `/api/SquirreLogs/archive?search=${search}`
+            );
             setStories(results.data.results);
         }
     }
@@ -129,8 +131,8 @@ function Gallery({ user, changeUser }) {
 
     function renderSquirrels() {
         //Render the stories, raises: can't render an object
-        if(stories.length === 0) {
-            return <div className="noPosts">No posts were found</div>
+        if (stories.length === 0) {
+            return <div className="noPosts">No posts were found</div>;
         }
 
         return stories.map((post) => {
@@ -176,4 +178,4 @@ function Gallery({ user, changeUser }) {
     );
 }
 
-export default Gallery;
+export default Archive;

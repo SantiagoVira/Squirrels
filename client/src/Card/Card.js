@@ -146,7 +146,7 @@ function Card({
 
             <Col>
                 <Row>
-                    <h4>{disableUsername ? "Gallery" : post.owner_name}</h4>
+                    <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                 </Row>
 
                 <br />
