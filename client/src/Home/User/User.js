@@ -10,6 +10,16 @@ function User(props) {
     const [userData, setUserData] = useState({ votes: "", posts: "" });
 
     useEffect(() => {
+        uPFP
+            ? setPfpOp(0)
+            : setPfpOp(
+                  getComputedStyle(document.documentElement).getPropertyValue(
+                      "--pfpOp"
+                  )
+              );
+    }, []);
+
+    useEffect(() => {
         const getUserData = async () => {
             const response = await api.get(
                 `/api/users/${props.user.profile.id}/posts/`
