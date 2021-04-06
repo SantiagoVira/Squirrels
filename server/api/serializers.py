@@ -42,7 +42,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked_by = UserSerializer(many=True, read_only=True)
     liked = serializers.SerializerMethodField()
     owner_name = serializers.SerializerMethodField()
-    replies = serializers.SerializerMethodField(read_only=True)
+    replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
 
     class Meta:
         model = SquirreLog
@@ -63,16 +63,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def get_owner_name(self, obj):
         return obj.owner.username
-
-    def get_replies(self, obj):
-        print("REPLIES:", obj.replies)
-        if obj.replies:
-            return [
-                SquirreLogSerializer(reply, context=self.context).data
-                for reply in obj.replies.all()
-            ]
-        else:
-            return None
 
     def create(self, validated_data):
         if 'SquirrelTopics' in validated_data: # We're not posting topics?

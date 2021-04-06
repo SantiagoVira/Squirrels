@@ -33,7 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = UserSquirrelPagination
+    # pagination_class = UserSquirrelPagination
 
     # Custom register route with token
     def create(self, request, *args, **kwargs):
@@ -133,6 +133,11 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     def uploads(self, request, **kwargs):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
+
+    @action(methods=['get'], detail=True, url_path='replies', name='replies')
+    def liked(self, request, pk=None):
+        logs = SquirreLog.objects.filter(id=pk).replies
+        return paginated_response(self, logs)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
