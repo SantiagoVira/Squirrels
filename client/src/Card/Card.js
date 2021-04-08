@@ -14,6 +14,7 @@ import Col from "../Col";
 import history from "../history";
 import { Link } from "react-router-dom";
 
+// Don't fetch from this component. Add them to the serializer instead!
 function Card({
     story,
     onDelete,
@@ -28,14 +29,6 @@ function Card({
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
-    const [pfp, setPfp] = useState("");
-
-    useEffect(async () => {
-        if (!disableUsername) {
-            const response = await api.get(`/api/users/${post.owner}`);
-            setPfp(response.data.pfp);
-        }
-    });
 
     async function vote() {
         if (!user.isLoggedIn) {
@@ -158,8 +151,14 @@ function Card({
             <Col>
                 <Link to={`/?user=${post.owner}`} className="CardUsername">
                     <Row>
-                        <img src={pfp} alt="profile" className="pfp" />
-                        <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
+                        {post.owner_details.pfp &&
+                            <img 
+                                src={post.owner_details.pfp} 
+                                alt="" 
+                                className="pfp" 
+                            />
+                        }
+                        <h4>{disableUsername ? "Archive" : post.owner_details.username}</h4>
                     </Row>
                 </Link>
                 <br />

@@ -25,7 +25,8 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'password', 'liked_posts', 'posts', 'pfp') # avatar
+        fields = ('id', 'url', 'username', 'password', 'liked_posts', 
+            'posts', 'pfp') # avatar
 
     def create(self, validated_data):
         password = validated_data.pop('password', None)
@@ -40,13 +41,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     SquirrelTopics = SquirrelTopicSerializer(many=True, read_only=True)
     liked_by = UserSerializer(many=True, read_only=True)
     liked = serializers.SerializerMethodField()
-    owner_name = serializers.SerializerMethodField()
+    owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
 
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_name', 'SquirrelTopics', 'liked_by', 'liked', 'replies')
+            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 'replies')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):
@@ -60,12 +61,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         except:
             return False
 
-    def get_owner_name(self, obj):
-        return obj.owner.username
+    def get_owner_details(self, obj):
+        return {
+            'username': obj.owner.username, 
+            'pfp': obj.owner.pfp,
+        }
 
     def create(self, validated_data):
-        
-
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],

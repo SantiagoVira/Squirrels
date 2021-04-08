@@ -23,7 +23,6 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
     def get_paginated_response(self, data):
         try:
-            print("DATA", data[0])
             total = self.get_total_votes(data[0]['owner'])
         except IndexError:
             total = 0
