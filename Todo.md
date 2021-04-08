@@ -17,6 +17,7 @@
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
 -   button in about page to see landing page
+-   css for pfps on posts
 
 ## **Server:**
 
