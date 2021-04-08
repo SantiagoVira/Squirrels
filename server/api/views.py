@@ -33,7 +33,7 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = (permissions.AllowAny,)
     queryset = User.objects.all()
     serializer_class = UserSerializer
-    pagination_class = UserSquirrelPagination
+    # pagination_class = UserSquirrelPagination
 
     # Custom register route with token
     def create(self, request, *args, **kwargs):
@@ -131,8 +131,33 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
     @action(methods=['get'], detail=False, url_path='uploads', url_name='uploads')
     def uploads(self, request, **kwargs):
+        "Not user 1"
+
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
+
+    @action(methods=['get', 'put'], detail=True, url_path='replies', url_name='replies')
+    def liked(self, request, pk=None):
+        "Replies"
+
+        log = SquirreLog.objects.get(id=pk)
+        if request.method == 'get':
+            replies = log.replies
+            return paginated_response(self, replies)
+        else: # put
+            log.replies.add()
+            # Adding for the replies 
+
+            log_serializer = SquirreLogSerializer(log, data={'liked_by': who_liked}, context={'request': request}, partial=True)
+            user_serializer = UserSerializer(user, context={'request': request})
+
+            if log_serializer.is_valid():
+                log_serializer.save()
+                return Response({
+                    'log': log_serializer.data,
+                    'user': user_serializer.data
+                }, status=status.HTTP_200_OK)
+            return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
@@ -149,8 +174,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             who_liked = log.liked_by.add(user.id)
             user.liked_posts.add(log.id)
 
-        log_serializer = SquirreLogSerializer(log, data={'liked_by':
-            who_liked}, context={'request': request}, partial=True)
+        log_serializer = SquirreLogSerializer(log, data={'liked_by': who_liked}, context={'request': request}, partial=True)
         user_serializer = UserSerializer(user, context={'request': request})
 
         if log_serializer.is_valid():
