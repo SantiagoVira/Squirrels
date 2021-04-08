@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Greeting.css";
 import Wave from "react-wavify";
 import Col from "../Col";
 
 function WaveSection() {
     const [display, setDisplay] = useState(false);
-    const height = 10;
-    const amp = 10;
+
+    useEffect(() => {
+        if (!localStorage.getItem("firstVist")) {
+            localStorage.setItem("firstVist", true);
+            setDisplay(true);
+        }
+    }, []);
+
     return (
         display && (
             <Col className="greetingMainWrapper">
@@ -14,8 +20,8 @@ function WaveSection() {
                     fill="#00a1e4"
                     paused={false}
                     options={{
-                        height: height,
-                        amplitude: amp,
+                        height: 10,
+                        amplitude: 10,
                         speed: 0.55,
                         points: 4,
                     }}
@@ -26,8 +32,8 @@ function WaveSection() {
                     fill="#00a1e4"
                     paused={false}
                     options={{
-                        height: height,
-                        amplitude: amp,
+                        height: 10,
+                        amplitude: 10,
                         speed: 0.55,
                         points: 3,
                     }}
