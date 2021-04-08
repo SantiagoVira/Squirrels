@@ -19,18 +19,15 @@ function Home(props) {
     return (
         <div className="homePageMain">
             {!scrolled && (
-                    <div className="backuptotopdiv">
-                        <button
-                            className={`GoBackUpToTheTop`}
-                            onClick={() => {
-                                window.scrollTo(0, 0);
-                            }}
-                        >
-                            <ArrowUpwardRoundedIcon />
-                        </button>
-                    </div>
-                )
-            }
+                <div className="backuptotopdiv">
+                    <button
+                        className={`GoBackUpToTheTop`}
+                        onClick={() => window.scrollTo(0, 0)}
+                    >
+                        <ArrowUpwardRoundedIcon />
+                    </button>
+                </div>
+            )}
 
             {window.innerWidth < 935 && <User user={props.user} />}
             <Uploads
