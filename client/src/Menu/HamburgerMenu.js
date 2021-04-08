@@ -33,7 +33,11 @@ function HamburgerMenu(props) {
 
     function renderAuth(page) {
         if (props.user.isLoggedIn) {
-            return <Link to="#" onClick={() => logout()}>Logout</Link>
+            return (
+                <Link to="#" onClick={() => logout()}>
+                    Logout
+                </Link>
+            );
         } else {
             const links = [
                 { to: "/login", name: "Login" },
@@ -60,7 +64,6 @@ function HamburgerMenu(props) {
     const links = [
         { to: "/", name: "Home" },
         { to: "/archive", name: "Archive" },
-        { to: "/about", name: "About" }
     ];
 
     return (
