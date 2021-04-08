@@ -65,7 +65,7 @@ function App() {
 
     useEffect(() => {
         const page = window.location.href;
-        setFooter(!(page.endsWith("/") || page.endsWith("/gallery")));
+        setFooter(!(page.endsWith("/") || page.endsWith("/archive")));
     }, [window.location.href]);
 
     const ChangeListener = ({ history }) => {

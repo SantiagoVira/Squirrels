@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
@@ -27,6 +27,14 @@ function Card({
     const [copied, setCopied] = useState("Copy Embed Link");
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
+    const [pfp, setPfp] = useState("");
+
+    useEffect(async () => {
+        if (!disableUsername) {
+            const response = await api.get(`/api/users/${post.owner}`);
+            setPfp(response.data.pfp);
+        }
+    });
 
     async function vote() {
         if (!user.isLoggedIn) {
@@ -146,7 +154,8 @@ function Card({
 
             <Col>
                 <Row>
-                    <h4>{disableUsername ? "Gallery" : post.owner_name}</h4>
+                    <img src={pfp} alt="profile" />
+                    <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                 </Row>
 
                 <br />
