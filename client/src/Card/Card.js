@@ -154,7 +154,7 @@ function Card({
 
             <Col>
                 <Row>
-                    <img src={pfp}/>
+                    <img src={pfp} alt="profile" />
                     <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                 </Row>
 
