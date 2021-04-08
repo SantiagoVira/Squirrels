@@ -16,15 +16,11 @@
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
--   un-jenkify pfp
 
 ## **Server:**
 
--   link pfps with front and back
--   Make pfp part of user model
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
--   pfp submit
 
 ## **Other**
 
