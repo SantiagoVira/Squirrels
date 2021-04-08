@@ -15,9 +15,7 @@
 
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
--   button in about page to see landing page
 -   css for pfps on posts
--   pfp and username on post link to user's posts
 -   archive desccription at the top
 -   show replies
 

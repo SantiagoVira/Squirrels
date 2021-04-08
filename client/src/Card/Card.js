@@ -12,6 +12,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
+import { Link } from "react-router-dom";
 
 function Card({
     story,
@@ -116,6 +117,7 @@ function Card({
 
     return (
         <div className="squirrelCard">
+            {/* Left-side Menu */}
             {!disableCardMenu ? (
                 <div className="leftSideWrapper">
                     <div className="buttons">
@@ -130,34 +132,36 @@ function Card({
                         <p className="votes">{post.votes}</p>
                     </div>
                     {onDelete &&
-                    user.isLoggedIn &&
-                    user.profile &&
-                    post.owner === user.profile.id ? (
-                        <Col>
-                            <IconButton
-                                className="editOrDeleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                className="editOrDeleteButton"
-                                onClick={() => setEditing(!editing)}
-                            >
-                                <CreateIcon />
-                            </IconButton>
-                        </Col>
-                    ) : null}
+                        user.isLoggedIn &&
+                        user.profile &&
+                        post.owner === user.profile.id && (
+                            <Col>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => onDelete(post.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => setEditing(!editing)}
+                                >
+                                    <CreateIcon />
+                                </IconButton>
+                            </Col>
+                        )}
                     <GetEmbedLink />
                 </div>
             ) : null}
 
+            {/* Post Content and Owner */}
             <Col>
-                <Row>
-                    <img src={pfp} alt="profile" />
-                    <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
-                </Row>
-
+                <Link to={`/?user=${post.owner}`} className="CardUsername">
+                    <Row>
+                        <img src={pfp} alt="profile" className="pfp" />
+                        <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
+                    </Row>
+                </Link>
                 <br />
                 <Row>
                     <ContentEditable
@@ -174,9 +178,9 @@ function Card({
                         }
                     />
                 </Row>
-                {/* Renders delete button only if this component is passed onDelete */}
             </Col>
 
+            {/* Hashtags */}
             <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );

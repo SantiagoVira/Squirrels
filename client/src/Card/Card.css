@@ -37,6 +37,12 @@
     font-size: clamp(20px, 2vw, 25px);
     float: left;
 }
+
+.squirrelCard .pfp {
+    width: 40px;
+    margin-right: 10px;
+}
+
 .codeIcon {
     color: #60300e;
     font-size: 1rem;
@@ -158,4 +164,8 @@
 .StoryIsEditable {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
+}
+.CardUsername {
+    color: var(--text);
+    text-decoration: none;
 }

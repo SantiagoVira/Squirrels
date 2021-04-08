@@ -20,10 +20,6 @@ function HamburgerMenu(props) {
         window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");
     };
 
-    const links = [
-        { to: "/", name: "Home" },
-        { to: "/archive", name: "Archive" },
-    ];
     function logout() {
         localStorage.removeItem("token");
         props.changeUser({ isLoggedIn: false, profile: null });
@@ -37,11 +33,7 @@ function HamburgerMenu(props) {
 
     function renderAuth(page) {
         if (props.user.isLoggedIn) {
-            return (
-                <Link to="#" onClick={() => logout()}>
-                    Logout
-                </Link>
-            );
+            return <Link to="#" onClick={() => logout()}>Logout</Link>
         } else {
             const links = [
                 { to: "/login", name: "Login" },
@@ -64,6 +56,13 @@ function HamburgerMenu(props) {
             );
         }
     }
+
+    const links = [
+        { to: "/", name: "Home" },
+        { to: "/archive", name: "Archive" },
+        { to: "/about", name: "About" }
+    ];
+
     return (
         <div className={`menu ${scrolled} hamburgerMenuDiv`}>
             <div className="MenuIconButton dropdown">
