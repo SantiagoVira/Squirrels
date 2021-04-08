@@ -41,11 +41,12 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked_by = UserSerializer(many=True, read_only=True)
     liked = serializers.SerializerMethodField()
     owner_name = serializers.SerializerMethodField()
+    replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
 
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_name', 'SquirrelTopics', 'liked_by', 'liked')
+            'owner_name', 'SquirrelTopics', 'liked_by', 'liked', 'replies')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):
@@ -63,10 +64,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         return obj.owner.username
 
     def create(self, validated_data):
-        if 'SquirrelTopics' in validated_data: # We're not posting topics?
-            topics = validated_data['SquirrelTopics']
-        else:
-            topics = []
+        
 
         log = SquirreLog.objects.create(
             note=validated_data['note'],
@@ -75,6 +73,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         )
         log.save()
 
+        topics = validated_data['SquirrelTopics']
         for topic in topics:
             topic.replace("#", "")
             try: # Finding an existing topic

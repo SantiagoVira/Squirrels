@@ -3,7 +3,7 @@ from rest_framework import pagination
 from rest_framework.response import Response
 from .models import SquirreLog, SquirrelTopic
 
-def paginated_response(viewset, queryset, serializer_class=None, 
+def paginated_response(viewset, queryset, serializer_class=None,
         paginator=None):
     used_serializer = serializer_class or viewset.get_serializer
     used_paginator_class = paginator or viewset.pagination_class
@@ -23,6 +23,7 @@ class UserSquirrelPagination(pagination.PageNumberPagination):
     # Add in the total votes field
     def get_paginated_response(self, data):
         try:
+            print("DATA", data[0])
             total = self.get_total_votes(data[0]['owner'])
         except IndexError:
             total = 0

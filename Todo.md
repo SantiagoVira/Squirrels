@@ -17,9 +17,12 @@
 -   infinite scolling showing results that don't match search query in archive
 -   css for pfps on posts
 -   archive desccription at the top
+-   show replies
 
 ## **Server:**
 
+-   Reply should say what it's replying to
+-   Replies should be postable to the reply link
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
 
