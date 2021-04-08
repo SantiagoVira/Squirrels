@@ -17,6 +17,7 @@
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
 -   un-jenkify pfp
+-   css for pfps on posts
 
 ## **Server:**
 
