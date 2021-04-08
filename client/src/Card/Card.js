@@ -158,7 +158,7 @@ function Card({
             <Col>
                 <Link to={`/?user=${post.owner}`} className="CardUsername">
                     <Row>
-                        <img src={pfp} alt="profile" className="pfp" />
+                        <img src={pfp} alt="" className="pfp" />
                         <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                     </Row>
                 </Link>
