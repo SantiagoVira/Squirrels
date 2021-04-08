@@ -145,6 +145,9 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             replies = log.replies
             return paginated_response(self, replies)
         else: # put
+            log.replies.add()
+            # Adding for the replies 
+
             log_serializer = SquirreLogSerializer(log, data={'liked_by': who_liked}, context={'request': request}, partial=True)
             user_serializer = UserSerializer(user, context={'request': request})
 

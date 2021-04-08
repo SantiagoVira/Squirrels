@@ -16,11 +16,12 @@
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
--   Show replies 
+-   Show replies
 
 ## **Server:**
 
 -   Reply should say what it's replying to
+-   Replies should be postable to the reply link 
 
 ## **Other**
 
