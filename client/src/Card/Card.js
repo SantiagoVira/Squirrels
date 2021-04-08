@@ -132,44 +132,36 @@ function Card({
                         <p className="votes">{post.votes}</p>
                     </div>
                     {onDelete &&
-                    user.isLoggedIn &&
-                    user.profile &&
-                    post.owner === user.profile.id && (
-                        <Col>
-                            <IconButton
-                                className="editOrDeleteButton"
-                                onClick={() => onDelete(post.id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                            <IconButton
-                                className="editOrDeleteButton"
-                                onClick={() => setEditing(!editing)}
-                            >
-                                <CreateIcon />
-                            </IconButton>
-                        </Col>
-                    )}
+                        user.isLoggedIn &&
+                        user.profile &&
+                        post.owner === user.profile.id && (
+                            <Col>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => onDelete(post.id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                                <IconButton
+                                    className="editOrDeleteButton"
+                                    onClick={() => setEditing(!editing)}
+                                >
+                                    <CreateIcon />
+                                </IconButton>
+                            </Col>
+                        )}
                     <GetEmbedLink />
                 </div>
             ) : null}
 
             {/* Post Content and Owner */}
             <Col>
-<<<<<<< HEAD
-                <Row>
-                    <img src={pfp} alt="" className="pfp" />
-                    <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
-                </Row>
-
-=======
                 <Link to={`/?user=${post.owner}`} className="CardUsername">
                     <Row>
-                        <img src={pfp} alt="profile" />
+                        <img src={pfp} alt="profile" className="pfp" />
                         <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                     </Row>
                 </Link>
->>>>>>> 090e41f37d9cb93e0b6fe1a5d6ece5a88891ab5e
                 <br />
                 <Row>
                     <ContentEditable
