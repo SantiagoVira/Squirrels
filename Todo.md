@@ -21,11 +21,8 @@
 
 ## **Server:**
 
--   link pfps with front and back
--   Make pfp part of user model
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
--   pfp submit
 
 ## **Other**
 
