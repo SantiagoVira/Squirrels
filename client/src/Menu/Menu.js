@@ -12,7 +12,9 @@ import HelpIcon from '@material-ui/icons/Help';
 import Row from "../Row";
 
 function Menu(props) {
-    const [scrolled, setScrolled] = useState(onScroll);
+    const [scrolled, setScrolled] = useState(
+        window.pageYOffset > 0 ? "scrolled" : ""
+    );
     const page = props.page;
 
     useEffect(() => {

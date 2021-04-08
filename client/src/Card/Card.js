@@ -116,6 +116,7 @@ function Card({
 
     return (
         <div className="squirrelCard">
+            {/* Left-side Menu */}
             {!disableCardMenu ? (
                 <div className="leftSideWrapper">
                     <div className="buttons">
@@ -132,7 +133,7 @@ function Card({
                     {onDelete &&
                     user.isLoggedIn &&
                     user.profile &&
-                    post.owner === user.profile.id ? (
+                    post.owner === user.profile.id && (
                         <Col>
                             <IconButton
                                 className="editOrDeleteButton"
@@ -147,14 +148,15 @@ function Card({
                                 <CreateIcon />
                             </IconButton>
                         </Col>
-                    ) : null}
+                    )}
                     <GetEmbedLink />
                 </div>
             ) : null}
 
+            {/* Post Content and Owner */}
             <Col>
                 <Row>
-                    <img src={pfp} alt="" />
+                    <img src={pfp} alt="" className="pfp" />
                     <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
                 </Row>
 
@@ -174,9 +176,9 @@ function Card({
                         }
                     />
                 </Row>
-                {/* Renders delete button only if this component is passed onDelete */}
             </Col>
 
+            {/* Hashtags */}
             <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
         </div>
     );

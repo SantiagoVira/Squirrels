@@ -22,7 +22,6 @@
 
 ## **Server:**
 
--   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
 
 ## **Other**
