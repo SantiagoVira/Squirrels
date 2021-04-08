@@ -16,12 +16,11 @@
 -   Splash page to welcome people
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
+-   Show replies 
 
 ## **Server:**
 
--   New posts going to the bottom (maybe server?)
--   searching by content doesnt work
--   pfp submit
+-   Reply should say what it's replying to
 
 ## **Other**
 

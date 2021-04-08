@@ -20,8 +20,9 @@ class SquirreLog(models.Model):
     owner = models.ForeignKey('User', on_delete=models.CASCADE, default=1, related_name='owner')
     topics = models.ManyToManyField('SquirrelTopic', through='TopicalSquirrel', related_name="SquirreLogs")
     liked_by = models.ManyToManyField('User', through="Liker", related_name="liked_by", default=None)
-    replies = models.ManyToManyField('self', related_name="replies")
-    # replies = models.ManyToManyField('self', through='ManageReplies',  blank=True, related_name="log_replies", symmetrical=False)
+
+    # replies
+    replies = models.ManyToManyField('self', related_name="log_replies", through='ManageReplies', default=None, symmetrical=False)
 
     def __str__(self):
         return str(self.note)
@@ -36,7 +37,7 @@ class SquirreLog(models.Model):
 class User(AbstractUser):
     # Separating likes from dislikes to make sure users can like and dislike one time
     liked_posts = models.ManyToManyField('SquirreLog', through="Liker", related_name="liked_posts")
-    pfp = models.TextField(default=None)
+    pfp = models.TextField(default=None, blank=True, null=True)
     # avatar = models.TextField(default="")
 
 # intermediary classes for many to many fields
@@ -48,6 +49,6 @@ class Liker(models.Model):
     log = models.ForeignKey('SquirreLog', on_delete=models.CASCADE)
     liker = models.ForeignKey('User', on_delete=models.CASCADE)
 
-# class ManageReplies(models.Model):
-#     log = models.ForeignKey('SquirreLog', related_name="log", on_delete=models.CASCADE)
-#     reply = models.ForeignKey('SquirreLog', related_name="reply", on_delete=models.CASCADE)
+class ManageReplies(models.Model):
+    log = models.ForeignKey('SquirreLog', related_name="log", on_delete=models.CASCADE)
+    reply = models.ForeignKey('SquirreLog', related_name="reply", on_delete=models.CASCADE)
