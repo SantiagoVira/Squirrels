@@ -12,6 +12,7 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
+import { Link } from "react-router-dom";
 
 function Card({
     story,
@@ -153,11 +154,12 @@ function Card({
             ) : null}
 
             <Col>
-                <Row>
-                    <img src={pfp} alt="profile" />
-                    <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
-                </Row>
-
+                <Link to={`/?user=${post.owner}`} className="CardUsername">
+                    <Row>
+                        <img src={pfp} alt="profile" />
+                        <h4>{disableUsername ? "Archive" : post.owner_name}</h4>
+                    </Row>
+                </Link>
                 <br />
                 <Row>
                     <ContentEditable
