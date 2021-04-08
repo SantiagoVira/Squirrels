@@ -90,7 +90,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     serializer_class = SquirreLogSerializer
     queryset = SquirreLog.objects.all()
-    pagination_class = PageNumberPagination
+    pagination_class = UserSquirrelPagination # PageNumberPagination
     # Adds searching functionality
     # search_fields = ['note', 'owner__username', 'topics__topic_name']
     # filter_backends = (filters.SearchFilter,)
@@ -146,7 +146,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             return paginated_response(self, replies)
         else: # put
             log.replies.add()
-            # Adding for the replies 
+            # Adding for the replies
 
             log_serializer = SquirreLogSerializer(log, data={'liked_by': who_liked}, context={'request': request}, partial=True)
             user_serializer = UserSerializer(user, context={'request': request})
