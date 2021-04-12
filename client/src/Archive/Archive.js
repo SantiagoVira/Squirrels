@@ -170,6 +170,14 @@ function Archive({ user, changeUser }) {
                     <ArrowUpwardRoundedIcon />
                 </button>
             </div>
+            <p className="ArchiveDescription">
+                In 2018, the New York City Government conducted a squirrel
+                census in Central Park, recording the events that took place
+                during a sighting of a squirrel. Neatly tagged and packed into
+                categories, these stories are often ridiculous, and some didn't
+                even relate to squirrels at all. And so, we decided to display
+                them here for all to see.
+            </p>
             <div className="searchWrapper">
                 <Search stories={data} getStories={getStories} />
             </div>

@@ -15,8 +15,6 @@
 
 -   hashtags overflow aaaaah
 -   infinite scolling showing results that don't match search query in archive
--   css for pfps on posts
--   archive desccription at the top
 -   show replies
 
 ## **Server:**
@@ -25,7 +23,8 @@
 -   Replies should be postable to the reply link
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
--   Something happened to total_votes 
+-   fix total votes
+-   deleting posts isnt working
 
 ## **Other**
 

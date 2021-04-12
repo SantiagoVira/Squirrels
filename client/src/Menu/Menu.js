@@ -7,7 +7,6 @@ import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
-import HelpIcon from '@material-ui/icons/Help';
 
 import Row from "../Row";
 
@@ -79,7 +78,6 @@ function Menu(props) {
     const links = [
         { to: "/", name: <HomeIcon />, word: "Home" },
         { to: "/archive", name: <AppsIcon />, word: "Archive" },
-        { to: "/about", name: <HelpIcon />, word: "About"}
     ];
     return (
         <div className={`menu ${scrolled}`}>
