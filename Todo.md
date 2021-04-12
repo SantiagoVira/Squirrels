@@ -25,6 +25,7 @@
 -   Replies should be postable to the reply link
 -   New posts going to the bottom (maybe server?)
 -   searching by content doesnt work
+-   Something happened to total_votes 
 
 ## **Other**
 

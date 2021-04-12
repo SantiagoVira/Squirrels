@@ -64,14 +64,12 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         return obj.owner.username
 
     def create(self, validated_data):
-        
-
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
-        log.save()
+        log.save() # Maybe extraneous
 
         topics = validated_data['SquirrelTopics']
         for topic in topics:
@@ -81,6 +79,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
+
+        if 'isReply' in validated_data:
+            replying_to = SquirreLog.objects.get(id=validated_data['id'])
+            replying_to.replies.add(log)
+            replying_to.save() # Maybe extraneous  
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):

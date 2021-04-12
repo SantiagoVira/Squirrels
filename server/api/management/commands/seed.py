@@ -72,4 +72,4 @@ class Command(BaseCommand):
             sys.stdout.write(f"\r~{round(current_percent, 2)}% done saving stories")
             sys.stdout.flush()
 
-        print("Consider thyself seeded")
+        print("\nConsider thyself seeded")
