@@ -60,7 +60,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, url_path='posts', name='posts')
     def posts(self, request, *args, **kwargs):
         logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
-        return paginated_response(self, logs, SquirreLogSerializer)
+        return paginated_response(self, logs, SquirreLogSerializer, UserSquirrelPagination)
 
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')
@@ -90,7 +90,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     serializer_class = SquirreLogSerializer
     queryset = SquirreLog.objects.all()
-    pagination_class = UserSquirrelPagination # PageNumberPagination
+    pagination_class = PageNumberPagination
     # Adds searching functionality
     # search_fields = ['note', 'owner__username', 'topics__topic_name']
     # filter_backends = (filters.SearchFilter,)
@@ -141,21 +141,22 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         "Replies"
 
         log = SquirreLog.objects.get(id=pk)
-        if request.method == 'get':
+        if request.method == 'GET':
             replies = log.replies
             return paginated_response(self, replies)
         else: # put
-            log.replies.add()
-            # Adding for the replies
+            # When it's a reply, we can post what we would normally for a SquirreLog
+            log_serializer = SquirreLogSerializer(log, data={'isReply': True}, context={'request': request, 'isReply': True}, partial=True)
 
-            log_serializer = SquirreLogSerializer(log, data={'liked_by': who_liked}, context={'request': request}, partial=True)
-            user_serializer = UserSerializer(user, context={'request': request})
+            # user = User.objects.get(id=request.user.id)
+            # user_serializer = UserSerializer(user, context={'request': request})
 
             if log_serializer.is_valid():
                 log_serializer.save()
                 return Response({
+                    # log_serializer.data,
                     'log': log_serializer.data,
-                    'user': user_serializer.data
+                    # 'user': user_serializer.data
                 }, status=status.HTTP_200_OK)
             return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

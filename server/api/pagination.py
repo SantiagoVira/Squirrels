@@ -3,8 +3,7 @@ from rest_framework import pagination
 from rest_framework.response import Response
 from .models import SquirreLog, SquirrelTopic
 
-def paginated_response(viewset, queryset, serializer_class=None,
-        paginator=None):
+def paginated_response(viewset, queryset, serializer_class=None, paginator=None):
     used_serializer = serializer_class or viewset.get_serializer
     used_paginator_class = paginator or viewset.pagination_class
     used_paginator = used_paginator_class()
