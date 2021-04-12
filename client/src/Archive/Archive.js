@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import api from "../api";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ArrowUpwardRoundedIcon from "@material-ui/icons/ArrowUpwardRounded";
+import CancelRoundedIcon from "@material-ui/icons/CancelRounded";
 
 import Card from "../Card/Card.js";
 import Search from "./Search/Search";
 import "./Archive.css";
+import { IconButton } from "@material-ui/core";
 
 function Archive({ user, changeUser }) {
     const [data, setData] = useState([]);
     const [stories, setStories] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
+    const [searching, setSearching] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
     );
@@ -26,15 +29,13 @@ function Archive({ user, changeUser }) {
             d = [...d, ...response.data.results];
             setData(d);
         }
-    }, []);
 
-    useEffect(() => {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     useEffect(() => {
-        if (isBottom && stories) {
+        if (isBottom && stories && !searching) {
             //Add the stuff
             const index = stories.length + 1;
             setStories([...stories, ...data.slice(index, index + 20)]);
@@ -45,7 +46,9 @@ function Archive({ user, changeUser }) {
     async function getStories(stories, search) {
         if (search === "") {
             setStories(stories);
+            setSearching(false);
         } else if (search.startsWith("#")) {
+            setSearching(true);
             const searchedStories = [];
             stories.forEach((log) => {
                 //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
@@ -71,6 +74,7 @@ function Archive({ user, changeUser }) {
             setStories(searchedStories.slice(storyNum, storyNum + 10));
             //Search by story (notes)
         } else {
+            setSearching(true);
             const results = await api.get(
                 `/api/SquirreLogs/archive?search=${search}`
             );
@@ -170,7 +174,7 @@ function Archive({ user, changeUser }) {
                     <ArrowUpwardRoundedIcon />
                 </button>
             </div>
-            <p className="ArchiveDescription">
+            <p className="ArchiveDescription hideOnTooSmall">
                 In 2018, the New York City Government conducted a squirrel
                 census in Central Park, recording the events that took place
                 during a sighting of a squirrel. Neatly tagged and packed into
@@ -178,8 +182,17 @@ function Archive({ user, changeUser }) {
                 even relate to squirrels at all. And so, we decided to display
                 them here for all to see.
             </p>
-            <div className="searchWrapper">
+            <div className="searchWrapper hideOnTooSmall">
                 <Search stories={data} getStories={getStories} />
+                {searching && (
+                    <IconButton
+                        onClick={() => {
+                            getStories(data, "");
+                        }}
+                    >
+                        <CancelRoundedIcon className="ArchiveExitSearchIcon" />
+                    </IconButton>
+                )}
             </div>
             <div className="cards">{renderSquirrels()}</div>
         </div>

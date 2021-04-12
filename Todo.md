@@ -14,7 +14,6 @@
 ## **Frontend**
 
 -   hashtags overflow aaaaah
--   infinite scolling showing results that don't match search query in archive
 -   show replies
 
 ## **Server:**
@@ -29,7 +28,6 @@
 ## **Other**
 
 -   buy Sqqrlz.com
--   Replying
 -   Communities
 
 ## **Watch Out For:**
