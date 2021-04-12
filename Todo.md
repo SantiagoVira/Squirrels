@@ -21,12 +21,10 @@
 -   Reply should say what it's replying to
 -   Replies should be postable to the reply link
 -   New posts going to the bottom (maybe server?)
--   searching by content doesnt work
--   fix total votes
--   deleting posts isnt working
 
 ## **Other**
 
+-   PERFORMANCE
 -   buy Sqqrlz.com
 -   Communities
 
