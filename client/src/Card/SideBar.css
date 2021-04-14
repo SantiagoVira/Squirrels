@@ -1,0 +1,41 @@
+.leftSideWrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    float: left;
+    height: 100%;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+    justify-content: left;
+    flex-direction: column;
+    float: left;
+}
+.up.liked {
+    color: var(--upvoting);
+}
+.up:hover {
+    color: var(--likeHover);
+}
+.votes {
+    color: black;
+    float: left;
+    font-size: 27px;
+    margin: 10px;
+    flex-grow: 4;
+    user-select: none;
+    text-align: center;
+}
+
+.editOrDeleteButton {
+    border: none;
+    outline: none;
+    color: #60300e;
+    border-radius: 20px;
+    padding: 6px 10px;
+    font-size: 1rem;
+    font-weight: 500;
+}

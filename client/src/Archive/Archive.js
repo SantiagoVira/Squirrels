@@ -82,43 +82,6 @@ function Archive({ user, changeUser }) {
         }
     }
 
-    // Separating this from getStories for more readability
-    // function searchStories(stories, search) {
-    //     //Search by tags (topics)
-    //     if (search.startsWith("#")) {
-    //         const searchedStories = [];
-    //         stories.forEach((log) => {
-    //             //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
-    //             log.SquirrelTopics.some((topic) => {
-    //                 const formattedSearch = search
-    //                     .slice(1)
-    //                     .trim()
-    //                     .toLowerCase();
-    //                 if (
-    //                     topic.topic_name
-    //                         .trim()
-    //                         .toLowerCase()
-    //                         .includes(formattedSearch)
-    //                 ) {
-    //                     searchedStories.push(log);
-    //                     return true;
-    //                 }
-    //                 return false;
-    //             });
-    //             return false;
-    //         });
-    //         const storyNum = Math.random() * searchedStories.length;
-    //         setStories(searchedStories.slice(storyNum, storyNum + 10));
-    //         //Search by story (notes)
-    //     } else {
-    //         const getDatabaseStories = async () => {
-    //             const results = await api.get(`/api/SquirreLogs/archive?search=${search}`);
-    //             setStories(results.data.results);
-    //         };
-    //         getDatabaseStories();
-    //     }
-    // }
-
     function handleScroll() {
         const scrollTop =
             (document.documentElement && document.documentElement.scrollTop) ||
