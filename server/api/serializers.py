@@ -78,7 +78,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
-
+        
         # Making sure there are topics
         if 'SquirrelTopics' in validated_data:
             topics = validated_data['SquirrelTopics']

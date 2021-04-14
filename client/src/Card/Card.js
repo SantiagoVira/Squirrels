@@ -7,11 +7,12 @@ import ContentEditable from "react-contenteditable";
 
 import ReplyIcon from "@material-ui/icons/Reply";
 
+import { Link } from "react-router-dom";
 import Row from "../Row";
 import Col from "../Col";
 import Hashtags from "./Hashtags";
 import SideBar from "./SideBar";
-import { Link } from "react-router-dom";
+import ReplyForm from "./ReplyForm";
 
 // Don't fetch from this component. Add them to the serializer instead!
 function Card({
@@ -28,6 +29,7 @@ function Card({
     const [post, setPost] = useState(story);
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
+    const [formOpen, setFormOpen] = useState(false);
 
     if (!post) {
         return null;
@@ -88,10 +90,18 @@ function Card({
                         <Hashtags findHashtag={findHashtag}>
                             {post.SquirrelTopics}
                         </Hashtags>
-                        <Link to="" className="CardRepliesLink pointerOnHover">
+                        <span 
+                            className="CardRepliesLink pointerOnHover"
+                            onClick={() => setFormOpen(!formOpen)}
+                        >
                             <p>{/*replies amount*/} 0 Replies</p>
                             <ReplyIcon className="CardRepliesIcon" />
-                        </Link>
+                        </span>
+                        <ReplyForm 
+                            post={story}
+                            open={formOpen} 
+                            changeOpen={() => setFormOpen()} 
+                        />
                     </React.Fragment>
                 )}
             </Col>

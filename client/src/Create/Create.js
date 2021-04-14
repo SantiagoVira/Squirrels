@@ -4,13 +4,8 @@ import history from "../history";
 
 import "./Create.css";
 import Row from "../Row";
+import Hashtags from "../Card/Hashtags";
 import { Redirect } from "react-router-dom";
-
-function unique() {
-    return Math.floor(
-        Math.random() * Math.floor(Math.random() * Date.now())
-    ).toString();
-}
 
 // Since we have an owner property, we need a way to find the currently logged in user
 // Maybe this should only be shown when someone is logged in?
@@ -36,30 +31,17 @@ function Create({ user }) {
         } catch (err) {}
     };
 
-    function Hashtags(props) {
-        return (
-            <Row className={props.className}>
-                {props.children.map((topic) => {
-                    return topic.trim() !== "" ? (
-                        <div className="hashtagWrappper" key={unique()}>
-                            <p>
-                                {topic.trim().startsWith("#") ? "" : "#"}
-                                {topic.trim()}
-                            </p>
-                        </div>
-                    ) : null;
-                })}
-            </Row>
-        );
-    }
-
     const commonHashtags = ["Squirrels", "Park", "Dogs", "Poems"];
 
     if(user.isLoggedIn === null) {
         return null;
     }
 
-    return user.isLoggedIn ? (
+    if(user.isLoggedIn === false) {
+        return <Redirect to="/login" />
+    }
+
+    return (
         <div>
             <form className="CreatePostForm" onSubmit={(e) => onSubmitClick(e)}>
                 <div className="inputs">
@@ -87,22 +69,16 @@ function Create({ user }) {
                         maxLength={400}
                         rows={1}
                     />
-                    <Hashtags className="StyledHashtagsDisplay">
-                        {request.topic.split(" ")}
-                    </Hashtags>
+                    <Hashtags>{request.topic.split(" ")}</Hashtags>
                     <Row>
                         Common:
-                        <Hashtags className="CommonHastagsRow">
-                            {commonHashtags}
-                        </Hashtags>
+                        <Hashtags>{commonHashtags}</Hashtags>
                     </Row>
                 </div>
                 <button className="Submit">Post</button>
             </form>
         </div>
-    ) : (
-        <Redirect to="/login" />
-    );
+    )
 }
 
 export default Create;
