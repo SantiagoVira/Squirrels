@@ -17,22 +17,22 @@ function Uploads(props) {
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const id = (new URL(props.page)).searchParams.get("user");
+                const id = new URL(props.page).searchParams.get("user");
                 //Get posts by user if querystring is provided
-                if(id) {
+                if (id) {
                     const response = await api.get(`/api/users/${id}/posts`);
                     setPosts(response.data.results);
                     setBackVisible(true);
                 } else {
                     loadAllPosts();
                 }
-            } catch(err) {
+            } catch (err) {
                 setPosts([]);
             }
-        }
+        };
         loadPosts();
     }, [props.page]);
-    
+
     //Infinite Scrolling
     useEffect(() => {
         window.addEventListener("scroll", handleScroll);
@@ -75,18 +75,18 @@ function Uploads(props) {
             setPosts(d);
         }
         setBackVisible(false);
-    }
+    };
 
     const loadByHashtag = async (name) => {
         try {
             const topicResponse = await api.get("/api/Topics/");
             //This will NOT attempt to find hashtags with '#'
-            const foundTopic = topicResponse.data.results.find(topic => (
+            const foundTopic = topicResponse.data.results.find(
+                (topic) =>
                     topic.topic_name.toString().trim() ===
                     name.toString().replace("#", "").trim()
-                )
             );
-            
+
             //Detail route returns topic info and list of associated logs
             let logResponse = await api.get(foundTopic.SquirreLogs);
             setPosts(logResponse.data.results);
@@ -110,39 +110,37 @@ function Uploads(props) {
     };
 
     const renderPosts = () => {
-        if(!posts) {
+        if (!posts) {
             return (
                 <div className="loaderWrapper">
                     <CircularProgress color="inherit" />
                 </div>
             );
-        } else if(posts.length === 0) {
-            return <div>No posts were found.</div>
+        } else if (posts.length === 0) {
+            return <div>No posts were found.</div>;
         } else {
-            return (
-                posts.map((post) => {
-                    return (
-                        <Card
-                            story={post}
-                            key={post.id}
-                            onDelete={delete_log}
-                            user={user}
-                            changeUser={props.changeUser}
-                            findHashtag={loadByHashtag}
-                        />
-                    );
-                })
-            );
+            return posts.map((post) => {
+                return (
+                    <Card
+                        story={post}
+                        key={post.id}
+                        onDelete={delete_log}
+                        user={user}
+                        changeUser={props.changeUser}
+                        findHashtag={loadByHashtag}
+                    />
+                );
+            });
         }
-    }
+    };
 
     return (
         <div className="posts">
-            {backVisible && 
+            {backVisible && (
                 <Link to="/" onClick={() => loadAllPosts()}>
                     <ExitToAppIcon className="exitSpecialCardsIcon" />
                 </Link>
-            }
+            )}
             {renderPosts()}
         </div>
     );

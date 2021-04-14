@@ -107,7 +107,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     def perform_create(self, serializer):
         serializer.save(
             owner=self.request.user,
-            SquirrelTopics=self.request.data['topics']
+            SquirrelTopics=self.request.data['topics'],
         )
 
     def destroy(self, request, *args, **kwargs):
@@ -137,27 +137,18 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         return paginated_response(self, uploads)
 
     @action(methods=['get', 'put'], detail=True, url_path='replies', url_name='replies')
-    def liked(self, request, pk=None):
-        "Replies"
+    def replies(self, request, pk=None):
+        "Replies" # For some reason says liked
 
-        log = SquirreLog.objects.get(id=pk)
         if request.method == 'GET':
+            log = SquirreLog.objects.get(id=pk)
             replies = log.replies
             return paginated_response(self, replies)
         else: # put
-            # When it's a reply, we can post what we would normally for a SquirreLog
-            log_serializer = SquirreLogSerializer(log, data={'isReply': True}, context={'request': request, 'isReply': True}, partial=True)
-
-            # user = User.objects.get(id=request.user.id)
-            # user_serializer = UserSerializer(user, context={'request': request})
-
+            log_serializer = self.get_serializer(data=request.data)
             if log_serializer.is_valid():
-                log_serializer.save()
-                return Response({
-                    # log_serializer.data,
-                    'log': log_serializer.data,
-                    # 'user': user_serializer.data
-                }, status=status.HTTP_200_OK)
+                log_serializer.save(reply_id=pk)
+                return Response(log_serializer.data, status=status.HTTP_200_OK)
             return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
