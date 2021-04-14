@@ -171,3 +171,39 @@
     color: var(--text);
     text-decoration: none;
 }
+
+.CardRepliesLink {
+    color: var(--text);
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    margin-left: auto;
+
+    border-radius: 12px;
+
+    /*
+    border: 2px solid #7c3b0c;
+    background: var(--cinnamon);
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    */
+}
+
+.CardRepliesLink:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.CardRepliesLink > p {
+    margin: 0;
+}
+
+.CardRepliesIcon {
+    transform: scaleX(-1);
+    margin: 0px 3px;
+}
