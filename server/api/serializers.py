@@ -25,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer): # For handling signups
 
     class Meta:
         model = User
-        fields = ('id', 'url', 'username', 'password', 'liked_posts', 
+        fields = ('id', 'url', 'username', 'password', 'liked_posts',
             'posts', 'pfp') # avatar
 
     def create(self, validated_data):
@@ -43,6 +43,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked = serializers.SerializerMethodField()
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
+    # replying_to = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
 
     class Meta:
         model = SquirreLog
@@ -63,7 +64,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def get_owner_details(self, obj):
         return {
-            'username': obj.owner.username, 
+            'username': obj.owner.username,
             'pfp': obj.owner.pfp,
         }
 
@@ -73,9 +74,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
-        log.save() # Maybe extraneous
 
-        topics = validated_data['SquirrelTopics']
+        # Making sure there are topics
+        if 'SquirrelTopics' in validated_data:
+            topics = validated_data['SquirrelTopics']
+        else:
+            topics = []
+
         for topic in topics:
             topic.replace("#", "")
             try: # Finding an existing topic
@@ -84,10 +89,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
 
-        if 'isReply' in validated_data:
-            replying_to = SquirreLog.objects.get(id=validated_data['id'])
+        log.save() # Maybe extraneous??
+        if 'reply_id' in validated_data:
+            replying_to = SquirreLog.objects.get(id=validated_data['reply_id'])
             replying_to.replies.add(log)
-            replying_to.save() # Maybe extraneous  
+            replying_to.save() # Maybe extraneous??
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
