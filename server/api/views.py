@@ -185,3 +185,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
                 'user': user_serializer.data
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['get'], detail=True, url_path='reply', name='reply')
+    def reply(self, request, pk):
+        log = SquirreLog.objects.get(id=pk)
+        print(log)
