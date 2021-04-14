@@ -82,20 +82,19 @@ function Card({
                         }
                     />
                 </Row>
+                {!isReply && (
+                    <React.Fragment>
+                        {/* Hashtags */}
+                        <Hashtags findHashtag={findHashtag}>
+                            {post.SquirrelTopics}
+                        </Hashtags>
+                        <Link to="" className="CardRepliesLink pointerOnHover">
+                            <p>{/*replies amount*/} 0 Replies</p>
+                            <ReplyIcon className="CardRepliesIcon" />
+                        </Link>
+                    </React.Fragment>
+                )}
             </Col>
-
-            {!isReply && (
-                <div>
-                    {/* Hashtags */}
-                    <Hashtags findHashtag={findHashtag}>
-                        {post.SquirrelTopics}
-                    </Hashtags>
-                    <Link to="" className="CardRepliesLink pointerOnHover">
-                        <p>{/*replies amount*/} 0 Replies</p>
-                        <ReplyIcon className="CardRepliesIcon" />
-                    </Link>
-                </div>
-            )}
         </div>
     );
 }
