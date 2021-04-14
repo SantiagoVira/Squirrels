@@ -13,7 +13,6 @@
 
 ## **Frontend**
 
--   hashtags overflow aaaaah
 -   show replies
 
 ## **Server:**

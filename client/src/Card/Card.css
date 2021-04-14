@@ -148,7 +148,7 @@
     background: rgba(0, 0, 0, 0.2);
 
     padding: 5px;
-    margin: 0px 5px;
+    margin: 5px;
     color: var(--text);
 }
 .hashtagWrappper > p {
@@ -159,6 +159,8 @@
     margin-left: 40px;
     margin-top: 20px;
     width: fit-content;
+    flex-wrap: wrap;
+    align-items: space-around !important;
 }
 
 .StoryIsEditable {

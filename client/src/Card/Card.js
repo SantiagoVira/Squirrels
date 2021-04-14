@@ -85,7 +85,7 @@ function Card({
                                 : topic;
                         return topic.trim() !== "" ? (
                             <div
-                                className="hashtagWrappper"
+                                className="hashtagWrappper pointerOnHover"
                                 key={unique()}
                                 onClick={() => {
                                     if (findHashtag) {
@@ -149,18 +149,25 @@ function Card({
 
             {/* Post Content and Owner */}
             <Col>
-                <Link to={`/?user=${post.owner}`} className="CardUsername">
-                    <Row>
-                        {post.owner_details.pfp &&
-                            <img 
-                                src={post.owner_details.pfp} 
-                                alt="" 
-                                className="pfp" 
-                            />
-                        }
-                        <h4>{disableUsername ? "Archive" : post.owner_details.username}</h4>
-                    </Row>
-                </Link>
+                {disableUsername ? (
+                    <h4>Archive</h4>
+                ) : (
+                    <Link
+                        to={`/?user=${post.owner}`}
+                        className="CardUsername pointerOnHover"
+                    >
+                        <Row>
+                            {post.owner_details.pfp && (
+                                <img
+                                    src={post.owner_details.pfp}
+                                    alt=""
+                                    className="pfp"
+                                />
+                            )}
+                            <h4>{post.owner_details.username}</h4>
+                        </Row>
+                    </Link>
+                )}
                 <br />
                 <Row>
                     <ContentEditable
