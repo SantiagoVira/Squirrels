@@ -75,6 +75,10 @@ button {
     text-align: center;
 }
 
+.pointerOnHover {
+    cursor: pointer;
+}
+
 @media only screen and (max-width: 900px) {
     /*About page*/
     .container {

@@ -60,7 +60,7 @@ class UserViewSet(viewsets.ModelViewSet):
     @action(methods=['get'], detail=True, url_path='posts', name='posts')
     def posts(self, request, *args, **kwargs):
         logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
-        return paginated_response(self, logs, SquirreLogSerializer)
+        return paginated_response(self, logs, SquirreLogSerializer, UserSquirrelPagination)
 
     # Gets all posts liked by specific user
     @action(methods=['get'], detail=True, url_path='liked', name='liked')

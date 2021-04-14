@@ -13,23 +13,23 @@
 
 ## **Frontend**
 
--   hashtags overflow aaaaah
--   infinite scolling showing results that don't match search query in archive
 -   show replies
+    -   page similar to a single user's posts for all replies
+        -   in Uploads.js, setBackVisible to true to show the back button
+        -   set posts to the post's replies
+    -   button to add replies in replies section
+    -   button on card with number of replies
 
 ## **Server:**
 
 -   Reply should say what it's replying to
 -   Replies should be postable to the reply link
 -   New posts going to the bottom (maybe server?)
--   searching by content doesnt work
--   fix total votes
--   deleting posts isnt working
 
 ## **Other**
 
+-   PERFORMANCE
 -   buy Sqqrlz.com
--   Replying
 -   Communities
 
 ## **Watch Out For:**

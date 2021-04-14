@@ -148,7 +148,7 @@
     background: rgba(0, 0, 0, 0.2);
 
     padding: 5px;
-    margin: 0px 5px;
+    margin: 5px;
     color: var(--text);
 }
 .hashtagWrappper > p {
@@ -159,6 +159,8 @@
     margin-left: 40px;
     margin-top: 20px;
     width: fit-content;
+    flex-wrap: wrap;
+    align-items: space-around !important;
 }
 
 .StoryIsEditable {
@@ -168,4 +170,40 @@
 .CardUsername {
     color: var(--text);
     text-decoration: none;
+}
+
+.CardRepliesLink {
+    color: var(--text);
+    text-decoration: none;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    width: fit-content;
+    height: fit-content;
+    padding: 5px;
+    margin-left: auto;
+
+    border-radius: 12px;
+
+    /*
+    border: 2px solid #7c3b0c;
+    background: var(--cinnamon);
+    
+    background-color: rgba(0, 0, 0, 0.2);
+    */
+}
+
+.CardRepliesLink:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+.CardRepliesLink > p {
+    margin: 0;
+}
+
+.CardRepliesIcon {
+    transform: scaleX(-1);
+    margin: 0px 3px;
 }

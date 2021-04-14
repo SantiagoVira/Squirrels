@@ -4,11 +4,14 @@ import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
 import ContentEditable from "react-contenteditable";
+
 import IconButton from "@material-ui/core/IconButton";
 import CodeIcon from "@material-ui/icons/Code";
 import DeleteIcon from "@material-ui/icons/Delete";
 import CreateIcon from "@material-ui/icons/Create";
 import FavoriteIcon from "@material-ui/icons/Favorite";
+import ReplyIcon from "@material-ui/icons/Reply";
+
 import Row from "../Row";
 import Col from "../Col";
 import history from "../history";
@@ -23,6 +26,7 @@ function Card({
     disableCardMenu,
     findHashtag,
     disableUsername,
+    isReply,
 }) {
     //When we call the card component, pass the id to access it on the server
     const [post, setPost] = useState(story);
@@ -85,7 +89,7 @@ function Card({
                                 : topic;
                         return topic.trim() !== "" ? (
                             <div
-                                className="hashtagWrappper"
+                                className="hashtagWrappper pointerOnHover"
                                 key={unique()}
                                 onClick={() => {
                                     if (findHashtag) {
@@ -143,24 +147,31 @@ function Card({
                                 </IconButton>
                             </Col>
                         )}
-                    <GetEmbedLink />
+                    {!isReply && <GetEmbedLink />}
                 </div>
             ) : null}
 
             {/* Post Content and Owner */}
             <Col>
-                <Link to={`/?user=${post.owner}`} className="CardUsername">
-                    <Row>
-                        {post.owner_details.pfp &&
-                            <img 
-                                src={post.owner_details.pfp} 
-                                alt="" 
-                                className="pfp" 
-                            />
-                        }
-                        <h4>{disableUsername ? "Archive" : post.owner_details.username}</h4>
-                    </Row>
-                </Link>
+                {disableUsername ? (
+                    <h4>Archive</h4>
+                ) : (
+                    <Link
+                        to={`/?user=${post.owner}`}
+                        className="CardUsername pointerOnHover"
+                    >
+                        <Row>
+                            {post.owner_details.pfp && (
+                                <img
+                                    src={post.owner_details.pfp}
+                                    alt=""
+                                    className="pfp"
+                                />
+                            )}
+                            <h4>{post.owner_details.username}</h4>
+                        </Row>
+                    </Link>
+                )}
                 <br />
                 <Row>
                     <ContentEditable
@@ -179,8 +190,18 @@ function Card({
                 </Row>
             </Col>
 
-            {/* Hashtags */}
-            <Hashtags className="HashtagsRow">{post.SquirrelTopics}</Hashtags>
+            {!isReply && (
+                <div>
+                    {/* Hashtags */}
+                    <Hashtags className="HashtagsRow">
+                        {post.SquirrelTopics}
+                    </Hashtags>
+                    <Link to="" className="CardRepliesLink pointerOnHover">
+                        <p>{/*replies amount*/} 0 Replies</p>
+                        <ReplyIcon className="CardRepliesIcon" />
+                    </Link>
+                </div>
+            )}
         </div>
     );
 }
