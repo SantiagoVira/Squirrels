@@ -119,7 +119,7 @@ function Uploads(props) {
         } else if (posts.length === 0) {
             return <div>No posts were found.</div>;
         } else {
-            return posts.map((post) => {
+            return posts.filter((post) => { return post.replying_to.length == 0; }).map((post) => {
                 return (
                     <Card
                         story={post}
