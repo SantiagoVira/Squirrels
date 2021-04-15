@@ -1,13 +1,29 @@
 import React from "react";
+import "./Replies.css";
 
-const Replies = ({open}) => {
+const Replies = ({replies, open}) => {
+    const renderReplies = () => {
+        return replies.map(reply => {
+            return (
+                <div className="replyCard">
+                    <strong><div className="owner">
+                        Test Owner
+                    </div></strong>
+                    <div>
+                        {reply.note}
+                    </div>
+                </div>
+            )
+        });
+    }
+
     if(!open) {
         return null;
     }
 
     return (
-        <div>
-            replies
+        <div className="replyWrapper">
+            {renderReplies()}
         </div>
     );
 }

@@ -17,10 +17,19 @@ function Uploads(props) {
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const id = new URL(props.page).searchParams.get("user");
+                const Userid = new URL(props.page).searchParams.get("user");
+                const Replyid = new URL(props.page).searchParams.get("replies");
                 //Get posts by user if querystring is provided
-                if (id) {
-                    const response = await api.get(`/api/users/${id}/posts`);
+                if (Userid) {
+                    const response = await api.get(
+                        `/api/users/${Userid}/posts`
+                    );
+                    setPosts(response.data.results);
+                    setBackVisible(true);
+                } else if (Replyid) {
+                    const response = await api.get(
+                        `/api/SquirreLogs/${Replyid}/replies`
+                    );
                     setPosts(response.data.results);
                     setBackVisible(true);
                 } else {
@@ -119,18 +128,22 @@ function Uploads(props) {
         } else if (posts.length === 0) {
             return <div>No posts were found.</div>;
         } else {
-            return posts.filter((post) => { return post.replying_to.length == 0; }).map((post) => {
-                return (
-                    <Card
-                        story={post}
-                        key={post.id}
-                        onDelete={delete_log}
-                        user={user}
-                        changeUser={props.changeUser}
-                        findHashtag={loadByHashtag}
-                    />
-                );
-            });
+            return posts
+                .filter((post) => {
+                    return post.replying_to.length === 0;
+                })
+                .map((post) => {
+                    return (
+                        <Card
+                            story={post}
+                            key={post.id}
+                            onDelete={delete_log}
+                            user={user}
+                            changeUser={props.changeUser}
+                            findHashtag={loadByHashtag}
+                        />
+                    );
+                });
         }
     };
 

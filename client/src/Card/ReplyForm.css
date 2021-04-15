@@ -1,0 +1,36 @@
+.replyForm {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 12px;
+    padding: 15px 15px;
+    margin: 10px 0;
+    width: 100%;
+}
+
+.replyForm textarea {
+    border: none;
+    border-radius: 10px;
+    outline: none;
+    background: var(--cinnamon);
+    padding: 1rem;
+    color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
+    resize: none;
+    overflow: hidden;
+    min-height: 150px;
+    word-wrap: none;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+.replyForm button {
+    border: none;
+    border-radius: 12px;
+    outline: none;
+    background-color: var(--cinnamon);
+    color: var(--text);
+    padding: 5px 30px;
+    margin: 10px 0;
+    font-size: 18px;
+}

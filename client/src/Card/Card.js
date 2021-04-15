@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
@@ -13,6 +13,7 @@ import Col from "../Col";
 import Hashtags from "./Hashtags";
 import SideBar from "./SideBar";
 import ReplyForm from "./ReplyForm";
+import Replies from "./Replies";
 
 // Don't fetch from this component. Add them to the serializer instead!
 function Card({
@@ -20,10 +21,10 @@ function Card({
     onDelete,
     user,
     changeUser,
-    disableCardMenu,
     findHashtag,
+    disableCardMenu,
     disableUsername,
-    isReply,
+    disableReplies
 }) {
     //When we call the card component, pass the id to access it on the server
     const [post, setPost] = useState(story);
@@ -31,14 +32,22 @@ function Card({
     const [editValue, setEditValue] = useState(story.note);
     const [formOpen, setFormOpen] = useState(false);
     const [repliesOpen, setRepliesOpen] = useState(false);
+    const [replies, setReplies] = useState(0);
+
+    useEffect(async () => {
+        const response = await api.get(story.replies);
+        setReplies(response.data.results.length);
+    }, []);
 
     if (!post) {
         return null;
     }
 
+    const testReplies = [{note: "reply 1"}, {note: "reply 2"}]
+
     return (
         <div className="squirrelCard">
-            <SideBar 
+            <SideBar
                 disabled={disableCardMenu}
                 post={post}
                 changePost={(post) => setPost(post)}
@@ -47,9 +56,9 @@ function Card({
                 editing={editing}
                 changeEditing={(editing) => setEditing(editing)}
                 onDelete={onDelete}
-                isReply={isReply}
             />
             <Col>
+                {/* User Details */}
                 {disableUsername ? (
                     <h4>Archive</h4>
                 ) : (
@@ -70,6 +79,8 @@ function Card({
                     </Link>
                 )}
                 <br />
+
+                {/* Note/Story */}
                 <Row>
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
@@ -85,32 +96,40 @@ function Card({
                         }
                     />
                 </Row>
+                
+                {/* Hashtags and Links */}
                 <Hashtags findHashtag={findHashtag}>
                     {post.SquirrelTopics}
                 </Hashtags>
                 <div className="linksWrapper">
                     <span 
                         className="CardRepliesLink pointerOnHover"
-                        onClick={() => setFormOpen(!formOpen)}
+                        onClick={() => setRepliesOpen(!repliesOpen)}
                     >
                         <p>{/*replies amount*/} 0 Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
                     </span>
                     <span
                         className="CardRepliesLink pointerOnHover"
-                        onClick={() => setRepliesOpen(!repliesOpen)}
+                        onClick={() => setFormOpen(!formOpen)}
                     >
                         Reply
                     </span>
                 </div>
-
-                {/* Replies */}
-                <ReplyForm 
-                    post={story}
-                    open={formOpen} 
-                    changeOpen={() => setFormOpen()} 
-                />
             </Col>
+
+            {/* Replies */}
+            {!disableReplies &&
+                <React.Fragment>
+                    <ReplyForm 
+                        post={story}
+                        open={formOpen} 
+                        changeOpen={() => setFormOpen()} 
+                    />
+                    {/* Temporary; replace testReplies with actual replies in the future */}
+                    <Replies replies={testReplies} open={repliesOpen} />
+                </React.Fragment>
+            }
         </div>
     );
 }

@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import api from "../api";
+import "./ReplyForm.css";
 
 const ReplyForm = ({post, open, changeOpen}) => {
     const [text, setText] = useState("");
@@ -19,13 +20,14 @@ const ReplyForm = ({post, open, changeOpen}) => {
     }
 
     return (
-        <div>
+        <div className="replyForm">
             <form onSubmit={(e) => onFormSubmit(e)}>
                 <textarea 
                     value={text}
+                    placeholder="Type your reply here..."
                     onChange={(e) => setText(e.target.value)}
                 />
-                <button>Submit</button>
+                <button className="submit">Submit</button>
             </form>
         </div>
     )
