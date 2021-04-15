@@ -128,22 +128,22 @@ function Uploads(props) {
         } else if (posts.length === 0) {
             return <div>No posts were found.</div>;
         } else {
-            return posts.map((post) => {
-                /*const replies = await api.get(post.replies);
-                post.replies = replies.data.results;
-
-                console.log(post);*/
-                return (
-                    <Card
-                        story={post}
-                        key={post.id}
-                        onDelete={delete_log}
-                        user={user}
-                        changeUser={props.changeUser}
-                        findHashtag={loadByHashtag}
-                    />
-                );
-            });
+            return posts
+                .filter((post) => {
+                    return post.replying_to.length === 0;
+                })
+                .map((post) => {
+                    return (
+                        <Card
+                            story={post}
+                            key={post.id}
+                            onDelete={delete_log}
+                            user={user}
+                            changeUser={props.changeUser}
+                            findHashtag={loadByHashtag}
+                        />
+                    );
+                });
         }
     };
 
