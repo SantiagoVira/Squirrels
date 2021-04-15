@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
@@ -26,16 +26,23 @@ function Card({
 }) {
     //When we call the card component, pass the id to access it on the server
     const [post, setPost] = useState(story);
-    const [editing, setEditing] = useState(false);
-    const [editValue, setEditValue] = useState(story.note);
 
     if (!post) {
         return null;
     }
 
+    const [editing, setEditing] = useState(false);
+    const [editValue, setEditValue] = useState(story.note);
+    const [replies, setReplies] = useState(0);
+
+    useEffect(async () => {
+        const response = await api.get(story.replies);
+        setReplies(response.data.results.length);
+    }, []);
+
     return (
         <div className="squirrelCard">
-            <SideBar 
+            <SideBar
                 disabled={disableCardMenu}
                 post={post}
                 changePost={(post) => setPost(post)}
@@ -88,8 +95,12 @@ function Card({
                         <Hashtags findHashtag={findHashtag}>
                             {post.SquirrelTopics}
                         </Hashtags>
-                        <Link to="" className="CardRepliesLink pointerOnHover">
-                            <p>{/*replies amount*/} 0 Replies</p>
+                        <Link
+                            to={`/?replies=${post.id}`}
+                            className="CardRepliesLink pointerOnHover"
+                        >
+                            {" "}
+                            <p>{replies} Replies</p>
                             <ReplyIcon className="CardRepliesIcon" />
                         </Link>
                     </React.Fragment>
