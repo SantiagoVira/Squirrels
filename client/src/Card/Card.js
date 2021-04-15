@@ -30,6 +30,7 @@ function Card({
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
     const [formOpen, setFormOpen] = useState(false);
+    const [repliesOpen, setRepliesOpen] = useState(false);
 
     if (!post) {
         return null;
@@ -84,26 +85,31 @@ function Card({
                         }
                     />
                 </Row>
-                {!isReply && (
-                    <React.Fragment>
-                        {/* Hashtags */}
-                        <Hashtags findHashtag={findHashtag}>
-                            {post.SquirrelTopics}
-                        </Hashtags>
-                        <span 
-                            className="CardRepliesLink pointerOnHover"
-                            onClick={() => setFormOpen(!formOpen)}
-                        >
-                            <p>{/*replies amount*/} 0 Replies</p>
-                            <ReplyIcon className="CardRepliesIcon" />
-                        </span>
-                        <ReplyForm 
-                            post={story}
-                            open={formOpen} 
-                            changeOpen={() => setFormOpen()} 
-                        />
-                    </React.Fragment>
-                )}
+                <Hashtags findHashtag={findHashtag}>
+                    {post.SquirrelTopics}
+                </Hashtags>
+                <div className="linksWrapper">
+                    <span 
+                        className="CardRepliesLink pointerOnHover"
+                        onClick={() => setFormOpen(!formOpen)}
+                    >
+                        <p>{/*replies amount*/} 0 Replies</p>
+                        <ReplyIcon className="CardRepliesIcon" />
+                    </span>
+                    <span
+                        className="CardRepliesLink pointerOnHover"
+                        onClick={() => setRepliesOpen(!repliesOpen)}
+                    >
+                        Reply
+                    </span>
+                </div>
+
+                {/* Replies */}
+                <ReplyForm 
+                    post={story}
+                    open={formOpen} 
+                    changeOpen={() => setFormOpen()} 
+                />
             </Col>
         </div>
     );

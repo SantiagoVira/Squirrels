@@ -4,11 +4,13 @@ import api from "../api";
 const ReplyForm = ({post, open, changeOpen}) => {
     const [text, setText] = useState("");
 
-    const onFormSubmit = async () => {
-        const response = api.post(`/api/SquirreLogs/${post.id}/replies/`, {
+    const onFormSubmit = async (e) => {
+        e.preventDefault();
+        const response = await api.post(`/api/SquirreLogs/${post.id}/replies/`, {
             note: text,
-            pub_date: new Date().toISOString()
-        })
+            pub_date: new Date().toISOString(),
+            reply_id: post.id
+        });
         changeOpen(false);
     }
 
@@ -18,7 +20,7 @@ const ReplyForm = ({post, open, changeOpen}) => {
 
     return (
         <div>
-            <form onSubmit={() => onFormSubmit()}>
+            <form onSubmit={(e) => onFormSubmit(e)}>
                 <textarea 
                     value={text}
                     onChange={(e) => setText(e.target.value)}
