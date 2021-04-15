@@ -3,6 +3,7 @@ import api from "../../api";
 import { Link } from "react-router-dom";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import AddRoundedIcon from "@material-ui/icons/AddRounded";
 
 import "./Uploads.css";
 import Card from "../../Card/Card.js";
@@ -12,6 +13,7 @@ function Uploads(props) {
     const [posts, setPosts] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
     const [backVisible, setBackVisible] = useState(false);
+    const [replies, setReplies] = useState(null);
     const user = props.user;
 
     useEffect(() => {
@@ -19,6 +21,8 @@ function Uploads(props) {
             try {
                 const Userid = new URL(props.page).searchParams.get("user");
                 const Replyid = new URL(props.page).searchParams.get("replies");
+
+                setReplies(Replyid);
                 //Get posts by user if querystring is provided
                 if (Userid) {
                     const response = await api.get(
@@ -153,6 +157,12 @@ function Uploads(props) {
                 <Link to="/" onClick={() => loadAllPosts()}>
                     <ExitToAppIcon className="exitSpecialCardsIcon" />
                 </Link>
+            )}
+            {replies && (
+                <button className="RepliesAddReply">
+                    <AddRoundedIcon />
+                    Reply
+                </button>
             )}
             {renderPosts()}
         </div>
