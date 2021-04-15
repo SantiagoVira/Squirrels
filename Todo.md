@@ -13,9 +13,7 @@
 
 ## **Frontend**
 
--   show replies
-    -   button to add replies in replies section
-    -   button on card with number of replies
+-   creating replies
 
 ## **Server:**
 

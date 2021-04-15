@@ -52,3 +52,14 @@
         left: -5px;
     }
 }
+
+.RepliesAddReply {
+    border: 2px solid #7c3b0c;
+    border-radius: 12px;
+    background: var(--cinnamon);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--text);
+}
