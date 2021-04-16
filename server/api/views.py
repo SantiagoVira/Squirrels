@@ -138,7 +138,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     def uploads(self, request, **kwargs):
         "Not user 1"
 
-        uploads = SquirreLog.objects.all().exclude(owner_id=1, is_reply=True).order_by('pub_date').reverse()
+        uploads = SquirreLog.objects.all().filter(is_reply=False).exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
 
     @action(methods=['get', 'post'], detail=True, url_path='replies', url_name='replies')
