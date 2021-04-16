@@ -93,7 +93,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         if validated_data['reply_id'] is not None:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
-            log.update(is_reply=True)
             post.save() # Maybe extraneous??        
         return log
 
