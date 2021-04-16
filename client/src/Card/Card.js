@@ -35,9 +35,9 @@ function Card({
     const [replies, setReplies] = useState(0);
 
     useEffect(async () => {
-        if (!user) {
+        if (user) {
             const response = await api.get(story.replies);
-            setReplies(response.data.results.length);
+            setReplies(response.data.count);
         }
     }, []);
 
