@@ -47,7 +47,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 'replies', 'replying_to')
+            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 'replies', 'is_reply')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):
@@ -88,11 +88,12 @@ class SquirreLogSerializer(serializers.ModelSerializer):
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
 
-        log.save() # Maybe extraneous??
         if 'reply_id' in validated_data:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
+            log.is_reply = True
             post.save() # Maybe extraneous??
+        log.save() # Maybe extraneous??
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
