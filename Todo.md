@@ -13,8 +13,6 @@
 
 ## **Frontend**
 
--   creating replies
-
 ## **Server:**
 
 ## **Other**

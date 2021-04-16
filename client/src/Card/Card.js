@@ -24,7 +24,7 @@ function Card({
     findHashtag,
     disableCardMenu,
     disableUsername,
-    disableReplies
+    disableReplies,
 }) {
     //When we call the card component, pass the id to access it on the server
     const [post, setPost] = useState(story);
@@ -35,15 +35,17 @@ function Card({
     const [replies, setReplies] = useState(0);
 
     useEffect(async () => {
-        const response = await api.get(story.replies);
-        setReplies(response.data.results.length);
+        if (!user) {
+            const response = await api.get(story.replies);
+            setReplies(response.data.results.length);
+        }
     }, []);
 
     if (!post) {
         return null;
     }
 
-    const testReplies = [{note: "reply 1"}, {note: "reply 2"}]
+    const testReplies = [{ note: "reply 1" }, { note: "reply 2" }];
 
     return (
         <div className="squirrelCard">
@@ -96,40 +98,42 @@ function Card({
                         }
                     />
                 </Row>
-                
+
                 {/* Hashtags and Links */}
                 <Hashtags findHashtag={findHashtag}>
                     {post.SquirrelTopics}
                 </Hashtags>
                 <div className="linksWrapper">
-                    <span 
+                    <span
                         className="CardRepliesLink pointerOnHover"
                         onClick={() => setRepliesOpen(!repliesOpen)}
                     >
-                        <p>{/*replies amount*/} 0 Replies</p>
+                        <p>{replies} Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
                     </span>
-                    <span
-                        className="CardRepliesLink pointerOnHover"
-                        onClick={() => setFormOpen(!formOpen)}
-                    >
-                        Reply
-                    </span>
+                    {user.isLoggedIn && (
+                        <span
+                            className="CardRepliesLink pointerOnHover"
+                            onClick={() => setFormOpen(!formOpen)}
+                        >
+                            Reply
+                        </span>
+                    )}
                 </div>
             </Col>
 
             {/* Replies */}
-            {!disableReplies &&
+            {!disableReplies && (
                 <React.Fragment>
-                    <ReplyForm 
+                    <ReplyForm
                         post={story}
-                        open={formOpen} 
-                        changeOpen={() => setFormOpen()} 
+                        open={formOpen}
+                        changeOpen={() => setFormOpen()}
                     />
                     {/* Temporary; replace testReplies with actual replies in the future */}
                     <Replies replies={testReplies} open={repliesOpen} />
                 </React.Fragment>
-            }
+            )}
         </div>
     );
 }
