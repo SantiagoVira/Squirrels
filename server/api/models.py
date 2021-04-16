@@ -23,13 +23,14 @@ class SquirreLog(models.Model):
 
     # replies
     replies = models.ManyToManyField('self', related_name="log_replies", through='ManageReplies', default=None, symmetrical=False)
+    is_reply = models.BooleanField(default=False)
 
     def __str__(self):
         return str(self.note)
 
-    def replying_to(self):
-        replying_to = self.log_replies.all()
-        return [ reply.id for reply in replying_to ]
+    # def replying_to(self):
+    #     replying_to = self.log_replies.all()
+    #     return [ reply.id for reply in replying_to ]
 
     def votes(self):
         return self.liked_by.count() # Maybe there's something better? Idk
