@@ -87,13 +87,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             except: # When no existing topics
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
+        log.save() # Maybe extraneous??
 
         if 'reply_id' in validated_data:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
-            log.is_reply = True
-            post.save() # Maybe extraneous??
-        log.save() # Maybe extraneous??
+            log.update(is_reply=True)
+            post.save() # Maybe extraneous??        
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
