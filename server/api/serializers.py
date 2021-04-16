@@ -70,7 +70,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def get_replying_to(self, obj):
         replying_to = obj.log_replies.all()
-        return [reply.id for reply in replying_to]
+        return [ reply.id for reply in replying_to ]
 
     def create(self, validated_data):
         log = SquirreLog.objects.create(
@@ -97,7 +97,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         if 'reply_id' in validated_data:
             replying_to = SquirreLog.objects.get(id=validated_data['reply_id'])
             replying_to.replies.add(log)
-            replying_to.save() # Maybe extraneous??
+            replying_to.save()
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
