@@ -31,7 +31,7 @@ function Card({
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
     const [repliesOpen, setRepliesOpen] = useState("");
-    const [replies, setReplies] = useState([]);
+    const [replies, setReplies] = useState(null);
 
     const changeRepliesOpen = (target) => {
         if(repliesOpen === target) {
@@ -41,16 +41,18 @@ function Card({
         }
     }
 
-    const onRepliesClick = async () => {
-        const response = await api.get(story.replies);
-        setReplies(response.data.results);
-        changeRepliesOpen("section");
+    const onRepliesClick = async (target) => {
+        if(replies === null) {
+            const response = await api.get(story.replies);
+            setReplies(response.data.results);
+        }
+        changeRepliesOpen(target);
     }
 
     if (!post) {
         return null;
     }
-
+    
     return (
         <div className="squirrelCard">
             <SideBar
@@ -110,7 +112,7 @@ function Card({
                 <div className="linksWrapper">
                     <span
                         className="CardRepliesLink pointerOnHover"
-                        onClick={() => onRepliesClick()}
+                        onClick={() => onRepliesClick("section")}
                     >
                         <p>{post.replies_length} Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
@@ -118,7 +120,7 @@ function Card({
                     {user.isLoggedIn && (
                         <span
                             className="CardRepliesLink pointerOnHover"
-                            onClick={() => changeRepliesOpen("form")}
+                            onClick={() => onRepliesClick("form")}
                         >
                             Reply
                         </span>
@@ -130,6 +132,8 @@ function Card({
             {!disableReplies && repliesOpen === "form" && (
                 <ReplyForm
                     post={story}
+                    replies={replies}
+                    changeReplies={(newReplies) => setReplies(newReplies)}
                     changeRepliesOpen={(target) => changeRepliesOpen(target)}
                 />
             )}

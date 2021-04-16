@@ -4,7 +4,6 @@ import "./Replies.css";
 const Replies = ({replies}) => {
     const renderReplies = () => {
         return replies.map(reply => {
-            console.log(reply)
             return (
                 <div className="replyCard" key={reply.id}>
                     <strong><div className="owner">
@@ -21,19 +20,15 @@ const Replies = ({replies}) => {
                         {reply.note}
                     </div>
                 </div>
-            )
+            );
         });
-    }
+    };
 
     if(!replies || replies.length === 0) {
         return null;
     }
 
-    return (
-        <div className="replyWrapper">
-            {renderReplies()}
-        </div>
-    );
-}
+    return <div className="replyWrapper">{renderReplies()}</div>;
+};
 
 export default Replies;
