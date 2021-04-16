@@ -17,6 +17,10 @@
     margin-bottom: 10px;
     padding: 15px;
 
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+
     /* Fit so it's more like the NYT website's cards? */
     /* width: clamp(100px, 100px+10%, 400px); */
 
@@ -25,6 +29,10 @@
     border-radius: 12px;
     /* margin: 1vh 1vw; */
     background: var(--cinnamon);
+}
+
+.squirrelCard > .ColComponent {
+    width: calc(100% - 40px);
 }
 
 .squirrelCard .topicWrapper {
@@ -74,19 +82,22 @@
     text-decoration: none;
 }
 
+.linksWrapper {
+    display: flex;
+    justify-content: right;
+    align-items: top;
+
+    width: 100%;
+    height: fit-content;
+}
+
 .CardRepliesLink {
     color: var(--text);
     text-decoration: none;
+    font-size: 20px;
 
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-
-    width: fit-content;
-    height: fit-content;
     padding: 5px;
-    margin-left: auto;
 
     border-radius: 12px;
 

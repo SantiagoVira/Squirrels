@@ -78,7 +78,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
-
+        
         # Making sure there are topics
         if 'SquirrelTopics' in validated_data:
             topics = validated_data['SquirrelTopics']
@@ -95,9 +95,9 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
         log.save() # Maybe extraneous??
         if 'reply_id' in validated_data:
-            replying_to = SquirreLog.objects.get(id=validated_data['reply_id'])
-            replying_to.replies.add(log)
-            replying_to.save() # Maybe extraneous??
+            post = SquirreLog.objects.get(id=validated_data['reply_id'])
+            post.replies.add(log)
+            post.save() # Maybe extraneous??
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):

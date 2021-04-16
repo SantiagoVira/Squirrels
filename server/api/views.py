@@ -105,9 +105,13 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         return super(SquirreLogViewSet, self).get_permissions()
 
     def perform_create(self, serializer):
+        if 'topics' in self.request.data:
+            topics = self.request.data['topics']
+        else:
+            topics = []
         serializer.save(
             owner=self.request.user,
-            SquirrelTopics=self.request.data['topics'],
+            SquirrelTopics=topics,
         )
 
     def destroy(self, request, *args, **kwargs):
@@ -136,7 +140,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
 
-    @action(methods=['get', 'put'], detail=True, url_path='replies', url_name='replies')
+    @action(methods=['get', 'post'], detail=True, url_path='replies', url_name='replies')
     def replies(self, request, pk=None):
         "Replies" # For some reason says liked
 
@@ -144,12 +148,13 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             log = SquirreLog.objects.get(id=pk)
             replies = log.replies
             return paginated_response(self, replies)
-        else: # put
-            log_serializer = self.get_serializer(data=request.data)
-            if log_serializer.is_valid():
-                log_serializer.save(reply_id=pk)
-                return Response(log_serializer.data, status=status.HTTP_200_OK)
-            return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        else: # post
+            reply_serializer = self.get_serializer(data=request.data)
+            if reply_serializer.is_valid():
+                self.perform_create(reply_serializer)
+                reply_serializer.save(reply_id=pk)
+                return Response(reply_serializer.data, status=status.HTTP_200_OK)
+            return Response(reply_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')
     def vote(self, request, **kwargs):
@@ -176,8 +181,3 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
                 'user': user_serializer.data
             }, status=status.HTTP_200_OK)
         return Response(log_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-    @action(methods=['get'], detail=True, url_path='reply', name='reply')
-    def reply(self, request, pk):
-        log = SquirreLog.objects.get(id=pk)
-        print(log)
