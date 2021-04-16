@@ -89,11 +89,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             log.topics.add(topic_obj) # Adding topic
         log.save() # Maybe extraneous??
 
-        if 'reply_id' in validated_data:
+        if validated_data['reply_id'] is not None:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
             log.update(is_reply=True)
-            post.save() # Maybe extraneous??        
+            post.save() # Maybe extraneous??
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):

@@ -104,7 +104,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
-    def perform_create(self, serializer):
+    def perform_create(self, serializer, reply_id=None):
         if 'topics' in self.request.data:
             topics = self.request.data['topics']
         else:
@@ -112,6 +112,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         serializer.save(
             owner=self.request.user,
             SquirrelTopics=topics,
+            reply_id=reply_id,
         )
 
     def destroy(self, request, *args, **kwargs):
@@ -152,8 +153,8 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         else: # post
             reply_serializer = self.get_serializer(data=request.data)
             if reply_serializer.is_valid():
-                self.perform_create(reply_serializer)
-                reply_serializer.save()
+                self.perform_create(reply_serializer, reply_id=pk)
+                # reply_serializer.save()
                 return Response(reply_serializer.data, status=status.HTTP_200_OK)
             return Response(reply_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
