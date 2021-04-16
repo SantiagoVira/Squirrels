@@ -89,7 +89,7 @@ class TopicViewSet(viewsets.ModelViewSet):
 # ALL SquirreLog view
 class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     serializer_class = SquirreLogSerializer
-    queryset = SquirreLog.objects.all()
+    queryset = SquirreLog.objects.all()#.exclude(is_reply=True)
     pagination_class = PageNumberPagination
     # Adds searching functionality
     # search_fields = ['note', 'owner__username', 'topics__topic_name']
@@ -131,6 +131,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             archive = SquirreLog.objects.filter(owner_id=1, note__icontains=search)
         else:
             archive = SquirreLog.objects.filter(owner_id=1)
+        archive.exclude(is_reply=True)
         return paginated_response(self, archive)
 
     # Gets all squirrelogs except for superuser's (user 1) squirrelogs
@@ -138,7 +139,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     def uploads(self, request, **kwargs):
         "Not user 1"
 
-        uploads = SquirreLog.objects.all().exclude(owner_id=1).order_by('pub_date').reverse()
+        uploads = SquirreLog.objects.all().filter(is_reply=False).exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
 
     @action(methods=['get', 'post'], detail=True, url_path='replies', url_name='replies')
