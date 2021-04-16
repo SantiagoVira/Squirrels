@@ -123,7 +123,7 @@ function Uploads(props) {
         } else {
             return posts
                 .filter((post) => {
-                    return post.replying_to.length === 0;
+                    return !post.is_reply;
                 })
                 .map((post) => {
                     return (

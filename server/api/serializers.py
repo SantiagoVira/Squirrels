@@ -68,6 +68,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         }
 
     def create(self, validated_data):
+        print(validated_data)
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
@@ -88,7 +89,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
                 topic_obj = SquirrelTopic.objects.create(topic_name=topic)
             log.topics.add(topic_obj) # Adding topic
 
-        if 'reply_id' in validated_data:
+        if validated_data['reply_id'] is not None:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
             log.is_reply = True
