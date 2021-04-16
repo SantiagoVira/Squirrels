@@ -154,7 +154,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             reply_serializer = self.get_serializer(data=request.data)
             if reply_serializer.is_valid():
                 self.perform_create(reply_serializer, reply_id=pk)
-                return Response(reply_serializer.data, status=status.HTTP_200_OK)
+                post = SquirreLog.objects.get(id=request.data['reply_id'])
+                post_serializer = self.get_serializer(post)
+                return Response({
+                    'reply': reply_serializer.data,
+                    'post': post_serializer.data
+                }, status=status.HTTP_200_OK)
             return Response(reply_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=True, url_path='vote', url_name='vote')

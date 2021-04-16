@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import "./ReplyForm.css";
 
-const ReplyForm = ({post, replies, changeReplies, changeRepliesOpen}) => {
+const ReplyForm = ({post, changePost, replies, changeReplies, changeRepliesOpen}) => {
     const [text, setText] = useState("");
 
     const onFormSubmit = async (e) => {
@@ -12,7 +12,8 @@ const ReplyForm = ({post, replies, changeReplies, changeRepliesOpen}) => {
             pub_date: new Date().toISOString(),
             reply_id: post.id,
         });
-        changeReplies([...replies, response.data])
+        changeReplies([...replies, response.data.reply])
+        changePost(response.data.post)
         if(changeRepliesOpen) {
             changeRepliesOpen("section");
         }

@@ -132,6 +132,7 @@ function Card({
             {!disableReplies && repliesOpen === "form" && (
                 <ReplyForm
                     post={story}
+                    changePost={(newPost) => setPost(newPost)}
                     replies={replies}
                     changeReplies={(newReplies) => setReplies(newReplies)}
                     changeRepliesOpen={(target) => changeRepliesOpen(target)}
