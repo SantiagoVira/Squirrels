@@ -10,7 +10,7 @@ const Hashtags = ({findHashtag, children}) => {
     }
 
     const formatTopic = (topic) => {
-        if(typeof topic.topic_name != undefined) {
+        if(topic.topic_name && typeof topic.topic_name != undefined) {
             topic = topic.topic_name.trim();
         } else {
             topic = topic.trim();

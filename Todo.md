@@ -13,12 +13,7 @@
 
 ## **Frontend**
 
--   show replies
-    -   page similar to a single user's posts for all replies
-        -   in Uploads.js, setBackVisible to true to show the back button
-        -   set posts to the post's replies
-    -   button to add replies in replies section
-    -   button on card with number of replies
+-   creating replies
 
 ## **Server:**
 
