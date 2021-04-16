@@ -43,11 +43,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked = serializers.SerializerMethodField()
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
+    replies_length = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 'replies', 'is_reply')
+            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 
+            'replies', 'replies_length', 'is_reply')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):
@@ -67,8 +69,10 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             'pfp': obj.owner.pfp,
         }
 
+    def get_replies_length(self, obj):
+        return obj.replies.count()
+
     def create(self, validated_data):
-        print(validated_data)
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
@@ -92,8 +96,10 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
         if validated_data['reply_id'] is not None:
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
+            log.is_reply = True
+            log.save()
             post.replies.add(log)
-            post.save() # Maybe extraneous??        
+            post.save() # Maybe extraneous??
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):

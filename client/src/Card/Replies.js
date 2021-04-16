@@ -1,13 +1,21 @@
 import React from "react";
 import "./Replies.css";
 
-const Replies = ({replies, open}) => {
+const Replies = ({replies}) => {
     const renderReplies = () => {
         return replies.map(reply => {
+            console.log(reply)
             return (
-                <div className="replyCard">
+                <div className="replyCard" key={reply.id}>
                     <strong><div className="owner">
-                        Test Owner
+                        {reply.owner_details.pfp && (
+                            <img
+                                src={reply.owner_details.pfp}
+                                alt=""
+                                className="pfp"
+                            />
+                        )}
+                        {reply.owner_details.username}
                     </div></strong>
                     <div>
                         {reply.note}
@@ -17,7 +25,7 @@ const Replies = ({replies, open}) => {
         });
     }
 
-    if(!open) {
+    if(!replies || replies.length === 0) {
         return null;
     }
 
