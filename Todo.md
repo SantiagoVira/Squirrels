@@ -13,8 +13,6 @@
 
 ## **Frontend**
 
--   creating replies
-
 ## **Server:**
 
 -   Reply should say what it's replying to
