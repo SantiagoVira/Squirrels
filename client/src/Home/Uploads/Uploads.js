@@ -122,9 +122,6 @@ function Uploads(props) {
             return <div>No posts were found.</div>;
         } else {
             return posts
-                .filter((post) => {
-                    return !post.is_reply;
-                })
                 .map((post) => {
                     return (
                         <Card
