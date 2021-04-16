@@ -153,7 +153,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             reply_serializer = self.get_serializer(data=request.data)
             if reply_serializer.is_valid():
                 self.perform_create(reply_serializer)
-                reply_serializer.save(reply_id=pk)
+                reply_serializer.save()
                 return Response(reply_serializer.data, status=status.HTTP_200_OK)
             return Response(reply_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
