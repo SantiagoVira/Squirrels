@@ -15,10 +15,6 @@
 
 ## **Server:**
 
--   Reply should say what it's replying to
--   Replies should be postable to the reply link
--   New posts going to the bottom (maybe server?)
-
 ## **Other**
 
 -   PERFORMANCE
