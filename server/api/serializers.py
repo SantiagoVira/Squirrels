@@ -43,7 +43,6 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked = serializers.SerializerMethodField()
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
-    replying_to = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
@@ -68,17 +67,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             'pfp': obj.owner.pfp,
         }
 
-    def get_replying_to(self, obj):
-        replying_to = obj.log_replies.all()
-        return [ reply.id for reply in replying_to ]
-
     def create(self, validated_data):
         log = SquirreLog.objects.create(
             note=validated_data['note'],
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
-        
+
         # Making sure there are topics
         if 'SquirrelTopics' in validated_data:
             topics = validated_data['SquirrelTopics']
@@ -95,15 +90,9 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
         log.save() # Maybe extraneous??
         if 'reply_id' in validated_data:
-<<<<<<< HEAD
-            replying_to = SquirreLog.objects.get(id=validated_data['reply_id'])
-            replying_to.replies.add(log)
-            replying_to.save()
-=======
             post = SquirreLog.objects.get(id=validated_data['reply_id'])
             post.replies.add(log)
             post.save() # Maybe extraneous??
->>>>>>> c607e8c7baa9c9af62823124a1c076522b1935bd
         return log
 
 class UserSquirrelSerializer(serializers.ModelSerializer):
