@@ -137,12 +137,15 @@ function Card({
                     post={story}
                     changePost={(newPost) => setPost(newPost)}
                     replies={replies}
-                    changeReplies={(newReplies) => setReplies(newReplies)}
+                    changeReplies={(newReply) => setReplies([newReply, ...replies])}
                     closeForm={closeForm}
                 />
             )}
             {!disableReplies && repliesOpen && (
-                <Replies replies={replies} />
+                <Replies 
+                    replies={replies}
+                    chnageReplies={(newReplies) => setReplies(newReplies)}
+                />
             )}
         </div>
     );

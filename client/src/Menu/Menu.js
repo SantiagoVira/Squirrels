@@ -25,103 +25,47 @@ function Menu(props) {
         window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");
     };
 
-    function unique() {
-        return Math.floor(
-            Math.random() * Math.floor(Math.random() * Date.now())
-        ).toString();
-    }
-
     function logout() {
         localStorage.removeItem("token");
         props.changeUser({ isLoggedIn: false, profile: null });
     }
 
-    function IconLabel(props) {
-        return <p className="menuBarIconLabel">{props.children}</p>;
+    // Note: 'Icon' must start with a capital I, since it's rendered as JSX
+    const renderLink = (Icon, label, path) => {
+        const underlined = page.endsWith(path) ? "MenuIconFocused" : ""
+        return (
+            <Link to={path}>
+                <Icon className={underlined} />
+                <p className="menuBarIconLabel">{label}</p>
+            </Link>
+        )
     }
 
-    function renderAuth(page) {
+    function renderAuth() {
         if (props.user.isLoggedIn) {
             return (
                 <Link to="#" onClick={() => logout()}>
                     <ExitToAppIcon />
-                    <IconLabel>Logout</IconLabel>
+                    <p className="menuBarIconLabel">Logout</p>
                 </Link>
             );
         } else {
-            const links = [
-                {
-                    to: "/login",
-                    name: (
-                        <AccountCircleIcon
-                            className={
-                                page.endsWith("/login") && "MenuIconFocused"
-                            }
-                        />
-                    ),
-                    word: "Login",
-                },
-                {
-                    to: "/register",
-                    name: (
-                        <PersonAddIcon
-                            className={
-                                page.endsWith("/register") && "MenuIconFocused"
-                            }
-                        />
-                    ),
-                    word: "Register",
-                },
-            ];
             return (
                 <Row>
-                    {links.map((link) => (
-                        <Link key={unique()} to={link.to}>
-                            {link.name}
-                            <IconLabel>{link.word}</IconLabel>
-                        </Link>
-                    ))}
+                    {renderLink(AccountCircleIcon, "Login", "/login")}
+                    {renderLink(PersonAddIcon, "Register", "/register")}
                 </Row>
-            );
+            )
         }
     }
 
-    const links = [
-        {
-            to: "/",
-            name: (
-                <HomeIcon className={page.endsWith("/") && "MenuIconFocused"} />
-            ),
-            word: "Home",
-        },
-        {
-            to: "/archive",
-            name: (
-                <AppsIcon
-                    className={page.endsWith("/archive") && "MenuIconFocused"}
-                />
-            ),
-            word: "Archive",
-        },
-    ];
     return (
         <div className={`menu ${scrolled}`}>
             <Row className="left">
-                {links.map((link) => (
-                    <Link key={unique()} to={link.to}>
-                        {link.name}
-                        <IconLabel>{link.word}</IconLabel>
-                    </Link>
-                ))}
+                {renderLink(HomeIcon, "Home", "/")}
+                {renderLink(AppsIcon, "Archive", "/archive")}
                 {props.user.isLoggedIn && (
-                    <Link key={unique()} to={"/create"}>
-                        <AddBoxIcon
-                            className={
-                                page.endsWith("/create") && "MenuIconFocused"
-                            }
-                        />
-                        <IconLabel>Create</IconLabel>
-                    </Link>
+                    renderLink(AddBoxIcon, "Create", "/create")
                 )}
             </Row>
             <div className="right">{renderAuth(page)}</div>

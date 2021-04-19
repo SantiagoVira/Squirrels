@@ -31,6 +31,7 @@ function Archive({ user, changeUser }) {
         }
 
         window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
     useEffect(() => {
