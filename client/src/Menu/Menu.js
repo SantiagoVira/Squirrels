@@ -50,67 +50,79 @@ function Menu(props) {
             );
         } else {
             const links = [
-                { to: "/login", name: <AccountCircleIcon />, word: "Login" },
-                { to: "/register", name: <PersonAddIcon />, word: "Register" },
+                {
+                    to: "/login",
+                    name: (
+                        <AccountCircleIcon
+                            className={
+                                page.endsWith("/login") && "MenuIconFocused"
+                            }
+                        />
+                    ),
+                    word: "Login",
+                },
+                {
+                    to: "/register",
+                    name: (
+                        <PersonAddIcon
+                            className={
+                                page.endsWith("/register") && "MenuIconFocused"
+                            }
+                        />
+                    ),
+                    word: "Register",
+                },
             ];
             return (
                 <Row>
-                    {links.map((link) =>
-                        page.endsWith(link.to) ? (
-                            <strong key={unique()}>
-                                <Link to={link.to}>
-                                    {link.name}
-                                    <IconLabel>{link.word}</IconLabel>
-                                </Link>
-                            </strong>
-                        ) : (
-                            <Link key={unique()} to={link.to}>
-                                {link.name}
-                                <IconLabel>{link.word}</IconLabel>
-                            </Link>
-                        )
-                    )}
+                    {links.map((link) => (
+                        <Link key={unique()} to={link.to}>
+                            {link.name}
+                            <IconLabel>{link.word}</IconLabel>
+                        </Link>
+                    ))}
                 </Row>
             );
         }
     }
 
     const links = [
-        { to: "/", name: <HomeIcon />, word: "Home" },
-        { to: "/archive", name: <AppsIcon />, word: "Archive" },
+        {
+            to: "/",
+            name: (
+                <HomeIcon className={page.endsWith("/") && "MenuIconFocused"} />
+            ),
+            word: "Home",
+        },
+        {
+            to: "/archive",
+            name: (
+                <AppsIcon
+                    className={page.endsWith("/archive") && "MenuIconFocused"}
+                />
+            ),
+            word: "Archive",
+        },
     ];
     return (
         <div className={`menu ${scrolled}`}>
             <Row className="left">
-                {links.map((link) =>
-                    page.endsWith(link.to) ? (
-                        <strong key={unique()}>
-                            <Link to={link.to}>
-                                {link.name}
-                                <IconLabel>{link.word}</IconLabel>
-                            </Link>
-                        </strong>
-                    ) : (
-                        <Link key={unique()} to={link.to}>
-                            {link.name}
-                            <IconLabel>{link.word}</IconLabel>
-                        </Link>
-                    )
+                {links.map((link) => (
+                    <Link key={unique()} to={link.to}>
+                        {link.name}
+                        <IconLabel>{link.word}</IconLabel>
+                    </Link>
+                ))}
+                {props.user.isLoggedIn && (
+                    <Link key={unique()} to={"/create"}>
+                        <AddBoxIcon
+                            className={
+                                page.endsWith("/create") && "MenuIconFocused"
+                            }
+                        />
+                        <IconLabel>Create</IconLabel>
+                    </Link>
                 )}
-                {props.user.isLoggedIn &&
-                    (page.endsWith("/create") ? (
-                        <strong key={unique()}>
-                            <Link to={"/create"}>
-                                <AddBoxIcon />
-                                <IconLabel>Create</IconLabel>
-                            </Link>
-                        </strong>
-                    ) : (
-                        <Link key={unique()} to={"/create"}>
-                            <AddBoxIcon />
-                            <IconLabel>Create</IconLabel>
-                        </Link>
-                    ))}
             </Row>
             <div className="right">{renderAuth(page)}</div>
         </div>

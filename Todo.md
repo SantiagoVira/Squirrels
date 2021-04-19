@@ -13,6 +13,8 @@
 
 ## **Frontend**
 
+-   icons look the same
+
 ## **Server:**
 
 ## **Other**
