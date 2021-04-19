@@ -26,27 +26,24 @@ function Card({
     disableUsername,
     disableReplies,
 }) {
-    //When we call the card component, pass the id to access it on the server
     const [post, setPost] = useState(story);
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
-    const [repliesOpen, setRepliesOpen] = useState("");
+    const [formOpen, setFormOpen] = useState(false);
+    const [repliesOpen, setRepliesOpen] = useState(false);
     const [replies, setReplies] = useState(null);
 
-    const changeRepliesOpen = (target) => {
-        if(repliesOpen === target) {
-            setRepliesOpen("");
-        } else {
-            setRepliesOpen(target);
+    const loadReplies = async () => {
+        if(replies === null) {
+            const response = await api.get(story.replies);
+            // Reverse replies array to order by pub_date
+            setReplies(response.data.results.reverse());
         }
     }
 
-    const onRepliesClick = async (target) => {
-        if(replies === null) {
-            const response = await api.get(story.replies);
-            setReplies(response.data.results);
-        }
-        changeRepliesOpen(target);
+    const closeForm = () => {
+        setFormOpen(false);
+        setRepliesOpen(true);
     }
 
     if (!post) {
@@ -112,7 +109,10 @@ function Card({
                 <div className="linksWrapper">
                     <span
                         className="CardRepliesLink pointerOnHover"
-                        onClick={() => onRepliesClick("section")}
+                        onClick={() => {
+                            loadReplies()
+                            setRepliesOpen(!repliesOpen)
+                        }}
                     >
                         <p>{post.replies_length} Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
@@ -120,7 +120,10 @@ function Card({
                     {user.isLoggedIn && (
                         <span
                             className="CardRepliesLink pointerOnHover"
-                            onClick={() => onRepliesClick("form")}
+                            onClick={() => {
+                                loadReplies()
+                                setFormOpen(!formOpen)
+                            }}
                         >
                             Reply
                         </span>
@@ -129,16 +132,16 @@ function Card({
             </Col>
 
             {/* Replies */}
-            {!disableReplies && repliesOpen === "form" && (
+            {!disableReplies && formOpen && (
                 <ReplyForm
                     post={story}
                     changePost={(newPost) => setPost(newPost)}
                     replies={replies}
                     changeReplies={(newReplies) => setReplies(newReplies)}
-                    changeRepliesOpen={(target) => changeRepliesOpen(target)}
+                    closeForm={closeForm}
                 />
             )}
-            {!disableReplies && repliesOpen === "section" && (
+            {!disableReplies && repliesOpen && (
                 <Replies replies={replies} />
             )}
         </div>
