@@ -13,7 +13,8 @@
 
 ## **Frontend**
 
--   icons look the same
+-   make presentation not bad
+-   Santiago stop procrastinating (Doing homework (watching youtube)) and do the reply sidebar
 
 ## **Server:**
 
