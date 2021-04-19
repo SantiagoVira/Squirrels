@@ -1,8 +1,8 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import api from "../api";
 import "./ReplyForm.css";
 
-const ReplyForm = ({post, open, changeOpen}) => {
+const ReplyForm = ({post, changePost, replies, changeReplies, changeRepliesOpen}) => {
     const [text, setText] = useState("");
 
     const onFormSubmit = async (e) => {
@@ -10,19 +10,19 @@ const ReplyForm = ({post, open, changeOpen}) => {
         const response = await api.post(`/api/SquirreLogs/${post.id}/replies/`, {
             note: text,
             pub_date: new Date().toISOString(),
-            reply_id: post.id
+            reply_id: post.id,
         });
-        changeOpen(false);
-    }
-
-    if(!open) {
-        return null;
+        changeReplies([...replies, response.data.reply])
+        changePost(response.data.post)
+        if(changeRepliesOpen) {
+            changeRepliesOpen("section");
+        }
     }
 
     return (
         <div className="replyForm">
             <form onSubmit={(e) => onFormSubmit(e)}>
-                <textarea 
+                <textarea
                     value={text}
                     placeholder="Type your reply here..."
                     onChange={(e) => setText(e.target.value)}
@@ -30,7 +30,7 @@ const ReplyForm = ({post, open, changeOpen}) => {
                 <button className="submit">Submit</button>
             </form>
         </div>
-    )
-}
+    );
+};
 
 export default ReplyForm;

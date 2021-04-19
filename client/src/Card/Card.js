@@ -1,5 +1,5 @@
 import api from "../api";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "./Card.css";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
@@ -30,23 +30,29 @@ function Card({
     const [post, setPost] = useState(story);
     const [editing, setEditing] = useState(false);
     const [editValue, setEditValue] = useState(story.note);
-    const [formOpen, setFormOpen] = useState(false);
-    const [repliesOpen, setRepliesOpen] = useState(false);
-    const [replies, setReplies] = useState(0);
+    const [repliesOpen, setRepliesOpen] = useState("");
+    const [replies, setReplies] = useState(null);
 
-    useEffect(async () => {
-        if (!user) {
-            const response = await api.get(story.replies);
-            setReplies(response.data.results.length);
+    const changeRepliesOpen = (target) => {
+        if(repliesOpen === target) {
+            setRepliesOpen("");
+        } else {
+            setRepliesOpen(target);
         }
-    }, []);
+    }
+
+    const onRepliesClick = async (target) => {
+        if(replies === null) {
+            const response = await api.get(story.replies);
+            setReplies(response.data.results);
+        }
+        changeRepliesOpen(target);
+    }
 
     if (!post) {
         return null;
     }
-
-    const testReplies = [{ note: "reply 1" }, { note: "reply 2" }];
-
+    
     return (
         <div className="squirrelCard">
             <SideBar
@@ -106,15 +112,15 @@ function Card({
                 <div className="linksWrapper">
                     <span
                         className="CardRepliesLink pointerOnHover"
-                        onClick={() => setRepliesOpen(!repliesOpen)}
+                        onClick={() => onRepliesClick("section")}
                     >
-                        <p>{replies} Replies</p>
+                        <p>{post.replies_length} Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
                     </span>
                     {user.isLoggedIn && (
                         <span
                             className="CardRepliesLink pointerOnHover"
-                            onClick={() => setFormOpen(!formOpen)}
+                            onClick={() => onRepliesClick("form")}
                         >
                             Reply
                         </span>
@@ -123,16 +129,17 @@ function Card({
             </Col>
 
             {/* Replies */}
-            {!disableReplies && (
-                <React.Fragment>
-                    <ReplyForm
-                        post={story}
-                        open={formOpen}
-                        changeOpen={() => setFormOpen()}
-                    />
-                    {/* Temporary; replace testReplies with actual replies in the future */}
-                    <Replies replies={testReplies} open={repliesOpen} />
-                </React.Fragment>
+            {!disableReplies && repliesOpen === "form" && (
+                <ReplyForm
+                    post={story}
+                    changePost={(newPost) => setPost(newPost)}
+                    replies={replies}
+                    changeReplies={(newReplies) => setReplies(newReplies)}
+                    changeRepliesOpen={(target) => changeRepliesOpen(target)}
+                />
+            )}
+            {!disableReplies && repliesOpen === "section" && (
+                <Replies replies={replies} />
             )}
         </div>
     );

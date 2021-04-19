@@ -43,11 +43,13 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     liked = serializers.SerializerMethodField()
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
+    replies_length = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 'replies', 'is_reply')
+            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 
+            'replies', 'replies_length', 'is_reply')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):
@@ -66,6 +68,9 @@ class SquirreLogSerializer(serializers.ModelSerializer):
             'username': obj.owner.username,
             'pfp': obj.owner.pfp,
         }
+
+    def get_replies_length(self, obj):
+        return obj.replies.count()
 
     def create(self, validated_data):
         log = SquirreLog.objects.create(

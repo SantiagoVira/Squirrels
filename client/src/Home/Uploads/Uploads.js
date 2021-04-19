@@ -121,22 +121,18 @@ function Uploads(props) {
         } else if (posts.length === 0) {
             return <div>No posts were found.</div>;
         } else {
-            return posts
-                .filter((post) => {
-                    return !post.is_reply;
-                })
-                .map((post) => {
-                    return (
-                        <Card
-                            story={post}
-                            key={post.id}
-                            onDelete={delete_log}
-                            user={user}
-                            changeUser={props.changeUser}
-                            findHashtag={loadByHashtag}
-                        />
-                    );
-                });
+            return posts.map((post) => {
+                return (
+                    <Card
+                        story={post}
+                        key={post.id}
+                        onDelete={delete_log}
+                        user={user}
+                        changeUser={props.changeUser}
+                        findHashtag={loadByHashtag}
+                    />
+                );
+            });
         }
     };
 
