@@ -63,7 +63,7 @@ function Card({
 
     return (
         <div className="squirrelCard">
-            {!disableCardMenu &&
+            {!disableCardMenu && (
                 <SideBar
                     post={post}
                     changePost={setPost}
@@ -73,7 +73,7 @@ function Card({
                     changeEditing={setEditing}
                     onDelete={onDelete}
                 />
-            }
+            )}
             <Col>
                 {/* User Details */}
                 {disableUsername ? (
@@ -102,7 +102,12 @@ function Card({
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
-                        html={sanitizeHtml(editValue) || ""}
+                        html={
+                            sanitizeHtml(editValue, {
+                                allowedTags: [],
+                                allowedAttributes: [],
+                            }) || ""
+                        }
                         onChange={(e) =>
                             setEditValue(e.currentTarget.textContent)
                         }
@@ -159,6 +164,7 @@ function Card({
                     user={user}
                     changeUser={changeUser}
                     post={post}
+                    changePost={setPost}
                 />
             )}
         </div>

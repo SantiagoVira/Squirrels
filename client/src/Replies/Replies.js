@@ -3,12 +3,14 @@ import api from "../api";
 import "./Replies.css";
 import Reply from "./Reply";
 
-const Replies = ({ replies, changeReplies, user, changeUser, post }) => {
+const Replies = ({ replies, changeReplies, user, changeUser, post, changePost }) => {
     const onDelete = async (id) => {
         try {
             if (window.confirm("Are you sure you want to delete this reply?")) {
                 await api.delete(`/api/SquirreLogs/${id}/`);
+                const postResponse = await api.get(`/api/SquirreLogs/${post.id}/`);
                 changeReplies(replies.filter(reply => reply.id !== id));
+                changePost(postResponse.data);
 
             }
         } catch (err) {}
@@ -19,7 +21,6 @@ const Replies = ({ replies, changeReplies, user, changeUser, post }) => {
             return (
                 <Reply 
                     reply={reply} 
-                    changeReplies={changeReplies}
                     user={user} 
                     changeUser={changeUser}
                     post={post} 
