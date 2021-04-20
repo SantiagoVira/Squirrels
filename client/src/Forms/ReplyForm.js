@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../api";
 import "./ReplyForm.css";
 
-const ReplyForm = ({post, changePost, replies, changeReplies, closeForm}) => {
+const ReplyForm = ({post, changePost, changeReplies, closeForm}) => {
     const [text, setText] = useState("");
 
     const onFormSubmit = async (e) => {
@@ -12,7 +12,7 @@ const ReplyForm = ({post, changePost, replies, changeReplies, closeForm}) => {
             pub_date: new Date().toISOString(),
             reply_id: post.id,
         });
-        changeReplies([...replies, response.data.reply])
+        changeReplies(response.data.reply)
         changePost(response.data.post)
 
         // Showing and hiding 

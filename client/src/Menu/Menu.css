@@ -49,11 +49,15 @@
     transition-delay: 100ms;
     transition-duration: 200ms;
     font-weight: 400 !important;
-    padding: 22.5px;
+    padding: 26px;
     position: absolute;
 }
 .menuBarIconLabel:hover {
     opacity: 1;
     transition-delay: 100ms;
     transition-duration: 200ms;
+}
+
+.MenuIconFocused {
+    border-bottom: 2px solid var(--text);
 }

@@ -6,6 +6,7 @@
 }
 
 .replyCard {
+    display: flex;
     background-color: var(--cinnamon);
     border-radius: 12px;
     margin: 10px 0;
@@ -14,6 +15,13 @@
     text-align: left;
 }
 
+.replyCard .content {
+    padding: 0;
+    margin-left: 10px;
+}
+
 .replyCard .owner {
     margin-bottom: 10px;
+    display: flex;
+    align-items: center;
 }

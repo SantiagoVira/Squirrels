@@ -13,6 +13,9 @@
 
 ## **Frontend**
 
+-   make presentation not bad
+-   reply sidebar
+
 ## **Server:**
 
 ## **Other**

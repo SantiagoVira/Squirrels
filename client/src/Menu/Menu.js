@@ -25,92 +25,48 @@ function Menu(props) {
         window.pageYOffset > 0 ? setScrolled("scrolled") : setScrolled("");
     };
 
-    function unique() {
-        return Math.floor(
-            Math.random() * Math.floor(Math.random() * Date.now())
-        ).toString();
-    }
-
     function logout() {
         localStorage.removeItem("token");
         props.changeUser({ isLoggedIn: false, profile: null });
     }
 
-    function IconLabel(props) {
-        return <p className="menuBarIconLabel">{props.children}</p>;
+    // Note: 'Icon' must start with a capital I, since it's rendered as JSX
+    const renderLink = (Icon, label, path) => {
+        const underlined = page.endsWith(path) ? "MenuIconFocused" : ""
+        return (
+            <Link to={path}>
+                <Icon className={underlined} />
+                <p className="menuBarIconLabel">{label}</p>
+            </Link>
+        )
     }
 
-    function renderAuth(page) {
+    function renderAuth() {
         if (props.user.isLoggedIn) {
             return (
                 <Link to="#" onClick={() => logout()}>
                     <ExitToAppIcon />
-                    <IconLabel>Logout</IconLabel>
+                    <p className="menuBarIconLabel">Logout</p>
                 </Link>
             );
         } else {
-            const links = [
-                { to: "/login", name: <AccountCircleIcon />, word: "Login" },
-                { to: "/register", name: <PersonAddIcon />, word: "Register" },
-            ];
             return (
                 <Row>
-                    {links.map((link) =>
-                        page.endsWith(link.to) ? (
-                            <strong key={unique()}>
-                                <Link to={link.to}>
-                                    {link.name}
-                                    <IconLabel>{link.word}</IconLabel>
-                                </Link>
-                            </strong>
-                        ) : (
-                            <Link key={unique()} to={link.to}>
-                                {link.name}
-                                <IconLabel>{link.word}</IconLabel>
-                            </Link>
-                        )
-                    )}
+                    {renderLink(AccountCircleIcon, "Login", "/login")}
+                    {renderLink(PersonAddIcon, "Register", "/register")}
                 </Row>
-            );
+            )
         }
     }
 
-    const links = [
-        { to: "/", name: <HomeIcon />, word: "Home" },
-        { to: "/archive", name: <AppsIcon />, word: "Archive" },
-    ];
     return (
         <div className={`menu ${scrolled}`}>
             <Row className="left">
-                {links.map((link) =>
-                    page.endsWith(link.to) ? (
-                        <strong key={unique()}>
-                            <Link to={link.to}>
-                                {link.name}
-                                <IconLabel>{link.word}</IconLabel>
-                            </Link>
-                        </strong>
-                    ) : (
-                        <Link key={unique()} to={link.to}>
-                            {link.name}
-                            <IconLabel>{link.word}</IconLabel>
-                        </Link>
-                    )
+                {renderLink(HomeIcon, "Home", "/")}
+                {renderLink(AppsIcon, "Archive", "/archive")}
+                {props.user.isLoggedIn && (
+                    renderLink(AddBoxIcon, "Create", "/create")
                 )}
-                {props.user.isLoggedIn &&
-                    (page.endsWith("/create") ? (
-                        <strong key={unique()}>
-                            <Link to={"/create"}>
-                                <AddBoxIcon />
-                                <IconLabel>Create</IconLabel>
-                            </Link>
-                        </strong>
-                    ) : (
-                        <Link key={unique()} to={"/create"}>
-                            <AddBoxIcon />
-                            <IconLabel>Create</IconLabel>
-                        </Link>
-                    ))}
             </Row>
             <div className="right">{renderAuth(page)}</div>
         </div>
