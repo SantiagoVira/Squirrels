@@ -57,7 +57,6 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
     }
 
     const renderVote = () => {
-        console.log(changeUser)
         if(changePost && changeUser && user) {
             const liked = post.liked ? "liked" : "";
             return (

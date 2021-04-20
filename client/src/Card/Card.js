@@ -157,6 +157,7 @@ function Card({
                     user={user}
                     changeUser={changeUser}
                     post={post}
+                    changePost={setPost}
                 />
             )}
         </div>
