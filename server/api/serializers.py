@@ -46,11 +46,11 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
     replies_length = serializers.SerializerMethodField()
-    note = serializers.SerializerMethodField()
+    escaped_note = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
-        fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
+        fields = ('id', 'url', 'note', 'escaped_note', 'pub_date', 'votes', 'owner',
             'owner_details', 'SquirrelTopics', 'liked_by', 'liked',
             'replies', 'replies_length', 'is_reply')
         extra_kwargs = {'note': {'trim_whitespace': False}}
@@ -75,7 +75,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     def get_replies_length(self, obj):
         return obj.replies.count()
 
-    def get_note(self, obj):
+    def get_escaped_note(self, obj):
         return html.escape(obj.note)
 
     def create(self, validated_data):

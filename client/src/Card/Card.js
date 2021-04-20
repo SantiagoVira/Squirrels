@@ -31,7 +31,7 @@ function Card({
 }) {
     const [post, setPost] = useState(story);
     const [editing, setEditing] = useState(false);
-    const [editValue, setEditValue] = useState(story.note);
+    const [editValue, setEditValue] = useState(story.escaped_note);
     const [formOpen, setFormOpen] = useState(false);
     const [repliesOpen, setRepliesOpen] = useState(false);
     const [replies, setReplies] = useState(null);
