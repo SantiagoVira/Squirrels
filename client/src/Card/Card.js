@@ -16,6 +16,8 @@ import SideBar from "./SideBar";
 import ReplyForm from "../Forms/ReplyForm";
 import Replies from "../Replies/Replies";
 
+var sanitizeHtml = require("sanitize-html");
+
 // Don't fetch from this component. Add them to the serializer instead!
 function Card({
     story,
@@ -61,7 +63,7 @@ function Card({
 
     return (
         <div className="squirrelCard">
-            {!disableCardMenu &&
+            {!disableCardMenu && (
                 <SideBar
                     post={post}
                     changePost={setPost}
@@ -71,7 +73,7 @@ function Card({
                     changeEditing={setEditing}
                     onDelete={onDelete}
                 />
-            }
+            )}
             <Col>
                 {/* User Details */}
                 {disableUsername ? (
@@ -100,7 +102,12 @@ function Card({
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
-                        html={editValue || ""}
+                        html={
+                            sanitizeHtml(editValue, {
+                                allowedTags: [],
+                                allowedAttributes: [],
+                            }) || ""
+                        }
                         onChange={(e) =>
                             setEditValue(e.currentTarget.textContent)
                         }

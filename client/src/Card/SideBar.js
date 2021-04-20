@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import api from "../api";
 import history from "../history";
 
@@ -11,8 +11,16 @@ import CodeIcon from "@material-ui/icons/Code";
 import Col from "../Col";
 import "./SideBar.css";
 
-const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing, 
-        changeEditing, onDelete}) => {
+const SideBar = ({
+    disableEmbed,
+    post,
+    changePost,
+    user,
+    changeUser,
+    editing,
+    changeEditing,
+    onDelete,
+}) => {
     const [copied, setCopied] = useState("Copy Embed Link");
 
     const copyLink = () => {
@@ -20,10 +28,10 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
         navigator.clipboard.writeText(
             `<iframe src="${window.location.origin}/card/${post.id}" title="Sqrrlz Card" />`
         );
-    }
+    };
 
     const renderEmbed = () => {
-        if(!disableEmbed) {
+        if (!disableEmbed) {
             return (
                 <div className="tooltip">
                     <IconButton
@@ -39,8 +47,8 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
                 </div>
             );
         }
-    }
-    
+    };
+
     const vote = async () => {
         try {
             if (!user.isLoggedIn) {
@@ -54,7 +62,7 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
         } catch (err) {
             return null;
         }
-    }
+    };
 
     const renderVote = () => {
         if(changePost && changeUser && user) {
@@ -69,13 +77,13 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
                     </IconButton>
                     <p className="votes">{post.votes}</p>
                 </React.Fragment>
-            )
+            );
         }
-    }
+    };
 
     const renderOwnerBtns = () => {
         try {
-            if(user.profile.id === post.owner) {
+            if (user.profile.id === post.owner) {
                 return (
                     <Col>
                         <IconButton
@@ -93,24 +101,22 @@ const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing,
                     </Col>
                 );
             }
-        } catch(err) {
+        } catch (err) {
             return null;
         }
-    }
+    };
 
-    if(!post) {
+    if (!post) {
         return null;
     }
 
     return (
         <div className="leftSideWrapper">
-            <div className="buttons">
-                {renderVote()}
-            </div>
+            <div className="buttons">{renderVote()}</div>
             {renderOwnerBtns()}
             {renderEmbed()}
         </div>
-    )
-}
+    );
+};
 
-export default SideBar
+export default SideBar;

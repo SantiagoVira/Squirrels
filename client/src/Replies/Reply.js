@@ -5,14 +5,16 @@ import "./Replies.css";
 import api from "../api";
 import SideBar from "../Card/SideBar";
 
-function Reply({user, onDelete, changeUser, ...props}) {
-    const [reply, setReply] = useState(props.reply)
-    const [editValue, setEditValue] = useState(reply.note)
+var sanitizeHtml = require("sanitize-html");
+
+function Reply({ user, onDelete, changeUser, ...props }) {
+    const [reply, setReply] = useState(props.reply);
+    const [editValue, setEditValue] = useState(reply.note);
     const [editing, setEditing] = useState(false);
-    
+
     return (
         <div className="replyCard">
-            {user.isLoggedIn &&
+            {user.isLoggedIn && (
                 <SideBar
                     disableEmbed
                     post={reply}
@@ -23,7 +25,7 @@ function Reply({user, onDelete, changeUser, ...props}) {
                     changeEditing={setEditing}
                     onDelete={onDelete}
                 />
-            }
+            )}
             <div className="content">
                 <strong>
                     <div className="owner">
@@ -40,10 +42,13 @@ function Reply({user, onDelete, changeUser, ...props}) {
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
                     disabled={!editing}
-                    html={editValue || ""}
-                    onChange={(e) =>
-                        setEditValue(e.currentTarget.textContent)
+                    html={
+                        sanitizeHtml(editValue, {
+                            allowedTags: [],
+                            allowedAttributes: [],
+                        }) || ""
                     }
+                    onChange={(e) => setEditValue(e.currentTarget.textContent)}
                     onBlur={(e) =>
                         api.patch(`/api/SquirreLogs/${reply.id}/`, {
                             note: e.currentTarget.textContent,
