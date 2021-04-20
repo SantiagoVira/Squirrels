@@ -7,19 +7,25 @@ import SideBar from "../Card/SideBar";
 
 var sanitizeHtml = require("sanitize-html");
 
-function Reply({ reply, user, onDelete }) {
+function Reply({ user, onDelete, changeUser, ...props }) {
+    const [reply, setReply] = useState(props.reply);
     const [editValue, setEditValue] = useState(reply.note);
     const [editing, setEditing] = useState(false);
 
     return (
         <div className="replyCard">
-            <SideBar
-                post={reply}
-                user={user}
-                editing={editing}
-                changeEditing={setEditing}
-                onDelete={onDelete}
-            />
+            {user.isLoggedIn && (
+                <SideBar
+                    disableEmbed
+                    post={reply}
+                    changePost={setReply}
+                    user={user}
+                    changeUser={changeUser}
+                    editing={editing}
+                    changeEditing={setEditing}
+                    onDelete={onDelete}
+                />
+            )}
             <div className="content">
                 <strong>
                     <div className="owner">
