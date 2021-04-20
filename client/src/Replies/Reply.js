@@ -5,8 +5,6 @@ import "./Replies.css";
 import api from "../api";
 import SideBar from "../Card/SideBar";
 
-var sanitizeHtml = require("sanitize-html");
-
 function Reply({ user, onDelete, changeUser, ...props }) {
     const [reply, setReply] = useState(props.reply);
     const [editValue, setEditValue] = useState(reply.note);
@@ -42,12 +40,7 @@ function Reply({ user, onDelete, changeUser, ...props }) {
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
                     disabled={!editing}
-                    html={
-                        sanitizeHtml(editValue, {
-                            allowedTags: [],
-                            allowedAttributes: [],
-                        }) || ""
-                    }
+                    html={editValue || ""}
                     onChange={(e) => setEditValue(e.currentTarget.textContent)}
                     onBlur={(e) =>
                         api.patch(`/api/SquirreLogs/${reply.id}/`, {
