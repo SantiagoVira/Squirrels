@@ -14,8 +14,7 @@
 ## **Frontend**
 
 -   make presentation not bad
--   Santiago stop procrastinating (Doing homework (watching youtube)) and do the reply sidebar
--   reply form just DOES NOT WORK
+-   reply sidebar
 
 ## **Server:**
 
