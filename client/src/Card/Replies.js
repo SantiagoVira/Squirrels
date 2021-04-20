@@ -1,30 +1,15 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./Replies.css";
+import Reply from "./Reply";
 
-const Replies = ({replies}) => {
+const Replies = ({ replies, changeReplies, user, post }) => {
     const renderReplies = () => {
-        return replies.map(reply => {
-            return (
-                <div className="replyCard" key={reply.id}>
-                    <strong><div className="owner">
-                        {reply.owner_details.pfp && (
-                            <img
-                                src={reply.owner_details.pfp}
-                                alt=""
-                                className="pfp"
-                            />
-                        )}
-                        {reply.owner_details.username}
-                    </div></strong>
-                    <div>
-                        {reply.note}
-                    </div>
-                </div>
-            );
+        return replies.map((reply, i) => {
+            return <Reply reply={reply} user={user} post={post} index={i} />;
         });
     };
 
-    if(!replies || replies.length === 0) {
+    if (!replies || replies.length === 0) {
         return null;
     }
 

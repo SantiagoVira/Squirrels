@@ -34,32 +34,32 @@ function Card({
     const [replies, setReplies] = useState(null);
 
     const loadReplies = async () => {
-        if(replies === null) {
+        if (replies === null) {
             const response = await api.get(story.replies);
             // Reverse replies array to order by pub_date
             setReplies(response.data.results.reverse());
         }
-    }
+    };
 
     const closeForm = () => {
         setFormOpen(false);
         setRepliesOpen(true);
-    }
+    };
 
     if (!post) {
         return null;
     }
-    
+
     return (
         <div className="squirrelCard">
             <SideBar
                 disabled={disableCardMenu}
                 post={post}
-                changePost={(post) => setPost(post)}
+                changePost={setPost}
                 user={user}
-                changeUser={(user) => changeUser(user)}
+                changeUser={changeUser}
                 editing={editing}
-                changeEditing={(editing) => setEditing(editing)}
+                changeEditing={setEditing}
                 onDelete={onDelete}
             />
             <Col>
@@ -110,8 +110,8 @@ function Card({
                     <span
                         className="CardRepliesLink pointerOnHover"
                         onClick={() => {
-                            loadReplies()
-                            setRepliesOpen(!repliesOpen)
+                            loadReplies();
+                            setRepliesOpen(!repliesOpen);
                         }}
                     >
                         <p>{post.replies_length} Replies</p>
@@ -121,8 +121,8 @@ function Card({
                         <span
                             className="CardRepliesLink pointerOnHover"
                             onClick={() => {
-                                loadReplies()
-                                setFormOpen(!formOpen)
+                                loadReplies();
+                                setFormOpen(!formOpen);
                             }}
                         >
                             Reply
@@ -137,14 +137,18 @@ function Card({
                     post={story}
                     changePost={(newPost) => setPost(newPost)}
                     replies={replies}
-                    changeReplies={(newReply) => setReplies([newReply, ...replies])}
+                    changeReplies={(newReply) =>
+                        setReplies([newReply, ...replies])
+                    }
                     closeForm={closeForm}
                 />
             )}
             {!disableReplies && repliesOpen && (
-                <Replies 
+                <Replies
                     replies={replies}
-                    chnageReplies={(newReplies) => setReplies(newReplies)}
+                    changeReplies={setReplies}
+                    user={user}
+                    post={post}
                 />
             )}
         </div>
