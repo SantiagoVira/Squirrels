@@ -12,7 +12,7 @@ import Col from "../Col";
 import "./SideBar.css";
 
 const SideBar = ({disabled, post, changePost, user, changeUser, editing, 
-        changeEditing, onDelete, isReply}) => {
+        changeEditing, onDelete}) => {
     const [copied, setCopied] = useState("Copy Embed Link");
 
     const copyLink = () => {
@@ -23,22 +23,20 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
     }
 
     const renderEmbed = () => {
-        if(!isReply) {
-            return (
-                <div className="tooltip">
-                    <IconButton
-                        className="copier"
-                        onMouseOut={() => setCopied("Copy Embed Link")}
-                        onClick={() => copyLink()}
-                    >
-                        <span className="tooltiptext" id="myTooltip">
-                            {copied}
-                        </span>
-                        <CodeIcon className="codeIcon" />
-                    </IconButton>
-                </div>
-            );
-        }
+        return (
+            <div className="tooltip">
+                <IconButton
+                    className="copier"
+                    onMouseOut={() => setCopied("Copy Embed Link")}
+                    onClick={() => copyLink()}
+                >
+                    <span className="tooltiptext" id="myTooltip">
+                        {copied}
+                    </span>
+                    <CodeIcon className="codeIcon" />
+                </IconButton>
+            </div>
+        );
     }
     
     const vote = async () => {
@@ -60,12 +58,15 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
         if(changePost && changeUser && user) {
             const liked = post.liked ? "liked" : "";
             return (
-                <IconButton
-                    className={`editOrDeleteButton up ${liked}`}
-                    onClick={() => vote()}
-                >
-                    <FavoriteIcon className="up" />
-                </IconButton>
+                <React.Fragment>
+                    <IconButton
+                        className={`editOrDeleteButton up ${liked}`}
+                        onClick={() => vote()}
+                    >
+                        <FavoriteIcon className="up" />
+                    </IconButton>
+                    <p className="votes">{post.votes}</p>
+                </React.Fragment>
             )
         }
     }
@@ -103,7 +104,6 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
         <div className="leftSideWrapper">
             <div className="buttons">
                 {renderVote()}
-                <p className="votes">{post.votes}</p>
             </div>
             {renderOwnerBtns()}
             {renderEmbed()}

@@ -13,8 +13,8 @@ import Row from "../Row";
 import Col from "../Col";
 import Hashtags from "./Hashtags";
 import SideBar from "./SideBar";
-import ReplyForm from "./ReplyForm";
-import Replies from "./Replies";
+import ReplyForm from "../Forms/ReplyForm";
+import Replies from "../Replies/Replies";
 
 // Don't fetch from this component. Add them to the serializer instead!
 function Card({
