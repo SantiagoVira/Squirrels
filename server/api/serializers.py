@@ -3,6 +3,8 @@ from rest_framework import serializers
 from rest_framework_jwt.settings import api_settings
 from .models import SquirreLog, SquirrelTopic, User
 
+import html
+
 class SquirrelTopicSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
     SquirreLogs = serializers.HyperlinkedIdentityField(view_name='squirreltopic-detail')
@@ -44,11 +46,12 @@ class SquirreLogSerializer(serializers.ModelSerializer):
     owner_details = serializers.SerializerMethodField()
     replies = serializers.HyperlinkedIdentityField(read_only=True, view_name='squirrelog-replies')
     replies_length = serializers.SerializerMethodField()
+    note = serializers.SerializerMethodField()
 
     class Meta:
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
-            'owner_details', 'SquirrelTopics', 'liked_by', 'liked', 
+            'owner_details', 'SquirrelTopics', 'liked_by', 'liked',
             'replies', 'replies_length', 'is_reply')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
@@ -71,6 +74,9 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def get_replies_length(self, obj):
         return obj.replies.count()
+
+    def get_note(self, obj):
+        return html.escape(obj.note)
 
     def create(self, validated_data):
         log = SquirreLog.objects.create(
