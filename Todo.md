@@ -13,8 +13,6 @@
 
 ## **Frontend**
 
--   reply sidebar
-
 ## **Server:**
 
 ## **Other**
