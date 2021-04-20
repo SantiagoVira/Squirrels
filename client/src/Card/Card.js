@@ -61,16 +61,17 @@ function Card({
 
     return (
         <div className="squirrelCard">
-            <SideBar
-                disabled={disableCardMenu}
-                post={post}
-                changePost={setPost}
-                user={user}
-                changeUser={changeUser}
-                editing={editing}
-                changeEditing={setEditing}
-                onDelete={onDelete}
-            />
+            {!disableCardMenu &&
+                <SideBar
+                    post={post}
+                    changePost={setPost}
+                    user={user}
+                    changeUser={changeUser}
+                    editing={editing}
+                    changeEditing={setEditing}
+                    onDelete={onDelete}
+                />
+            }
             <Col>
                 {/* User Details */}
                 {disableUsername ? (
@@ -154,6 +155,7 @@ function Card({
                     replies={replies}
                     changeReplies={setReplies}
                     user={user}
+                    changeUser={changeUser}
                     post={post}
                 />
             )}
