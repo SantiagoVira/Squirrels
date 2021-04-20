@@ -6,12 +6,18 @@
 }
 
 .replyCard {
+    display: flex;
     background-color: var(--cinnamon);
     border-radius: 12px;
     margin: 10px 0;
     padding: 15px;
     font-size: 18px;
     text-align: left;
+}
+
+.replyCard .content {
+    padding: 0;
+    margin-left: 10px;
 }
 
 .replyCard .owner {
