@@ -33,12 +33,12 @@ function Create({ user }) {
 
     const commonHashtags = ["Squirrels", "Park", "Dogs", "Poems"];
 
-    if(user.isLoggedIn === null) {
+    if (user.isLoggedIn === null) {
         return null;
     }
 
-    if(user.isLoggedIn === false) {
-        return <Redirect to="/login" />
+    if (user.isLoggedIn === false) {
+        return <Redirect to="/login" />;
     }
 
     return (
@@ -78,7 +78,7 @@ function Create({ user }) {
                 <button className="Submit">Post</button>
             </form>
         </div>
-    )
+    );
 }
 
 export default Create;

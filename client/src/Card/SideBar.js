@@ -11,7 +11,7 @@ import CodeIcon from "@material-ui/icons/Code";
 import Col from "../Col";
 import "./SideBar.css";
 
-const SideBar = ({disabled, post, changePost, user, changeUser, editing, 
+const SideBar = ({disableEmbed, post, changePost, user, changeUser, editing, 
         changeEditing, onDelete}) => {
     const [copied, setCopied] = useState("Copy Embed Link");
 
@@ -23,20 +23,22 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
     }
 
     const renderEmbed = () => {
-        return (
-            <div className="tooltip">
-                <IconButton
-                    className="copier"
-                    onMouseOut={() => setCopied("Copy Embed Link")}
-                    onClick={() => copyLink()}
-                >
-                    <span className="tooltiptext" id="myTooltip">
-                        {copied}
-                    </span>
-                    <CodeIcon className="codeIcon" />
-                </IconButton>
-            </div>
-        );
+        if(!disableEmbed) {
+            return (
+                <div className="tooltip">
+                    <IconButton
+                        className="copier"
+                        onMouseOut={() => setCopied("Copy Embed Link")}
+                        onClick={() => copyLink()}
+                    >
+                        <span className="tooltiptext" id="myTooltip">
+                            {copied}
+                        </span>
+                        <CodeIcon className="codeIcon" />
+                    </IconButton>
+                </div>
+            );
+        }
     }
     
     const vote = async () => {
@@ -55,6 +57,7 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
     }
 
     const renderVote = () => {
+        console.log(changeUser)
         if(changePost && changeUser && user) {
             const liked = post.liked ? "liked" : "";
             return (
@@ -96,7 +99,7 @@ const SideBar = ({disabled, post, changePost, user, changeUser, editing,
         }
     }
 
-    if(disabled || !post) {
+    if(!post) {
         return null;
     }
 

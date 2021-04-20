@@ -3,7 +3,7 @@ import api from "../api";
 import "./Replies.css";
 import Reply from "./Reply";
 
-const Replies = ({ replies, changeReplies, user, post }) => {
+const Replies = ({ replies, changeReplies, user, changeUser, post }) => {
     const onDelete = async (id) => {
         try {
             if (window.confirm("Are you sure you want to delete this reply?")) {
@@ -21,6 +21,7 @@ const Replies = ({ replies, changeReplies, user, post }) => {
                     reply={reply} 
                     changeReplies={changeReplies}
                     user={user} 
+                    changeUser={changeUser}
                     post={post} 
                     onDelete={(id) => onDelete(id)}
                     key={reply.id} 
