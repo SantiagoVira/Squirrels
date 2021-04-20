@@ -1,6 +1,7 @@
 import api from "../api";
 import React, { useState } from "react";
 import "./Card.css";
+import history from "../history";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
 import ContentEditable from "react-contenteditable";
@@ -44,6 +45,14 @@ function Card({
     const closeForm = () => {
         setFormOpen(false);
         setRepliesOpen(true);
+    };
+
+    const replyButtonAction = async () => {
+        if (!user.isLoggedIn) {
+            return history.push("/login");
+        }
+        loadReplies();
+        setFormOpen(!formOpen);
     };
 
     if (!post) {
@@ -117,17 +126,14 @@ function Card({
                         <p>{post.replies_length} Replies</p>
                         <ReplyIcon className="CardRepliesIcon" />
                     </span>
-                    {user.isLoggedIn && (
-                        <span
-                            className="CardRepliesLink pointerOnHover"
-                            onClick={() => {
-                                loadReplies();
-                                setFormOpen(!formOpen);
-                            }}
-                        >
-                            Reply
-                        </span>
-                    )}
+                    <span
+                        className="CardRepliesLink pointerOnHover"
+                        onClick={() => {
+                            replyButtonAction();
+                        }}
+                    >
+                        Reply
+                    </span>
                 </div>
             </Col>
 
