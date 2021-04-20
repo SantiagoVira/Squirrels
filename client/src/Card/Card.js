@@ -16,8 +16,6 @@ import SideBar from "./SideBar";
 import ReplyForm from "../Forms/ReplyForm";
 import Replies from "../Replies/Replies";
 
-var sanitizeHtml = require("sanitize-html");
-
 // Don't fetch from this component. Add them to the serializer instead!
 function Card({
     story,
@@ -102,12 +100,7 @@ function Card({
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
-                        html={
-                            sanitizeHtml(editValue, {
-                                allowedTags: [],
-                                allowedAttributes: [],
-                            }) || ""
-                        }
+                        html={editValue || ""}
                         onChange={(e) =>
                             setEditValue(e.currentTarget.textContent)
                         }
