@@ -122,6 +122,12 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             # Topics with 1 or less logs will be empty after this method
             if topic.logs.count() <= 1:
                 topic.delete()
+
+        # Delete related replies
+        log = SquirreLog.objects.get(id=kwargs['pk'])
+        for reply in log.replies.all():
+            reply.delete()
+
         return super(SquirreLogViewSet, self).destroy(request, *args, **kwargs)
 
     @action(methods=['get'], detail=False, url_path='archive', url_name='archive')
