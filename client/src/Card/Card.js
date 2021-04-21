@@ -69,7 +69,7 @@ function Card({
                     changeUser={changeUser}
                     editing={editing}
                     changeEditing={setEditing}
-                    onDelete={onDelete}
+                    onDelete={() => onDelete(post)}
                 />
             )}
             <Col>

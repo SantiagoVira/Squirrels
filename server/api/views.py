@@ -59,7 +59,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
     @action(methods=['get'], detail=True, url_path='posts', name='posts')
     def posts(self, request, *args, **kwargs):
-        logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk'])
+        logs = SquirreLog.objects.filter(owner__id=self.kwargs['pk']).exclude(is_reply=True)
         return paginated_response(self, logs, SquirreLogSerializer, UserSquirrelPagination)
 
     # Gets all posts liked by specific user
@@ -91,9 +91,6 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     serializer_class = SquirreLogSerializer
     queryset = SquirreLog.objects.all()#.exclude(is_reply=True)
     pagination_class = PageNumberPagination
-    # Adds searching functionality
-    # search_fields = ['note', 'owner__username', 'topics__topic_name']
-    # filter_backends = (filters.SearchFilter,)
 
     def get_permissions(self):
         if self.action in ['list', 'retrieve']:

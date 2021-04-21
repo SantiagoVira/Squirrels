@@ -21,7 +21,7 @@ function Reply({ user, onDelete, changeUser, ...props }) {
                     changeUser={changeUser}
                     editing={editing}
                     changeEditing={setEditing}
-                    onDelete={onDelete}
+                    onDelete={() => onDelete(reply.id)}
                 />
             )}
             <div className="content">
