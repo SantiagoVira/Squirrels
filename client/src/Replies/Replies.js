@@ -11,7 +11,6 @@ const Replies = ({ replies, changeReplies, user, changeUser, post, changePost })
                 const postResponse = await api.get(`/api/SquirreLogs/${post.id}/`);
                 changeReplies(replies.filter(reply => reply.id !== id));
                 changePost(postResponse.data);
-
             }
         } catch (err) {}
     };

@@ -15,7 +15,7 @@ import Header from "./Header/Header.js";
 import Archive from "./Archive/Archive";
 import Home from "./Home/Home.js";
 import About from "./About/About.js";
-import Create from "./Forms/Create.js";
+import Create from "./Create/Create.js";
 import Login from "./Auth/Login.js";
 import Register from "./Auth/Register.js";
 
@@ -32,10 +32,7 @@ import Greeting from "./Greetings/Greeting";
 
 function App() {
     const [page, setPage] = useState(window.location.href);
-    const [user, setUser] = useState({
-        isLoggedIn: null,
-        profile: null,
-    });
+    const [user, setUser] = useState({isLoggedIn: null, profile: null});
     const [size, setSize] = useState(window.innerWidth);
     const [footer, setFooter] = useState(false);
 
