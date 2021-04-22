@@ -23,14 +23,14 @@ function Archive({ user, changeUser }) {
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    console.log(isBottom)
+    
     useEffect(() => {
         const getNext = async () => {
-            console.log(next)
-            if(next) {
+            if(isBottom && next) {
                 const response = await api.get(next);
                 setStories([...stories, ...response.data.results]);
                 setNext(response.data.next);
+                setIsBottom(false);
             }
         }
         getNext();
@@ -78,7 +78,6 @@ function Archive({ user, changeUser }) {
             setStories(results.data.results);
         }
     }
-    
     const handleScroll = async () => {
         const scrollTop =
             (document.documentElement && document.documentElement.scrollTop) ||
@@ -87,6 +86,7 @@ function Archive({ user, changeUser }) {
             (document.documentElement &&
                 document.documentElement.scrollHeight) ||
             document.body.scrollHeight;
+        
         if (scrollTop + window.innerHeight + 500 >= scrollHeight) {
             setIsBottom(true);
         }
