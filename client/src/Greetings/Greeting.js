@@ -55,13 +55,29 @@ function Greeting() {
                             Mental health, squirrels, and a whole lot more!
                             <br />
                             Visit{" "}
-                            <Link to="/about" className="greetingAboutLink">
+                            <Link
+                                to="/about"
+                                className="greetingAboutLink"
+                                onClick={() => {
+                                    setDisplay(false);
+                                }}
+                            >
                                 our About page
                             </Link>{" "}
                             to learn about our story or you can explore our
-                            website! We have an Archive page that is sure to
-                            brighten your day, as well as a page to view real
-                            peoples' posts as they post them! Enjoy!
+                            website by{" "}
+                            <Link
+                                to="/register"
+                                className="greetingAboutLink"
+                                onClick={() => {
+                                    setDisplay(false);
+                                }}
+                            >
+                                signing up here
+                            </Link>{" "}
+                            ! We have an Archive page that is sure to brighten
+                            your day, as well as a page to view real peoples'
+                            posts as they post them! Enjoy!
                         </p>
                     </div>
                     <IconButton
