@@ -13,11 +13,12 @@
 
 ## **Frontend**
 
--   Replies getting duplicated
--   archive wont load more posts
-    -   load 1 more set of 20 posts than showing
+-   post button gets half cutoff by footer on create
+-   make search bar smaller not dissapear on small screen
 
 ## **Server:**
+
+-   searching by hashtags doesnt search entire database
 
 ## **Other**
 
