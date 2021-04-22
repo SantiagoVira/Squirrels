@@ -12,18 +12,16 @@ function Reply({ user, onDelete, changeUser, ...props }) {
 
     return (
         <div className="replyCard">
-            {user.isLoggedIn && (
-                <SideBar
-                    disableEmbed
-                    post={reply}
-                    changePost={setReply}
-                    user={user}
-                    changeUser={changeUser}
-                    editing={editing}
-                    changeEditing={setEditing}
-                    onDelete={() => onDelete(reply.id)}
-                />
-            )}
+            <SideBar
+                disableEmbed
+                post={reply}
+                changePost={setReply}
+                user={user}
+                changeUser={changeUser}
+                editing={editing}
+                changeEditing={setEditing}
+                onDelete={() => onDelete(reply.id)}
+            />
             <div className="content">
                 <strong>
                     <div className="owner">

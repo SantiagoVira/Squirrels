@@ -10,45 +10,43 @@ import "./Archive.css";
 import { IconButton } from "@material-ui/core";
 
 function Archive({ user, changeUser }) {
-    const [data, setData] = useState([]);
     const [stories, setStories] = useState(null);
-    const [isBottom, setIsBottom] = useState(false);
+    const [next, setNext] = useState(null);
     const [searching, setSearching] = useState(false);
+    const [isBottom, setIsBottom] = useState(false);
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
     );
-
+    
     useEffect(async () => {
-        var response = await api.get("/api/SquirreLogs/archive");
-        var d = response.data.results;
-
-        setData(d);
-        getStories(d, "");
-        while (response.data.next) {
-            response = await api.get(response.data.next);
-            d = [...d, ...response.data.results];
-            setData(d);
-        }
-
+        getStories();
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-
+    console.log(isBottom)
     useEffect(() => {
-        if (isBottom && stories && !searching) {
-            //Add the stuff
-            const index = stories.length + 1;
-            setStories([...stories, ...data.slice(index, index + 20)]);
-            setIsBottom(false);
+        const getNext = async () => {
+            console.log(next)
+            if(next) {
+                const response = await api.get(next);
+                setStories([...stories, ...response.data.results]);
+                setNext(response.data.next);
+            }
         }
+        getNext();
     }, [isBottom]);
 
-    async function getStories(stories, search) {
-        if (search === "") {
-            setStories(stories);
-            setSearching(false);
-        } else if (search.startsWith("#")) {
-            setSearching(true);
+    const getStories = async () => {
+        const response = await api.get("/api/SquirreLogs/archive");
+        setStories(response.data.results);
+        setNext(response.data.next);
+        setSearching(false);
+        
+    }
+
+    const search = async (stories, search) => {
+        setSearching(true);
+        if (search.startsWith("#")) {
             const searchedStories = [];
             stories.forEach((log) => {
                 //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
@@ -74,15 +72,14 @@ function Archive({ user, changeUser }) {
             setStories(searchedStories.slice(storyNum, storyNum + 10));
             //Search by story (notes)
         } else {
-            setSearching(true);
             const results = await api.get(
                 `/api/SquirreLogs/archive?search=${search}`
             );
             setStories(results.data.results);
         }
     }
-
-    function handleScroll() {
+    
+    const handleScroll = async () => {
         const scrollTop =
             (document.documentElement && document.documentElement.scrollTop) ||
             document.body.scrollTop;
@@ -146,13 +143,9 @@ function Archive({ user, changeUser }) {
                 them here for all to see.
             </p>
             <div className="searchWrapper hideOnTooSmall">
-                <Search stories={data} getStories={getStories} />
+                <Search stories={stories} getStories={search} />
                 {searching && (
-                    <IconButton
-                        onClick={() => {
-                            getStories(data, "");
-                        }}
-                    >
+                    <IconButton onClick={getStories}>
                         <CancelRoundedIcon className="ArchiveExitSearchIcon" />
                     </IconButton>
                 )}
