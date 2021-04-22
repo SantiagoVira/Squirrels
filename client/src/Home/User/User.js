@@ -1,29 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
-import api from "../../api";
 import Avatar from "../Avatar/Avatar";
 
 function User(props) {
-    const [userData, setUserData] = useState({ votes: "", posts: "" });
-
-    useEffect(() => {
-        const getUserData = async () => {
-            const response = await api.get(
-                `/api/users/${props.user.profile.id}/posts/`
-            );
-            setUserData({
-                votes: response.data.total_votes,
-                posts: response.data.count,
-            });
-        };
-        if(props.user.profile) {
-            getUserData();
-        }
-    }, [props.user]);
-
     if (!props.user.profile) {
         return null;
     }
@@ -35,13 +17,13 @@ function User(props) {
             <Row>
                 <Col>
                     <p className="userData">
-                        Total Votes: <strong>{userData.votes}</strong>
+                        Total Votes: <strong>{props.counts.votes}</strong>
                     </p>
                     <Link
                         className="link userData"
                         to={`/?user=${props.user.profile.id}`}
                     >
-                        Posts: <strong>{userData.posts}</strong>
+                        Posts: <strong>{props.counts.posts}</strong>
                     </Link>
                 </Col>
             </Row>

@@ -88,7 +88,7 @@ const SideBar = ({
                     <Col>
                         <IconButton
                             className="editOrDeleteButton"
-                            onClick={() => onDelete(post.id)}
+                            onClick={() => onDelete()}
                         >
                             <DeleteIcon />
                         </IconButton>

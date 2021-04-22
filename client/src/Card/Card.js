@@ -13,7 +13,7 @@ import Row from "../Row";
 import Col from "../Col";
 import Hashtags from "./Hashtags";
 import SideBar from "./SideBar";
-import ReplyForm from "../Forms/ReplyForm";
+import ReplyForm from "../Replies/ReplyForm";
 import Replies from "../Replies/Replies";
 
 // Don't fetch from this component. Add them to the serializer instead!
@@ -69,7 +69,7 @@ function Card({
                     changeUser={changeUser}
                     editing={editing}
                     changeEditing={setEditing}
-                    onDelete={onDelete}
+                    onDelete={() => onDelete(post)}
                 />
             )}
             <Col>

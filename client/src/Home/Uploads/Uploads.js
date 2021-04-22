@@ -102,11 +102,16 @@ function Uploads(props) {
         }
     };
 
-    const delete_log = async (id) => {
+    const delete_log = async (deletedPost) => {
         try {
             if (window.confirm("Are you sure you want to delete this post?")) {
-                await api.delete(`/api/SquirreLogs/${id}/`);
-                setPosts(posts.filter((post) => post.id !== id));
+                await api.delete(`/api/SquirreLogs/${deletedPost.id}/`);
+                setPosts(posts.filter((post) => post.id !== deletedPost.id));
+                
+                // Updates user's post count
+                if(user.profile.id === deletedPost.owner) {
+                    props.getCounts()
+                }
             }
         } catch (err) {}
     };
