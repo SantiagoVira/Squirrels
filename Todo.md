@@ -13,6 +13,9 @@
 
 ## **Frontend**
 
+-   Replies getting duplicated
+-   archive wont load more posts
+
 ## **Server:**
 
 ## **Other**
