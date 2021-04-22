@@ -15,6 +15,8 @@
 
 -   Replies getting duplicated
 -   archive wont load more posts
+    -   load 1 more set of 20 posts than showing
+-   reply text is small
 
 ## **Server:**
 
