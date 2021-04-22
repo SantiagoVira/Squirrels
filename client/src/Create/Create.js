@@ -17,6 +17,7 @@ function Create({ user }) {
     const onSubmitClick = async (e) => {
         try {
             e.preventDefault();
+            history.push("/");
 
             await api.post("/api/SquirreLogs/", {
                 ...request,
@@ -27,7 +28,6 @@ function Create({ user }) {
                 pub_date: new Date().toISOString(), //Gets current date
             });
 
-            history.push("/");
         } catch (err) {}
     };
 

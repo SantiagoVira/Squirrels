@@ -7,6 +7,11 @@ const ReplyForm = ({post, changePost, changeReplies, closeForm}) => {
 
     const onFormSubmit = async (e) => {
         e.preventDefault();
+        // Showing and hiding
+        if(closeForm) {
+            closeForm();
+        }
+
         const response = await api.post(`/api/SquirreLogs/${post.id}/replies/`, {
             note: text,
             pub_date: new Date().toISOString(),
@@ -14,11 +19,6 @@ const ReplyForm = ({post, changePost, changeReplies, closeForm}) => {
         });
         changeReplies(response.data.reply)
         changePost(response.data.post)
-
-        // Showing and hiding 
-        if(closeForm) {
-            closeForm();
-        }
     }
 
     return (
