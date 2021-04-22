@@ -22,6 +22,7 @@
     word-wrap: none;
     box-sizing: border-box;
     width: 100%;
+    font-size: 1.2rem;
 }
 
 .replyForm button {
