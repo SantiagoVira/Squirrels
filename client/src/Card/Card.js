@@ -5,6 +5,7 @@ import history from "../history";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
 import ContentEditable from "react-contenteditable";
+import { Remarkable } from 'remarkable';
 
 import ReplyIcon from "@material-ui/icons/Reply";
 
@@ -33,6 +34,7 @@ function Card({
     const [formOpen, setFormOpen] = useState(false);
     const [repliesOpen, setRepliesOpen] = useState(false);
     const [replies, setReplies] = useState(null);
+    const md = new Remarkable();
 
     const loadReplies = async () => {
         if (replies === null) {
@@ -100,10 +102,12 @@ function Card({
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
-                        html={editValue || ""}
-                        onChange={(e) =>
-                            setEditValue(e.currentTarget.textContent)
+                        html={
+                          !editing ? md.render(editValue)
+                          : editValue ? editValue
+                          : ""
                         }
+                        onChange={(e) => setEditValue(e.currentTarget.textContent)}
                         onBlur={(e) =>
                             api.patch(`/api/SquirreLogs/${post.id}/`, {
                                 note: e.currentTarget.textContent,
