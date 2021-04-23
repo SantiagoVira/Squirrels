@@ -13,14 +13,14 @@
 
 ## **Frontend**
 
--   post button gets half cutoff by footer on create
 -   make search bar smaller not dissapear on small screen
 -   menu underline goes to home page when reload
 -   Use RegEx to make links clickable in messages
 -   Show search bar in archive on mobile, just make it smaller
 -   If Hashtags are too long they just overflow
 -   ^ Same for text
--   Make username & pfp on a reply link to user’s posts
+
+-   post doesnt appear on home page after creation
 
 ## **Server:**
 
