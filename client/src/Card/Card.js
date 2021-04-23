@@ -40,7 +40,7 @@ function Card({
         if (replies === null) {
             const response = await api.get(story.replies);
             // Reverse replies array to order by pub_date
-            setReplies(response.data.results.reverse());
+            setReplies(response.data.results);
         }
     };
 
@@ -149,7 +149,7 @@ function Card({
                     changePost={(newPost) => setPost(newPost)}
                     replies={replies}
                     changeReplies={(newReply) =>
-                        setReplies([newReply, ...replies])
+                        setReplies([...replies, newReply])
                     }
                     closeForm={closeForm}
                 />

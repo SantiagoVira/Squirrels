@@ -14,10 +14,11 @@ function Menu(props) {
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 0 ? "scrolled" : ""
     );
-    const page = props.page;
+    const [page, setPage] = useState(window.location.href);
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll);
+        setPage(window.location.href);
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
@@ -32,14 +33,14 @@ function Menu(props) {
 
     // Note: 'Icon' must start with a capital I, since it's rendered as JSX
     const renderLink = (Icon, label, path) => {
-        const underlined = page.endsWith(path) ? "MenuIconFocused" : ""
+        const underlined = page.endsWith(path) ? "MenuIconFocused" : "";
         return (
             <Link to={path}>
                 <Icon className={underlined} />
                 <p className="menuBarIconLabel">{label}</p>
             </Link>
-        )
-    }
+        );
+    };
 
     function renderAuth() {
         if (props.user.isLoggedIn) {
@@ -55,7 +56,7 @@ function Menu(props) {
                     {renderLink(AccountCircleIcon, "Login", "/login")}
                     {renderLink(PersonAddIcon, "Register", "/register")}
                 </Row>
-            )
+            );
         }
     }
 
@@ -64,9 +65,8 @@ function Menu(props) {
             <Row className="left">
                 {renderLink(HomeIcon, "Home", "/")}
                 {renderLink(AppsIcon, "Archive", "/archive")}
-                {props.user.isLoggedIn && (
-                    renderLink(AddBoxIcon, "Create", "/create")
-                )}
+                {props.user.isLoggedIn &&
+                    renderLink(AddBoxIcon, "Create", "/create")}
             </Row>
             <div className="right">{renderAuth(page)}</div>
         </div>

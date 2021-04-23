@@ -30,7 +30,7 @@ const Hashtags = ({findHashtag, children}) => {
                             key={unique()}
                             onClick={() => findHashtag ? findHashtag(topic) : null}
                         >
-                            <p>{topic}</p>
+                            <div>{topic}</div>
                         </div>
                     )
                 } else {

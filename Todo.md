@@ -13,11 +13,15 @@
 
 ## **Frontend**
 
--   Replies getting duplicated
--   archive wont load more posts
-    -   load 1 more set of 20 posts than showing
+-   Use RegEx to make links clickable in messages
+-   text too long they just overflow
+
+-   editing posts is like really hard
 
 ## **Server:**
+
+-   searching by hashtags doesnt search entire database
+-   Maybe a notification center
 
 ## **Other**
 

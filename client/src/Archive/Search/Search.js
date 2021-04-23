@@ -8,7 +8,7 @@ function Search(props) {
 
     function search(e) {
         e.preventDefault();
-        props.getStories(props.stories, value);
+        props.getStories(value);
         setValue("");
     }
 
@@ -25,9 +25,7 @@ function Search(props) {
                 ></input>
                 <button
                     type="submit"
-                    onClick={(e) => {
-                        search(e);
-                    }}
+                    onClick={(e) => search(e)}
                     style={{ display: "none" }}
                 />
             </form>

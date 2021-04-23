@@ -130,8 +130,11 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     @action(methods=['get'], detail=False, url_path='archive', url_name='archive')
     def archive(self, request, **kwargs):
         search = request.query_params.get("search")
+        hashtag = request.query_params.get("hashtag")
         if search:
             archive = SquirreLog.objects.filter(owner_id=1, note__icontains=search)
+        elif hashtag:
+            archive = SquirreLog.objects.filter(owner_id=1, topics__topic_name=hashtag)
         else:
             archive = SquirreLog.objects.filter(owner_id=1)
         archive.exclude(is_reply=True)
