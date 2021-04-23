@@ -22,7 +22,7 @@ function User(props) {
     return (
         <div className="user">
             {/* Passing name as prop for more reusability */}
-            <Row>
+            <Row style={{ alignItems: "center" }}>
                 <Avatar user={props.user} name={props.user.profile.username} />
                 <NoNotif />
             </Row>

@@ -117,7 +117,11 @@ function Avatar(props) {
                         className="UserBreakdownPreview"
                     />
                 )}
-                {props.name && <h1>{props.name}</h1>}
+                {props.name && (
+                    <h1 className="UserBreakdownAvatarUsername">
+                        {props.name}
+                    </h1>
+                )}
             </Row>
         </div>
     );

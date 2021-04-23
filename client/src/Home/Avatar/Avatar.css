@@ -22,7 +22,7 @@
     justify-content: space-evenly;
 }
 .UserBreakdownUsernameAndImage {
-    margin-top: 10px;
+    margin-right: 10px;
     width: 100%;
 }
 .UserBreakdownPreview {
@@ -43,4 +43,8 @@
     display: block;
     min-height: var(--profileSize);
     min-width: var(--profileSize);
+}
+
+.UserBreakdownAvatarUsername {
+    margin: 0;
 }
