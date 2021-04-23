@@ -5,6 +5,7 @@ import history from "../history";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
 import ContentEditable from "react-contenteditable";
+import { Remarkable } from 'remarkable';
 
 import ReplyIcon from "@material-ui/icons/Reply";
 
@@ -33,6 +34,7 @@ function Card({
     const [formOpen, setFormOpen] = useState(false);
     const [repliesOpen, setRepliesOpen] = useState(false);
     const [replies, setReplies] = useState(null);
+    const md = new Remarkable();
 
     const loadReplies = async () => {
         if (replies === null) {
@@ -56,7 +58,7 @@ function Card({
     };
 
     const makeClickable = (text) => {
-        return text.replaceAll(/https?:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&;\?\#\/.=]+/ig, (m) => {return "<a href=\"" + m + "\">" + m + "</a>"});
+        return text.replaceAll(/[^\[\(]https?:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&;\?\#\/.=]+/ig, (m) => {return "[" + m + "](" + m + ")"});
     }
 
     if (!post) {
@@ -104,10 +106,12 @@ function Card({
                     <ContentEditable
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
-                        html={makeClickable(editValue) || ""}
-                        onChange={(e) =>
-                            setEditValue(e.currentTarget.textContent)
+                        html={
+                          !editing ? md.render(makeClickable(editValue))
+                          : editValue ? editValue
+                          : ""
                         }
+                        onChange={(e) => setEditValue(e.currentTarget.textContent)}
                         onBlur={(e) =>
                             api.patch(`/api/SquirreLogs/${post.id}/`, {
                                 note: e.currentTarget.textContent,

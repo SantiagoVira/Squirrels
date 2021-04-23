@@ -76,7 +76,8 @@ class SquirreLogSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         log = SquirreLog.objects.create(
-            note=html.escape(validated_data['note']),
+            # note=html.escape(validated_data['note']),
+            note=validated_data['note'],
             pub_date=validated_data['pub_date'],
             owner=validated_data['owner'],
         )
