@@ -41,43 +41,18 @@ function Archive({ user, changeUser }) {
         setStories(response.data.results);
         setNext(response.data.next);
         setSearching(false);
-        
     }
 
-    const search = async (stories, search) => {
+    const search = async (search) => {
+        const query = search.startsWith("#") 
+            ? `hashtag=${search.slice(1)}`
+            : `search=${search}`
+        const response = await api.get(`/api/SquirreLogs/archive?${query}`);
         setSearching(true);
-        if (search.startsWith("#")) {
-            const searchedStories = [];
-            stories.forEach((log) => {
-                //search.startsWith('#') ? log.topics :log.note_squirrel_park_stories;
-                log.SquirrelTopics.some((topic) => {
-                    const formattedSearch = search
-                        .slice(1)
-                        .trim()
-                        .toLowerCase();
-                    if (
-                        topic.topic_name
-                            .trim()
-                            .toLowerCase()
-                            .includes(formattedSearch)
-                    ) {
-                        searchedStories.push(log);
-                        return true;
-                    }
-                    return false;
-                });
-                return false;
-            });
-            const storyNum = Math.random() * searchedStories.length;
-            setStories(searchedStories.slice(storyNum, storyNum + 10));
-            //Search by story (notes)
-        } else {
-            const results = await api.get(
-                `/api/SquirreLogs/archive?search=${search}`
-            );
-            setStories(results.data.results);
-        }
+        setStories(response.data.results);
+        setNext(response.data.next);
     }
+
     const handleScroll = async () => {
         const scrollTop =
             (document.documentElement && document.documentElement.scrollTop) ||
@@ -106,6 +81,7 @@ function Archive({ user, changeUser }) {
                     key={post.id}
                     user={user}
                     changeUser={changeUser}
+                    findHashtag={search}
                     disableUsername={true}
                 />
             );
