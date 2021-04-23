@@ -16,6 +16,8 @@
 -   Use RegEx to make links clickable in messages
 -   text too long they just overflow
 
+-   editing posts is like really hard
+
 ## **Server:**
 
 -   searching by hashtags doesnt search entire database
