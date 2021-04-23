@@ -57,6 +57,10 @@ function Card({
         setFormOpen(!formOpen);
     };
 
+    const makeClickable = (text) => {
+        return text.replaceAll(/[^\[\(]https?:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&;\?\#\/.=]+/ig, (m) => {return "[" + m + "](" + m + ")"});
+    }
+
     if (!post) {
         return null;
     }
@@ -103,7 +107,7 @@ function Card({
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
                         html={
-                          !editing ? md.render(editValue)
+                          !editing ? md.render(makeClickable(editValue))
                           : editValue ? editValue
                           : ""
                         }

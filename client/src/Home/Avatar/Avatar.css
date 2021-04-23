@@ -21,10 +21,6 @@
     align-items: center;
     justify-content: center;
 }
-/* .UserBreakdownUsernameAndImage {
-    margin-top: 10px;
-    width: 100%;
-} */
 .UserBreakdownPreview {
     width: var(--profileSize);
     height: auto;
@@ -43,4 +39,8 @@
     display: block;
     min-height: var(--profileSize);
     min-width: var(--profileSize);
+}
+
+.UserBreakdownAvatarUsername {
+    margin: 0;
 }

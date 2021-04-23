@@ -4,6 +4,15 @@ import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import Avatar from "../Avatar/Avatar";
+import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
+import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
+
+function NoNotif() {
+    return <NotificationsNoneOutlinedIcon />;
+}
+function Notif() {
+    return <NotificationsActiveOutlinedIcon />;
+}
 
 function User(props) {
     if (!props.user.profile) {

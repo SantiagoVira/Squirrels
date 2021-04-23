@@ -14,7 +14,6 @@
 ## **Frontend**
 
 -   Use RegEx to make links clickable in messages
--   text too long they just overflow
 
 -   editing posts is like really hard
 
