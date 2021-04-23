@@ -8,10 +8,7 @@
     position: absolute;
     bottom: 0;
     left: 0;
-    /* height: 100px; */
-    /* justify-content: flex-start !important; */
     align-items: center;
-    margin-top: 10px;
 }
 
 .footer a {
@@ -39,4 +36,10 @@
 }
 .spacer {
     height: 20vh;
+}
+
+@media only screen and (max-width: 768px) {
+    .footer {
+        bottom: -20px;
+    }
 }
