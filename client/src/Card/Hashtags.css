@@ -15,6 +15,13 @@
     margin: 5px;
     color: var(--text);
 }
-.hashtagWrappper > p {
+.hashtagWrappper > div {
+    /* Fixed table allows word-break to work with percent widths */
+    display: table;
+    table-layout: fixed;
+    max-width: 100%;
+    word-break: break-word;
+    text-align: left;
+    font-size: 20px;
     margin: 0 !important;
 }
