@@ -46,7 +46,7 @@ function Reply({ user, onDelete, changeUser, ...props }) {
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
                     disabled={!editing}
-                    html=html={
+                    html={
                       !editing ? md.render(editValue)
                       : editValue ? editValue
                       : ""
