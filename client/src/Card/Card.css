@@ -67,11 +67,14 @@
     padding: 4px;
     outline: none;
     border: none;
-    word-wrap: break-word;
+
+    /* Fixed table allows word-break to work with percent widths */
+    display: table;
+    table-layout: fixed;
+    max-width: 100%;
+    word-break: break-word;
     white-space: pre-wrap;
 }
-
-
 
 .StoryIsEditable {
     background-color: rgba(0, 0, 0, 0.2);
