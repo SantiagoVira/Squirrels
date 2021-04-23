@@ -17,7 +17,7 @@ function User(props) {
             <Row>
                 <Col>
                     <p className="userData">
-                        Total Votes: <strong>{props.counts.votes}</strong>
+                        Total Likes: <strong>{props.counts.votes}</strong>
                     </p>
                     <Link
                         className="link userData"
