@@ -57,6 +57,16 @@ function Card({
         setFormOpen(!formOpen);
     };
 
+    const updateLog = async (e) => {
+        const value = e.currentTarget.textContent.trim().length > 0 
+            ? e.currentTarget.textContent
+            : "-";
+        const response = await api.patch(`/api/SquirreLogs/${post.id}/`, {
+            note: value,
+        })
+        setEditValue(response.data.note)
+    }
+
     const makeClickable = (text) => {
         return text.replaceAll(/[^\[\(]https?:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&;\?\#\/.=]+/ig, (m) => {return "[" + m + "](" + m + ")"});
     }
@@ -112,11 +122,7 @@ function Card({
                           : ""
                         }
                         onChange={(e) => setEditValue(e.currentTarget.textContent)}
-                        onBlur={(e) =>
-                            api.patch(`/api/SquirreLogs/${post.id}/`, {
-                                note: e.currentTarget.textContent,
-                            })
-                        }
+                        onBlur={(e) => updateLog(e)}
                     />
                 </Row>
 
