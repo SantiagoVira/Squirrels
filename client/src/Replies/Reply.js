@@ -4,6 +4,7 @@ import ContentEditable from "react-contenteditable";
 import "./Replies.css";
 import api from "../api";
 import SideBar from "../Card/SideBar";
+import { Link } from "react-router-dom";
 
 function Reply({ user, onDelete, changeUser, ...props }) {
     const [reply, setReply] = useState(props.reply);
@@ -24,16 +25,21 @@ function Reply({ user, onDelete, changeUser, ...props }) {
             />
             <div className="content">
                 <strong>
-                    <div className="owner">
-                        {reply.owner_details.pfp && (
-                            <img
-                                src={reply.owner_details.pfp}
-                                alt=""
-                                className="pfp"
-                            />
-                        )}
-                        {reply.owner_details.username}
-                    </div>
+                    <Link
+                        to={`/?user=${reply.owner}`}
+                        className="CardUsername pointerOnHover"
+                    >
+                        <div className="owner">
+                            {reply.owner_details.pfp && (
+                                <img
+                                    src={reply.owner_details.pfp}
+                                    alt=""
+                                    className="pfp"
+                                />
+                            )}
+                            {reply.owner_details.username}
+                        </div>
+                    </Link>
                 </strong>
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
