@@ -14,10 +14,7 @@
 ## **Frontend**
 
 -   Use RegEx to make links clickable in messages
--   If Hashtags are too long they just overflow
--   ^ Same for text
-
--   post doesnt appear on home page after creation
+-   text too long they just overflow
 
 ## **Server:**
 
