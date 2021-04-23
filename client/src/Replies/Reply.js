@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ContentEditable from "react-contenteditable";
+import { Remarkable } from 'remarkable';
 
 import "./Replies.css";
 import api from "../api";
@@ -10,6 +11,7 @@ function Reply({ user, onDelete, changeUser, ...props }) {
     const [reply, setReply] = useState(props.reply);
     const [editValue, setEditValue] = useState(reply.note);
     const [editing, setEditing] = useState(false);
+    const md = new Remarkable();
 
     return (
         <div className="replyCard">
@@ -44,7 +46,11 @@ function Reply({ user, onDelete, changeUser, ...props }) {
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
                     disabled={!editing}
-                    html={editValue || ""}
+                    html=html={
+                      !editing ? md.render(editValue)
+                      : editValue ? editValue
+                      : ""
+                    }
                     onChange={(e) => setEditValue(e.currentTarget.textContent)}
                     onBlur={(e) =>
                         api.patch(`/api/SquirreLogs/${reply.id}/`, {
