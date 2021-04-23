@@ -22,11 +22,10 @@ function User(props) {
     return (
         <div className="user">
             {/* Passing name as prop for more reusability */}
-            <Row style={{ alignItems: "center" }}>
-                <Avatar user={props.user} name={props.user.profile.username} />
-                <NoNotif />
-            </Row>
-
+            <div className="UserBreakdownUsernameAndImage">
+                <Avatar user={props.user} />
+                <h1>{props.user.profile.username}</h1>
+            </div>
             <Row>
                 <Col>
                     <p className="userData">
