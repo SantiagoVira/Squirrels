@@ -17,22 +17,22 @@ function Archive({ user, changeUser }) {
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 250 ? "" : "scrolled"
     );
-    
+
     useEffect(async () => {
         getStories();
         window.addEventListener("scroll", handleScroll);
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
-    
+
     useEffect(() => {
         const getNext = async () => {
-            if(isBottom && next) {
+            if (isBottom && next) {
                 const response = await api.get(next);
                 setStories([...stories, ...response.data.results]);
                 setNext(response.data.next);
                 setIsBottom(false);
             }
-        }
+        };
         getNext();
     }, [isBottom]);
 
@@ -41,17 +41,17 @@ function Archive({ user, changeUser }) {
         setStories(response.data.results);
         setNext(response.data.next);
         setSearching(false);
-    }
+    };
 
     const search = async (search) => {
-        const query = search.startsWith("#") 
+        const query = search.startsWith("#")
             ? `hashtag=${search.slice(1)}`
-            : `search=${search}`
+            : `search=${search}`;
         const response = await api.get(`/api/SquirreLogs/archive?${query}`);
         setSearching(true);
         setStories(response.data.results);
         setNext(response.data.next);
-    }
+    };
 
     const handleScroll = async () => {
         const scrollTop =
@@ -61,12 +61,12 @@ function Archive({ user, changeUser }) {
             (document.documentElement &&
                 document.documentElement.scrollHeight) ||
             document.body.scrollHeight;
-        
+
         if (scrollTop + window.innerHeight + 500 >= scrollHeight) {
             setIsBottom(true);
         }
         window.pageYOffset > 250 ? setScrolled("") : setScrolled("scrolled");
-    }
+    };
 
     function renderSquirrels() {
         //Render the stories, raises: can't render an object
@@ -118,7 +118,7 @@ function Archive({ user, changeUser }) {
                 even relate to squirrels at all. And so, we decided to display
                 them here for all to see.
             </p>
-            <div className="searchWrapper hideOnTooSmall">
+            <div className="searchWrapper">
                 <Search stories={stories} getStories={search} />
                 {searching && (
                     <IconButton onClick={getStories}>

@@ -13,10 +13,7 @@
 
 ## **Frontend**
 
--   make search bar smaller not dissapear on small screen
--   menu underline goes to home page when reload
 -   Use RegEx to make links clickable in messages
--   Show search bar in archive on mobile, just make it smaller
 -   If Hashtags are too long they just overflow
 -   ^ Same for text
 
