@@ -13,14 +13,12 @@
 
 ## **Frontend**
 
--   Use RegEx to make links clickable in messages
-
--   editing posts is like really hard
+-   style notifications button
 
 ## **Server:**
 
 -   searching by hashtags doesnt search entire database
--   Maybe a notification center
+-   send post/reply id thorugh notification... object?
 
 ## **Other**
 

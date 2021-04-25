@@ -97,7 +97,7 @@ function Card({
     }
 
     return (
-        <div className="squirrelCard">
+        <div className="squirrelCard" id={`card_id_${post.id}`}>
             {!disableCardMenu && (
                 <SideBar
                     post={post}
