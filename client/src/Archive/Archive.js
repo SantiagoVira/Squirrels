@@ -37,7 +37,7 @@ function Archive({ user, changeUser }) {
     }, [isBottom]);
 
     const getStories = async () => {
-        const response = await api.get("/api/SquirreLogs/archive");
+        const response = await api.get("/api/SquirreLogs/archive/");
         setStories(response.data.results);
         setNext(response.data.next);
         setSearching(false);
