@@ -17,7 +17,9 @@ function User(props) {
             <div className="UserBreakdownUsernameAndImage">
                 <Avatar user={props.user} />
                 <Row>
-                    <h1>{props.user.profile.username}</h1>
+                    <h1 className="UserBreakdownUsername">
+                        {props.user.profile.username}
+                    </h1>
                     <Notifications />
                 </Row>
             </div>
