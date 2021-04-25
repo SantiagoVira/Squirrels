@@ -13,8 +13,6 @@
 
 ## **Frontend**
 
--   style notifications button
-
 ## **Server:**
 
 -   searching by hashtags doesnt search entire database
