@@ -4,15 +4,7 @@ import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import Avatar from "../Avatar/Avatar";
-import NotificationsNoneOutlinedIcon from "@material-ui/icons/NotificationsNoneOutlined";
-import NotificationsActiveOutlinedIcon from "@material-ui/icons/NotificationsActiveOutlined";
-
-function NoNotif() {
-    return <NotificationsNoneOutlinedIcon />;
-}
-function Notif() {
-    return <NotificationsActiveOutlinedIcon />;
-}
+import Notifications from "../Notifications/Notifications";
 
 function User(props) {
     if (!props.user.profile) {
@@ -24,7 +16,10 @@ function User(props) {
             {/* Passing name as prop for more reusability */}
             <div className="UserBreakdownUsernameAndImage">
                 <Avatar user={props.user} />
-                <h1>{props.user.profile.username}</h1>
+                <Row>
+                    <h1>{props.user.profile.username}</h1>
+                    <Notifications />
+                </Row>
             </div>
             <Row>
                 <Col>
