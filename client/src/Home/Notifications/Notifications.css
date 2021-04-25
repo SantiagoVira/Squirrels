@@ -11,7 +11,10 @@
 }
 
 .menu-trigger {
-    background: #ffffff;
+    border: 2px solid #7c3b0c;
+    background: var(--cinnamon);
+    color: var(--text);
+
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -37,7 +40,9 @@
 }
 
 .NotificationsMenuMain {
-    background: #ffffff;
+    border: 2px solid #7c3b0c;
+    background: var(--cinnamon);
+
     border-radius: 8px;
     position: absolute;
     top: 60px;
@@ -64,12 +69,12 @@
 }
 
 .NotificationsMenuMain li {
-    border-bottom: 1px solid #dddddd;
+    border-bottom: 1px solid #7c3b0c;
 }
 
 .NotificationsMenuMain li a {
     text-decoration: none;
-    color: #333333;
+    color: var(--text);
     padding: 15px 20px;
     display: block;
 }
