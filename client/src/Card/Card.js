@@ -67,8 +67,12 @@ function Card({
         setEditValue(response.data.note)
     }
 
+    const wrapMarkdown = (link) => {
+        return "[" + link + "](" + link + ")";
+    }
+
     const makeClickable = (text) => {
-        return text.replaceAll(/[^\[\(]https?:\/\/[A-Za-z0-9\-_]+\.[A-Za-z0-9\-_:%&;\?\#\/.=]+/ig, (m) => {return "[" + m + "](" + m + ")"});
+        return text.replaceAll(/(^|\s)https?:\/\/[A-Za-z0-9-]+.[A-Za-z0-9-:%&;?#/.=]+/ig, wrapMarkdown);
     }
 
     if (!post) {
