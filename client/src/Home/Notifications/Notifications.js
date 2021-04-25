@@ -12,8 +12,19 @@ function NotificationActive() {
     return <NotificationsActiveIcon />;
 }
 
+function NotificationItem(props) {
+    return (
+        <li>
+            <a href={`#card_id_${props.id}`} onClick={props.onClick}>
+                {props.message}
+            </a>
+        </li>
+    );
+}
+
 function Notifications() {
     const [newNotif, SetNewNotif] = useState(false);
+    const notifications = [{ id: 821, message: "This is a card" }];
 
     const dropdownRef = useRef(null);
     const [isActive, setIsActive] = OutsideClick(dropdownRef, false);
@@ -36,15 +47,14 @@ function Notifications() {
                     }`}
                 >
                     <ul>
-                        <li>
-                            <a href={`#card_id_${821 /*post.id*/}`}>Messages</a>
-                        </li>
-                        <li>
-                            <a href="#123">Trips</a>
-                        </li>
-                        <li>
-                            <a href="#123">Saved</a>
-                        </li>
+                        {notifications.map((n, i) => (
+                            <NotificationItem
+                                id={n.id}
+                                message={n.message}
+                                key={i}
+                                onClick={onClick}
+                            />
+                        ))}
                     </ul>
                 </nav>
             </div>
