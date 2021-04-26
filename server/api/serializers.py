@@ -102,7 +102,7 @@ class SquirreLogSerializer(serializers.ModelSerializer):
         model = SquirreLog
         fields = ('id', 'url', 'note', 'pub_date', 'votes', 'owner',
             'owner_details', 'SquirrelTopics', 'liked_by', 'liked',
-            'replies', 'replies_length', 'is_reply')
+            'replies', 'replies_length', 'is_reply', 'replying_to')
         extra_kwargs = {'note': {'trim_whitespace': False}}
 
     def get_liked(self, obj):

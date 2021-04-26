@@ -152,11 +152,11 @@ function Card({
                 </Row>
 
                 {/* Hashtags and Links */}
-                {!disableHashtags &&
+                {!disableHashtags && (
                     <Hashtags findHashtag={findHashtag}>
                         {post.SquirrelTopics}
                     </Hashtags>
-                }
+                )}
                 <div className="linksWrapper">
                     <span
                         className="CardRepliesLink pointerOnHover"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ContentEditable from "react-contenteditable";
-import { Remarkable } from 'remarkable';
+import { Remarkable } from "remarkable";
 
 import "./Replies.css";
 import api from "../api";
@@ -8,6 +8,8 @@ import SideBar from "../Card/SideBar";
 import ReplyForm from "./ReplyForm";
 import Replies from "./Replies";
 import { Link } from "react-router-dom";
+import Row from "../Row";
+import { useEffect } from "react";
 
 function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
     const [reply, setReply] = useState(props.reply);
@@ -16,7 +18,13 @@ function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
     const [editing, setEditing] = useState(false);
     const [formOpen, setFormOpen] = useState(false);
     const md = new Remarkable();
-    
+
+    useEffect(async () => {
+        setReply({ ...reply, replying_to: "Lmao Plz Work" });
+    }, []);
+
+    console.log(reply);
+
     return (
         <div className="replyCard">
             <SideBar
@@ -30,30 +38,39 @@ function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
                 onDelete={() => onDelete(reply.id)}
             />
             <div className="content">
-                <strong>
-                    <Link
-                        to={`/?user=${reply.owner}`}
-                        className="CardUsername pointerOnHover"
-                    >
-                        <div className="owner">
-                            {reply.owner_details.pfp && (
-                                <img
-                                    src={reply.owner_details.pfp}
-                                    alt=""
-                                    className="pfp"
-                                />
-                            )}
-                            {reply.owner_details.username}
-                        </div>
-                    </Link>
-                </strong>
+                <Row>
+                    <strong>
+                        <Link
+                            to={`/?user=${reply.owner}`}
+                            className="CardUsername pointerOnHover"
+                        >
+                            <div className="owner">
+                                {reply.owner_details.pfp && (
+                                    <img
+                                        src={reply.owner_details.pfp}
+                                        alt=""
+                                        className="pfp"
+                                    />
+                                )}
+                                {reply.owner_details.username}
+                            </div>
+                        </Link>
+                    </strong>
+                    {reply.replying_to && (
+                        <p>
+                            Replying to <strong>{reply.replying_to}</strong>
+                        </p>
+                    )}
+                </Row>
                 <ContentEditable
                     className={`CardStory ${editing && "StoryIsEditable"}`}
                     disabled={!editing}
                     html={
-                      !editing ? md.render(editValue)
-                      : editValue ? editValue
-                      : ""
+                        !editing
+                            ? md.render(editValue)
+                            : editValue
+                            ? editValue
+                            : ""
                     }
                     onChange={(e) => setEditValue(e.currentTarget.textContent)}
                     onBlur={(e) =>
@@ -69,16 +86,18 @@ function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
                     Reply
                 </span>
             </div>
-            {formOpen && 
-                <ReplyForm 
+            {formOpen && (
+                <ReplyForm
                     post={reply}
                     changePost={setReply}
-                    changeReplies={(newReply) => setChildReplies([...childReplies, newReply])}
+                    changeReplies={(newReply) =>
+                        setChildReplies([...childReplies, newReply])
+                    }
                     closeForm={() => setFormOpen(false)}
                 />
-            }
-            {reply.replies && reply.replies.length > 0 &&
-                <Replies 
+            )}
+            {reply.replies && reply.replies.length > 0 && (
+                <Replies
                     replies={childReplies}
                     changeReplies={setChildReplies}
                     user={user}
@@ -86,7 +105,7 @@ function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
                     post={reply}
                     changePost={setReply}
                 />
-            }
+            )}
         </div>
     );
 }
