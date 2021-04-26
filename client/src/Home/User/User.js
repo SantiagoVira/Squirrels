@@ -4,7 +4,7 @@ import "./User.css";
 import Row from "../../Row";
 import Col from "../../Col";
 import Avatar from "../Avatar/Avatar";
-import Notifications from "../Notifications/Notifications";
+//import Notifications from "../Notifications/Notifications";
 
 function User(props) {
     if (!props.user.profile) {
@@ -20,7 +20,7 @@ function User(props) {
                     <h1 className="UserBreakdownUsername">
                         {props.user.profile.username}
                     </h1>
-                    <Notifications />
+                    {/*<Notifications />*/}
                 </Row>
             </div>
             <Row>
