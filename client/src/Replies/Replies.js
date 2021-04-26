@@ -22,6 +22,9 @@ const Replies = ({ replies, changeReplies, user, changeUser, post, changePost })
                     reply={reply} 
                     user={user} 
                     changeUser={changeUser}
+                    changeReplies={(newReply) => 
+                        changeReplies([...replies, newReply])
+                    }
                     post={post} 
                     onDelete={(id) => onDelete(id)}
                     key={reply.id} 

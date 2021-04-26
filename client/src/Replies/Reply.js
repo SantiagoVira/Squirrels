@@ -5,14 +5,18 @@ import { Remarkable } from 'remarkable';
 import "./Replies.css";
 import api from "../api";
 import SideBar from "../Card/SideBar";
+import ReplyForm from "./ReplyForm";
+import Replies from "./Replies";
 import { Link } from "react-router-dom";
 
-function Reply({ user, onDelete, changeUser, ...props }) {
+function Reply({ user, onDelete, changeUser, changeReplies, ...props }) {
     const [reply, setReply] = useState(props.reply);
+    const [childReplies, setChildReplies] = useState(reply.replies);
     const [editValue, setEditValue] = useState(reply.note);
     const [editing, setEditing] = useState(false);
+    const [formOpen, setFormOpen] = useState(false);
     const md = new Remarkable();
-
+    
     return (
         <div className="replyCard">
             <SideBar
@@ -58,7 +62,31 @@ function Reply({ user, onDelete, changeUser, ...props }) {
                         })
                     }
                 />
+                <span
+                    className="CardRepliesLink pointerOnHover"
+                    onClick={() => setFormOpen(!formOpen)}
+                >
+                    Reply
+                </span>
             </div>
+            {formOpen && 
+                <ReplyForm 
+                    post={reply}
+                    changePost={setReply}
+                    changeReplies={(newReply) => setChildReplies([...childReplies, newReply])}
+                    closeForm={() => setFormOpen(false)}
+                />
+            }
+            {reply.replies && reply.replies.length > 0 &&
+                <Replies 
+                    replies={childReplies}
+                    changeReplies={setChildReplies}
+                    user={user}
+                    changeUser={changeUser}
+                    post={reply}
+                    changePost={setReply}
+                />
+            }
         </div>
     );
 }

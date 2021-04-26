@@ -101,7 +101,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
             self.permission_classes = [IsOwner, ]
         return super(SquirreLogViewSet, self).get_permissions()
 
-    def perform_create(self, serializer, reply_id=None):
+    def perform_create(self, serializer, post_id=None):
         if 'topics' in self.request.data:
             topics = self.request.data['topics']
         else:
@@ -109,7 +109,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         serializer.save(
             owner=self.request.user,
             SquirrelTopics=topics,
-            reply_id=reply_id,
+            post_id=post_id,
         )
 
     def destroy(self, request, *args, **kwargs):
@@ -153,14 +153,13 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         "Replies" # For some reason says liked
 
         if request.method == 'GET':
-            log = SquirreLog.objects.get(id=pk)
-            replies = log.replies
-            return paginated_response(self, replies)
+            post = SquirreLog.objects.get(id=pk)
+            return paginated_response(self, post.replies, serializer_class=ReplySerializer)
         else: # post
-            reply_serializer = self.get_serializer(data=request.data)
+            reply_serializer = ReplySerializer(data=request.data, context={'request': request})
             if reply_serializer.is_valid():
-                self.perform_create(reply_serializer, reply_id=pk)
-                post = SquirreLog.objects.get(id=request.data['reply_id'])
+                self.perform_create(reply_serializer, post_id=pk)
+                post = SquirreLog.objects.get(id=pk)
                 post_serializer = self.get_serializer(post)
                 return Response({
                     'reply': reply_serializer.data,

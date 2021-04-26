@@ -27,6 +27,7 @@ function Card({
     disableCardMenu,
     disableUsername,
     disableReplies,
+    disableHashtags,
 }) {
     const [post, setPost] = useState(story);
     const [editing, setEditing] = useState(false);
@@ -39,7 +40,6 @@ function Card({
     const loadReplies = async () => {
         if (replies === null) {
             const response = await api.get(story.replies);
-            // Reverse replies array to order by pub_date
             setReplies(response.data.results);
         }
     };
@@ -152,9 +152,11 @@ function Card({
                 </Row>
 
                 {/* Hashtags and Links */}
-                <Hashtags findHashtag={findHashtag}>
-                    {post.SquirrelTopics}
-                </Hashtags>
+                {!disableHashtags &&
+                    <Hashtags findHashtag={findHashtag}>
+                        {post.SquirrelTopics}
+                    </Hashtags>
+                }
                 <div className="linksWrapper">
                     <span
                         className="CardRepliesLink pointerOnHover"

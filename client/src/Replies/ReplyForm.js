@@ -15,8 +15,8 @@ const ReplyForm = ({post, changePost, changeReplies, closeForm}) => {
         const response = await api.post(`/api/SquirreLogs/${post.id}/replies/`, {
             note: text,
             pub_date: new Date().toISOString(),
-            reply_id: post.id,
         });
+        console.log(response)
         changeReplies(response.data.reply)
         changePost(response.data.post)
     }
