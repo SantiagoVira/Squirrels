@@ -136,7 +136,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         elif hashtag:
             archive = SquirreLog.objects.filter(owner_id=1, topics__topic_name=hashtag)
         else:
-            archive = SquirreLog.objects.filter(owner_id=1)
+            archive = SquirreLog.objects.filter(owner_id=1).order_by("?")
         archive.exclude(is_reply=True)
         return paginated_response(self, archive)
 
