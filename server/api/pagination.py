@@ -9,7 +9,7 @@ def paginated_response(viewset, queryset, serializer_class=None, paginator=None)
     used_paginator = used_paginator_class()
 
     # Paginates queryset with specified paginator
-    page = used_paginator.paginate_queryset(queryset, viewset.request)
+    page = used_paginator.paginate_queryset(queryset.all(), viewset.request)
     # Makes specified serializer using paginated queryset
     serializer = used_serializer(page, many=True, context={'request': viewset.request})
     # Returns paginated response
