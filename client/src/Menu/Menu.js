@@ -9,16 +9,17 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import HomeIcon from "@material-ui/icons/Home";
 
 import Row from "../Row";
+import HamburgerMenu from "./HamburgerMenu";
 
 function Menu(props) {
     const [scrolled, setScrolled] = useState(
         window.pageYOffset > 0 ? "scrolled" : ""
     );
-    const [page, setPage] = useState(window.location.href);
+    const [page, setPage] = useState(window.location.pathname);
 
     useEffect(() => {
         window.addEventListener("scroll", onScroll);
-        setPage(window.location.href);
+        setPage(window.location.pathname);
         return () => window.removeEventListener("scroll", onScroll);
     }, []);
 
@@ -33,7 +34,8 @@ function Menu(props) {
 
     // Note: 'Icon' must start with a capital I, since it's rendered as JSX
     const renderLink = (Icon, label, path) => {
-        const underlined = page.endsWith(path) ? "MenuIconFocused" : "";
+        const underlined = path === page || path === page.slice(0, page.length - 1)
+            ? "MenuIconFocused" : "";
         return (
             <Link to={path}>
                 <Icon className={underlined} />
@@ -60,6 +62,16 @@ function Menu(props) {
         }
     }
 
+    if(props.size < 935) {
+        return (
+            <HamburgerMenu 
+                page={page}
+                user={props.user}
+                changeUser={props.changeUser}
+            />
+        );
+    }
+
     return (
         <div className={`menu ${scrolled}`}>
             <Row className="left">
@@ -68,7 +80,7 @@ function Menu(props) {
                 {props.user.isLoggedIn &&
                     renderLink(AddBoxIcon, "Create", "/create")}
             </Row>
-            <div className="right">{renderAuth(page)}</div>
+            <div className="right">{renderAuth()}</div>
         </div>
     );
 }

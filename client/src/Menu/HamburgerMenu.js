@@ -46,7 +46,7 @@ function HamburgerMenu(props) {
             return (
                 <React.Fragment>
                     {links.map((link) =>
-                        page.endsWith(link.to) ? (
+                        page === link.to || page.slice(0, page.length - 1) === link.to ? (
                             <strong key={unique()}>
                                 <Link to={link.to}>{link.name}</Link>
                             </strong>
@@ -84,8 +84,8 @@ function HamburgerMenu(props) {
                     }}
                 >
                     <Col className="dropdownColumn">
-                        {links.map((link) =>
-                            page.endsWith(link.to) ? (
+                        {links.map((link) => 
+                            page === link.to || page.slice(0, page.length - 1) === link.to ? (
                                 <strong key={unique()}>
                                     <Link to={link.to}>{link.name}</Link>
                                 </strong>
