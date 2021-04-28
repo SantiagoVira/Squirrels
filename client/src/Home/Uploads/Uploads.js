@@ -44,6 +44,18 @@ function Uploads(props) {
         getNext();
     }, [isBottom]);
 
+    useEffect(() => {
+        const getNext = async () => {
+            if (isBottom && next) {
+                const response = await api.get(next);
+                setPosts([...posts, ...response.data.results]);
+                setNext(response.data.next);
+                setIsBottom(false);
+            }
+        };
+        getNext();
+    }, [isBottom]);
+
     const getPosts = async (query, key) => {
         let response;
         if(key === "user") {
@@ -78,7 +90,7 @@ function Uploads(props) {
             if (window.confirm("Are you sure you want to delete this post?")) {
                 await api.delete(`/api/SquirreLogs/${deletedPost.id}/`);
                 setPosts(posts.filter((post) => post.id !== deletedPost.id));
-                
+
                 // Updates user's post count
                 if(props.user.profile.id === deletedPost.owner) {
                     props.getCounts()
@@ -105,7 +117,7 @@ function Uploads(props) {
                         onDelete={deleteLog}
                         user={props.user}
                         changeUser={props.changeUser}
-                        findHashtag={(hashtag) => 
+                        findHashtag={(hashtag) =>
                             getPosts(hashtag.slice(1), "hashtag")
                         }
                     />

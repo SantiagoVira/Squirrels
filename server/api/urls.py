@@ -3,7 +3,12 @@ from rest_framework import routers
 from rest_framework_jwt.views import obtain_jwt_token
 from . import views
 
+<<<<<<< Updated upstream
 # Registering viewsets
+=======
+from rest_framework_jwt.views import obtain_jwt_token
+
+>>>>>>> Stashed changes
 router = routers.DefaultRouter()
 
 # Maybe we should just combine them and mix with users' posts
@@ -15,6 +20,7 @@ router.register(r'users', views.UserViewSet)
 
 # These urlpatterns are included in server/urls.py
 urlpatterns = [ # We can actually register the path for our serialized info here
+<<<<<<< Updated upstream
     path('current_user/', views.current_user),
 
     # Custom router views # probably a better way :pensive:
@@ -26,4 +32,18 @@ urlpatterns = [ # We can actually register the path for our serialized info here
 
     path('', include(router.urls)),
     path('auth/', include('rest_framework.urls', namespace='rest_framework')),
+=======
+    # Commented out to view the builtin django api interface
+    # Since we enabled CORS, directly serving the frontend is unnecessary?
+    # ^ We can make requests anyway
+    # path('auth/', include('rest_framework.urls', namespace='rest_framework')),
+    # path('logs/', views.logs),
+    # path('vote/', views.vote),
+    path('current_user/', views.current_user),
+    path('users/', views.UserList),
+
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('token-auth/', obtain_jwt_token)
+>>>>>>> Stashed changes
 ]

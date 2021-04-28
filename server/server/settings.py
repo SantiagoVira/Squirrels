@@ -180,6 +180,13 @@ else:
     # WSGI server (production) runs collectstatic and checks STATIC_ROOT
     STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
+<<<<<<< Updated upstream
+=======
+# I want to be able to see the django interface
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, "static/static"),
+)
+>>>>>>> Stashed changes
 
 # CORS Settings
 CORS_ORIGIN_ALLOW_ALL = True

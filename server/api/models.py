@@ -25,6 +25,10 @@ class SquirreLog(models.Model):
     replies = models.ManyToManyField('self', related_name="log_replies", through='ManageReplies', default=None, symmetrical=False)
     is_reply = models.BooleanField(default=False)
 
+    user_story = models.BooleanField(default=False)
+    votes = models.IntegerField(default=0)
+    # Reporting system
+
     def __str__(self):
         return str(self.note)
 
