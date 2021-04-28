@@ -8,7 +8,6 @@ import api from "./api";
 
 // The header
 import Menu from "./Menu/Menu.js";
-import HamburgerMenu from "./Menu/HamburgerMenu.js";
 import Header from "./Header/Header.js";
 
 // Content
@@ -61,8 +60,8 @@ function App() {
     }, []);
 
     useEffect(() => {
-        const page = window.location.href;
-        setFooter(!(page.endsWith("/") || page.endsWith("/archive")));
+        const path = window.location.pathname;
+        setFooter(!(path.endsWith("/") || path.endsWith("/archive") || path.endsWith("/archive/")));
     }, [window.location.href]);
 
     const ChangeListener = ({ history }) => {
@@ -82,7 +81,6 @@ function App() {
         return history.location.pathname.includes("/card")
             ? null
             : props.children;
-        //<Cardlink page={page}></Cardlink>
     }
 
     return (
@@ -93,15 +91,11 @@ function App() {
                 </Cardlink>
                 <Greeting />
                 <Cardlink>
-                    {size >= 935 ? (
-                        <Menu page={page} user={user} changeUser={setUser} />
-                    ) : (
-                        <HamburgerMenu
-                            page={page}
-                            user={user}
-                            changeUser={setUser}
-                        />
-                    )}
+                    <Menu 
+                        size={size}
+                        user={user} 
+                        changeUser={setUser}
+                    />
                 </Cardlink>
                 <Cardlink>
                     <Header />
