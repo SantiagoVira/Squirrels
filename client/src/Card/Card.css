@@ -51,6 +51,11 @@
     margin-right: 10px;
 }
 
+.squirrelCard img {
+  max-width: 100%;
+  max-height: 200px;
+}
+
 .codeIcon {
     color: #60300e;
     font-size: 1rem;
@@ -67,11 +72,16 @@
     padding: 4px;
     outline: none;
     border: none;
-    word-wrap: break-word;
+
+    /* Fixed table allows word-break to work with percent widths */
+    display: table;
+    table-layout: fixed;
+    max-width: 100%;
+    word-break: break-word;
     white-space: pre-wrap;
+    min-width: 20px;
+    min-height: 26px;
 }
-
-
 
 .StoryIsEditable {
     background-color: rgba(0, 0, 0, 0.2);
@@ -104,7 +114,7 @@
     /*
     border: 2px solid #7c3b0c;
     background: var(--cinnamon);
-    
+
     background-color: rgba(0, 0, 0, 0.2);
     */
 }
