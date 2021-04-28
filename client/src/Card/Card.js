@@ -5,7 +5,7 @@ import history from "../history";
 //Using this library because it fixes mouse movement bug
 //More Info: https://stackoverflow.com/questions/47257519/react-contenteditable-cursor-jumps-to-beginning
 import ContentEditable from "react-contenteditable";
-import { Remarkable } from 'remarkable';
+import { Remarkable } from "remarkable";
 
 import ReplyIcon from "@material-ui/icons/Reply";
 
@@ -57,12 +57,47 @@ function Card({
         setFormOpen(!formOpen);
     };
 
+    const propoganda = [
+        "Sqrrlz is great",
+        "I love this app",
+        "This site has helped my mental health so much.",
+        "I love Sqrrlz",
+        "I love Squirrels",
+        "I <3 Sqrrlz",
+        "Have a good day",
+        "You are loved",
+        "The gorillas can't hurt you",
+        "What's up my squirrelies",
+    ];
+
+    const updateLog = async (e) => {
+        const value =
+            e.currentTarget.textContent.trim().length > 0
+                ? e.currentTarget.textContent
+                : propoganda[Math.floor(Math.random() * propoganda.length)];
+        const response = await api.patch(`/api/SquirreLogs/${post.id}/`, {
+            note: value,
+        });
+        setEditValue(response.data.note);
+    };
+
+    const wrapMarkdown = (link) => {
+        return "[" + link + "](" + link + ")";
+    };
+
+    const makeClickable = (text) => {
+        return text.replaceAll(
+            /(^|\s)https?:\/\/[A-Za-z0-9-]+.[A-Za-z0-9-:%&;?#/.=]+/gi,
+            wrapMarkdown
+        );
+    };
+
     if (!post) {
         return null;
     }
 
     return (
-        <div className="squirrelCard">
+        <div className="squirrelCard" id={`card_id_${post.id}`}>
             {!disableCardMenu && (
                 <SideBar
                     post={post}
@@ -103,16 +138,16 @@ function Card({
                         className={`CardStory ${editing && "StoryIsEditable"}`}
                         disabled={!editing}
                         html={
-                          !editing ? md.render(editValue)
-                          : editValue ? editValue
-                          : ""
+                            !editing
+                                ? md.render(makeClickable(editValue))
+                                : editValue
+                                ? editValue
+                                : ""
                         }
-                        onChange={(e) => setEditValue(e.currentTarget.textContent)}
-                        onBlur={(e) =>
-                            api.patch(`/api/SquirreLogs/${post.id}/`, {
-                                note: e.currentTarget.textContent,
-                            })
+                        onChange={(e) =>
+                            setEditValue(e.currentTarget.textContent)
                         }
+                        onBlur={(e) => updateLog(e)}
                     />
                 </Row>
 

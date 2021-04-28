@@ -19,11 +19,7 @@
 .UserBreakdownTopDiv {
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
-}
-.UserBreakdownUsernameAndImage {
-    margin-top: 10px;
-    width: 100%;
+    justify-content: center;
 }
 .UserBreakdownPreview {
     width: var(--profileSize);
@@ -43,4 +39,8 @@
     display: block;
     min-height: var(--profileSize);
     min-width: var(--profileSize);
+}
+
+.UserBreakdownAvatarUsername {
+    margin: 0;
 }

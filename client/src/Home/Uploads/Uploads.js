@@ -8,26 +8,17 @@ import "./Uploads.css";
 import Card from "../../Card/Card.js";
 
 function Uploads(props) {
-    const [currentPosts, setCurrentPosts] = useState([]);
     const [posts, setPosts] = useState(null);
+    const [next, setNext] = useState(null);
     const [isBottom, setIsBottom] = useState(false);
     const [backVisible, setBackVisible] = useState(false);
-    const user = props.user;
 
     useEffect(() => {
         const loadPosts = async () => {
             try {
-                const Userid = new URL(props.page).searchParams.get("user");
+                const userId = new URL(props.page).searchParams.get("user");
                 //Get posts by user if querystring is provided
-                if (Userid) {
-                    const response = await api.get(
-                        `/api/users/${Userid}/posts`
-                    );
-                    setPosts(response.data.results);
-                    setBackVisible(true);
-                } else {
-                    loadAllPosts();
-                }
+                userId ? getPosts(userId, "user") : getPosts();
             } catch (err) {
                 setPosts([]);
             }
@@ -42,16 +33,32 @@ function Uploads(props) {
     }, []);
 
     useEffect(() => {
-        if (isBottom && posts) {
-            //Add the stuff
-            const index = currentPosts.length + 1;
-            setCurrentPosts([
-                ...currentPosts,
-                ...posts.slice(index, index + 20),
-            ]);
-            setIsBottom(false);
-        }
+        const getNext = async () => {
+            if (isBottom && next) {
+                const response = await api.get(next);
+                setPosts([...posts, ...response.data.results]);
+                setNext(response.data.next);
+                setIsBottom(false);
+            }
+        };
+        getNext();
     }, [isBottom]);
+
+    const getPosts = async (query, key) => {
+        let response;
+        if(key === "user") {
+            response = await api.get(`/api/users/${query}/posts/`);
+            setBackVisible(true);
+        } else if(key === "hashtag") {
+            response = await api.get(`/api/SquirreLogs/uploads?hashtag=${query}`);
+            setBackVisible(true);
+        } else {
+            response = await api.get("/api/SquirreLogs/uploads/");
+            setBackVisible(false);
+        }
+        setPosts(response.data.results);
+        setNext(response.data.next);
+    };
 
     function handleScroll() {
         const scrollTop =
@@ -66,50 +73,14 @@ function Uploads(props) {
         }
     }
 
-    const loadAllPosts = async () => {
-        let response = await api.get("/api/SquirreLogs/uploads/");
-        let d = [...response.data.results];
-        setPosts(d);
-        setCurrentPosts(d);
-        while (response.data.next) {
-            response = await api.get(response.data.next);
-            d = [...d, ...response.data.results];
-            setPosts(d);
-        }
-        setBackVisible(false);
-    };
-
-    const loadByHashtag = async (name) => {
-        try {
-            const topicResponse = await api.get("/api/Topics/");
-            //This will NOT attempt to find hashtags with '#'
-            const foundTopic = topicResponse.data.results.find(
-                (topic) =>
-                    topic.topic_name.toString().trim() ===
-                    name.toString().replace("#", "").trim()
-            );
-
-            //Detail route returns topic info and list of associated logs
-            let logResponse = await api.get(foundTopic.SquirreLogs);
-            setPosts(logResponse.data.results);
-            while (logResponse.data.next !== null) {
-                logResponse = await api.get(logResponse.data.next);
-                setPosts([...posts, ...logResponse.data.results]);
-            }
-            setBackVisible(true);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const delete_log = async (deletedPost) => {
+    const deleteLog = async (deletedPost) => {
         try {
             if (window.confirm("Are you sure you want to delete this post?")) {
                 await api.delete(`/api/SquirreLogs/${deletedPost.id}/`);
                 setPosts(posts.filter((post) => post.id !== deletedPost.id));
                 
                 // Updates user's post count
-                if(user.profile.id === deletedPost.owner) {
+                if(props.user.profile.id === deletedPost.owner) {
                     props.getCounts()
                 }
             }
@@ -131,10 +102,12 @@ function Uploads(props) {
                     <Card
                         story={post}
                         key={post.id}
-                        onDelete={delete_log}
-                        user={user}
+                        onDelete={deleteLog}
+                        user={props.user}
                         changeUser={props.changeUser}
-                        findHashtag={loadByHashtag}
+                        findHashtag={(hashtag) => 
+                            getPosts(hashtag.slice(1), "hashtag")
+                        }
                     />
                 );
             });
@@ -144,7 +117,7 @@ function Uploads(props) {
     return (
         <div className="posts">
             {backVisible && (
-                <Link to="/" onClick={() => loadAllPosts()}>
+                <Link to="/" onClick={getPosts}>
                     <ExitToAppIcon className="exitSpecialCardsIcon" />
                 </Link>
             )}

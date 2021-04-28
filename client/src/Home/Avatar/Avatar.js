@@ -109,7 +109,7 @@ function Avatar(props) {
             </div>
 
             {/* Bottom avatar (when editing) and username */}
-            <Row className="UserBreakdownUsernameAndImage">
+            <Row>
                 {preview && (
                     <img
                         src={preview}
@@ -117,7 +117,6 @@ function Avatar(props) {
                         className="UserBreakdownPreview"
                     />
                 )}
-                {props.name && <h1>{props.name}</h1>}
             </Row>
         </div>
     );

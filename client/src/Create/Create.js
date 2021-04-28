@@ -17,8 +17,6 @@ function Create({ user }) {
     const onSubmitClick = async (e) => {
         try {
             e.preventDefault();
-            history.push("/");
-
             await api.post("/api/SquirreLogs/", {
                 ...request,
                 topics: request.topic
@@ -27,7 +25,7 @@ function Create({ user }) {
                     .map((r) => r.replace("#", "").trim()),
                 pub_date: new Date().toISOString(), //Gets current date
             });
-
+            history.push("/");
         } catch (err) {}
     };
 

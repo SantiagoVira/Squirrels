@@ -5,7 +5,7 @@
 
     min-height: 1vh;
     height: fit-content;
-    width: 40vw;
+    box-sizing: border-box;
     flex: 3;
     padding: 20px;
 

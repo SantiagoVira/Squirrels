@@ -13,15 +13,10 @@
 
 ## **Frontend**
 
--   Use RegEx to make links clickable in messages
--   text too long they just overflow
-
--   editing posts is like really hard
-
 ## **Server:**
 
 -   searching by hashtags doesnt search entire database
--   Maybe a notification center
+-   send post/reply id thorugh notification... object?
 
 ## **Other**
 

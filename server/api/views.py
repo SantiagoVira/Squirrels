@@ -21,6 +21,10 @@ from rest_framework.pagination import PageNumberPagination
 from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
 
+# Notifications
+# from channels.layers import get_channel_layer
+# from asgiref.sync import async_to_sync
+
 User = get_user_model() # checks the most updated User model (api.User)
 
 # Unlike viewsets, this gets user from JWT and not querysets
@@ -136,7 +140,7 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
         elif hashtag:
             archive = SquirreLog.objects.filter(owner_id=1, topics__topic_name=hashtag)
         else:
-            archive = SquirreLog.objects.filter(owner_id=1)
+            archive = SquirreLog.objects.filter(owner_id=1).order_by("?")
         archive.exclude(is_reply=True)
         return paginated_response(self, archive)
 
@@ -145,7 +149,11 @@ class SquirreLogViewSet(viewsets.ModelViewSet, mixins.ListModelMixin):
     def uploads(self, request, **kwargs):
         "Not user 1"
 
-        uploads = SquirreLog.objects.all().filter(is_reply=False).exclude(owner_id=1).order_by('pub_date').reverse()
+        hashtag = request.query_params.get("hashtag")
+        if hashtag:
+            uploads = SquirreLog.objects.all().filter(is_reply=False, topics__topic_name=hashtag).exclude(owner_id=1).order_by('pub_date').reverse()
+        else:
+            uploads = SquirreLog.objects.all().filter(is_reply=False).exclude(owner_id=1).order_by('pub_date').reverse()
         return paginated_response(self, uploads)
 
     @action(methods=['get', 'post'], detail=True, url_path='replies', url_name='replies')
