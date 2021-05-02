@@ -51,6 +51,11 @@
     margin-right: 10px;
 }
 
+.squirrelCard img {
+  max-width: 100%;
+  max-height: 200px;
+}
+
 .codeIcon {
     color: #60300e;
     font-size: 1rem;
@@ -109,7 +114,7 @@
     /*
     border: 2px solid #7c3b0c;
     background: var(--cinnamon);
-    
+
     background-color: rgba(0, 0, 0, 0.2);
     */
 }

@@ -21,6 +21,10 @@ from rest_framework.pagination import PageNumberPagination
 from .models import SquirreLog, SquirrelTopic
 from django.contrib.auth import get_user_model
 
+# Notifications
+# from channels.layers import get_channel_layer
+# from asgiref.sync import async_to_sync
+
 User = get_user_model() # checks the most updated User model (api.User)
 
 # Unlike viewsets, this gets user from JWT and not querysets

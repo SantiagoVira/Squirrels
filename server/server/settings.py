@@ -27,11 +27,23 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'f151u71kopnay_9$a+^mo68^exeml232ip!y+
 DEBUG = False
 
 # Add to this list if you want this app to be hosted on another site
-ALLOWED_HOSTS = ['localhost', '.herokuapp.com', '127.0.0.1']
+ALLOWED_HOSTS = [ 'localhost', '.herokuapp.com', '127.0.0.1', 6379 ]
 
+# ./asgi.py
+ASGI_APPLICATION = 'django_notifications_project.routing.application'
+
+# Channel backend settings
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": [('127.0.0.1', 6379, 'localhost', '.herokuapp.com',)],
+        },
+    },
+}
+# CHANNEL_LAYERS = {}
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -43,6 +55,7 @@ INSTALLED_APPS = [
     # Third-party
     'rest_framework', # Rest API
     'corsheaders', # enables cors requests from frontend
+    'channels', # Realtime library
 
     # Custom Apps
     'api.apps.ApiConfig', # Django won't know about the api otherwise
