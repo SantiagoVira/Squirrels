@@ -1,5 +1,7 @@
 # Squirrels
 
+![Sample](/docs/images/sample.png)
+
 Our CS4All Hackathon submission
 
 # Usage
